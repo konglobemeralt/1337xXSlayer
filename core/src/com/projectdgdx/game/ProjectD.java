@@ -21,6 +21,8 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.ArrayList;
+
 public class ProjectD extends ApplicationAdapter {
 	private PerspectiveCamera camera;
 	public CameraInputController camController;
@@ -28,14 +30,19 @@ public class ProjectD extends ApplicationAdapter {
 	private Model box;
 	private ModelInstance boxInstance;
 	private Environment environment;
+
+	private ArrayList<ControllerTest> controllerTestList = new ArrayList<>();
 	
 	@Override
 	public void create () {
 		createSceneCamera();
 		createModels();
 		createEnviroment();
+		int i = 0;
 		for (Controller controller : Controllers.getControllers()) {
-			System.out.println(controller.getName());
+			controllerTestList.add(new ControllerTest(controller, i, camera));
+			i++;
+
 		}
 	}
 
@@ -72,7 +79,7 @@ public class ProjectD extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		camera.rotateAround(Vector3.Zero, new Vector3(0,1,0),1f);
+//		camera.rotateAround(Vector3.Zero, new Vector3(0,1,0),1f);
 		camera.update();
 
 		modelBatch.begin(camera);
