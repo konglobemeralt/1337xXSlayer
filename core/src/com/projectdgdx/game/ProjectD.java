@@ -3,6 +3,8 @@ package com.projectdgdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -32,6 +34,9 @@ public class ProjectD extends ApplicationAdapter {
 		createSceneCamera();
 		createModels();
 		createEnviroment();
+		for (Controller controller : Controllers.getControllers()) {
+			System.out.println(controller.getName());
+		}
 	}
 
 	private void createSceneCamera(){
@@ -73,6 +78,10 @@ public class ProjectD extends ApplicationAdapter {
 		modelBatch.begin(camera);
 		modelBatch.render(boxInstance, environment);
 		modelBatch.end();
+
+	}
+
+	public void update() {
 
 	}
 	
