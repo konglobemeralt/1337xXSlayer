@@ -12,10 +12,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -23,7 +20,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 public class ProjectD extends ApplicationAdapter {
 	private PerspectiveCamera camera;
 	public CameraInputController camController;
-	private ModelBatch modelBatch;
 	private Model model;
 	private ModelInstance modelInstance;
 	private Environment environment;
@@ -35,6 +31,8 @@ public class ProjectD extends ApplicationAdapter {
 	private RenderContext renderContext;
 	private Shader shader;
 	private Renderable renderable;
+
+	private ModelBatch modelBatch;
 
 	//Uniforms
 	int u_projTrans;
@@ -91,6 +89,9 @@ public class ProjectD extends ApplicationAdapter {
 								new Material(ColorAttribute.createDiffuse(Color.BLUE)),
 								VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		modelInstance = new ModelInstance(model);
+
+		modelBatch = new ModelBatch(shaderProgram);
+		modelBatch.
 	}
 
 	private void createEnviroment(){
@@ -109,19 +110,17 @@ public class ProjectD extends ApplicationAdapter {
 
 		camera.rotateAround(Vector3.Zero, new Vector3(0,1,0),1f);
 		camera.update();
-
 		renderContext.begin();
-		shader.begin(camera, renderContext);
-		shader.render(renderable);
-		shader.end();
+		shaderProgram.begin();
+		//shader.begin(camera, renderContext);
+		//shader.render(renderable);
+		//shader.end();
 		renderContext.end();
-
-
 	}
 
 	@Override
 	public void dispose () {
-
+		shader.dispose();
 		model.dispose();
 	}
 }
