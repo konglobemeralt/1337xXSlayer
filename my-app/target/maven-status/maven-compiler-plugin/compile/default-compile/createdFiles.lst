@@ -1,0 +1,7 @@
+edu/chalmers/projecttemplate/model/Project.class
+edu/chalmers/projecttemplate/view/ProjectView.class
+edu/chalmers/projecttemplate/controller/ProjectController.class
+edu/chalmers/projecttemplate/controller/ProjectController$1.class
+edu/chalmers/projecttemplate/ProjectTemplate$1.class
+edu/chalmers/projecttemplate/controller/ProjectController$ProjectButtonPressed.class
+edu/chalmers/projecttemplate/ProjectTemplate.class

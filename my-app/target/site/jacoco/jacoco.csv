@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+ProjectTemplate,edu.chalmers.projecttemplate,ProjectTemplate,8,0,0,0,4,0,2,0,2,0
+ProjectTemplate,edu.chalmers.projecttemplate,ProjectTemplate.new Runnable() {...},20,0,0,0,6,0,2,0,2,0
+ProjectTemplate,edu.chalmers.projecttemplate.view,ProjectView,57,0,0,0,14,0,3,0,3,0
+ProjectTemplate,edu.chalmers.projecttemplate.model,Project,0,13,0,0,0,4,0,3,0,3
+ProjectTemplate,edu.chalmers.projecttemplate.controller,ProjectController,23,0,0,0,6,0,2,0,2,0
+ProjectTemplate,edu.chalmers.projecttemplate.controller,ProjectController.ProjectButtonPressed,21,0,0,0,4,0,2,0,2,0

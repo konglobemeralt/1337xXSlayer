@@ -3,35 +3,71 @@ package com.projectdgdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.NodePart;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class ProjectD extends ApplicationAdapter {
 	private PerspectiveCamera camera;
 	public CameraInputController camController;
 	private ModelBatch modelBatch;
-	private Model box;
-	private ModelInstance boxInstance;
+	private Model model;
+	private ModelInstance modelInstance;
 	private Environment environment;
-	
+
+	private Texture img;
+	private String vertexShader;
+	private String fragmentShader;
+	private ShaderProgram shaderProgram;
+	private RenderContext renderContext;
+	private Shader shader;
+	private Renderable renderable;
+
+	//Uniforms
+	int u_projTrans;
+	int u_worldTrans;
+
 	@Override
 	public void create () {
 		createSceneCamera();
 		createModels();
 		createEnviroment();
+		createShaders();
+
+		NodePart root = model.nodes.get(0).parts.get(0);
+
+		renderable = new Renderable();
+		root.setRenderable(renderable);
+		renderable.environment = environment;
+		renderable.worldTransform.idt();
+
+		renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
+		shader = new DefaultShader(renderable);
+		shader.init();
+	}
+
+	private void createShaders(){
+		vertexShader = Gdx.files.internal("shaders/vertexShader.glsl").readString();
+		fragmentShader = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
+		shaderProgram = new ShaderProgram(vertexShader,fragmentShader);
+		if (!shaderProgram.isCompiled())
+			throw new GdxRuntimeException(shaderProgram.getLog());
+
+		u_projTrans = shaderProgram.getUniformLocation("u_projViewTrans");
+		u_worldTrans = shaderProgram.getUniformLocation("u_worldTrans");
 	}
 
 	private void createSceneCamera(){
@@ -44,13 +80,17 @@ public class ProjectD extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(camController);
 	}
 
+
+
 	private void createModels(){
-		modelBatch = new ModelBatch();
+		//ModelLoader loader = new ObjLoader();
+		//model = loader.loadModel(Gdx.files.internal("bunny.obj"));
+
 		ModelBuilder modelBuilder = new ModelBuilder();
-		box = modelBuilder.createBox(2f, 2f, 2f,
-				new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		boxInstance = new ModelInstance(box, 0, 0, 0);
+		model = modelBuilder.createBox(2f, 2f, 2f,
+								new Material(ColorAttribute.createDiffuse(Color.BLUE)),
+								VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+		modelInstance = new ModelInstance(model);
 	}
 
 	private void createEnviroment(){
@@ -70,15 +110,18 @@ public class ProjectD extends ApplicationAdapter {
 		camera.rotateAround(Vector3.Zero, new Vector3(0,1,0),1f);
 		camera.update();
 
-		modelBatch.begin(camera);
-		modelBatch.render(boxInstance, environment);
-		modelBatch.end();
+		renderContext.begin();
+		shader.begin(camera, renderContext);
+		shader.render(renderable);
+		shader.end();
+		renderContext.end();
+
 
 	}
-	
+
 	@Override
 	public void dispose () {
-		modelBatch.dispose();
-		box.dispose();
+
+		model.dispose();
 	}
 }
