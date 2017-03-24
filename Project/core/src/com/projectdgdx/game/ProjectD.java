@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.projectdgdx.game.utils.MapLoader;
 
 public class ProjectD extends ApplicationAdapter {
 	private PerspectiveCamera camera;
@@ -26,12 +27,13 @@ public class ProjectD extends ApplicationAdapter {
 	private Model box;
 	private ModelInstance boxInstance;
 	private Environment environment;
-	
+
 	@Override
 	public void create () {
 		createSceneCamera();
 		createModels();
 		createEnviroment();
+		new MapLoader("BasicMap");
 	}
 
 	private void createSceneCamera(){
@@ -75,7 +77,7 @@ public class ProjectD extends ApplicationAdapter {
 		modelBatch.end();
 
 	}
-	
+
 	@Override
 	public void dispose () {
 		modelBatch.dispose();
