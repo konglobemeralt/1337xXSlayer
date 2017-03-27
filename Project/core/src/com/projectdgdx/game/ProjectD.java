@@ -3,6 +3,7 @@ package com.projectdgdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -18,67 +19,83 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 public class ProjectD extends ApplicationAdapter {
-	private PerspectiveCamera camera;
-	public CameraInputController camController;
+	private PerspectiveCamera cam;
+	private CameraInputController camController;
 	private ModelBatch modelBatch;
-	private Model box;
-	private ModelInstance boxInstance;
-	private Environment environment;
+	private AssetManager assets;
+	public Array<ModelInstance> instances = new Array<ModelInstance>();
+	public Environment environment;
+	public boolean loading;
+
 	
 	@Override
 	public void create () {
-		createSceneCamera();
+
 		createModels();
-		createEnviroment();
+
+		createEnvironment();
+		createCamera();
 	}
 
-	private void createSceneCamera(){
-		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(0f, 0f, 3f);
-		camera.lookAt(0f, 0f, 0f);
-		camera.near = 0.01f;
-		camera.far = 1000f;
-		camController = new CameraInputController(camera);
+	public void createModels(){
+		modelBatch = new ModelBatch();
+		assets = new AssetManager();
+		assets.load("ship.g3db", Model.class);
+		loading = true;
+	}
+
+	private void doneLoading() {
+		Model ship = assets.get("ship.g3db", Model.class);
+		for (float x = -50f; x <= 50f; x += 2f) {
+			for (float z = -50f; z <= 50f; z += 2f) {
+				ModelInstance shipInstance = new ModelInstance(ship);
+				shipInstance.transform.setToTranslation(x, 0, z);
+				instances.add(shipInstance);
+			}
+		}
+		loading = false;
+	}
+
+	public void createEnvironment(){
+		environment = new Environment();
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+	}
+
+	public void createCamera(){
+		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.position.set(7f, 7f, 7f);
+		cam.lookAt(0,0,0);
+		cam.near = 1f;
+		cam.far = 300f;
+		cam.update();
+
+		//Camera control
+		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 	}
 
-	private void createModels(){
-		modelBatch = new ModelBatch();
-		ModelBuilder modelBuilder = new ModelBuilder();
-		box = modelBuilder.createBox(2f, 2f, 2f,
-				new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		boxInstance = new ModelInstance(box, 0, 0, 0);
-	}
 
-	private void createEnviroment(){
-		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1.0f));
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-
-	}
-
-	@Override
 	public void render () {
+		if (loading && assets.update())
+			doneLoading();
+		camController.update();
+
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		camera.rotateAround(Vector3.Zero, new Vector3(0,1,0),1f);
-		camera.update();
-
-		modelBatch.begin(camera);
-		modelBatch.render(boxInstance, environment);
+		modelBatch.begin(cam);
+		modelBatch.render(instances, environment);
 		modelBatch.end();
-
 	}
 	
 	@Override
 	public void dispose () {
 		modelBatch.dispose();
-		box.dispose();
+		instances.clear();
+		assets.dispose();
 	}
 }
