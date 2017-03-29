@@ -62,7 +62,7 @@ public class MapParser {
     public void parse(String mapName) {
         loadDocument(mapName);
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-        loadElements(doc.getElementsByTagName("student"));
+        loadElements(doc.getElementsByTagName("Mesh"));
     }
 
 

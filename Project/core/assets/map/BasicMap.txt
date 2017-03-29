@@ -1,21 +1,11 @@
 <?xml version="1.0"?>
 <Map>
-   <student rollno="393">
-      <firstname>dinkar</firstname>
-      <lastname>kad</lastname>
-      <nickname>dinkar</nickname>
-      <marks>85</marks>
-   </student>
-   <student rollno="493">
-      <firstname>Vaneet</firstname>
-      <lastname>Gupta</lastname>
-      <nickname>vinni</nickname>
-      <marks>95</marks>
-   </student>
-   <student rollno="593">
-      <firstname>jasvir</firstname>
-      <lastname>singn</lastname>
-      <nickname>jazz</nickname>
-      <marks>90</marks>
-   </student>
+	<Camera x="7.481132" y="-6.507640" z="5.343665" rotationX="1.109319" rotationY="0.000000" rotationZ="0.814928"></Camera>
+	<Mesh x="0.000000" y="0.000000" z="2.532511" rotationX="0.000000" rotationY="0.000000" rotationZ="0.000000" prop="1.0"></Mesh>
+	<Light x="4.076245" y="1.005454" z="5.903862" rotationX="0.650328" rotationY="0.055217" rotationZ="1.866391"></Light>
+	<Model x="9.505321" y="-0.499455" z="4.310412" rotationX="0.000000" rotationY="0.000000" rotationZ="0.000000"></Model>
+	<Model x="9.505321" y="-0.499455" z="4.310412" rotationX="0.000000" rotationY="0.000000" rotationZ="0.000000">
+		<Model x="-27.644455" y="-1.156332" z="4.012072" rotationX="0.000000" rotationY="0.000000" rotationZ="0.000000"></Model>
+		<Model x="-0.062735" y="1.008524" z="11.506603" rotationX="0.000000" rotationY="0.000000" rotationZ="0.000000"></Model>
+	</Model>
 </Map>
