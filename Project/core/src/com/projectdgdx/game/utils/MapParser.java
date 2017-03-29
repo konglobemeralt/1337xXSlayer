@@ -1,5 +1,6 @@
 package com.projectdgdx.game.utils;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -17,7 +18,7 @@ import java.util.List;
 public class MapParser {
 
     private Document doc;
-    List<GameObject> gameObjects;
+    List<GameObject> gameObjects = new ArrayList();
 
     /**
      * This method loads the xml representation of the map into a Document folder which can be used
@@ -46,15 +47,12 @@ public class MapParser {
     private void loadElements(NodeList list) {
         for(int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
-//            System.out.println(node.getNodeName());
             GameObjectInit gameObjectInit = new GameObjectInit(node.getNodeName());
             for(int j = 0; j < node.getAttributes().getLength(); j++) {
                 Node attribute = node.getAttributes().item(j);
-                System.out.println(attribute.getNodeName() + " : " + attribute.getNodeValue());
                 gameObjectInit.changeValue(attribute.getNodeName(), attribute.getNodeValue());
             }
-
-
+            gameObjects.add(gameObjectInit.convert());
         }
 
     }
@@ -62,7 +60,13 @@ public class MapParser {
     public void parse(String mapName) {
         loadDocument(mapName);
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-        loadElements(doc.getElementsByTagName("Mesh"));
+        loadElements(doc.getElementsByTagName("Model"));
+
+
+        System.out.println(gameObjects.size());
+        for(GameObject g : gameObjects) {
+            g.init();
+        }
     }
 
 

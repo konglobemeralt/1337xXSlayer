@@ -18,6 +18,11 @@ public class GameObjectInit {
     double width = 1;
     double height  = 1;
     double depth = 1;
+
+    double rotationX = 0;
+    double rotationY = 0;
+    double rotationZ = 0;
+
     Polygon polygon = null;
 
     double spawnRate = 1;
@@ -25,7 +30,7 @@ public class GameObjectInit {
     double spawnDelay = 0;
     double aliveLimit = 10;
 
-    String className = null;
+    String className = "NoClass";
 
     public GameObjectInit(String type) {
         this.type = type;
@@ -33,11 +38,11 @@ public class GameObjectInit {
 
     public GameObject convert() {
         switch (type) {
-            case "Object":
-                return new GameObject();
+            case "Model":
+                return new GameObject(className);
 
             case "Spawn":
-                return new GameObject();
+                return new GameObject(className);
             default:
                 System.out.println("TAG OF TYPE: " + type + " not supported");
                 return null;
@@ -73,11 +78,23 @@ public class GameObjectInit {
             case "depth":
                 depth = Double.parseDouble(value);
                 break;
+            case "rotationX":
+                rotationX = Double.parseDouble(value);
+                break;
+            case "rotationY":
+                rotationY = Double.parseDouble(value);
+                break;
+            case "rotationZ":
+                rotationZ = Double.parseDouble(value);
+                break;
             case "polygon":
                 // TODO Handle polygons
                 break;
+            case "className":
+                className = value;
+                break;
             default:
-                System.out.println("Value does not exist");
+                System.out.println("Value does not exist   " + key);
                 break;
         }
     }
