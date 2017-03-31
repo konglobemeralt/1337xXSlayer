@@ -1,5 +1,7 @@
 package com.projectdgdx.game.utils;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by Hampus on 2017-03-26.
  */
@@ -7,30 +9,28 @@ public class GameObjectInit {
     private String type;
 
     //Different values with defaults:
-    double x = 0;
-    double y = 0;
-    double z = 0;
+    private double x = 0;
+    private double y = 0;
+    private double z = 0;
 
-    double scaleX = 1;
-    double scaleY = 1;
-    double scaleZ = 1;
+    private double scaleX = 1;
+    private double scaleY = 1;
+    private double scaleZ = 1;
 
-    double width = 1;
-    double height  = 1;
-    double depth = 1;
+    private double width = 1;
+    private double height  = 1;
+    private double depth = 1;
 
-    double rotationX = 0;
-    double rotationY = 0;
-    double rotationZ = 0;
+    private double rotationX = 0;
+    private double rotationY = 0;
+    private double rotationZ = 0;
 
-    Polygon polygon = null;
+    private Polygon polygon = null;
 
-    double spawnRate = 1;
+    private double spawnRate = 1;
     boolean spawnRateRandom = false;
-    double spawnDelay = 0;
-    double aliveLimit = 10;
-
-    String className = "NoClass";
+    private double spawnDelay = 0;
+    private double aliveLimit = 10;
 
     public GameObjectInit(String type) {
         this.type = type;
@@ -39,10 +39,13 @@ public class GameObjectInit {
     public GameObject convert() {
         switch (type) {
             case "Model":
-                return new GameObject(className);
-
+//                Class<?> clazz = Class.forName(className);
+//                GameObject date = clazz.newInstance();
+                return new GameObject(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(width, height, depth), new Vector3(rotationX, rotationY, rotationZ), "Model");
+            case "Machine":
+                return new GameObject(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(width, height, depth), new Vector3(rotationX, rotationY, rotationZ), "machine.basic");
             case "Spawn":
-                return new GameObject(className);
+                return new GameObject(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(width, height, depth), new Vector3(rotationX, rotationY, rotationZ), "Spawn");
             default:
                 System.out.println("TAG OF TYPE: " + type + " not supported");
                 return null;
@@ -91,7 +94,7 @@ public class GameObjectInit {
                 // TODO Handle polygons
                 break;
             case "className":
-                className = value;
+//                className = value;
                 break;
             default:
                 System.out.println("Value does not exist   " + key);

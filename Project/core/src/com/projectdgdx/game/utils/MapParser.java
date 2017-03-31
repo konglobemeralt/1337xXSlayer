@@ -65,7 +65,7 @@ public class MapParser {
 
         System.out.println(gameObjects.size());
         for(GameObject g : gameObjects) {
-            g.init();
+//            g.init();
         }
     }
 
