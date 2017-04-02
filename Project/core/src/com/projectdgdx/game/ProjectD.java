@@ -14,11 +14,15 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+
+import java.util.Random;
 
 public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
@@ -29,10 +33,14 @@ public class ProjectD extends ApplicationAdapter {
     public Environment environment;
     public boolean loading;
 
+    public Texture roboTexture;
+
+    Random rand;
 
     @Override
     public void create () {
 
+        rand = new Random();
         loadModels();
 
         createEnvironment();
@@ -51,27 +59,23 @@ public class ProjectD extends ApplicationAdapter {
         assets.load("badlogic.jpg", Texture.class, param);
 
         //model
-        assets.load("ship.g3db", Model.class);
-        assets.load("bunny.obj", Model.class);
+        assets.load("robo.obj", Model.class);
         loading = true;
     }
 
     private void doneLoading() {
-        Model ship = assets.get("ship.g3db", Model.class);
-        Model bunny = assets.get("bunny.obj", Model.class);
+        Model robo = assets.get("robo.obj", Model.class);
+
+        roboTexture = new Texture(Gdx.files.internal("copper.jpg"));
+        robo.materials.get(0).set(TextureAttribute.createDiffuse(roboTexture));
+
         for (float x = -50f; x <= 50f; x += 2f) {
             for (float z = -50f; z <= 50f; z += 2f) {
                 ModelInstance modelInstance;
-                if (z<-30) {
-                    modelInstance = new ModelInstance(bunny);
-                    modelInstance.transform.setToTranslation(x, 3, z);
-                    modelInstance.transform.scale(10, 10, 10);
-                }
-                else{
-                    modelInstance = new ModelInstance(ship);
-                    modelInstance.transform.setToTranslation(x, 0, z);
-
-                }
+                modelInstance = new ModelInstance(robo);
+                modelInstance.transform.setToTranslation(x, 3, z);
+                modelInstance.transform.scale(0.03f, 0.03f, 0.03f);
+                modelInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
 
                 instances.add(modelInstance);
             }
@@ -117,14 +121,14 @@ public class ProjectD extends ApplicationAdapter {
     }
 
     private void moveModel(Array<ModelInstance> instances){
-        for(ModelInstance instance: instances) {
-            if (Gdx.input.isButtonPressed(Input.Keys.I)) {
-                instance.transform.trn(0, 0, 0.1f);
-            }
-            if (Gdx.input.isButtonPressed(Input.Keys.K)) {
-                instance.transform.trn(0, 0, 0.1f);
-            }
-        }
+       //for(ModelInstance instance: instances) {
+       //    if (Gdx.input.isButtonPressed(Input.Keys.I)) {
+       //        instance.transform.trn(0, 0, 0.1f);
+       //    }
+       //    if (Gdx.input.isButtonPressed(Input.Keys.K)) {
+       //        instance.transform.trn(0, 0, 0.1f);
+       //    }
+       //}
     }
 
     @Override
