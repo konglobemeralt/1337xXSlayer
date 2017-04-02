@@ -112,8 +112,8 @@ public class ProjectD extends ApplicationAdapter {
     public void render () {
         if (loading && assets.update())
             doneLoading();
-        camController.update();
 
+        camController.update();
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -137,11 +137,11 @@ public class ProjectD extends ApplicationAdapter {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            instance.transform.trn(0, 0, 0.1f);
+            instance.transform.trn(0, 0, -0.1f);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            instance.transform.trn(0, 0, -0.1f);
+            instance.transform.trn(0, 0, 0.1f);
         }
 
 
