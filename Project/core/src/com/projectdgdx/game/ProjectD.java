@@ -69,15 +69,21 @@ public class ProjectD extends ApplicationAdapter {
         roboTexture = new Texture(Gdx.files.internal("copper.jpg"));
         robo.materials.get(0).set(TextureAttribute.createDiffuse(roboTexture));
 
+        //Player
+        ModelInstance playerInstance;
+        playerInstance = new ModelInstance(robo);
+        playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
+        instances.add(playerInstance);
+
         for (float x = -50f; x <= 50f; x += 2f) {
             for (float z = -50f; z <= 50f; z += 2f) {
-                ModelInstance modelInstance;
-                modelInstance = new ModelInstance(robo);
-                modelInstance.transform.setToTranslation(x, 3, z);
-                modelInstance.transform.scale(0.03f, 0.03f, 0.03f);
-                modelInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+                ModelInstance npcInstance;
+                npcInstance = new ModelInstance(robo);
+                npcInstance.transform.setToTranslation(x, 3, z);
+                npcInstance.transform.scale(0.03f, 0.03f, 0.03f);
+                npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
 
-                instances.add(modelInstance);
+                instances.add(npcInstance);
             }
         }
         loading = false;
@@ -113,22 +119,32 @@ public class ProjectD extends ApplicationAdapter {
 
 
         if(!loading)
-            moveModel(instances);
+            moveModel(instances.get(0));
 
         modelBatch.begin(cam);
         modelBatch.render(instances, environment);
         modelBatch.end();
     }
 
-    private void moveModel(Array<ModelInstance> instances){
-       //for(ModelInstance instance: instances) {
-       //    if (Gdx.input.isButtonPressed(Input.Keys.I)) {
-       //        instance.transform.trn(0, 0, 0.1f);
-       //    }
-       //    if (Gdx.input.isButtonPressed(Input.Keys.K)) {
-       //        instance.transform.trn(0, 0, 0.1f);
-       //    }
-       //}
+    private void moveModel(ModelInstance instance){
+
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            instance.transform.trn(0.1f, 0, 0);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            instance.transform.trn(-0.1f, 0, 0);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            instance.transform.trn(0, 0, 0.1f);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            instance.transform.trn(0, 0, -0.1f);
+        }
+
+
     }
 
     @Override
