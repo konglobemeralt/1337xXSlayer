@@ -72,19 +72,19 @@ public class ProjectD extends ApplicationAdapter {
         //Player
         ModelInstance playerInstance;
         playerInstance = new ModelInstance(robo);
+        playerInstance.transform.setToTranslation(0, 0, 0);
         playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
+
         instances.add(playerInstance);
 
-        for (float x = -50f; x <= 50f; x += 2f) {
-            for (float z = -50f; z <= 50f; z += 2f) {
-                ModelInstance npcInstance;
-                npcInstance = new ModelInstance(robo);
-                npcInstance.transform.setToTranslation(x, 3, z);
-                npcInstance.transform.scale(0.03f, 0.03f, 0.03f);
-                npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+        for (int x = 0; x < 150; x += 1) {
+                    ModelInstance npcInstance;
+                    npcInstance = new ModelInstance(robo);
+                    npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
+                    npcInstance.transform.scale(0.03f, 0.03f, 0.03f);
+                    npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
 
-                instances.add(npcInstance);
-            }
+                    instances.add(npcInstance);
         }
         loading = false;
     }
