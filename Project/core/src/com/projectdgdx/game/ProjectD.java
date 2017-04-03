@@ -49,8 +49,6 @@ public class ProjectD extends ApplicationAdapter {
 
     public void loadAssets(){
         modelBatch = new ModelBatch();
-
-
         //model
         AssetManager.loadModel("robo.obj");
         AssetManager.loadModel("ship.obj");
@@ -107,16 +105,14 @@ public class ProjectD extends ApplicationAdapter {
     }
 
     public void createCamera(){
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(7f, 7f, 7f);
-        cam.lookAt(0,0,0);
-        cam.near = 1f;
-        cam.far = 300f;
-        cam.update();
-
-        //Camera control
+        cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(0f, 0f, 3f);
+        cam.lookAt(0f, 0f, 0f);
+        cam.near = 0.01f;
+        cam.far = 1000f;
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
+
     }
 
 
@@ -124,7 +120,8 @@ public class ProjectD extends ApplicationAdapter {
         if (loading && AssetManager.update())
             doneLoading();
 
-        camController.update();
+        cam.update();
+
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
