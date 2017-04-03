@@ -26,7 +26,7 @@ public abstract class GameObject {
         return rotation;
     }
 
-    public Vector3 getId() {
-        return rotation;
+    public String getId() {
+        return id;
     }
 }
