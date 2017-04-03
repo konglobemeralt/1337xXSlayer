@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Array;
  */
 public class AssetManager {
 
-    private ModelBatch modelBatch;
     private com.badlogic.gdx.assets.AssetManager rawAssets;
 
     private TextureLoader.TextureParameter param;
@@ -22,7 +21,6 @@ public class AssetManager {
     private Array<String> loadedModels = new Array<String>();
 
     public AssetManager(){
-        modelBatch = new ModelBatch();
         rawAssets = new com.badlogic.gdx.assets.AssetManager();
 
         param = new TextureLoader.TextureParameter();
@@ -59,7 +57,6 @@ public class AssetManager {
 
     public void dispose(){
         rawAssets.dispose();
-        modelBatch.dispose();
     }
 
     private boolean checkIfLoaded(String assetToCheck){
@@ -69,5 +66,9 @@ public class AssetManager {
             }
         }
         return false;
+    }
+
+    public boolean update(){
+        return rawAssets.update();
     }
 }
