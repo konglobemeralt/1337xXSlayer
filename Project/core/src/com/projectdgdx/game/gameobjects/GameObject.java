@@ -27,6 +27,10 @@ public abstract class GameObject {
         return rotation;
     }
 
+    public Vector3 getScale() {
+        return scale;
+    }
+
     public String getId() {
         return id;
     }

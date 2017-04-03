@@ -84,9 +84,13 @@ public class ProjectD extends ApplicationAdapter {
             ModelInstance npcInstance;
             System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
             npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-            npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
-            npcInstance.transform.scale(2f, 2f, 2f);
-            npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+            npcInstance.transform.setToTranslation(gameObject.getPosition());
+            Vector3 scale = gameObject.getScale();
+            npcInstance.transform.scale(scale.x, scale.y, scale.z);
+            Vector3 rotation = gameObject.getRotation();
+            npcInstance.transform.rotate(Vector3.X, rotation.x);
+            npcInstance.transform.rotate(Vector3.Y, rotation.y);
+            npcInstance.transform.rotate(Vector3.Z, rotation.z);
 
             instances.add(npcInstance);
         }
