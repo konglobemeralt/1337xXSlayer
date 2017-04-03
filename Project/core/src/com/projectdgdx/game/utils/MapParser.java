@@ -1,10 +1,10 @@
 package com.projectdgdx.game.utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.projectdgdx.game.gameobjects.GameObject;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

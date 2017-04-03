@@ -1,9 +1,11 @@
-package com.projectdgdx.game.utils;
+package com.projectdgdx.game.gameobjects;
+
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Hampus on 2017-03-26.
  */
-public class GameObject {
+public abstract class GameObject {
     private Vector3 position;
     private Vector3 size;
     private Vector3 scale;
