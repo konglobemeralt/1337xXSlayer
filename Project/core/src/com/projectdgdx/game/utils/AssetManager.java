@@ -14,13 +14,13 @@ import com.badlogic.gdx.utils.Array;
  */
 public class AssetManager {
 
-    private com.badlogic.gdx.assets.AssetManager rawAssets;
+   static  private com.badlogic.gdx.assets.AssetManager rawAssets;
 
-    private TextureLoader.TextureParameter param;
+    static private TextureLoader.TextureParameter param;
 
-    private Array<String> loadedModels = new Array<String>();
+    static private Array<String> loadedModels = new Array<String>();
 
-    public AssetManager(){
+    static{
         rawAssets = new com.badlogic.gdx.assets.AssetManager();
 
         param = new TextureLoader.TextureParameter();
@@ -28,15 +28,15 @@ public class AssetManager {
         param.genMipMaps = true;
     }
 
-    public void loadModel(String model){
+    public static void loadModel(String model){
         rawAssets.load(model, Model.class);
     }
 
-    public void loadTexture(String texture){
+    public static void loadTexture(String texture){
         rawAssets.load(texture, Texture.class, param);
     }
 
-    public void setTextureToModel(String textureToSet, String modelToChange){
+    public static void setTextureToModel(String textureToSet, String modelToChange){
         Model model = rawAssets.get(modelToChange, Model.class);
         Texture newModelTexture = new Texture(Gdx.files.internal(textureToSet));
 
@@ -45,7 +45,7 @@ public class AssetManager {
         model.materials.get(0).set(TextureAttribute.createDiffuse(newModelTexture));
     }
 
-    public ModelInstance getModel(String modelString){
+    public static ModelInstance getModel(String modelString){
         if(!checkIfLoaded(modelString)){
             loadModel(modelString);
         }
@@ -55,11 +55,11 @@ public class AssetManager {
         return modelInstance;
     }
 
-    public void dispose(){
+    public static void dispose(){
         rawAssets.dispose();
     }
 
-    private boolean checkIfLoaded(String assetToCheck){
+    private static boolean checkIfLoaded(String assetToCheck){
         for(String model : loadedModels) {
             if (assetToCheck.equals(model)){
                 return true;
@@ -68,7 +68,7 @@ public class AssetManager {
         return false;
     }
 
-    public boolean update(){
+    public static boolean update(){
         return rawAssets.update();
     }
 }

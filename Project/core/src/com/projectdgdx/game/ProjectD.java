@@ -20,9 +20,13 @@ import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.projectdgdx.game.gameobjects.GameObject;
+import com.projectdgdx.game.utils.BasicMap;
+import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.utils.MapLoader;
 
 import com.badlogic.gdx.utils.Array;
+import com.projectdgdx.game.utils.MapParser;
 
 import java.util.Random;
 
@@ -38,6 +42,7 @@ public class ProjectD extends ApplicationAdapter {
     public Texture roboTexture;
 
     Random rand;
+    Map map;
 
     @Override
     public void create () {
@@ -47,6 +52,8 @@ public class ProjectD extends ApplicationAdapter {
 
         createEnvironment();
         createCamera();
+        MapParser parser = new MapParser();
+        map = parser.parse("BasicMap");
     }
 
     public void loadAssets(){
@@ -70,9 +77,20 @@ public class ProjectD extends ApplicationAdapter {
         playerInstance.transform.setToTranslation(0, 0, 0);
         playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
 
+
         instances.add(playerInstance);
 
-        for (int x = 0; x < 150; x += 1) {
+//        for (int x = 0; x < 150; x += 1) {
+//            ModelInstance npcInstance;
+//            npcInstance = new ModelInstance(assetManager.getModel("ship.obj"));
+//            npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
+//            npcInstance.transform.scale(2f, 2f, 2f);
+//            npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+//
+//            instances.add(npcInstance);
+//        }
+
+        for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
             npcInstance = new ModelInstance(assetManager.getModel("ship.obj"));
             npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
