@@ -56,6 +56,8 @@ public class ProjectD extends ApplicationAdapter {
 
         //model
         assetManager.loadModel("robo.obj");
+        assetManager.loadModel("ship.obj");
+
         loading = true;
     }
 
@@ -69,6 +71,18 @@ public class ProjectD extends ApplicationAdapter {
         playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
 
         instances.add(playerInstance);
+
+        for (int x = 0; x < 150; x += 1) {
+            ModelInstance npcInstance;
+            npcInstance = new ModelInstance(assetManager.getModel("ship.obj"));
+            npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
+            npcInstance.transform.scale(2f, 2f, 2f);
+            npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+
+            instances.add(npcInstance);
+        }
+
+
 
         loading = false;
     }
