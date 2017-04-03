@@ -57,16 +57,14 @@ public class MapParser {
 
     }
 
-    public void parse(String mapName) {
+    public Map parse(String mapName) {
         loadDocument(mapName);
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
         loadElements(doc.getElementsByTagName("Model"));
 
 
-        System.out.println(gameObjects.size());
-        for(GameObject g : gameObjects) {
-//            g.init();
-        }
+        return new BasicMap(gameObjects);
+
     }
 
 
