@@ -11,7 +11,7 @@ public class AssetsFinder {
     static HashMap<String, String[]> textureMap = new HashMap<String, String[]>();
 
     static {
-        textureMap.put("machine.basic", new String[]{"pathToModel", "pathToTexture"});
+        textureMap.put("worker.basic", new String[]{"robo.obj", "copper.jpg"});
     }
 
     static String getModelPath(String id) {
