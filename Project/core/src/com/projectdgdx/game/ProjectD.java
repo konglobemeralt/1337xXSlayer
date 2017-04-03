@@ -1,29 +1,20 @@
 package com.projectdgdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
-import com.projectdgdx.game.utils.BasicMap;
+import com.projectdgdx.game.utils.AssetManager;
+import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
-import com.projectdgdx.game.utils.MapLoader;
 
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.utils.MapParser;
@@ -34,7 +25,6 @@ public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
     private CameraInputController camController;
     private ModelBatch modelBatch;
-    private com.projectdgdx.game.utils.AssetManager assetManager;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Environment environment;
     public boolean loading;
@@ -46,34 +36,34 @@ public class ProjectD extends ApplicationAdapter {
 
     @Override
     public void create () {
-
+        MapParser parser = new MapParser();
+        map = parser.parse("BasicMap");
         rand = new Random();
         loadAssets();
 
         createEnvironment();
         createCamera();
-        MapParser parser = new MapParser();
-        map = parser.parse("BasicMap");
+
+
     }
 
     public void loadAssets(){
         modelBatch = new ModelBatch();
 
-        assetManager = new com.projectdgdx.game.utils.AssetManager();
 
         //model
-        assetManager.loadModel("robo.obj");
-        assetManager.loadModel("ship.obj");
+        AssetManager.loadModel("robo.obj");
+        AssetManager.loadModel("ship.obj");
 
         loading = true;
     }
 
     private void doneLoading() {
 
-        assetManager.setTextureToModel("copper.jpg", "robo.obj");
+        AssetManager.setTextureToModel("copper.jpg", "robo.obj");
 
         ModelInstance playerInstance;
-        playerInstance = new ModelInstance(assetManager.getModel("robo.obj"));
+        playerInstance = new ModelInstance(AssetManager.getModel("robo.obj"));
         playerInstance.transform.setToTranslation(0, 0, 0);
         playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
 
@@ -92,7 +82,8 @@ public class ProjectD extends ApplicationAdapter {
 
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
-            npcInstance = new ModelInstance(assetManager.getModel("ship.obj"));
+            System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
+            npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
             npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
             npcInstance.transform.scale(2f, 2f, 2f);
             npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
@@ -126,7 +117,7 @@ public class ProjectD extends ApplicationAdapter {
 
 
     public void render () {
-        if (loading && assetManager.update())
+        if (loading && AssetManager.update())
             doneLoading();
 
         camController.update();
@@ -167,6 +158,6 @@ public class ProjectD extends ApplicationAdapter {
     public void dispose () {
         modelBatch.dispose();
         instances.clear();
-        assetManager.dispose();
+        AssetManager.dispose();
     }
 }

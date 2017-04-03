@@ -15,6 +15,7 @@ public abstract class GameObject {
         this.position = position;
         this.scale = scale;
         this.rotation = rotation;
+        this.id = id;
     }
 
     public Vector3 getPosition() {
