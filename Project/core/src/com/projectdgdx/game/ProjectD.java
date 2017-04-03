@@ -30,7 +30,7 @@ public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
     private CameraInputController camController;
     private ModelBatch modelBatch;
-    private AssetManager assets;
+    private com.projectdgdx.game.utils.AssetManager assetManager;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Environment environment;
     public boolean loading;
@@ -43,51 +43,33 @@ public class ProjectD extends ApplicationAdapter {
     public void create () {
 
         rand = new Random();
-        loadModels();
+        loadAssets();
 
         createEnvironment();
         createCamera();
     }
 
-    public void loadModels(){
+    public void loadAssets(){
         modelBatch = new ModelBatch();
 
-        assets = new AssetManager();
-
-        //Text
-        TextureLoader.TextureParameter param = new TextureLoader.TextureParameter();
-        param.minFilter = Texture.TextureFilter.Linear;
-        param.genMipMaps = true;
-        assets.load("badlogic.jpg", Texture.class, param);
+        assetManager = new com.projectdgdx.game.utils.AssetManager();
 
         //model
-        assets.load("robo.obj", Model.class);
+        assetManager.loadModel("robo.obj");
         loading = true;
     }
 
     private void doneLoading() {
-        Model robo = assets.get("robo.obj", Model.class);
 
-        roboTexture = new Texture(Gdx.files.internal("copper.jpg"));
-        robo.materials.get(0).set(TextureAttribute.createDiffuse(roboTexture));
+        assetManager.setTextureToModel("copper.jpg", "robo.obj");
 
-        //Player
         ModelInstance playerInstance;
-        playerInstance = new ModelInstance(robo);
+        playerInstance = new ModelInstance(assetManager.getModel("robo.obj"));
         playerInstance.transform.setToTranslation(0, 0, 0);
         playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
 
         instances.add(playerInstance);
 
-        for (int x = 0; x < 150; x += 1) {
-                    ModelInstance npcInstance;
-                    npcInstance = new ModelInstance(robo);
-                    npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
-                    npcInstance.transform.scale(0.03f, 0.03f, 0.03f);
-                    npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
-
-                    instances.add(npcInstance);
-        }
         loading = false;
     }
 
@@ -112,7 +94,7 @@ public class ProjectD extends ApplicationAdapter {
 
 
     public void render () {
-        if (loading && assets.update())
+        if (loading && assetManager.update())
             doneLoading();
 
         camController.update();
@@ -153,6 +135,6 @@ public class ProjectD extends ApplicationAdapter {
     public void dispose () {
         modelBatch.dispose();
         instances.clear();
-        assets.dispose();
+        assetManager.dispose();
     }
 }
