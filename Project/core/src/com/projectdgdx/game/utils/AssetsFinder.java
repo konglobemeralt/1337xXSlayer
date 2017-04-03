@@ -11,14 +11,15 @@ public class AssetsFinder {
     static HashMap<String, String[]> textureMap = new HashMap<String, String[]>();
 
     static {
-        textureMap.put("worker.basic", new String[]{"robo2.obj", "copper.jpg"});
+        textureMap.put("machine.basic", new String[]{"robo.obj", "copper.jpg"});
     }
 
-    static String getModelPath(String id) {
+    public static String getModelPath(String id) {
+        System.out.println("ID: " + id);
         return textureMap.get(id)[0];
     }
 
-    static String getTexturePath(String id) {
+    public static String getTexturePath(String id) {
         return textureMap.get(id)[1];
     }
 

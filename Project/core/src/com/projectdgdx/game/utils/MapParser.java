@@ -2,6 +2,7 @@ package com.projectdgdx.game.utils;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.projectdgdx.game.gameobjects.GameObject;
@@ -28,6 +29,7 @@ public class MapParser {
      */
     private void loadDocument(String mapName) {
         try {
+            System.out.println("map/" + mapName + ".txt");
             FileHandle handle = Gdx.files.internal("map/" + mapName + ".txt");
             File inputFile = handle.file();
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -60,8 +62,12 @@ public class MapParser {
     public Map parse(String mapName) {
         loadDocument(mapName);
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-        loadElements(doc.getElementsByTagName("Model"));
+        loadElements(doc.getElementsByTagName("Machine"));
 
+//        for(GameObject gameObject : gameObjects) {
+//            System.out.println(gameObject);
+//        }
+        System.out.println("GameObjects: " + gameObjects.size());
 
         return new BasicMap(gameObjects);
 
