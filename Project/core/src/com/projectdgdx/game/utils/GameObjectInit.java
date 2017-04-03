@@ -1,6 +1,6 @@
 package com.projectdgdx.game.utils;
 
-import com.badlogic.gdx.Gdx;
+import com.projectdgdx.game.gameobjects.GameObject;
 
 /**
  * Created by Hampus on 2017-03-26.
