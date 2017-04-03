@@ -21,7 +21,6 @@ public abstract class GameObject {
         return position;
     }
 
-
     public Vector3 getRotation() {
         return rotation;
     }
