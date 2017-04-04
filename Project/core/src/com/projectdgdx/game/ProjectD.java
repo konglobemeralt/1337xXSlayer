@@ -50,33 +50,36 @@ public class ProjectD extends ApplicationAdapter {
     public void loadAssets(){
         modelBatch = new ModelBatch();
         //model
-        AssetManager.loadModel("robo.obj");
-        AssetManager.loadModel("ship.obj");
+        AssetManager.loadModel("robo.g3dj");
+        AssetManager.loadModel("machine.g3dj");
+        AssetManager.loadModel("ship.g3db");
 
         loading = true;
     }
 
     private void doneLoading() {
 
-        AssetManager.setTextureToModel("copper.jpg", "robo.obj");
+        AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
+        AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
+
 
         ModelInstance playerInstance;
-        playerInstance = new ModelInstance(AssetManager.getModel("robo.obj"));
+        playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
         playerInstance.transform.setToTranslation(0, 0, 0);
-        playerInstance.transform.scale(0.03f, 0.03f, 0.03f);
+        playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
 
 
         instances.add(playerInstance);
 
-//        for (int x = 0; x < 150; x += 1) {
-//            ModelInstance npcInstance;
-//            npcInstance = new ModelInstance(assetManager.getModel("ship.obj"));
-//            npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
-//            npcInstance.transform.scale(2f, 2f, 2f);
-//            npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
-//
-//            instances.add(npcInstance);
-//        }
+        for (int x = 0; x < 150; x += 1) {
+            ModelInstance npcInstance;
+            npcInstance = new ModelInstance(AssetManager.getModel("ship.g3db"));
+            npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
+            npcInstance.transform.scale(2f, 2f, 2f);
+            npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+
+            instances.add(npcInstance);
+        }
 
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
@@ -137,19 +140,19 @@ public class ProjectD extends ApplicationAdapter {
     private void moveModel(ModelInstance instance){
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            instance.transform.trn(0.1f, 0, 0);
+            instance.transform.trn(1f, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            instance.transform.trn(-0.1f, 0, 0);
+            instance.transform.trn(-1f, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            instance.transform.trn(0, 0, -0.1f);
+            instance.transform.trn(0, 0, -1f);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            instance.transform.trn(0, 0, 0.1f);
+            instance.transform.trn(0, 0, 1f);
         }
 
 

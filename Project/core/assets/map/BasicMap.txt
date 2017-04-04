@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Map>
-	<Machine x="7.481132" y="-6.507640" z="5.343665" rotationX="1.109319" rotationY="5.000000" rotationZ="0.814928"></Machine>
-	<Machine x="2" y="2" z="5.343665" rotationX="5" rotationY="0.000000" rotationZ="90.814928"></Machine>
-	<Machine x="-5" y="8" z="5.343665" rotationX="-3" rotationY="0.000000" rotationZ="180"></Machine>
+	<Machine x="7.481132" y="0" z="5.343665" rotationX="0" rotationY="5.000000" rotationZ="0"></Machine>
+	<Machine x="200" y="0" z="5.343665" rotationX="0" rotationY="90.000000" rotationZ="0"></Machine>
+	<Machine x="-150" y="0" z="5.343665" rotationX="0" rotationY="270.000000" rotationZ="0"></Machine>
 </Map>
