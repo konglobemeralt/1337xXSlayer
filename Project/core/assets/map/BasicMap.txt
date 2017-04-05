@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Map>
     <Machine x="7.481132" y="0" z="5.343665" rotationX="0" rotationY="5.000000" rotationZ="0">
-	    <Machine x="7.481132" y="0" z="5.343665" rotationX="0" rotationY="5.000000" rotationZ="0"></Machine>
-	    <Machine x="7.481132" y="0" z="5.343665" rotationX="0" rotationY="5.000000" rotationZ="0"></Machine>
-	    <Machine x="7.481132" y="0" z="5.343665" rotationX="0" rotationY="5.000000" rotationZ="0"></Machine>
+	    <Machine x="20" y="0" z="-203.343665" rotationX="0" rotationY="5.000000" rotationZ="0"></Machine>
+	    <Machine x="200" y="5" z="50.343665" rotationX="0" rotationY="90.000000" rotationZ="0"></Machine>
+        <Machine x="-150" y="120" z="5.343665" rotationX="0" rotationY="270.000000" rotationZ="0"></Machine>
 	</Machine>
 </Map>
