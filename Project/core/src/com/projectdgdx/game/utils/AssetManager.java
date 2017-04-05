@@ -31,6 +31,7 @@ public class AssetManager {
 
     public static void loadModel(String model){
         rawAssets.load("models/" + model, Model.class);
+        rawAssets.finishLoading();
     }
 
     public static void loadTexture(String texture){
@@ -54,6 +55,15 @@ public class AssetManager {
         Model model = rawAssets.get("models/" + modelString, Model.class);
         ModelInstance modelInstance = new ModelInstance(model);
         return modelInstance;
+    }
+
+    public static Model getRawModel(String modelString){
+        if(!checkIfLoaded(modelString)){
+            loadModel(modelString);
+        }
+
+        Model model = rawAssets.get("models/" + modelString, Model.class);
+        return model;
     }
 
     public static void dispose(){

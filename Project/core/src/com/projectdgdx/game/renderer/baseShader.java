@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 /**
  * Created by konglobemeralt on 2017-04-05.
  */
-public class baseShader implements Shader {
+public class BaseShader implements Shader {
     ShaderProgram program;
     Camera camera;
     com.badlogic.gdx.graphics.g3d.utils.RenderContext context;
