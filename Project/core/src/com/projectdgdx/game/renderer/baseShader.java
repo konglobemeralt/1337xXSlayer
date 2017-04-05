@@ -19,8 +19,8 @@ public class baseShader implements Shader {
 
     @Override
     public void init() {
-        String vert = Gdx.files.internal("shaders/vertexShader").readString();
-        String frag = Gdx.files.internal("shaders/fragmentShader").readString();
+        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
+        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
         program = new ShaderProgram(vert, frag);
         if (!program.isCompiled())
             throw new GdxRuntimeException(program.getLog());
