@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
@@ -32,14 +33,13 @@ public class ProjectD extends ApplicationAdapter {
     private CameraInputController camController;
     public Environment environment;
     public boolean loading;
-
-
-    public RenderContext renderContext;
     public Shader shader;
-    public Model model;
+
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public ModelBatch modelBatch;
+
     public Renderable renderable;
+    public RenderContext renderContext;
 
     Random rand;
     Map map;
@@ -164,15 +164,16 @@ public class ProjectD extends ApplicationAdapter {
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
-        if(!loading)
+        if(!loading) {
             moveModel(instances.get(0));
+        }
+
 
         modelBatch.begin(cam);
         for (ModelInstance instance : instances)
             modelBatch.render(instance, shader);
         modelBatch.end();
     }
-
 
 
     private void moveModel(ModelInstance instance){
