@@ -28,6 +28,9 @@ import com.projectdgdx.game.utils.MapParser;
 
 import java.util.Random;
 
+import com.projectdgdx.game.utils.AssetManager;
+
+
 public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
     private CameraInputController camController;
@@ -89,13 +92,17 @@ public class ProjectD extends ApplicationAdapter {
 
         NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
 
+        AssetManager.loadModel("robo.g3dj");
+
+        Model model = AssetManager.getRawModel("robo.g3dj");
+
         renderable = new Renderable();
         blockPart.setRenderable(renderable);
         renderable.environment = null;
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-<<<<<<< HEAD
+
         instances.add(playerInstance);
 
 
@@ -129,11 +136,11 @@ public class ProjectD extends ApplicationAdapter {
         loading = false;
 
         shader = new BaseShader();
-=======
+
         String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
         String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
         shader = new DefaultShader(renderable, new DefaultShader.Config(vert, frag));
->>>>>>> Refactored shader filenames and added more test code
+
         shader.init();
 
         modelBatch = new ModelBatch();
@@ -166,9 +173,19 @@ public class ProjectD extends ApplicationAdapter {
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
+
+
+        renderContext.begin();
+        shader.begin(cam, renderContext);
+        shader.render(renderable);
+        shader.end();
+        renderContext.end();
+
+
 
         if(!loading) {
             moveModel(instances.get(0));
