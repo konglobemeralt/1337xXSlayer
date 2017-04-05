@@ -95,6 +95,7 @@ public class ProjectD extends ApplicationAdapter {
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
+<<<<<<< HEAD
         instances.add(playerInstance);
 
 
@@ -128,6 +129,11 @@ public class ProjectD extends ApplicationAdapter {
         loading = false;
 
         shader = new BaseShader();
+=======
+        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
+        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
+        shader = new DefaultShader(renderable, new DefaultShader.Config(vert, frag));
+>>>>>>> Refactored shader filenames and added more test code
         shader.init();
 
         modelBatch = new ModelBatch();
