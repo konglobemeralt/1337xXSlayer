@@ -1,4 +1,3 @@
-
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -6,7 +5,6 @@ precision mediump float;
 varying vec2 v_texCoord0;
 
 uniform vec3 u_color;
-<<<<<<< HEAD
 uniform sampler2D u_texture;
 
 void main() {
@@ -16,10 +14,3 @@ void main() {
     gl_FragColor = texture2D(u_texture, v_texCoord0) + colorTint;
     //gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
     }
-=======
-
-void main() {
-    vec4 colorTint = vec4(u_color, 1.0);
-    gl_FragColor = vec4(v_texCoord0, 0.0, 1.0) + colorTint;
-}
->>>>>>> flashing light shader code
