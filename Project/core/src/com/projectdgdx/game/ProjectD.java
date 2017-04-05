@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.projectdgdx.game.utils.AssetManager;
 
 
 public class ProjectD extends ApplicationAdapter {
@@ -23,7 +24,7 @@ public class ProjectD extends ApplicationAdapter {
     @Override
     public void create () {
         cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(2f, 2f, 2f);
+        cam.position.set(2f, 100f, 150f);
         cam.lookAt(0,0,0);
         cam.near = 1f;
         cam.far = 300f;
@@ -32,12 +33,11 @@ public class ProjectD extends ApplicationAdapter {
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
 
-        ModelBuilder modelBuilder = new ModelBuilder();
-        model = modelBuilder.createSphere(2f, 2f, 2f, 20, 20,
-                new Material(),
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates);
+        AssetManager.loadModel("robo.g3dj");
 
-        NodePart blockPart = model.nodes.get(0).parts.get(0);
+        Model model = AssetManager.getRawModel("robo.g3dj");
+
+        NodePart blockPart = model.getNode("robo_root").getChild(0).parts.get(0);
 
         renderable = new Renderable();
         blockPart.setRenderable(renderable);
@@ -57,6 +57,8 @@ public class ProjectD extends ApplicationAdapter {
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
         renderContext.begin();
         shader.begin(cam, renderContext);
