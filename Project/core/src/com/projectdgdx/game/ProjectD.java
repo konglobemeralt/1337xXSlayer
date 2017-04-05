@@ -4,12 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.model.NodePart;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
+import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
 import com.projectdgdx.game.utils.AssetManager;
@@ -30,6 +32,10 @@ public class ProjectD extends ApplicationAdapter {
     public boolean loading;
 
     public Texture roboTexture;
+
+    public Renderable renderable;
+    public RenderContext renderContext;
+    public Shader shader;
 
     Random rand;
     Map map;
@@ -129,12 +135,29 @@ public class ProjectD extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
-        if(!loading)
+        if(!loading) {
             moveModel(instances.get(0));
+            setShader(instances.get(0));
+        }
+
 
         modelBatch.begin(cam);
         modelBatch.render(instances, environment);
         modelBatch.end();
+    }
+
+    private void setShader(ModelInstance instance){
+        NodePart rootNode = instance.nodes.get(0).parts.get(0);
+
+        renderable = new Renderable();
+        rootNode.setRenderable(renderable);
+        renderable.environment = null;
+
+        renderable.worldTransform.idt();
+
+        renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
+        shader = new DefaultShader(renderable);
+        shader.init();
     }
 
     private void moveModel(ModelInstance instance){
