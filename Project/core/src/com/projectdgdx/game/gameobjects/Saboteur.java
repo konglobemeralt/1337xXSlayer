@@ -9,4 +9,14 @@ public class Saboteur extends PlayableCharacter{
     public Saboteur(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
         super(position, scale, rotation, id);
     }
+
+    @Override
+    public void dishonestInteract(){
+        System.out.println("Sabotaged");
+    }
+
+    @Override
+    public void useAbility(){
+        System.out.println("Blackout");
+    }
 }

@@ -3,6 +3,7 @@ package com.projectdgdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -12,6 +13,9 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
+import com.projectdgdx.game.gameobjects.PlayableCharacter;
+import com.projectdgdx.game.gameobjects.Saboteur;
+import com.projectdgdx.game.gameobjects.Supervisor;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
@@ -44,6 +48,8 @@ public class ProjectD extends ApplicationAdapter {
         createEnvironment();
         createCamera();
 
+        PlayableCharacter s = new Supervisor(new Vector3(1,1,1), new Vector3(1,1,1),new Vector3(1,1,1), "Saboteur");
+        Controllers.getControllers().get(0).addListener(s);
 
     }
 
