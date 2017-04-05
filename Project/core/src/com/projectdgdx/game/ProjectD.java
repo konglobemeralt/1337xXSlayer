@@ -45,7 +45,9 @@ public class ProjectD extends ApplicationAdapter {
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-        shader = new DefaultShader(renderable);
+        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
+        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
+        shader = new DefaultShader(renderable, new DefaultShader.Config(vert, frag));
         shader.init();
     }
 
