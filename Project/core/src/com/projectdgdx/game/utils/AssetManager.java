@@ -62,6 +62,7 @@ public class AssetManager {
             loadModel(modelString);
         }
 
+
         Model model = rawAssets.get("models/" + modelString, Model.class);
         return model;
     }
