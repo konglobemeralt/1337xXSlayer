@@ -30,6 +30,11 @@ public class GameObjectInit {
     private float spawnDelay = 0;
     private float aliveLimit = 10;
 
+    /**
+     * The constructor for GameObjectInit requires a type
+     *
+     * @param type Type of GameObject that the data should be converted into
+     */
     GameObjectInit(String type) {
         this.type = type;
     }
@@ -57,6 +62,12 @@ public class GameObjectInit {
         aliveLimit = gameObjectInit.aliveLimit;
     }
 
+
+    /**
+     * convert can be used to convert a GameObjectInit into a GameObject
+     *
+     * @return A GameObject that has the data within GameObjectInit
+     */
     GameObject convert() {
         switch (type) {
             case "Machine":
@@ -108,6 +119,11 @@ public class GameObjectInit {
         }
     }
 
+    /**
+     * Clone provides a way to do a deep copy of a GameObjectInit
+     *
+     * @return A clone of GameObjectInit
+     */
     @Override
     public GameObjectInit clone() {
         return new GameObjectInit(this);
