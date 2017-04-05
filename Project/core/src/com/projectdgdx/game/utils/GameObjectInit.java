@@ -26,15 +26,38 @@ public class GameObjectInit {
     private Polygon polygon = null;
 
     private float spawnRate = 1;
-    boolean spawnRateRandom = false;
+    private boolean spawnRateRandom = false;
     private float spawnDelay = 0;
     private float aliveLimit = 10;
 
-    public GameObjectInit(String type) {
+    GameObjectInit(String type) {
         this.type = type;
     }
 
-    public GameObject convert() {
+    private GameObjectInit(GameObjectInit gameObjectInit) {
+        type = gameObjectInit.type;
+
+        x = gameObjectInit.x;
+        y = gameObjectInit.y;
+        z = gameObjectInit.z;
+
+        scaleX = gameObjectInit.scaleX;
+        scaleY = gameObjectInit.scaleY;
+        scaleZ = gameObjectInit.scaleZ;
+
+        rotationX = gameObjectInit.rotationX;
+        rotationY = gameObjectInit.rotationY;
+        rotationZ = gameObjectInit.rotationZ;
+
+        polygon = gameObjectInit.polygon;
+
+        spawnRate = gameObjectInit.spawnRate;
+        spawnRateRandom = gameObjectInit.spawnRateRandom;
+        spawnDelay = gameObjectInit.spawnDelay;
+        aliveLimit = gameObjectInit.aliveLimit;
+    }
+
+    GameObject convert() {
         switch (type) {
             case "Machine":
                 return new Machine(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "machine.basic");
@@ -44,7 +67,7 @@ public class GameObjectInit {
         }
     }
 
-    public void changeValue(String key, String value) {
+    void changeValue(String key, String value) {
         switch(key) {
             case "x":
                 x = Float.parseFloat(value);
@@ -83,5 +106,10 @@ public class GameObjectInit {
                 System.out.println("Value does not exist   " + key);
                 break;
         }
+    }
+
+    @Override
+    public GameObjectInit clone() {
+        return new GameObjectInit(this);
     }
 }

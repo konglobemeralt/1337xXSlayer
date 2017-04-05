@@ -19,7 +19,7 @@ import java.util.List;
 public class MapParser {
 
     private Document doc;
-    List<GameObject> gameObjects = new ArrayList();
+    List<GameObject> gameObjects = new ArrayList<GameObject>();
 
     /**
      * This method loads the xml representation of the map into a Document folder which can be used
@@ -49,20 +49,54 @@ public class MapParser {
     private void loadElements(NodeList list) {
         for(int i = 0; i < list.getLength(); i++) {
             Node node = list.item(i);
-            GameObjectInit gameObjectInit = new GameObjectInit(node.getNodeName());
-            for(int j = 0; j < node.getAttributes().getLength(); j++) {
-                Node attribute = node.getAttributes().item(j);
-                gameObjectInit.changeValue(attribute.getNodeName(), attribute.getNodeValue());
-            }
-            gameObjects.add(gameObjectInit.convert());
-        }
 
+            //Make sure that node is not a text element
+            if(node.getNodeType() == Node.ELEMENT_NODE) {
+                //Load node
+                GameObjectInit gameObjectInit = loadNode(node, new GameObjectInit(node.getNodeName()));
+
+                //Check for child nodes
+                if(node.hasChildNodes()) {
+                    for(int j = 0; j < node.getChildNodes().getLength(); j++) {
+                        Node deepNode = node.getChildNodes().item(j);
+                        if(deepNode.getNodeType() == Node.ELEMENT_NODE) {
+                            GameObjectInit deepGameObjectInit = loadNode(deepNode, gameObjectInit.clone());
+                            addGameObject(deepGameObjectInit);
+                        }
+
+                    }
+                }else {
+                    addGameObject(gameObjectInit);
+                }
+            }
+        }
+    }
+
+    //GameObject to add attributes to from xml
+    private GameObjectInit loadNode(Node node, GameObjectInit gameObjectInit) {
+        for(int i = 0; i < node.getAttributes().getLength(); i++) {
+            Node attribute = node.getAttributes().item(i);
+            gameObjectInit.changeValue(attribute.getNodeName(), attribute.getNodeValue());
+        }
+        System.out.println(gameObjectInit);
+        return gameObjectInit;
+    }
+
+    private void addGameObject(GameObjectInit gameObjectInit) {
+        GameObject gameObject = gameObjectInit.convert();
+        if(gameObject != null) {
+            gameObjects.add(gameObject);
+        }
     }
 
     public Map parse(String mapName) {
         loadDocument(mapName);
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
-        loadElements(doc.getElementsByTagName("Machine"));
+//        loadElements(doc.getElementsByTagName("Machine"));
+//        for(int i = 0; i < doc.getDocumentElement().getChildNodes().getLength(); i++) {
+//            System.out.println(doc.getDocumentElement().getChildNodes().item(i).toString());
+//        }
+        loadElements(doc.getDocumentElement().getChildNodes());
 
 //        for(GameObject gameObject : gameObjects) {
 //            System.out.println(gameObject);
