@@ -43,7 +43,7 @@ public abstract class PlayableCharacter extends Character implements ControllerL
         if(axisCode == 0 || axisCode == 2){
             this.addPositionY(value);
         }
-        if(axisCode == 2 || axisCode == 3){
+        if(axisCode == 1 || axisCode == 3){
             this.addPositionX(value);
         }
 
@@ -68,10 +68,6 @@ public abstract class PlayableCharacter extends Character implements ControllerL
     }
 
     public abstract void dishonestInteract();
-
-    public void honestInteract(){
-        System.out.println("Honest interaction");
-    }
 
     public abstract void useAbility();
 }

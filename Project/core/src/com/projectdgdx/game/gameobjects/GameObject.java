@@ -36,9 +36,12 @@ public abstract class GameObject {
 
     public void addPositionX(float x){
         this.position.x += x;
+        System.out.println("x: "+this.position.x);
     }
 
     public void addPositionY(float y){
         this.position.y += y;
+        System.out.println("y: "+this.position.y);
+
     }
 }
