@@ -17,6 +17,10 @@ import com.projectdgdx.game.renderer.BaseShader;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
+import com.badlogic.gdx.utils.Array;
+import com.projectdgdx.game.renderer.BaseShader;
+import com.projectdgdx.game.utils.AssetManager;
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.utils.MapParser;
@@ -26,8 +30,6 @@ import java.util.Random;
 public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
     private CameraInputController camController;
-    private ModelBatch modelBatch;
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Environment environment;
     public boolean loading;
 
@@ -35,7 +37,8 @@ public class ProjectD extends ApplicationAdapter {
     public RenderContext renderContext;
     public Shader shader;
     public Model model;
-
+    public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public ModelBatch modelBatch;
     public Renderable renderable;
 
     Random rand;
@@ -46,6 +49,13 @@ public class ProjectD extends ApplicationAdapter {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMap");
         rand = new Random();
+        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(2f, 100f, 150f);
+        cam.lookAt(0,0,0);
+        cam.near = 1f;
+        cam.far = 10000f;
+        cam.update();
+
 
         loadAssets();
         createEnvironment();
@@ -120,6 +130,8 @@ public class ProjectD extends ApplicationAdapter {
 
         shader = new BaseShader();
         shader.init();
+
+        modelBatch = new ModelBatch();
     }
 
     public void createEnvironment(){
@@ -153,16 +165,16 @@ public class ProjectD extends ApplicationAdapter {
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
-
         if(!loading)
             moveModel(instances.get(0));
 
         modelBatch.begin(cam);
-        for (ModelInstance instance : instances) {
+        for (ModelInstance instance : instances)
             modelBatch.render(instance, shader);
-        }
         modelBatch.end();
     }
+
+
 
     private void moveModel(ModelInstance instance){
 
