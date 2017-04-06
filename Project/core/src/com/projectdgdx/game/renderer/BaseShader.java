@@ -17,6 +17,10 @@ public class BaseShader implements Shader {
     Camera camera;
     RenderContext context;
 
+    //Uniforms
+    int u_projViewTrans;
+    int u_worldTrans;
+
     @Override
     public void init () {
         String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
@@ -24,6 +28,9 @@ public class BaseShader implements Shader {
         shader = new ShaderProgram(vert, frag);
         if (!shader.isCompiled())
             throw new GdxRuntimeException(shader.getLog());
+
+        u_projViewTrans = shader.getUniformLocation("u_projViewTrans");
+        u_worldTrans = shader.getUniformLocation("u_worldTrans");
     }
 
     @Override
