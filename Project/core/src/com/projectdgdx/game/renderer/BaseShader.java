@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
@@ -20,6 +21,7 @@ public class BaseShader implements Shader {
     //Uniforms
     int u_projViewTrans;
     int u_worldTrans;
+    int u_color;
 
     @Override
     public void init () {
@@ -31,6 +33,7 @@ public class BaseShader implements Shader {
 
         u_projViewTrans = shader.getUniformLocation("u_projViewTrans");
         u_worldTrans = shader.getUniformLocation("u_worldTrans");
+        u_color = shader.getUniformLocation("u_color");
     }
 
     @Override
@@ -51,6 +54,7 @@ public class BaseShader implements Shader {
     @Override
     public void render (Renderable renderable) {
         shader.setUniformMatrix("u_worldTrans", renderable.worldTransform);
+        shader.setUniformf(u_color, MathUtils.random(), MathUtils.random(), MathUtils.random());
         renderable.meshPart.render(shader);
     }
 
