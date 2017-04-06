@@ -13,51 +13,48 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
  * Created by konglobemeralt on 2017-04-05.
  */
 public class BaseShader implements Shader {
-    ShaderProgram program;
+    ShaderProgram shader;
     Camera camera;
-    com.badlogic.gdx.graphics.g3d.utils.RenderContext context;
+    RenderContext context;
 
     @Override
-    public void init() {
+    public void init () {
         String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
         String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
-        program = new ShaderProgram(vert, frag);
-        if (!program.isCompiled())
-            throw new GdxRuntimeException(program.getLog());
+        shader = new ShaderProgram(vert, frag);
+        if (!shader.isCompiled())
+            throw new GdxRuntimeException(shader.getLog());
     }
 
     @Override
-    public void dispose() {
-        program.dispose();
+    public void dispose () {
+        shader.dispose();
     }
 
     @Override
-    public void begin(Camera camera, RenderContext context) {
+    public void begin (Camera camera, RenderContext context) {
         this.camera = camera;
         this.context = context;
-        program.begin();
-        program.setUniformMatrix("u_projViewTrans", camera.combined);
+        shader.begin();
+        shader.setUniformMatrix("u_projViewTrans", camera.combined);
         context.setDepthTest(GL20.GL_LEQUAL);
         context.setCullFace(GL20.GL_BACK);
     }
 
     @Override
-    public void render(Renderable renderable) {
-        program.setUniformMatrix("u_worldTrans", renderable.worldTransform);
-        renderable.meshPart.render(program);
+    public void render (Renderable renderable) {
+        shader.setUniformMatrix("u_worldTrans", renderable.worldTransform);
+        renderable.meshPart.render(shader);
     }
 
     @Override
-    public void end() {
-        program.end();
-    }
-
+    public void end () {    }
     @Override
-    public int compareTo(Shader other) {
+    public int compareTo (Shader other) {
         return 0;
     }
     @Override
-    public boolean canRender(Renderable instance) {
+    public boolean canRender (Renderable instance) {
         return true;
     }
 }
