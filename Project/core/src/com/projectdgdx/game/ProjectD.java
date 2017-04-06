@@ -117,6 +117,9 @@ public class ProjectD extends ApplicationAdapter {
 
 
         loading = false;
+
+        shader = new BaseShader();
+        shader.init();
     }
 
     public void createEnvironment(){
