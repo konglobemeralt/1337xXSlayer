@@ -4,7 +4,9 @@ precision mediump float;
 
 varying vec2 v_texCoord0;
 
+uniform vec3 u_color;
+
 void main() {
-    vec4 colorTint = vec4(0.7, 0.1, 0.6, 1.0);
+    vec4 colorTint = vec4(u_color, 1.0);
     gl_FragColor = vec4(v_texCoord0, 0.0, 1.0) + colorTint;
 }
