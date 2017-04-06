@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.projectdgdx.game.renderer.BaseShader;
 import com.projectdgdx.game.utils.AssetManager;
 
 
@@ -45,9 +46,7 @@ public class ProjectD extends ApplicationAdapter {
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
-        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
-        shader = new DefaultShader(renderable, new DefaultShader.Config(vert, frag));
+        shader = new BaseShader();
         shader.init();
     }
 
