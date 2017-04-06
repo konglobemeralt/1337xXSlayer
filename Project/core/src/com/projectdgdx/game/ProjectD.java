@@ -14,12 +14,12 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
-import com.projectdgdx.game.renderer.BaseShader;
+import com.projectdgdx.game.renderer.baseShader;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.renderer.BaseShader;
+
 import com.projectdgdx.game.utils.AssetManager;
 import com.sun.xml.internal.xsom.impl.scd.Iterators;
 
@@ -64,7 +64,7 @@ public class ProjectD extends ApplicationAdapter {
         createEnvironment();
         createCamera();
 
-        shader = new BaseShader();
+        shader = new baseShader();
         shader.init();
 
         modelBatch = new ModelBatch();
@@ -135,7 +135,7 @@ public class ProjectD extends ApplicationAdapter {
 
         loading = false;
 
-        shader = new BaseShader();
+        shader = new baseShader();
 
         String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
         String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
@@ -172,7 +172,6 @@ public class ProjectD extends ApplicationAdapter {
 
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
