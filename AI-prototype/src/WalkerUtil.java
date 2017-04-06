@@ -124,6 +124,6 @@ public class WalkerUtil {
             }
         }
 
-       // model.addObstacle(new Obstacle();
+
     }
 }

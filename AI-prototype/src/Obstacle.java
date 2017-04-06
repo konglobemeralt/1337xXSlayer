@@ -19,6 +19,24 @@ public class Obstacle {
         return color;
     }
 
+    public int[] getXPositions(int doubleToIntFactor){
+        int[] xPos = new int[positions.size()];
+        int i=0;
+        for (Position p: positions){
+            xPos[i] = (int) (doubleToIntFactor*p.getX());
+        }
+        return xPos;
+    }
+
+    public int[] getYPositions(int doubleToIntFactor){
+        int[] yPos = new int[positions.size()];
+        int i=0;
+        for (Position p: positions){
+            yPos[i] = (int) (doubleToIntFactor*p.getY());
+        }
+        return yPos;
+    }
+
     private Color color = Color.GRAY;
 
     public Obstacle(Position[] pos){
@@ -37,11 +55,11 @@ public class Obstacle {
     }
 
     public Obstacle(Obstacle base, Position refence){
-        Position[] positionArray = new Position[base.getPositions().size()];
-        int i=0;
-        for (Position pos: base.getPositions()){
-            positionArray[i] = pos;
+
+        for (Position p: base.getPositions()){
+            positions.add(p);
         }
-        // TODO this(positionArray, base.getColor());
+        this.color = base.getColor();
+        this.referencePoint = refence;
     }
 }

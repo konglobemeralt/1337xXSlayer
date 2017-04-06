@@ -50,6 +50,7 @@ public class WalkerView extends Component implements ObserverOfWalkerModel{
     public void paint(Graphics g){
         paintWalkers(g);
         paintObstacles(g);
+        //fillObstacles(g);
         //paintNodes(g);
     }
 
@@ -77,7 +78,16 @@ public class WalkerView extends Component implements ObserverOfWalkerModel{
         g2.setStroke(new BasicStroke(1));
     }
 
-    private void paintNodes(Graphics g){
+    private void fillObstacles(Graphics g){
+        Graphics2D g2 = (Graphics2D) g;
+        for (Obstacle o: model.getObstacles()){
+            g2.setColor(o.getColor());
+            g2.fillPolygon(o.getXPositions(doubleToIntFactor), o.getYPositions(doubleToIntFactor), o.getPositions().size());
+        }
+
+    }
+
+    private void paintNodes(Graphics g){ //TODO fix
         g.setColor(Color.RED);
         for (WalkwayNode n: model.getNodes()){
             g.fillOval((int) (doubleToIntFactor*n.getPos().getX()-3), (int) (doubleToIntFactor*n.getPos().getY()-3),7 ,7);
