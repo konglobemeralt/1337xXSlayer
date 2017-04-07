@@ -48,8 +48,8 @@ public class ProjectD extends ApplicationAdapter {
         createEnvironment();
         createCamera();
 
-        PlayableCharacter s = new Supervisor(new Vector3(1,1,1), new Vector3(1,1,1),new Vector3(1,1,1), "Saboteur");
-        Controllers.getControllers().get(0).addListener(s);
+       /* PlayableCharacter s = new Supervisor(new Vector3(1,1,1), new Vector3(1,1,1),new Vector3(1,1,1), "Saboteur");
+        Controllers.getControllers().get(0).addListener(s);*/
 
     }
 
