@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
-import com.projectdgdx.game.renderer.baseShader;
+import com.projectdgdx.game.renderer.BaseShader;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
@@ -64,7 +64,7 @@ public class ProjectD extends ApplicationAdapter {
         createEnvironment();
         createCamera();
 
-        shader = new baseShader();
+        shader = new BaseShader();
         shader.init();
 
         modelBatch = new ModelBatch();
@@ -135,7 +135,7 @@ public class ProjectD extends ApplicationAdapter {
 
         loading = false;
 
-        shader = new baseShader();
+        shader = new BaseShader();
 
         String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
         String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
