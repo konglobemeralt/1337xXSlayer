@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
-import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
@@ -36,14 +35,16 @@ public class ProjectD extends ApplicationAdapter {
     private CameraInputController camController;
     public Environment environment;
     public boolean loading;
-    public Shader shader;
-
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public ModelBatch modelBatch;
 
-    public Renderable renderable;
-    public RenderContext renderContext;
 
+
+    public RenderContext renderContext;
+    public Shader shader;
+    public Model model;
+
+    public Renderable renderable;
     Random rand;
     Map map;
 
@@ -52,13 +53,6 @@ public class ProjectD extends ApplicationAdapter {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMap");
         rand = new Random();
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(2f, 100f, 150f);
-        cam.lookAt(0,0,0);
-        cam.near = 1f;
-        cam.far = 10000f;
-        cam.update();
-
 
         loadAssets();
         createEnvironment();
@@ -92,17 +86,12 @@ public class ProjectD extends ApplicationAdapter {
 
         NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
 
-        AssetManager.loadModel("robo.g3dj");
-
-        Model model = AssetManager.getRawModel("robo.g3dj");
-
         renderable = new Renderable();
         blockPart.setRenderable(renderable);
         renderable.environment = null;
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-
         instances.add(playerInstance);
 
 
@@ -136,10 +125,6 @@ public class ProjectD extends ApplicationAdapter {
         loading = false;
 
         shader = new BaseShader();
-
-        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
-        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
-        shader = new DefaultShader(renderable, new DefaultShader.Config(vert, frag));
 
         shader.init();
 
@@ -194,6 +179,7 @@ public class ProjectD extends ApplicationAdapter {
         modelBatch.begin(cam);
         for (ModelInstance instance : instances)
             modelBatch.render(instance, shader);
+
         modelBatch.end();
     }
 
