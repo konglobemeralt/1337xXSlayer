@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
@@ -23,6 +25,7 @@ public class BaseShader implements Shader {
     int u_projViewTrans;
     int u_worldTrans;
     int u_color;
+    int u_texture;
 
     @Override
     public void init () {
@@ -35,6 +38,7 @@ public class BaseShader implements Shader {
         u_projViewTrans = shader.getUniformLocation("u_projViewTrans");
         u_worldTrans = shader.getUniformLocation("u_worldTrans");
         u_color = shader.getUniformLocation("u_color");
+        u_texture = shader.getUniformLocation("u_texture");
     }
 
     @Override
@@ -54,15 +58,18 @@ public class BaseShader implements Shader {
 
     @Override
     public void render (Renderable renderable) {
+
         shader.setUniformMatrix("u_worldTrans", renderable.worldTransform);
         //shader.setUniformf(u_color, MathUtils.random(), MathUtils.random(), MathUtils.random());
-        Color color = (Color)renderable.userData;
-        shader.setUniformf(u_color, color.r, color.g, color.b);
+
+        Texture tex = ((TextureAttribute)renderable.material.get(TextureAttribute.Diffuse)).textureDescription.texture;
+
+        shader.setUniformi(u_texture, context.textureBinder.bind(tex));
         renderable.meshPart.render(shader);
     }
 
     @Override
-    public void end () {    }
+    public void end () {  shader.end();  }
     @Override
     public int compareTo (Shader other) {
         return 0;
