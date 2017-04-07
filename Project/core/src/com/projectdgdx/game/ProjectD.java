@@ -45,7 +45,9 @@ public class ProjectD extends ApplicationAdapter {
 
         for (int x = -500; x <= 500; x+=60) {
             for (int z = -500; z<=500; z+=60) {
-                instances.add(new ModelInstance(model, x, 0, z));
+                ModelInstance instance = new ModelInstance(model, x, 0, z);
+                instance.userData = new Color((x+5f)/10f, (z+5f)/10f, 0, 1);
+                instances.add(instance);
             }
         }
 
