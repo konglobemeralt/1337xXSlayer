@@ -72,7 +72,6 @@ public class ProjectD extends ApplicationAdapter {
         AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
         AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
-
         ModelInstance playerInstance;
         playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
         playerInstance.transform.setToTranslation(0, 0, 0);
