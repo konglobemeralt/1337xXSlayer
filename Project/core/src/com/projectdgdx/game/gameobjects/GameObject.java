@@ -33,4 +33,13 @@ public abstract class GameObject {
     public String getId() {
         return id;
     }
+
+    public void addPositionX(float x){
+        this.position.x += x;
+    }
+
+    public void addPositionY(float y){
+        this.position.y += y;
+    }
+
 }
