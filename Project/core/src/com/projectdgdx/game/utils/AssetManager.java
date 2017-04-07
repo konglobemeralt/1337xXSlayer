@@ -61,8 +61,6 @@ public class AssetManager {
         if(!checkIfLoaded(modelString)){
             loadModel(modelString);
         }
-
-
         Model model = rawAssets.get("models/" + modelString, Model.class);
         return model;
     }

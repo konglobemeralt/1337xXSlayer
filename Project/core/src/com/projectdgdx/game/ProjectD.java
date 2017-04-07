@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
-import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
@@ -18,31 +17,26 @@ import com.projectdgdx.game.renderer.BaseShader;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
-import com.badlogic.gdx.utils.Array;
-
-import com.projectdgdx.game.utils.AssetManager;
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.utils.MapParser;
 
 import java.util.Random;
 
-import com.projectdgdx.game.utils.AssetManager;
-
-
 public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
     private CameraInputController camController;
+    private ModelBatch modelBatch;
+    public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Environment environment;
     public boolean loading;
-    public Shader shader;
 
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
-    public ModelBatch modelBatch;
+
+    public RenderContext renderContext;
+    public Shader shader;
+    public Model model;
 
     public Renderable renderable;
-    public RenderContext renderContext;
 
     Random rand;
     Map map;
@@ -52,13 +46,6 @@ public class ProjectD extends ApplicationAdapter {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMap");
         rand = new Random();
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(2f, 100f, 150f);
-        cam.lookAt(0,0,0);
-        cam.near = 1f;
-        cam.far = 10000f;
-        cam.update();
-
 
         loadAssets();
         createEnvironment();
@@ -85,6 +72,7 @@ public class ProjectD extends ApplicationAdapter {
         AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
         AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
+
         ModelInstance playerInstance;
         playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
         playerInstance.transform.setToTranslation(0, 0, 0);
@@ -92,17 +80,12 @@ public class ProjectD extends ApplicationAdapter {
 
         NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
 
-        AssetManager.loadModel("robo.g3dj");
-
-        Model model = AssetManager.getRawModel("robo.g3dj");
-
         renderable = new Renderable();
         blockPart.setRenderable(renderable);
         renderable.environment = null;
         renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-
         instances.add(playerInstance);
 
 
@@ -134,16 +117,6 @@ public class ProjectD extends ApplicationAdapter {
 
 
         loading = false;
-
-        shader = new BaseShader();
-
-        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
-        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
-        shader = new DefaultShader(renderable, new DefaultShader.Config(vert, frag));
-
-        shader.init();
-
-        modelBatch = new ModelBatch();
     }
 
     public void createEnvironment(){
@@ -172,31 +145,18 @@ public class ProjectD extends ApplicationAdapter {
 
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-                (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
-        //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
-        renderContext.begin();
-        shader.begin(cam, renderContext);
-        shader.render(renderable);
-        shader.end();
-        renderContext.end();
-
-
-
-        if(!loading) {
+        if(!loading)
             moveModel(instances.get(0));
-        }
-
 
         modelBatch.begin(cam);
-        for (ModelInstance instance : instances)
+        for (ModelInstance instance : instances) {
             modelBatch.render(instance, shader);
+        }
         modelBatch.end();
     }
-
 
     private void moveModel(ModelInstance instance){
 
