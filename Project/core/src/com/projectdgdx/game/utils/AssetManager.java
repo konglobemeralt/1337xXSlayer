@@ -30,16 +30,16 @@ public class AssetManager {
     }
 
     public static void loadModel(String model){
-        rawAssets.load(model, Model.class);
+        rawAssets.load("models/" + model, Model.class);
     }
 
     public static void loadTexture(String texture){
-        rawAssets.load(texture, Texture.class, param);
+        rawAssets.load("textures/" + texture, Texture.class, param);
     }
 
     public static void setTextureToModel(String textureToSet, String modelToChange){
-        Model model = rawAssets.get(modelToChange, Model.class);
-        Texture newModelTexture = new Texture(Gdx.files.internal(textureToSet));
+        Model model = rawAssets.get("models/" + modelToChange, Model.class);
+        Texture newModelTexture = new Texture(Gdx.files.internal("textures/" + textureToSet));
 
         //In the case that we use complex with a number of nodes this will obviously need to be updated to change
         // a specific node instead of the root node 0.
@@ -51,7 +51,7 @@ public class AssetManager {
             loadModel(modelString);
         }
 
-        Model model = rawAssets.get(modelString, Model.class);
+        Model model = rawAssets.get("models/" + modelString, Model.class);
         ModelInstance modelInstance = new ModelInstance(model);
         return modelInstance;
     }
