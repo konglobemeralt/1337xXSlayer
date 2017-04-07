@@ -2,6 +2,7 @@ package com.projectdgdx.game.renderer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
@@ -54,7 +55,9 @@ public class BaseShader implements Shader {
     @Override
     public void render (Renderable renderable) {
         shader.setUniformMatrix("u_worldTrans", renderable.worldTransform);
-        shader.setUniformf(u_color, MathUtils.random(), MathUtils.random(), MathUtils.random());
+        //shader.setUniformf(u_color, MathUtils.random(), MathUtils.random(), MathUtils.random());
+        Color color = (Color)renderable.userData;
+        shader.setUniformf(u_color, color.r, color.g, color.b);
         renderable.meshPart.render(shader);
     }
 
