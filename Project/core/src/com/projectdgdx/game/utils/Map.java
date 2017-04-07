@@ -8,9 +8,9 @@ import java.util.List;
  * Created by Hampus on 2017-03-24.
  */
 public abstract class Map {
-    int gameTime = 300;
-    int playerSpeed = 1;
-    List<GameObject> gameObjects;
+    private int gameTime = 300;
+    private int playerSpeed = 1;
+    private List<GameObject> gameObjects;
 
 
     /**
@@ -30,5 +30,6 @@ public abstract class Map {
     public List<GameObject> getGameObjects() {
         return gameObjects;
     }
+
 
 }
