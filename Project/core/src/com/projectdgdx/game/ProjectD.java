@@ -125,6 +125,7 @@ public class ProjectD extends ApplicationAdapter {
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
     }
 
+
     public void createCamera(){
         cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(0f, 0f, 3f);
