@@ -67,7 +67,7 @@ public class ProjectD extends ApplicationAdapter {
         AssetManager.loadModel("robo.g3dj");
         AssetManager.loadModel("machine.g3dj");
         AssetManager.loadModel("ship.g3db");
-        AssetManager.loadModel("walking_3.g3db");
+        AssetManager.loadModel("roboAnim1.g3dj");
 
         loading = true;
     }
@@ -75,6 +75,7 @@ public class ProjectD extends ApplicationAdapter {
     private void doneLoading() {
 
         AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
+        AssetManager.setTextureToModel("copper.jpg", "roboAnim1.g3dj");
         AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
         ModelInstance playerInstance;
@@ -82,12 +83,11 @@ public class ProjectD extends ApplicationAdapter {
         playerInstance.transform.setToTranslation(0, 0, 0);
         playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
 
-        NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
-
-        renderable = new Renderable();
-        blockPart.setRenderable(renderable);
-        renderable.environment = null;
-        renderable.worldTransform.idt();
+       // NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
+       // renderable = new Renderable();
+       // blockPart.setRenderable(renderable);
+       // renderable.environment = null;
+       // renderable.worldTransform.idt();
 
         renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
         instances.add(playerInstance);
@@ -118,13 +118,13 @@ public class ProjectD extends ApplicationAdapter {
             instances.add(npcInstance);
         }
 
-        animatedInstance = new ModelInstance(AssetManager.getModel("walking_3.g3db"));
+        animatedInstance = new ModelInstance(AssetManager.getModel("roboAnim1.g3dj"));
         animatedInstance.transform.translate(5f, 0, 5f);
-        animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
+        //animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
 
 
         animController = new AnimationController(animatedInstance);
-        animController.setAnimation("mixamo.com", -1, new AnimationController.AnimationListener() {
+        animController.setAnimation("Take 001", -1, new AnimationController.AnimationListener() {
             @Override
             public void onEnd(AnimationController.AnimationDesc animation) {
             }
@@ -134,6 +134,7 @@ public class ProjectD extends ApplicationAdapter {
                 Gdx.app.log("INFO","Animation Ended");
             }
         });
+
 
 
         loading = false;

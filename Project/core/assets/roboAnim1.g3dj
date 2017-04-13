@@ -1130,70 +1130,127 @@
 	], 
 	"materials": [
 		{
-			"id": "Chrome", 
+			"id": "Chrome",
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
 			"diffuse": [ 0.125490,  0.137255,  0.160784], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000, 
+			"opacity":  1.000000,
 			"specular": [ 0.200000,  0.200000,  0.200000], 
-			"shininess":  50.000000
+			"shininess":  50.000000,
+			"textures": [
+            				{
+            					"id": "Chrome",
+            					"filename": "Copper.jpg",
+            					"type": "DIFFUSE"
+            				},
+            			]
 		}, 
 		{
-			"id": "Default_Material", 
+			"id": "Default_Material",
 			"ambient": [ 0.500000,  0.500000,  0.500000], 
 			"diffuse": [ 0.500000,  0.500000,  0.500000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000
+			"opacity":  1.000000
+						"textures": [
+                        				{
+                        					"id": "Chrome",
+                        					"filename": "Copper.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
 		}, 
 		{
-			"id": "Dents Rough Overlay Procedural", 
+			"id": "Dents Rough Overlay Procedural",
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
 			"diffuse": [ 1.000000,  1.000000,  1.000000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000
+			"opacity":  1.000000
+						"textures": [
+                        				{
+                        					"id": "Chrome",
+                        					"filename": "Copper.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
 		}, 
 		{
 			"id": "Grease Overlay Procedural", 
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
 			"diffuse": [ 1.000000,  1.000000,  1.000000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000, 
+			"opacity":  1.000000,
 			"specular": [ 0.250000,  0.250000,  0.250000], 
 			"shininess":  2.000000
+						"textures": [
+                        				{
+                        					"id": "Chrome",
+                        					"filename": "Copper.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
 		}, 
 		{
 			"id": "Mat", 
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
 			"diffuse": [ 0.800000,  0.800000,  0.800000], 
 			"emissive": [ 0.585124,  0.800331,  1.200000], 
-			"opacity":  0.000000, 
+			"opacity":  1.000000,
 			"specular": [ 0.200000,  0.200000,  0.200000], 
 			"shininess":  50.000000
+						"textures": [
+                        				{
+                        					"id": "Chrome",
+                        					"filename": "Copper.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
+
 		}, 
 		{
 			"id": "Metal Dirty", 
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
 			"diffuse": [ 0.000000,  0.000000,  0.000000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000, 
+			"opacity":  1.000000,
 			"specular": [ 0.000000,  0.000000,  0.000000], 
 			"shininess":  20.000000
+						"textures": [
+                        				{
+                        					"id": "Metal",
+                        					"filename": "metal.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
 		}, 
 		{
 			"id": "Rust Overlay Procedural", 
-			"ambient": [ 0.000000,  0.000000,  0.000000], 
+			"ambient": [ 1.000000,  1.000000,  1.000000],
 			"diffuse": [ 0.800000,  0.800000,  0.800000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000, 
+			"opacity":  1.000000,
 			"specular": [ 0.100000,  0.100000,  0.100000], 
 			"shininess":  75.000000
+						"textures": [
+                        				{
+                        					"id": "Chrome",
+                        					"filename": "Copper.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
 		}, 
 		{
 			"id": "Scratches_003", 
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
 			"diffuse": [ 0.268817,  0.210785,  0.169334], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  0.000000
+			"opacity":  1.000000
+						"textures": [
+                        				{
+                        					"id": "Chrome",
+                        					"filename": "Copper.jpg",
+                        					"type": "DIFFUSE"
+                        				},
+                        			]
 		}
 	], 
 	"nodes": [
