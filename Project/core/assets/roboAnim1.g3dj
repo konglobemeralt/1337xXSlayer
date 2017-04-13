@@ -1131,16 +1131,16 @@
 	"materials": [
 		{
 			"id": "Chrome",
-			"ambient": [ 0.000000,  0.000000,  0.000000], 
+			"ambient": [ 1.000000,  1.000000,  1.000000],
 			"diffuse": [ 0.125490,  0.137255,  0.160784], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
 			"opacity":  1.000000,
-			"specular": [ 0.200000,  0.200000,  0.200000], 
+			"specular": [ 0.900000,  0.900000,  0.900000],
 			"shininess":  50.000000,
 			"textures": [
             				{
             					"id": "Chrome",
-            					"filename": "Copper.jpg",
+            					"filename": "metal.jpg",
             					"type": "DIFFUSE"
             				},
             			]
@@ -1162,7 +1162,7 @@
 		{
 			"id": "Dents Rough Overlay Procedural",
 			"ambient": [ 0.000000,  0.000000,  0.000000], 
-			"diffuse": [ 1.000000,  1.000000,  1.000000], 
+			"diffuse": [ 1.000000,  1.000000,  1.000000],
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
 			"opacity":  1.000000
 						"textures": [
@@ -1179,12 +1179,12 @@
 			"diffuse": [ 1.000000,  1.000000,  1.000000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
 			"opacity":  1.000000,
-			"specular": [ 0.250000,  0.250000,  0.250000], 
+			"specular": [ 0.90000,  0.90000,  0.90000],
 			"shininess":  2.000000
 						"textures": [
                         				{
                         					"id": "Chrome",
-                        					"filename": "Copper.jpg",
+                        					"filename": "metal.jpg",
                         					"type": "DIFFUSE"
                         				},
                         			]
@@ -1195,7 +1195,7 @@
 			"diffuse": [ 0.800000,  0.800000,  0.800000], 
 			"emissive": [ 0.585124,  0.800331,  1.200000], 
 			"opacity":  1.000000,
-			"specular": [ 0.200000,  0.200000,  0.200000], 
+			"specular": [ 0.900000,  0.900000,  0.900000],
 			"shininess":  50.000000
 						"textures": [
                         				{
@@ -1228,12 +1228,12 @@
 			"diffuse": [ 0.800000,  0.800000,  0.800000], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
 			"opacity":  1.000000,
-			"specular": [ 0.100000,  0.100000,  0.100000], 
+			"specular": [ 0.900000,  0.900000,  0.900000],
 			"shininess":  75.000000
 						"textures": [
                         				{
                         					"id": "Chrome",
-                        					"filename": "Copper.jpg",
+                        					"filename": "metal.jpg",
                         					"type": "DIFFUSE"
                         				},
                         			]
@@ -1247,7 +1247,7 @@
 						"textures": [
                         				{
                         					"id": "Chrome",
-                        					"filename": "Copper.jpg",
+                        					"filename": "metal.jpg",
                         					"type": "DIFFUSE"
                         				},
                         			]
@@ -1281,7 +1281,7 @@
 				}, 
 				{
 					"meshpartid": "shape1_part7", 
-					"materialid": "Metal Dirty", 
+					"materialid": "Rust Overlay Procedural",
 					"bones": [
 						{
 							"node": "joint11", 
@@ -1330,7 +1330,7 @@
 				}, 
 				{
 					"meshpartid": "shape1_part6", 
-					"materialid": "Grease Overlay Procedural", 
+					"materialid": "Grease Overlay Procedural",
 					"bones": [
 						{
 							"node": "joint7", 
@@ -1437,7 +1437,7 @@
 				}, 
 				{
 					"meshpartid": "shape1_part1", 
-					"materialid": "Default_Material", 
+					"materialid": "Mat",
 					"bones": [
 						{
 							"node": "joint2", 

@@ -78,10 +78,10 @@ public class ProjectD extends ApplicationAdapter {
         AssetManager.setTextureToModel("copper.jpg", "roboAnim1.g3dj");
         AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
-        ModelInstance playerInstance;
-        playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
-        playerInstance.transform.setToTranslation(0, 0, 0);
-        playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
+       //ModelInstance playerInstance;
+       //playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
+       //playerInstance.transform.setToTranslation(0, 0, 0);
+       //playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
 
        // NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
        // renderable = new Renderable();
@@ -89,8 +89,8 @@ public class ProjectD extends ApplicationAdapter {
        // renderable.environment = null;
        // renderable.worldTransform.idt();
 
-        renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-        instances.add(playerInstance);
+       //renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
+       //instances.add(playerInstance);
 
 
         for (int x = 0; x < 150; x += 1) {
@@ -119,7 +119,7 @@ public class ProjectD extends ApplicationAdapter {
         }
 
         animatedInstance = new ModelInstance(AssetManager.getModel("roboAnim1.g3dj"));
-        animatedInstance.transform.translate(5f, 0, 5f);
+        animatedInstance.transform.rotate(Vector3.Y, 90);
         //animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
 
 
@@ -176,7 +176,7 @@ public class ProjectD extends ApplicationAdapter {
         //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
         if(!loading)
-            moveModel(instances.get(0));
+            moveModel(animatedInstance);
 
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
