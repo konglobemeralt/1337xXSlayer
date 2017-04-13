@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
@@ -34,7 +35,10 @@ public class ProjectD extends ApplicationAdapter {
 
     public RenderContext renderContext;
     public Shader shader;
-    public Model model;
+
+    private Model animatedModel;
+    private ModelInstance animatedInstance;
+    private AnimationController animController;
 
     public Renderable renderable;
 
@@ -63,6 +67,7 @@ public class ProjectD extends ApplicationAdapter {
         AssetManager.loadModel("robo.g3dj");
         AssetManager.loadModel("machine.g3dj");
         AssetManager.loadModel("ship.g3db");
+        AssetManager.loadModel("walking_3.g3db");
 
         loading = true;
     }
@@ -113,6 +118,22 @@ public class ProjectD extends ApplicationAdapter {
             instances.add(npcInstance);
         }
 
+        animatedInstance = new ModelInstance(AssetManager.getModel("walking_3.g3db"));
+        animatedInstance.transform.translate(5f, 0, 5f);
+        animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
+
+
+        animController = new AnimationController(animatedInstance);
+        animController.setAnimation("mixamo.com", -1, new AnimationController.AnimationListener() {
+            @Override
+            public void onEnd(AnimationController.AnimationDesc animation) {
+            }
+
+            @Override
+            public void onLoop(AnimationController.AnimationDesc animation) {
+                Gdx.app.log("INFO","Animation Ended");
+            }
+        });
 
 
         loading = false;
@@ -145,13 +166,13 @@ public class ProjectD extends ApplicationAdapter {
             doneLoading();
         cam.update();
 
+        animController.update(Gdx.graphics.getDeltaTime());
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
-
 
         if(!loading)
             moveModel(instances.get(0));
@@ -160,6 +181,8 @@ public class ProjectD extends ApplicationAdapter {
         for (ModelInstance instance : instances) {
             modelBatch.render(instance, shader);
         }
+        modelBatch.render(animatedInstance);
+
         modelBatch.end();
     }
 
