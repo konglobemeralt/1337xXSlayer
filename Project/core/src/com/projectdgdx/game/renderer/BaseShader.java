@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /**
@@ -27,6 +28,8 @@ public class BaseShader implements Shader {
     int u_worldTrans;
     int u_color;
     int u_texture;
+    int[] u_bones = new int [3];
+
 
     @Override
     public void init () {
@@ -40,6 +43,11 @@ public class BaseShader implements Shader {
         u_worldTrans = shader.getUniformLocation("u_worldTrans");
         u_color = shader.getUniformLocation("u_color");
         u_texture = shader.getUniformLocation("u_texture");
+
+        for(int i = 0; i< 3; i++){
+            u_bones[i] = shader.getUniformLocation("u_bones[" + i +"]");
+        }
+
     }
 
     @Override
@@ -66,7 +74,23 @@ public class BaseShader implements Shader {
         Texture tex = ((TextureAttribute)renderable.material.get(TextureAttribute.Diffuse)).textureDescription.texture;
 
         shader.setUniformi(u_texture, context.textureBinder.bind(tex));
+        float[] bones = new float[renderable.bones.length];
+
+        Matrix4 idtMatrix = new Matrix4().idt(); //Identity matrix
+
+        for (int i = 0; i < bones.length; i++) {
+            bones[i] = idtMatrix.val[i%16];
+        }
+
+        for (int i = 0; i < bones.length; i++) {
+            final int idx = i/16;
+            bones[i] = (renderable.bones == null || idx >= renderable.bones.length || renderable.bones[idx] == null) ?
+                    idtMatrix.val[i%16] : renderable.bones[idx].val[i%16];
+        }
+
+        shader.setUniformMatrix4fv("u_bones", bones, 0, renderable.bones.length); //Nor is the replacement of "u_bones" to u_bones (program.getUniformLocation("u_bones")) solving the issue.
         renderable.meshPart.render(shader);
+
     }
 
     @Override

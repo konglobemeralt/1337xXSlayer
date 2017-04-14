@@ -180,9 +180,9 @@ public class ProjectD extends ApplicationAdapter {
 
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
-            modelBatch.render(instance, shader);
+            modelBatch.render(instance);
         }
-        modelBatch.render(animatedInstance);
+        modelBatch.render(animatedInstance, shader);
 
         modelBatch.end();
     }
