@@ -65,7 +65,7 @@ public class ProjectD extends ApplicationAdapter {
         modelBatch = new ModelBatch();
         //model
         AssetManager.loadModel("robo.g3dj");
-        AssetManager.loadModel("machine.g3dj");
+        AssetManager.loadModel("machineAO.g3dj");
         AssetManager.loadModel("ship.g3db");
         AssetManager.loadModel("roboAnim1.g3dj");
 
@@ -76,7 +76,7 @@ public class ProjectD extends ApplicationAdapter {
 
         AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
         AssetManager.setTextureToModel("copper.jpg", "roboAnim1.g3dj");
-        AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
+       // AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
        //ModelInstance playerInstance;
        //playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
@@ -180,7 +180,7 @@ public class ProjectD extends ApplicationAdapter {
 
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
-            modelBatch.render(instance, shader);
+            modelBatch.render(instance);
         }
         modelBatch.render(animatedInstance);
 
