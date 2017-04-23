@@ -64,19 +64,15 @@ public class ProjectD extends ApplicationAdapter {
     public void loadAssets(){
         modelBatch = new ModelBatch();
         //model
-        AssetManager.loadModel("robo.g3dj");
+        AssetManager.loadModel("animRobot.g3dj");
         AssetManager.loadModel("machineAO.g3dj");
         AssetManager.loadModel("ship.g3db");
-        AssetManager.loadModel("roboAnim1.g3dj");
 
         loading = true;
     }
 
     private void doneLoading() {
 
-        AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
-        AssetManager.setTextureToModel("copper.jpg", "roboAnim1.g3dj");
-       // AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
        //ModelInstance playerInstance;
        //playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
@@ -118,13 +114,13 @@ public class ProjectD extends ApplicationAdapter {
             instances.add(npcInstance);
         }
 
-        animatedInstance = new ModelInstance(AssetManager.getModel("roboAnim1.g3dj"));
+        animatedInstance = new ModelInstance(AssetManager.getModel("animRobot.g3dj"));
         animatedInstance.transform.rotate(Vector3.Y, 90);
         //animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
 
 
         animController = new AnimationController(animatedInstance);
-        animController.setAnimation("Take 001", -1, new AnimationController.AnimationListener() {
+        animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
             @Override
             public void onEnd(AnimationController.AnimationDesc animation) {
             }
