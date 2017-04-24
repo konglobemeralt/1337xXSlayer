@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Map>
+	<Machine x="-4.109045" y="44.756908" z="0.000000" rotationX="1.570796" rotationY="-0.000000" rotationZ="0.000000" scaleX="1.000000" scaleY="1.000000" scaleZ="1.000000" tag="Machine"></Machine>
+	<Machine x="23.196972" y="0.000000" z="0.000000" rotationX="1.570796" rotationY="-0.000000" rotationZ="0.000000" scaleX="0.216717" scaleY="0.216717" scaleZ="0.216717" tag="Machine"></Machine>
+	<Machine x="18.775749" y="0.000000" z="85.384895" rotationX="1.570796" rotationY="-0.000000" rotationZ="0.000000" scaleX="2.701483" scaleY="2.701483" scaleZ="2.701483" tag="Machine" prop="1.0"></Machine>
+	<Worker x="0.00000" y="0.000000" z="0.00000" rotationX="0.0000" rotationY="-0.000000" rotationZ="0.000000" scaleX="2.701483" scaleY="2.701483" scaleZ="2.701483" tag="Worker" prop="1.0"></Worker>
+</Map>

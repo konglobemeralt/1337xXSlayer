@@ -49,7 +49,7 @@ public class ProjectD extends ApplicationAdapter {
     @Override
     public void create () {
         MapParser parser = new MapParser();
-        map = parser.parse("BasicMap");
+        map = parser.parse("BasicMapTest");
         rand = new Random();
 
         loadAssets();
