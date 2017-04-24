@@ -1,6 +1,8 @@
 import bpy
 import os
 
+from math import pi
+
 # Ensure all folders of the path exist
 #path = "C:/Blender_Export/"
 path = "C:/Users/Hampus/Desktop/1337xXSlayer/Project/core/assets/map/"
@@ -11,6 +13,13 @@ os.makedirs(path, exist_ok=True)
 luxElements = {}
 luxContainers = {}
 
+def Eu_degr(eu): # eu in radians
+    degx=((eu[0]/(pi+pi))*360.0)
+    degy=((eu[1]/(pi+pi))*360.0)
+    degz=((eu[2]/(pi+pi))*360.0)
+    eu_degr = [degx, degy, degz]
+
+    return eu_degr
 
 #Get tag string from element
 def getTag(obj):
@@ -43,7 +52,8 @@ with open(path + fileName, "w") as file:
             values += "<" + tag + " "
 
             #NOTE TODO z and y has changed values
-            position = "x=\"%f\" y=\"%f\" z=\"%f\" rotationX=\"%f\" rotationY=\"%f\" rotationZ=\"%f\"" % (ob.location.x, ob.location.z, ob.location.y, ob.rotation_euler.x, ob.rotation_euler.y, ob.rotation_euler.z)
+            rotation = Eu_degr(ob.rotation_euler)
+            position = "x=\"%f\" y=\"%f\" z=\"%f\" rotationX=\"%f\" rotationY=\"%f\" rotationZ=\"%f\"" % (ob.location.x, ob.location.z, ob.location.y, rotation[0], rotation[1], rotation[2])
             values += position
 
             scale = " scaleX=\"%f\" scaleY=\"%f\" scaleZ=\"%f\"" % (ob.scale.x, ob.scale.y, ob.scale.z)
