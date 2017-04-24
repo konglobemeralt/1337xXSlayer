@@ -54,12 +54,14 @@ public class Obstacle {
         return referencePoint;
     }
 
-    public Obstacle(Obstacle base, Position refence){
+    public Obstacle(Obstacle base, Position reference){ //TODO Cloned Obstacles lose edge
 
-        for (Position p: base.getPositions()){
+        this.positions = base.getPositions();
+
+        /*for (Position p: base.getPositions()){
             positions.add(p);
-        }
+        }*/
         this.color = base.getColor();
-        this.referencePoint = refence;
+        this.referencePoint = reference;
     }
 }

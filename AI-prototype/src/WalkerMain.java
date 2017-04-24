@@ -11,7 +11,7 @@ public class WalkerMain {
         WalkerController controller = new WalkerController(10, model);
 
         model.addListener(view);
-        WalkerUtil.setupMapOne(model);
+        WalkerUtil.setupMapTwo(model);
 
         controller.runGameLoop();
     }
