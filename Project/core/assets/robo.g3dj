@@ -3164,14 +3164,14 @@
 	], 
 	"nodes": [
 		{
-			"id": "robo_root", 
+			"id": "robo_root",
 			"children": [
 				{
-					"id": "Cylinder_6", 
+					"id": "Cylinder_6",
 					"parts": [
 						{
-							"meshpartid": "shape1_part1", 
-							"materialid": "Cylinder_6Mat", 
+							"meshpartid": "shape1_part1",
+							"materialid": "Cylinder_6Mat",
 							"uvMapping": [[]]
 						}
 					]

@@ -4,14 +4,17 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.model.NodePart;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
+import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
+import com.projectdgdx.game.renderer.BaseShader;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
@@ -29,7 +32,15 @@ public class ProjectD extends ApplicationAdapter {
     public Environment environment;
     public boolean loading;
 
-    public Texture roboTexture;
+
+    public RenderContext renderContext;
+    public Shader shader;
+
+    private Model animatedModel;
+    private ModelInstance animatedInstance;
+    private AnimationController animController;
+
+    public Renderable renderable;
 
     Random rand;
     Map map;
@@ -39,19 +50,22 @@ public class ProjectD extends ApplicationAdapter {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMap");
         rand = new Random();
-        loadAssets();
 
+        loadAssets();
         createEnvironment();
         createCamera();
 
+        shader = new BaseShader();
+        shader.init();
 
+        modelBatch = new ModelBatch();
     }
 
     public void loadAssets(){
         modelBatch = new ModelBatch();
         //model
-        AssetManager.loadModel("robo.g3dj");
-        AssetManager.loadModel("machine.g3dj");
+        AssetManager.loadModel("animRobot.g3dj");
+        AssetManager.loadModel("machineAO.g3dj");
         AssetManager.loadModel("ship.g3db");
 
         loading = true;
@@ -59,17 +73,21 @@ public class ProjectD extends ApplicationAdapter {
 
     private void doneLoading() {
 
-        AssetManager.setTextureToModel("copper.jpg", "robo.g3dj");
-        AssetManager.setTextureToModel("metal.jpg", "machine.g3dj");
 
+       //ModelInstance playerInstance;
+       //playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
+       //playerInstance.transform.setToTranslation(0, 0, 0);
+       //playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
 
-        ModelInstance playerInstance;
-        playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
-        playerInstance.transform.setToTranslation(0, 0, 0);
-        playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
+       // NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
+       // renderable = new Renderable();
+       // blockPart.setRenderable(renderable);
+       // renderable.environment = null;
+       // renderable.worldTransform.idt();
 
+       //renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
+       //instances.add(playerInstance);
 
-        instances.add(playerInstance);
 
         for (int x = 0; x < 150; x += 1) {
             ModelInstance npcInstance;
@@ -96,9 +114,29 @@ public class ProjectD extends ApplicationAdapter {
             instances.add(npcInstance);
         }
 
+        animatedInstance = new ModelInstance(AssetManager.getModel("animRobot.g3dj"));
+        animatedInstance.transform.rotate(Vector3.Y, 90);
+        //animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
+
+
+        animController = new AnimationController(animatedInstance);
+        animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
+            @Override
+            public void onEnd(AnimationController.AnimationDesc animation) {
+            }
+
+            @Override
+            public void onLoop(AnimationController.AnimationDesc animation) {
+                Gdx.app.log("INFO","Animation Ended");
+            }
+        });
+
 
 
         loading = false;
+
+        shader = new BaseShader();
+        shader.init();
     }
 
     public void createEnvironment(){
@@ -106,6 +144,7 @@ public class ProjectD extends ApplicationAdapter {
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
     }
+
 
     public void createCamera(){
         cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -124,16 +163,23 @@ public class ProjectD extends ApplicationAdapter {
             doneLoading();
         cam.update();
 
+        animController.update(Gdx.graphics.getDeltaTime());
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
+                (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+        //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
         if(!loading)
-            moveModel(instances.get(0));
+            moveModel(animatedInstance);
 
         modelBatch.begin(cam);
-        modelBatch.render(instances, environment);
+        for (ModelInstance instance : instances) {
+            modelBatch.render(instance);
+        }
+        modelBatch.render(animatedInstance);
+
         modelBatch.end();
     }
 
