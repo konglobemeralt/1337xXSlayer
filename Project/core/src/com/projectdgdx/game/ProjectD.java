@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.DefaultTextureBinder;
-import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
+import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
 import com.projectdgdx.game.renderer.BaseShader;
@@ -25,20 +22,25 @@ import com.projectdgdx.game.utils.MapParser;
 import java.util.Random;
 
 public class ProjectD extends ApplicationAdapter {
+
+    private final float moveSpeed = 0.2f;
+
     private PerspectiveCamera cam;
     private CameraInputController camController;
     private ModelBatch modelBatch;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Array<AnimationController> animationControllers = new Array<AnimationController>();
+    private AnimationController animController;
+
     public Environment environment;
     public boolean loading;
-
+    private Model floor;
 
     public RenderContext renderContext;
     public Shader shader;
 
     private Model animatedModel;
     private ModelInstance animatedInstance;
-    private AnimationController animController;
 
     public Renderable renderable;
 
@@ -89,16 +91,6 @@ public class ProjectD extends ApplicationAdapter {
        //instances.add(playerInstance);
 
 
-        for (int x = 0; x < 150; x += 1) {
-            ModelInstance npcInstance;
-            npcInstance = new ModelInstance(AssetManager.getModel("ship.g3db"));
-            npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
-            npcInstance.transform.scale(2f, 2f, 2f);
-            npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
-
-            instances.add(npcInstance);
-        }
-
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
             System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
@@ -111,26 +103,29 @@ public class ProjectD extends ApplicationAdapter {
             npcInstance.transform.rotate(Vector3.Y, rotation.y);
             npcInstance.transform.rotate(Vector3.Z, rotation.z);
 
+            if(gameObject.getId() == "worker.basic") {
+                animController = new AnimationController(npcInstance);
+                animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
+                    @Override
+                    public void onEnd(AnimationController.AnimationDesc animation) {
+                    }
+
+                    @Override
+                    public void onLoop(AnimationController.AnimationDesc animation) {
+                        Gdx.app.log("INFO", "Animation Ended");
+                    }
+                });
+                animationControllers.add(animController);
+            }
             instances.add(npcInstance);
         }
 
-        animatedInstance = new ModelInstance(AssetManager.getModel("animRobot.g3dj"));
-        animatedInstance.transform.rotate(Vector3.Y, 90);
-        //animatedInstance.transform.scale(0.1f, 0.1f, 0.1f);
-
-
-        animController = new AnimationController(animatedInstance);
-        animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
-            @Override
-            public void onEnd(AnimationController.AnimationDesc animation) {
-            }
-
-            @Override
-            public void onLoop(AnimationController.AnimationDesc animation) {
-                Gdx.app.log("INFO","Animation Ended");
-            }
-        });
-
+        //Create a temp floor
+        ModelBuilder modelBuilder = new ModelBuilder();
+        floor = modelBuilder.createBox(500f, 1f, 500f,
+                new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        instances.add(new ModelInstance(floor));
 
 
         loading = false;
@@ -148,7 +143,7 @@ public class ProjectD extends ApplicationAdapter {
 
     public void createCamera(){
         cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(0f, 0f, 3f);
+        cam.position.set(0f, 5f, 3f);
         cam.lookAt(0f, 0f, 0f);
         cam.near = 0.01f;
         cam.far = 1000f;
@@ -172,13 +167,12 @@ public class ProjectD extends ApplicationAdapter {
         //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
         if(!loading)
-            moveModel(animatedInstance);
+            moveModel(instances.get(2));
 
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
             modelBatch.render(instance);
         }
-        modelBatch.render(animatedInstance);
 
         modelBatch.end();
     }
@@ -186,19 +180,19 @@ public class ProjectD extends ApplicationAdapter {
     private void moveModel(ModelInstance instance){
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            instance.transform.trn(1f, 0, 0);
+            instance.transform.trn(moveSpeed, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            instance.transform.trn(-1f, 0, 0);
+            instance.transform.trn(-moveSpeed, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            instance.transform.trn(0, 0, -1f);
+            instance.transform.trn(0, 0, -moveSpeed);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            instance.transform.trn(0, 0, 1f);
+            instance.transform.trn(0, 0, moveSpeed);
         }
 
 
