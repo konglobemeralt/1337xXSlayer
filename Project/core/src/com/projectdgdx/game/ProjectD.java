@@ -38,6 +38,7 @@ public class ProjectD extends ApplicationAdapter {
 
     private Model animatedModel;
     private ModelInstance animatedInstance;
+    private Array<AnimationController> animControllerList = new Array<>();
     private AnimationController animController;
 
     public Renderable renderable;
@@ -91,10 +92,28 @@ public class ProjectD extends ApplicationAdapter {
 
         for (int x = 0; x < 150; x += 1) {
             ModelInstance npcInstance;
-            npcInstance = new ModelInstance(AssetManager.getModel("ship.g3db"));
+            npcInstance = new ModelInstance(AssetManager.getModel("animRobot.g3dj"));
             npcInstance.transform.setToTranslation(rand.nextFloat() * (50 - -50) + -50, 0, rand.nextFloat() * (50 - -50) + -50);
             npcInstance.transform.scale(2f, 2f, 2f);
             npcInstance.transform.rotate(Vector3.Y, rand.nextFloat() * 360f);
+
+
+
+            animController = new AnimationController(npcInstance);
+            animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
+                @Override
+                public void onEnd(AnimationController.AnimationDesc animation) {
+                }
+
+                @Override
+                public void onLoop(AnimationController.AnimationDesc animation) {
+                    Gdx.app.log("INFO","Animation Ended");
+                }
+
+            });
+
+
+            animControllerList.add(animController);
 
             instances.add(npcInstance);
         }
@@ -163,6 +182,10 @@ public class ProjectD extends ApplicationAdapter {
             doneLoading();
         cam.update();
 
+        for(AnimationController instance : animControllerList){
+            instance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.1f);
+
+        }
         animController.update(Gdx.graphics.getDeltaTime());
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
