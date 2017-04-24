@@ -18,6 +18,22 @@ public abstract class GameObject {
         this.id = id;
     }
 
+    public void setPosition(Vector3 position) {
+        this.position = position;
+    }
+
+    public void setScale(Vector3 scale) {
+        this.scale = scale;
+    }
+
+    public void setRotation(Vector3 rotation) {
+        this.rotation = rotation;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Vector3 getPosition() {
         return position;
     }
@@ -33,4 +49,13 @@ public abstract class GameObject {
     public String getId() {
         return id;
     }
+
+    public void addPositionX(float x){
+        this.position.x += x;
+    }
+
+    public void addPositionY(float y){
+        this.position.y += y;
+    }
+
 }

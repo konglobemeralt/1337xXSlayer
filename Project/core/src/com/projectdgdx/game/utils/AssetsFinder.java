@@ -12,7 +12,7 @@ public class AssetsFinder {
 
     //Add all paths here
     static {
-        textureMap.put("machine.basic", new String[]{"machine.g3dj", "metal.jpg"});
+        textureMap.put("machine.basic", new String[]{"machineAOblend.g3dj", "metal.jpg"});
     }
 
     /**

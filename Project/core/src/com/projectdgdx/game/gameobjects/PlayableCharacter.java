@@ -9,4 +9,11 @@ public abstract class PlayableCharacter extends Character {
     public PlayableCharacter(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
         super(position, scale, rotation, id);
     }
+
+    public abstract void dishonestInteraction();
+
+    public void honestInteraction(){
+        System.out.println("Honest interaction");
+    }
+    public abstract void useAbility();
 }
