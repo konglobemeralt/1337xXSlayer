@@ -112,7 +112,7 @@ public class ProjectD extends ApplicationAdapter {
 
                     @Override
                     public void onLoop(AnimationController.AnimationDesc animation) {
-                        Gdx.app.log("INFO", "Animation Ended");
+                     //   Gdx.app.log("INFO", "Animation Ended");
                     }
                 });
                 animationControllers.add(animController);
@@ -143,7 +143,7 @@ public class ProjectD extends ApplicationAdapter {
 
     public void createCamera(){
         cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(0f, 5f, 3f);
+        cam.position.set(0f, 55f, 35f);
         cam.lookAt(0f, 0f, 0f);
         cam.near = 0.01f;
         cam.far = 1000f;
@@ -158,7 +158,10 @@ public class ProjectD extends ApplicationAdapter {
             doneLoading();
         cam.update();
 
-        animController.update(Gdx.graphics.getDeltaTime());
+        for(AnimationController controllerInstance: animationControllers){
+            controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
+        }
+
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
