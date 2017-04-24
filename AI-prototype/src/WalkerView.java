@@ -66,6 +66,7 @@ public class WalkerView extends Component implements ObserverOfWalkerModel{
         g2.setStroke(new BasicStroke(5));
         for (Obstacle o: model.getObstacles()){
             g2.setColor(o.getColor());
+            //g2.drawPolygon(o.getXPositions(doubleToIntFactor),o.getYPositions(doubleToIntFactor),o.getPositions().size()); //TODO might work better
             for (int i = 0; i < o.getPositions().size()-1; i++){
                 g2.drawLine((int) (doubleToIntFactor*(o.getPositions().get(i).getX() + o.getReferencePoint().getX())), (int) (doubleToIntFactor*(o.getPositions().get(i).getY() + o.getReferencePoint().getY())),
                         (int) (doubleToIntFactor*(o.getPositions().get(i+1).getX() + o.getReferencePoint().getX())), (int) (doubleToIntFactor*(o.getPositions().get(i+1).getY() + o.getReferencePoint().getY())));
@@ -73,12 +74,11 @@ public class WalkerView extends Component implements ObserverOfWalkerModel{
             }
             g.drawLine((int) (doubleToIntFactor*o.getPositions().get(0).getX()), (int) (doubleToIntFactor*o.getPositions().get(0).getY()),
                     (int) (doubleToIntFactor*o.getPositions().get(o.getPositions().size()-1).getX()), (int) (doubleToIntFactor*o.getPositions().get(o.getPositions().size()-1).getY()));
-
         }
         g2.setStroke(new BasicStroke(1));
     }
 
-    private void fillObstacles(Graphics g){
+    private void fillObstacles(Graphics g){ //TODO fix
         Graphics2D g2 = (Graphics2D) g;
         for (Obstacle o: model.getObstacles()){
             g2.setColor(o.getColor());
@@ -87,7 +87,7 @@ public class WalkerView extends Component implements ObserverOfWalkerModel{
 
     }
 
-    private void paintNodes(Graphics g){ //TODO fix
+    private void paintNodes(Graphics g){ //TODO fix maybe placed todo wronng?
         g.setColor(Color.RED);
         for (WalkwayNode n: model.getNodes()){
             g.fillOval((int) (doubleToIntFactor*n.getPos().getX()-3), (int) (doubleToIntFactor*n.getPos().getY()-3),7 ,7);
