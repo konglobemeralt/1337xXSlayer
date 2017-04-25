@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.graphics.g3d.utils.*;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.gameobjects.GameObject;
 import com.projectdgdx.game.renderer.BaseShader;
@@ -173,11 +174,11 @@ public class ProjectD extends ApplicationAdapter {
 
 
     public void createCamera(){
-        cam = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(0f, 55f, 35f);
+        cam = new PerspectiveCamera(25, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(110f, 120f, 135f);
         cam.lookAt(0f, 0f, 0f);
         cam.near = 0.01f;
-        cam.far = 1000f;
+        cam.far = 500f;
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
 
