@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Vector3;
@@ -28,11 +29,13 @@ public class ProjectD extends ApplicationAdapter {
     private PerspectiveCamera cam;
     private CameraInputController camController;
     private ModelBatch modelBatch;
+    private ModelBatch shadowBatch;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Array<AnimationController> animationControllers = new Array<AnimationController>();
     private AnimationController animController;
 
     public Environment environment;
+    DirectionalShadowLight shadowLight;
     public boolean loading;
     private Model floor;
 
@@ -65,6 +68,7 @@ public class ProjectD extends ApplicationAdapter {
 
     public void loadAssets(){
         modelBatch = new ModelBatch();
+        shadowBatch = new ModelBatch(new DepthShaderProvider());
         //model
         AssetManager.loadModel("animRobot.g3dj");
         AssetManager.loadModel("machineAO.g3dj");
@@ -123,7 +127,7 @@ public class ProjectD extends ApplicationAdapter {
         //Create a temp floor
         ModelBuilder modelBuilder = new ModelBuilder();
         floor = modelBuilder.createBox(500f, 1f, 500f,
-                new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+                new Material(ColorAttribute.createDiffuse(Color.WHITE)),
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         instances.add(new ModelInstance(floor));
 
@@ -137,7 +141,10 @@ public class ProjectD extends ApplicationAdapter {
     public void createEnvironment(){
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.8f, 0.8f, -1f, -.4f,
+                -.2f));
+        environment.shadowMap = shadowLight;
+
     }
 
 
@@ -158,6 +165,17 @@ public class ProjectD extends ApplicationAdapter {
             doneLoading();
         cam.update();
 
+        shadowLight.begin(Vector3.Zero, cam.direction);
+        shadowBatch.begin(shadowLight.getCamera());
+
+
+        for (ModelInstance instance : instances) {
+            shadowBatch.render(instance, environment);
+        }
+
+        shadowBatch.end();
+        shadowLight.end();
+
         for(AnimationController controllerInstance: animationControllers){
             controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
         }
@@ -174,7 +192,7 @@ public class ProjectD extends ApplicationAdapter {
 
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
-            modelBatch.render(instance);
+            modelBatch.render(instance, environment);
         }
 
         modelBatch.end();
