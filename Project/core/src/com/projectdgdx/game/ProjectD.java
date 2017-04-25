@@ -86,7 +86,6 @@ public class ProjectD extends ApplicationAdapter {
 
     private void doneLoading() {
 
-
        //ModelInstance playerInstance;
        //playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
        //playerInstance.transform.setToTranslation(0, 0, 0);
@@ -113,9 +112,17 @@ public class ProjectD extends ApplicationAdapter {
             npcInstance.transform.rotate(Vector3.Y, rotation.y);
             npcInstance.transform.rotate(Vector3.Z, rotation.z);
 
+            if(gameObject.getId() == "control.basic"){
+                environment.add(new PointLight().set(0.3f, 0.9f, 0.3f,
+                        gameObject.getPosition().x, 15f, gameObject.getPosition().z, 100f));}
+
 
 
             if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
+
+
+
+
                 animController = new AnimationController(npcInstance);
                 animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
                     @Override
@@ -148,13 +155,15 @@ public class ProjectD extends ApplicationAdapter {
 
     public void createEnvironment(){
         environment = new Environment();
-        //environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.8f, 0.9f, -1f, -.4f,
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.5f, 0.4f, 0.4f, 1f));
+        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.7f, 0.6f, -1f, -.4f,
                 -.2f));
         environment.shadowMap = shadowLight;
 
-        environment.add(new PointLight().set(0.3f, 0.9f, 0.3f,
-                10f, 15f, 0f, 100f));
+
+
+        environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
+                35, 15f, 45f, 100f));
        // for(int i =0; i < 10; i++){
        //     environment.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
        //             rand.nextFloat()*10, rand.nextFloat()*10, rand.nextFloat()*10, 0.4f));

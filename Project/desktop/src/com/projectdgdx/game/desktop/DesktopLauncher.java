@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.vSyncEnabled = false;
 		config.samples = 20;
+		config.foregroundFPS = 10000;
 		new LwjglApplication(new ProjectD(), config);
 	}
 }
