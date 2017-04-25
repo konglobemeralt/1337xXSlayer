@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Vector3;
@@ -23,6 +24,8 @@ import com.projectdgdx.game.utils.MapParser;
 import java.util.Random;
 
 public class ProjectD extends ApplicationAdapter {
+
+    private FPSLogger fps;
 
     private final float moveSpeed = 0.2f;
 
@@ -50,6 +53,8 @@ public class ProjectD extends ApplicationAdapter {
     Random rand;
     Map map;
 
+    private int playerIndex;
+
     @Override
     public void create () {
         MapParser parser = new MapParser();
@@ -64,6 +69,8 @@ public class ProjectD extends ApplicationAdapter {
         shader.init();
 
         modelBatch = new ModelBatch();
+
+        fps = new FPSLogger();
     }
 
     public void loadAssets(){
@@ -94,7 +101,6 @@ public class ProjectD extends ApplicationAdapter {
        //renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
        //instances.add(playerInstance);
 
-
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
             System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
@@ -107,7 +113,9 @@ public class ProjectD extends ApplicationAdapter {
             npcInstance.transform.rotate(Vector3.Y, rotation.y);
             npcInstance.transform.rotate(Vector3.Z, rotation.z);
 
-            if(gameObject.getId() == "worker.basic") {
+
+
+            if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
                 animController = new AnimationController(npcInstance);
                 animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
                     @Override
@@ -140,10 +148,17 @@ public class ProjectD extends ApplicationAdapter {
 
     public void createEnvironment(){
         environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.8f, 0.8f, -1f, -.4f,
+        //environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.8f, 0.9f, -1f, -.4f,
                 -.2f));
         environment.shadowMap = shadowLight;
+
+        environment.add(new PointLight().set(0.3f, 0.9f, 0.3f,
+                10f, 15f, 0f, 100f));
+       // for(int i =0; i < 10; i++){
+       //     environment.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
+       //             rand.nextFloat()*10, rand.nextFloat()*10, rand.nextFloat()*10, 0.4f));
+       // }
 
     }
 
@@ -161,6 +176,9 @@ public class ProjectD extends ApplicationAdapter {
 
 
     public void render () {
+
+        fps.log();
+
         if (loading && AssetManager.update())
             doneLoading();
         cam.update();
