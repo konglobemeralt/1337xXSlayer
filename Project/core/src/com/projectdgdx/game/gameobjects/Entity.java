@@ -9,4 +9,24 @@ public abstract class Entity extends GameObject {
     public Entity(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
         super(position, scale, rotation, id);
     }
+
+    /**
+     * Returns true if moving does not cause a collision.
+     * @return True if moving does not cause a collision.
+     */
+
+    protected abstract boolean notColiding(Vector3 v);
+
+    /**
+     * Changes the entity's position by translation by vector v.
+     * @param v The vector used for translation.
+     */
+
+    public void move(Vector3 v){
+        if (notColiding(v)){
+            this.addPositionX(v.x);
+            this.addPositionY(v.y);
+        }
+
+    }
 }
