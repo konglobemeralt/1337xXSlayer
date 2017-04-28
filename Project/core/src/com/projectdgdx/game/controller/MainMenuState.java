@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.projectdgdx.game.Config;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.utils.AssetManager;
@@ -27,8 +28,6 @@ public class InGameState implements GameState {
 
     private FPSLogger fps;
 
-    private final float moveSpeed = 0.2f;
-
     private PerspectiveCamera cam;
     private CameraInputController camController;
     private ModelBatch modelBatch;
@@ -41,46 +40,30 @@ public class InGameState implements GameState {
     DirectionalShadowLight shadowLight;
     public boolean loading;
     private Model floor;
-
-    public RenderContext renderContext;
     public Shader shader;
 
-    private Model animatedModel;
-    private ModelInstance animatedInstance;
-
-    public Renderable renderable;
 
     Random rand;
     Map map;
 
-    private int playerIndex;
+
 
     public void loadAssets(){
         modelBatch = new ModelBatch();
         shadowBatch = new ModelBatch(new DepthShaderProvider());
-        //model
-        AssetManager.loadModel("animRobot.g3dj");
-        AssetManager.loadModel("machineAO.g3dj");
-        AssetManager.loadModel("ship.g3db");
+
+        //Create a temp floor
+        ModelBuilder modelBuilder = new ModelBuilder();
+        floor = modelBuilder.createBox(500f, 1f, 500f,
+                new Material(ColorAttribute.createDiffuse(Color.WHITE)),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        instances.add(new ModelInstance(floor));
 
         loading = true;
     }
 
     private void doneLoading() {
 
-        //ModelInstance playerInstance;
-        //playerInstance = new ModelInstance(AssetManager.getModel("robo.g3dj"));
-        //playerInstance.transform.setToTranslation(0, 0, 0);
-        //playerInstance.transform.scale(0.2f, 0.2f, 0.2f);
-
-        // NodePart blockPart = playerInstance.getNode("robo_root").getChild(0).parts.get(0);
-        // renderable = new Renderable();
-        // blockPart.setRenderable(renderable);
-        // renderable.environment = null;
-        // renderable.worldTransform.idt();
-
-        //renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.WEIGHTED, 1));
-        //instances.add(playerInstance);
 
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
@@ -99,12 +82,7 @@ public class InGameState implements GameState {
                         gameObject.getPosition().x, 15f, gameObject.getPosition().z, 100f));}
 
 
-
             if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
-
-
-
-
                 animController = new AnimationController(npcInstance);
                 animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
                     @Override
@@ -121,12 +99,6 @@ public class InGameState implements GameState {
             instances.add(npcInstance);
         }
 
-        //Create a temp floor
-        ModelBuilder modelBuilder = new ModelBuilder();
-        floor = modelBuilder.createBox(500f, 1f, 500f,
-                new Material(ColorAttribute.createDiffuse(Color.WHITE)),
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        instances.add(new ModelInstance(floor));
 
 
         loading = false;
@@ -209,19 +181,19 @@ public class InGameState implements GameState {
     private void moveModel(ModelInstance instance){
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            instance.transform.trn(moveSpeed, 0, 0);
+            instance.transform.trn(Config.MOVE_SPEED, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            instance.transform.trn(-moveSpeed, 0, 0);
+            instance.transform.trn(-Config.MOVE_SPEED, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            instance.transform.trn(0, 0, -moveSpeed);
+            instance.transform.trn(0, 0, -Config.MOVE_SPEED);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            instance.transform.trn(0, 0, moveSpeed);
+            instance.transform.trn(0, 0, Config.MOVE_SPEED);
         }
 
 
