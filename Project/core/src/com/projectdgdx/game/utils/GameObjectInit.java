@@ -1,8 +1,7 @@
 package com.projectdgdx.game.utils;
 
 import com.badlogic.gdx.math.Vector3;
-import com.projectdgdx.game.gameobjects.GameObject;
-import com.projectdgdx.game.gameobjects.Machine;
+import com.projectdgdx.game.gameobjects.*;
 
 /**
  * Created by Hampus on 2017-03-26.
@@ -72,6 +71,16 @@ public class GameObjectInit {
         switch (type) {
             case "Machine":
                 return new Machine(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "machine.basic");
+            case "SpotControl":
+                return new SpotControl(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "control.basic");
+            case "Worker":
+                return new Worker(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "worker.basic");
+            case "Supervisor":
+                return new Supervisor(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "supervisor.basic");
+            case "Saboteur":
+                return new Worker(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "saboteur.basic");
+            case "Player":
+                return new Worker(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "player.basic");
             default:
                 System.out.println("TAG OF TYPE: " + type + " not supported");
                 return null;
