@@ -1,7 +1,8 @@
-package com.projectdgdx.game.utils;
+package test.com.projectdgdx.game.utils;
 
-import com.projectdgdx.game.gameobjects.GameObject;
-import com.projectdgdx.game.gameobjects.Machine;
+import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.Machine;
+import com.projectdgdx.game.utils.GameObjectInit;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

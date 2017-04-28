@@ -1,4 +1,4 @@
-package com.projectdgdx.game.gameobjects;
+package com.projectdgdx.game.model;
 
 import com.badlogic.gdx.math.Vector3;
 

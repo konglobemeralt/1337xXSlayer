@@ -1,7 +1,7 @@
 package com.projectdgdx.game.utils;
 
 import com.badlogic.gdx.math.Vector3;
-import com.projectdgdx.game.gameobjects.*;
+import com.projectdgdx.game.model.*;
 
 /**
  * Created by Hampus on 2017-03-26.
@@ -34,7 +34,7 @@ public class GameObjectInit {
      *
      * @param type Type of GameObject that the data should be converted into
      */
-    GameObjectInit(String type) {
+    public GameObjectInit(String type) {
         this.type = type;
     }
 
@@ -67,7 +67,7 @@ public class GameObjectInit {
      *
      * @return A GameObject that has the data within GameObjectInit
      */
-    GameObject convert() {
+    public GameObject convert() {
         switch (type) {
             case "Machine":
                 return new Machine(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "machine.basic");
@@ -87,7 +87,7 @@ public class GameObjectInit {
         }
     }
 
-    void changeValue(String key, String value) {
+    public void changeValue(String key, String value) {
         switch(key) {
             case "x":
                 x = Float.parseFloat(value);
