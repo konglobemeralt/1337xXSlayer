@@ -4,11 +4,13 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector3;
+import com.projectdgdx.game.model.InputModel;
 
 /**
- * Created by Eddie on 2017-04-25.
+ * Created by Eddie on 2017-04-28.
  */
-public class FindOut implements ControllerListener{
+public class XboxController extends InputController implements ControllerListener {
+
     @Override
     public void connected(Controller controller) {
 
@@ -21,7 +23,6 @@ public class FindOut implements ControllerListener{
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
-        System.out.println();
         return false;
     }
 
@@ -32,7 +33,6 @@ public class FindOut implements ControllerListener{
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        System.out.println(axisCode);
         return false;
     }
 
