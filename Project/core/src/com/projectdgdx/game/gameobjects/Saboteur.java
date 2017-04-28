@@ -11,12 +11,17 @@ public class Saboteur extends PlayableCharacter{
     }
 
     @Override
-    public void dishonestInteraction() {
+    public void dishonestInteract() {
 
     }
 
     @Override
     public void useAbility() {
 
+    }
+
+    @Override
+    public boolean isColliding(Vector3 vec) {
+        return false;
     }
 }
