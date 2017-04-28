@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.projectdgdx.game.gameobjects.GameObject;
+import com.projectdgdx.game.model.GameObject;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

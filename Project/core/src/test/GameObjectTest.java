@@ -1,8 +1,8 @@
 package test;
 
 import com.badlogic.gdx.math.Vector3;
-import com.projectdgdx.game.gameobjects.GameObject;
-import com.projectdgdx.game.gameobjects.Supervisor;
+import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.Supervisor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;

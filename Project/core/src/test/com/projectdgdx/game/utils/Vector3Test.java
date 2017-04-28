@@ -1,4 +1,5 @@
-package com.projectdgdx.game.utils;
+package test.com.projectdgdx.game.utils;
+import com.projectdgdx.game.utils.Vector3;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
