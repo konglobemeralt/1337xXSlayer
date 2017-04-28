@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.projectdgdx.game.Config;
+import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 
 import static com.badlogic.gdx.Gdx.gl20;
@@ -52,8 +54,7 @@ public class MainMenuState implements GameState {
         stage.draw();
 
         if(newGameButton.isPressed()){
-            projectD.setState(new InGameState());
-            projectD.getState().init(projectD);
+            projectD.setState(GameStates.INGAME);
         }
     }
 
