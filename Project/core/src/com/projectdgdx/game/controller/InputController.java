@@ -9,11 +9,11 @@ public abstract class InputController {
     final private String id = "";
     private InputModel inputModel;
 
-    public void setModel(){
-
+    public void setModel(InputModel newModel){
+        this.inputModel = newModel;
     }
 
-    public InputModel getmdoel(){
+    public InputModel getModel(){
         return inputModel;
     }
 
