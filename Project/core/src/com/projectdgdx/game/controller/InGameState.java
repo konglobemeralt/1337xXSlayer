@@ -235,17 +235,17 @@ public class InGameState implements GameState {
     private void handleInput() {
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             cam.translate(-Config.CAMERA_MOVE_SPEED, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             cam.translate(Config.CAMERA_MOVE_SPEED, 0, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            cam.translate(0, -Config.CAMERA_MOVE_SPEED, 0);
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            cam.translate(0, 0, -Config.CAMERA_MOVE_SPEED);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            cam.translate(0, Config.CAMERA_MOVE_SPEED, 0);
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            cam.translate(0, 0, Config.CAMERA_MOVE_SPEED);
         }
 
     }
