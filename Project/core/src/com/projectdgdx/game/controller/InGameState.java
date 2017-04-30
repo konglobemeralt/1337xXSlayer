@@ -84,7 +84,7 @@ public class InGameState implements GameState {
 
             if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
                 animController = new AnimationController(npcInstance);
-                animController.setAnimation("IdleAnim", -1, new AnimationController.AnimationListener() {
+                animController.setAnimation("Robot|IdleAnim", -1, new AnimationController.AnimationListener() {
                     @Override
                     public void onEnd(AnimationController.AnimationDesc animation) {
                     }

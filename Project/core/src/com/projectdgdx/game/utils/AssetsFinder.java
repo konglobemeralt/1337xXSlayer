@@ -12,12 +12,12 @@ public class AssetsFinder {
 
     //Add all paths here
     static {
-        textureMap.put("machine.basic", new String[]{"machineAOblend.g3dj", "metal.jpg"});
-        textureMap.put("control.basic", new String[]{"ControlBoardAO.g3db", "metal.jpg"});
-        textureMap.put("worker.basic", new String[]{"animRobot.g3dj", "metal.jpg"});
-        textureMap.put("supervisor.basic", new String[]{"animRobot.g3dj", "metal.jpg"});
-        textureMap.put("saboteur.basic", new String[]{"animRobot.g3dj", "metal.jpg"});
-        textureMap.put("player.basic", new String[]{"animRobot.g3dj", "metal.jpg"});
+        textureMap.put("machine.basic", new String[]{"MachineBasic.g3db", "metal.jpg"});
+        textureMap.put("control.basic", new String[]{"ControlBoard.g3db", "metal.jpg"});
+        textureMap.put("worker.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
+        textureMap.put("supervisor.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
+        textureMap.put("saboteur.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
+        textureMap.put("player.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
     }
 
     /**
