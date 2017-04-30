@@ -5,5 +5,6 @@ package com.projectdgdx.game;
  */
 public class Config {
 	static final boolean DEBUG = false;
-    public static final float MOVE_SPEED = 0.2f;
+    public static final float MOVE_SPEED = 0.05f;
+    public static final float CAMERA_MOVE_SPEED = 0.3f;
 }

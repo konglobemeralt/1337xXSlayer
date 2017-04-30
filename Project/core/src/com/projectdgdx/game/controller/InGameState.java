@@ -18,6 +18,7 @@ import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.utils.MapParser;
 import com.projectdgdx.game.view.BaseShader;
+import com.badlogic.gdx.ApplicationListener;
 
 import java.util.Random;
 
@@ -120,15 +121,20 @@ public class InGameState implements GameState {
         cam.far = 500f;
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
+        cam.update();
     }
 
     public void render () {
 
         fps.log();
 
+        handleInput();
+
         if (loading && AssetManager.update())
             doneLoading();
-        cam.update();
+
+
+
 
         for(AnimationController controllerInstance: animationControllers){
             controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
@@ -152,7 +158,6 @@ public class InGameState implements GameState {
         for (ModelInstance instance : instances) {
             modelBatch.render(instance, environment);
         }
-
         modelBatch.end();
     }
 
@@ -171,18 +176,22 @@ public class InGameState implements GameState {
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             instance.transform.trn(Config.MOVE_SPEED, 0, 0);
+            //cam.position.set(cam.position.x + Config.MOVE_SPEED, cam.position.y, cam.position.z);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             instance.transform.trn(-Config.MOVE_SPEED, 0, 0);
+            //cam.position.set(cam.position.x - Config.MOVE_SPEED, cam.position.y, cam.position.z);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             instance.transform.trn(0, 0, -Config.MOVE_SPEED);
+            //cam.position.set(cam.position.x, cam.position.y, cam.position.z -Config.MOVE_SPEED);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             instance.transform.trn(0, 0, Config.MOVE_SPEED);
+            //cam.position.set(cam.position.x, cam.position.y, cam.position.z +Config.MOVE_SPEED);
         }
 
 
@@ -199,8 +208,11 @@ public class InGameState implements GameState {
     }
 
     public void update(ProjectD projectD){
+        cam.update();
+        camController.update();
         render();
-        moveModel(this.instances.get(1));
+        moveModel(this.instances.get(3));
+
     }
 
     public void init(ProjectD projectD){
@@ -220,5 +232,21 @@ public class InGameState implements GameState {
         fps = new FPSLogger();
     }
 
+    private void handleInput() {
 
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            cam.translate(-Config.CAMERA_MOVE_SPEED, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            cam.translate(Config.CAMERA_MOVE_SPEED, 0, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            cam.translate(0, -Config.CAMERA_MOVE_SPEED, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            cam.translate(0, Config.CAMERA_MOVE_SPEED, 0);
+        }
+
+    }
 }
