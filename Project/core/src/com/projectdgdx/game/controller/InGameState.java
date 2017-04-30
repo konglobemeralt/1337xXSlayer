@@ -64,7 +64,6 @@ public class InGameState implements GameState {
 
     private void doneLoading() {
 
-
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
             System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
@@ -77,14 +76,9 @@ public class InGameState implements GameState {
             npcInstance.transform.rotate(Vector3.Y, rotation.y);
             npcInstance.transform.rotate(Vector3.Z, rotation.z);
 
-            if(gameObject.getId() == "control.basic"){
-                environment.add(new PointLight().set(0.3f, 0.9f, 0.3f,
-                        gameObject.getPosition().x, 15f, gameObject.getPosition().z, 100f));}
-
-
             if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
                 animController = new AnimationController(npcInstance);
-                animController.setAnimation("Robot|IdleAnim", -1, new AnimationController.AnimationListener() {
+                animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
                     @Override
                     public void onEnd(AnimationController.AnimationDesc animation) {
                     }
@@ -99,8 +93,6 @@ public class InGameState implements GameState {
             instances.add(npcInstance);
         }
 
-
-
         loading = false;
 
         shader = new BaseShader();
@@ -113,15 +105,9 @@ public class InGameState implements GameState {
         environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.7f, 0.6f, -1f, -.4f,
                 -.2f));
         environment.shadowMap = shadowLight;
-
-
-
         environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
                 35, 15f, 45f, 100f));
-        // for(int i =0; i < 10; i++){
-        //     environment.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
-        //             rand.nextFloat()*10, rand.nextFloat()*10, rand.nextFloat()*10, 0.4f));
-        // }
+
 
     }
 
@@ -134,7 +120,6 @@ public class InGameState implements GameState {
         cam.far = 500f;
         camController = new CameraInputController(cam);
         Gdx.input.setInputProcessor(camController);
-
     }
 
     public void render () {
@@ -145,37 +130,41 @@ public class InGameState implements GameState {
             doneLoading();
         cam.update();
 
-        shadowLight.begin(Vector3.Zero, cam.direction);
-        shadowBatch.begin(shadowLight.getCamera());
-
-
-        for (ModelInstance instance : instances) {
-            shadowBatch.render(instance, environment);
-        }
-
-        shadowBatch.end();
-        shadowLight.end();
-
         for(AnimationController controllerInstance: animationControllers){
             controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
         }
-
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
-        //renderable.meshPart.primitiveType = GL20.GL_LINE_STRIP;
 
         if(!loading)
             moveModel(instances.get(2));
 
+        renderShadowMap();
+        renderToScreen();
+
+    }
+
+    private void renderToScreen(){
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
             modelBatch.render(instance, environment);
         }
 
         modelBatch.end();
+    }
+
+    private void renderShadowMap(){
+        shadowLight.begin(Vector3.Zero, cam.direction);
+        shadowBatch.begin(shadowLight.getCamera());
+
+        for (ModelInstance instance : instances) {
+            shadowBatch.render(instance, environment);
+        }
+        shadowBatch.end();
+        shadowLight.end();
     }
 
     private void moveModel(ModelInstance instance){
