@@ -2,6 +2,7 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -18,7 +19,6 @@ import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.utils.MapParser;
 import com.projectdgdx.game.view.BaseShader;
-import com.badlogic.gdx.ApplicationListener;
 
 import java.util.Random;
 
@@ -28,9 +28,11 @@ import java.util.Random;
 public class InGameState implements GameState {
 
     private FPSLogger fps;
+    private InputMultiplexer multiplexer;
 
     private PerspectiveCamera cam;
     private CameraInputController camController;
+
     private ModelBatch modelBatch;
     private ModelBatch shadowBatch;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
@@ -46,7 +48,6 @@ public class InGameState implements GameState {
 
     Random rand;
     Map map;
-
 
 
     public void loadAssets(){
@@ -114,13 +115,17 @@ public class InGameState implements GameState {
 
 
     public void createCamera(){
-        cam = new PerspectiveCamera(25, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(110f, 120f, 135f);
         cam.lookAt(0f, 0f, 0f);
-        cam.near = 0.01f;
-        cam.far = 500f;
+        cam.near = Config.CAMERA_NEAR;
+        cam.far = Config.CAMERA_FAR;
         camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
+        camController.forwardTarget = true;
+
+        multiplexer.addProcessor(camController);// Make the stage consume events
+        Gdx.input.setInputProcessor(multiplexer);
+
         cam.update();
     }
 
@@ -128,13 +133,10 @@ public class InGameState implements GameState {
 
         fps.log();
 
-        handleInput();
-
         if (loading && AssetManager.update())
             doneLoading();
 
-
-
+        cam.update();
 
         for(AnimationController controllerInstance: animationControllers){
             controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
@@ -208,14 +210,15 @@ public class InGameState implements GameState {
     }
 
     public void update(ProjectD projectD){
-        cam.update();
-        camController.update();
+
         render();
         moveModel(this.instances.get(3));
 
     }
 
     public void init(ProjectD projectD){
+        this.multiplexer = projectD.getMultiplexer();
+
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
         rand = new Random();
@@ -227,26 +230,9 @@ public class InGameState implements GameState {
         shader = new BaseShader();
         shader.init();
 
-        modelBatch = new ModelBatch();
-
         fps = new FPSLogger();
     }
 
-    private void handleInput() {
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            cam.translate(-Config.CAMERA_MOVE_SPEED, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            cam.translate(Config.CAMERA_MOVE_SPEED, 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            cam.translate(0, 0, -Config.CAMERA_MOVE_SPEED);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            cam.translate(0, 0, Config.CAMERA_MOVE_SPEED);
-        }
-
-    }
 }

@@ -1,9 +1,6 @@
 package com.projectdgdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
@@ -34,6 +31,8 @@ public class ProjectD extends ApplicationAdapter {
     private GameState currentState;
     private List<InputController> inputController = new ArrayList();
 
+    private InputMultiplexer multiplexer;
+
     public GameState getState() {
         return currentState;
     }
@@ -57,10 +56,13 @@ public class ProjectD extends ApplicationAdapter {
     @Override
     public void create(){
 
+        multiplexer = new InputMultiplexer();
+
+        gameStates.put(GameStates.MAINMENU, new MainMenuState());
+        gameStates.get(GameStates.MAINMENU).init(this);
     	gameStates.put(GameStates.INGAME, new InGameState());
     	gameStates.get(GameStates.INGAME).init(this);
-    	gameStates.put(GameStates.MAINMENU, new MainMenuState());
-		gameStates.get(GameStates.MAINMENU).init(this);
+
 
         if(Config.DEBUG) {
         	this.setState(GameStates.INGAME);
@@ -86,6 +88,8 @@ public class ProjectD extends ApplicationAdapter {
         this.currentState.exit();
     }
 
-
+    public InputMultiplexer getMultiplexer() {
+        return multiplexer;
+    }
 
 }

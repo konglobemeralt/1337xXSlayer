@@ -1,6 +1,7 @@
 package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,7 @@ public class MainMenuState implements GameState {
     private Skin skin;
     private Stage stage;
     private TextButton newGameButton;
+    private InputMultiplexer multiplexer;
 
     private void createBasicSkin(){
         //Create a font
@@ -53,23 +55,28 @@ public class MainMenuState implements GameState {
         stage.draw();
 
         if(newGameButton.isPressed()){
+            this.exit();
             projectD.setState(GameStates.INGAME);
         }
     }
 
     @Override
     public void init(ProjectD projectD) {
+
         this.stage = new Stage();
-        Gdx.input.setInputProcessor(stage);// Make the stage consume events
 
         createBasicSkin();
         newGameButton = new TextButton("New game", skin); // Use the initialized skin
         newGameButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2);
         stage.addActor(newGameButton);
+
+        this.multiplexer = projectD.getMultiplexer();
+        multiplexer.addProcessor(stage);// Make the stage consume events
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
     public void exit() {
-
+        stage.dispose();
     }
 }
