@@ -22,6 +22,7 @@ public class MainMenuState implements GameState {
     private Skin skin;
     private Stage stage;
     private TextButton newGameButton;
+    private TextButton settingsButton;
     private InputMultiplexer multiplexer;
 
     private void createBasicSkin(){
@@ -58,6 +59,10 @@ public class MainMenuState implements GameState {
             this.exit();
             projectD.setState(GameStates.INGAME);
         }
+        else if(settingsButton.isPressed()){
+            this.exit();
+            projectD.setState(GameStates.SETTINGS);
+        }
     }
 
     @Override
@@ -67,8 +72,12 @@ public class MainMenuState implements GameState {
 
         createBasicSkin();
         newGameButton = new TextButton("New game", skin); // Use the initialized skin
-        newGameButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2);
+        newGameButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 + 45);
         stage.addActor(newGameButton);
+
+        settingsButton = new TextButton("Settings", skin);
+        settingsButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
+        stage.addActor(settingsButton);
 
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
@@ -79,4 +88,6 @@ public class MainMenuState implements GameState {
     public void exit() {
         stage.dispose();
     }
+
+
 }

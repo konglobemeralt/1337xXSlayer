@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.*;
@@ -103,10 +104,33 @@ public class InGameState implements GameState {
 
     public void createEnvironment(){
         environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.5f, 0.4f, 0.4f, 1f));
-        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.7f, 0.6f, -1f, -.4f,
-                -.2f));
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
+                Config.AMBIENT_LIGHT_R,
+                Config.AMBIENT_LIGHT_G,
+                Config.AMBIENT_LIGHT_B,
+                Config.AMBIENT_LIGHT_A));
+        if(Config.SHADOWMAPPING_ENABLED){
+        environment.add((shadowLight = new DirectionalShadowLight(Config.SHADOW_MAP_WIDTH,
+                Config.SHADOW_MAP_HEIGHT,
+                Config.SHADOW_MAP_VIEWPORT_WIDTH,
+                Config.SHADOW_MAP_VIEWPORT_HEIGHT,
+                Config.SHADOW_MAP_NEAR,
+                Config.SHADOW_MAP_FAR)).set(
+                Config.SUN_LIGHT_R,
+                Config.SUN_LIGHT_G,
+                Config.SUN_LIGHT_B,
+                Config.SUN_LIGHT_X,
+                Config.SUN_LIGHT_Y,
+                Config.SUN_LIGHT_Z));
         environment.shadowMap = shadowLight;
+        }else{
+            environment.add(new DirectionalLight().set(Config.SUN_LIGHT_R,
+                    Config.SUN_LIGHT_G,
+                    Config.SUN_LIGHT_B,
+                    Config.SUN_LIGHT_X,
+                    Config.SUN_LIGHT_Y,
+                    Config.SUN_LIGHT_Z));
+        }
         environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
                 35, 15f, 45f, 100f));
 
@@ -150,7 +174,9 @@ public class InGameState implements GameState {
         if(!loading)
             moveModel(instances.get(2));
 
-        renderShadowMap();
+        if(Config.SHADOWMAPPING_ENABLED) {
+            renderShadowMap();
+        }
         renderToScreen();
 
     }
