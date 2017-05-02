@@ -16,5 +16,6 @@ public class DesktopLauncher {
 		config.samples = Config.AA_SAMPLES;
 		config.foregroundFPS = Config.FPS_CAP;
 		new LwjglApplication(new ProjectD(), config);
+
 	}
 }
