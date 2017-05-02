@@ -73,7 +73,7 @@ public class ProjectD extends ApplicationAdapter {
 		}
 
         XboxController xboxController = new XboxController();
-//        Controllers.getControllers().get(0).addListener(xboxController); TODO add this line
+        Controllers.getControllers().get(0).addListener(xboxController); //TODO add this line
         xboxController.setModel(new InputModel());
         inputController.add(xboxController);
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
@@ -239,6 +240,19 @@ public class InGameState implements GameState {
 
         render();
         moveModel(this.instances.get(3));
+
+        //TODO Controller testing:
+        ModelInstance modelInstance = this.instances.get(3);
+        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
+
+//        modelInstance.transform.setToRotation(Vector3.X, 0);
+
+//        modelInstance.transform.setToRotation(Vector3.Z, 0);
+        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
+        modelInstance.transform.setToRotation(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
+        modelInstance.transform.setTranslation(position);
+        modelInstance.transform.trn(inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+        System.out.println( inputModel.getLeftStick().getAngle());
 
     }
 
