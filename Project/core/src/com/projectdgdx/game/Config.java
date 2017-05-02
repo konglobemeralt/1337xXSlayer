@@ -1,5 +1,7 @@
 package com.projectdgdx.game;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by Eddie on 2017-04-28.
  */
@@ -8,7 +10,7 @@ public class Config {
     public static final float MOVE_SPEED = 0.05f;
 
     //CAMERA VARIABLES
-    public static final int CAMERA_FOV = 25;
+    public static int CAMERA_FOV = 25;
     public static final float CAMERA_NEAR = 0.01f;
     public static final float CAMERA_FAR = 500f;
 
@@ -42,6 +44,13 @@ public class Config {
     public static final float AMBIENT_LIGHT_G = 0.4f;
     public static final float AMBIENT_LIGHT_B = 0.4f;
     public static final float AMBIENT_LIGHT_A = 0.4f;
+
+    //MENUES
+
+    public static final float MENU_DEFAULTBACKGROUND_R = 0.2f;
+    public static final float MENU_DEFAULTBACKGROUND_G = 0.2f;
+    public static final float MENU_DEFAULTBACKGROUND_B = 0.2f;
+    public static final float MENU_DEFAULTBACKGROUND_A = 1f;;
 
 
 
