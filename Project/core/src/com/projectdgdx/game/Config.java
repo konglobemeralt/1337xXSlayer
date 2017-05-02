@@ -21,7 +21,7 @@ public class Config {
     public static final int FPS_CAP = 10000;
 
     //LIGHTS AND SHADOW MAPPING
-    public static boolean SHADOWMAPPING_ENABLED = false;
+    public static boolean SHADOWMAPPING_ENABLED = true;
     public static final int SHADOW_MAP_HEIGHT = 4048;
     public static final int SHADOW_MAP_WIDTH = 4048;
     public static final float SHADOW_MAP_VIEWPORT_HEIGHT = 100;
