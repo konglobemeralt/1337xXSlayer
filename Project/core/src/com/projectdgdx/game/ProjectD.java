@@ -38,7 +38,11 @@ public class ProjectD extends ApplicationAdapter {
     }
 
     public void setState(GameStates newState) {
+        if(currentState != null){
+            currentState.stop();
+        }
         this.currentState = gameStates.get(newState);
+        this.currentState.start();
     }
 
     public List<InputController> getInpuControllers() {

@@ -179,6 +179,16 @@ public class SettingsState implements GameState {
     }
 
     @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
     public void exit() {
         stage.dispose();
     }

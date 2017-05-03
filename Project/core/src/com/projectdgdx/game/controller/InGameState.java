@@ -227,9 +227,6 @@ public class InGameState implements GameState {
 
     }
 
-    public void exit(){
-        dispose();
-    }
 
     public void dispose () {
         modelBatch.dispose();
@@ -254,6 +251,8 @@ public class InGameState implements GameState {
 		}
     }
 
+
+
     public void init(ProjectD projectD){
         this.multiplexer = projectD.getMultiplexer();
 
@@ -262,13 +261,26 @@ public class InGameState implements GameState {
         rand = new Random();
 
         loadAssets();
-        createEnvironment();
-        createCamera();
 
         shader = new BaseShader();
         shader.init();
 
         fps = new FPSLogger();
+    }
+
+    @Override
+    public void start() {
+        createEnvironment();
+        createCamera();
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    public void exit(){
+        dispose();
     }
 
 

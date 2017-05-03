@@ -9,4 +9,7 @@ public interface GameState {
     void update(ProjectD projectD);
     void init(ProjectD projectD);
     void exit();
+
+    void start();
+    void stop();
 }
