@@ -27,9 +27,14 @@ public class SettingsState implements GameState {
     private TextButton toggleShadowMapButton;
     private TextButton backButton;
     private InputMultiplexer multiplexer;
+
     private Slider fovSlider;
     private Label fovValueLabel;
     private Label fovLabel;
+
+    private Slider aaSlider;
+    private Label aaLabel;
+    private Label aaValueLabel;
 
 
     private Label settingsHeading;
@@ -111,9 +116,15 @@ public class SettingsState implements GameState {
         //backButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
         //stage.addActor(backButton);
 
-        fovSlider = new Slider(0, 90, 1, false, skin);
+        fovSlider = new Slider(5, 120, 1, false, skin);
+        fovSlider.setValue(Config.CAMERA_FOV);
         fovLabel = new Label("FOV", skin);
         fovValueLabel = new Label("", skin);
+
+        aaSlider = new Slider(0, 20, 1, false, skin);
+        aaSlider.setValue(Config.AA_SAMPLES);
+        aaLabel = new Label("AA Samples", skin);
+        aaValueLabel = new Label("", skin);
 
         //moveSpeedIn = new TextField("5", skin);
         //moveSpeedIn.setMessageText("Movement Speed");
@@ -128,11 +139,15 @@ public class SettingsState implements GameState {
         table.row();
         table.add(fovLabel).expandY();
         table.add(fovSlider);
-        table.add(fovValueLabel).padRight(100);
+        table.add(fovValueLabel).padRight(300);
+        table.row();
+        table.add(aaLabel).expandY();
+        table.add(aaSlider);
+        table.add(aaValueLabel).padRight(300);
         table.row();
         table.add(toggleShadowMapButton).expandY().width(600).height(60);
         table.row();
-        table.add(backButton).expandY();
+        table.add(backButton).expandY().width(450).height(60);
         table.row();
 
 
@@ -147,17 +162,21 @@ public class SettingsState implements GameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-
-                if (value == 0)
-                {
-                    Config.CAMERA_FOV = 0;
-                }
-                else
-                {
-                    Config.CAMERA_FOV = ((int) value);
-                }
-
+                Config.CAMERA_FOV = ((int) value);
                 updateFOVlabel();
+            }
+        });
+
+        aaSlider.addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                Slider slider = (Slider) actor;
+
+                float value = slider.getValue();
+                Config.AA_SAMPLES = ((int) value);
+                updateAAlabel();
             }
         });
 
@@ -173,14 +192,27 @@ public class SettingsState implements GameState {
         float value = Config.CAMERA_FOV;
 
         fovSlider.setValue(value);
+        fovSlider.setAnimateDuration(0.3f);
 
         fovValueLabel.setText(String.valueOf(Config.CAMERA_FOV));
         fovValueLabel.invalidate();
     }
 
+    private void updateAAlabel()
+    {
+        float value = Config.AA_SAMPLES;
+
+        aaSlider.setValue(value);
+        aaSlider.setAnimateDuration(0.3f);
+
+        aaValueLabel.setText(String.valueOf(Config.AA_SAMPLES));
+        aaValueLabel.invalidate();
+    }
+
     @Override
     public void start() {
-
+        updateFOVlabel();
+        updateAAlabel();
     }
 
     @Override
