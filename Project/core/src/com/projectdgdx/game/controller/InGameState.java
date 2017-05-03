@@ -3,6 +3,7 @@ package com.projectdgdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -242,18 +243,15 @@ public class InGameState implements GameState {
         moveModel(this.instances.get(3));
 
         //TODO Controller testing:
-        ModelInstance modelInstance = this.instances.get(3);
-        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
-
-//        modelInstance.transform.setToRotation(Vector3.X, 0);
-
-//        modelInstance.transform.setToRotation(Vector3.Z, 0);
-        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
-        modelInstance.transform.setToRotation(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
-        modelInstance.transform.setTranslation(position);
-        modelInstance.transform.trn(inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, -inputModel.getLeftStick().z * Config.MOVE_SPEED);
-        System.out.println( inputModel.getLeftStick().getAngle());
-
+		if(Controllers.getControllers().size >= 1) {
+			ModelInstance modelInstance = this.instances.get(3);
+			InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
+			Vector3 position = modelInstance.transform.getTranslation(new Vector3());
+			modelInstance.transform.setToRotation(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
+			modelInstance.transform.setTranslation(position);
+			modelInstance.transform.trn(inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+			System.out.println( inputModel.getLeftStick().getAngle());
+		}
     }
 
     public void init(ProjectD projectD){
