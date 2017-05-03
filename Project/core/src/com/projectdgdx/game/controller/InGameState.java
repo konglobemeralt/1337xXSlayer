@@ -249,7 +249,8 @@ public class InGameState implements GameState {
 			Vector3 position = modelInstance.transform.getTranslation(new Vector3());
 			modelInstance.transform.setToRotation(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
 			modelInstance.transform.setTranslation(position);
-			modelInstance.transform.trn(inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+			float deltaTime = Gdx.graphics.getDeltaTime();
+			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 			System.out.println( inputModel.getLeftStick().getAngle());
 		}
     }
