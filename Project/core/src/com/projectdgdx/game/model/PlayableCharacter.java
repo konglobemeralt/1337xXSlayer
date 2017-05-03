@@ -8,6 +8,7 @@ import java.util.List;
  * Created by Eddie on 2017-04-03.
  */
 public abstract class PlayableCharacter extends Character {
+
     public PlayableCharacter(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
         super(position, scale, rotation, id);
     }
@@ -15,6 +16,7 @@ public abstract class PlayableCharacter extends Character {
     /**
      * Recieves the movement inputs and delegates it to the state machine.
      * TODO Will buttons be handled here or go directly to the functions?
+     * TODO  ANSWER: Will call functions. We want to separate all input handling from the model.
      */
 
     public void reactToInput(){
@@ -37,15 +39,20 @@ public abstract class PlayableCharacter extends Character {
      * @param interactables The list of objects the character tries to interact with.
      */
 
-    public void honestInteract(List<HonestlyInteractable> interactables){
-        for (HonestlyInteractable i: interactables){
-            if (isByHActable(i)){
-                i.honsestInteract();
+    public void honestInteract(List<HonestInteractable> interactables){
+        for (HonestInteractable i: interactables){
+            if (canHonestInteract(i)){
+                i.honestInteract();
             }
         }
     }
 
-    protected boolean isByHActable(HonestlyInteractable i){
+    /**
+     *
+     * @param i
+     * @return
+     */
+    protected boolean canHonestInteract(HonestInteractable i){
         float value = this.getPosition().dst2(i.getPosition()) - GlobalVariables.machineActDistance;
         return value < 0;
     }
