@@ -12,6 +12,6 @@ public class SpotlightControlBoard extends StaticObject implements HonestInterac
 
     @Override
     public void honestInteract() {
-        
+        // Hello
     }
 }
