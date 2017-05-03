@@ -15,7 +15,7 @@ public class Machine extends StaticObject implements HonestInteractable {
         super(position, scale, rotation, id);
         this.state = new UnusedMachine();
     }
-//w
+
     @Override
     public void honestInteract(PlayableCharacter player) { //TODO  test commit
         state.honestInteract(player);
