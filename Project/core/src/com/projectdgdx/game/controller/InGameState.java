@@ -252,7 +252,6 @@ public class InGameState implements GameState {
     }
 
 
-
     public void init(ProjectD projectD){
         this.multiplexer = projectD.getMultiplexer();
 

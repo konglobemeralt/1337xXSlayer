@@ -15,7 +15,7 @@ public class Config {
     public static final float CAMERA_FAR = 500f;
 
     //GRAPHICS SETTINGS
-    public static final int AA_SAMPLES = 20;
+    public static int AA_SAMPLES = 20;
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
     public static final boolean RESIZABLE = false;
