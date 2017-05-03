@@ -72,7 +72,7 @@ public class GameObjectInit {
             case "Machine":
                 return new Machine(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "machine.basic");
             case "SpotControl":
-                return new SpotControl(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "control.basic");
+                return new SpotlightControlBoard(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "control.basic");
               case "Worker":
                   return new Worker(new Vector3(x, y, z), new Vector3(scaleX, scaleY, scaleZ), new Vector3(rotationX, rotationY, rotationZ), "worker.basic");
               case "Supervisor":
