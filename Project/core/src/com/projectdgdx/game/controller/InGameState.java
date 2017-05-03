@@ -258,7 +258,7 @@ public class InGameState implements GameState {
 
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
-			System.out.println( inputModel.getLeftStick().getAngle());
+//			System.out.println( inputModel.getLeftStick().getAngle());
 		}
     }
 
