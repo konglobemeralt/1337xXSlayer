@@ -174,7 +174,7 @@ public class InGameState implements GameState {
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
         if(!loading)
-            moveModel(instances.get(2));
+            //moveModel(instances.get(2));
 
         if(Config.SHADOWMAPPING_ENABLED) {
             renderShadowMap();
@@ -205,22 +205,22 @@ public class InGameState implements GameState {
     private void moveModel(ModelInstance instance){
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            instance.transform.trn(Config.MOVE_SPEED, 0, 0);
+            instance.transform.trn(Config.MOVE_SPEED * Gdx.graphics.getDeltaTime(), 0, 0);
             //cam.position.set(cam.position.x + Config.MOVE_SPEED, cam.position.y, cam.position.z);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            instance.transform.trn(-Config.MOVE_SPEED, 0, 0);
+            instance.transform.trn(-Config.MOVE_SPEED * Gdx.graphics.getDeltaTime(), 0, 0);
             //cam.position.set(cam.position.x - Config.MOVE_SPEED, cam.position.y, cam.position.z);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            instance.transform.trn(0, 0, -Config.MOVE_SPEED);
+            instance.transform.trn(0, 0, -Config.MOVE_SPEED * Gdx.graphics.getDeltaTime());
             //cam.position.set(cam.position.x, cam.position.y, cam.position.z -Config.MOVE_SPEED);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            instance.transform.trn(0, 0, Config.MOVE_SPEED);
+            instance.transform.trn(0, 0, Config.MOVE_SPEED * Gdx.graphics.getDeltaTime());
             //cam.position.set(cam.position.x, cam.position.y, cam.position.z +Config.MOVE_SPEED);
         }
 
@@ -240,7 +240,6 @@ public class InGameState implements GameState {
     public void update(ProjectD projectD){
 
         render();
-        moveModel(this.instances.get(3));
 
         //TODO Controller testing:
 		if(Controllers.getControllers().size >= 1) {
@@ -255,8 +254,9 @@ public class InGameState implements GameState {
 
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
-//			System.out.println( inputModel.getLeftStick().getAngle());
-		}
+		}else{
+            moveModel(this.instances.get(3));
+        }
     }
 
     public void init(ProjectD projectD){
