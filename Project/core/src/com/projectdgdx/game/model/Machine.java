@@ -11,7 +11,7 @@ public class Machine extends StaticObject implements HonestlyInteractable{
     }
 
     @Override
-    public void honsestInteract() { //TODO
+    public void honsestInteract() { //TODO  test commit
 
     }
 }
