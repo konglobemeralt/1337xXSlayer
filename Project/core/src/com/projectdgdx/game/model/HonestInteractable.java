@@ -5,7 +5,8 @@ import com.badlogic.gdx.math.Vector3;
 /**
  * Created by Emil Jansson on 2017-04-25.
  */
-public interface HonestlyInteractable {
-    void honsestInteract();
-    Vector3 getPosition();
+public interface HonestInteractable {
+    public abstract void honestInteract();
+    public abstract Vector3 getPosition();
 }
+
