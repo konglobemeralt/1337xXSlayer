@@ -24,7 +24,12 @@ public class SettingsState implements GameState {
 
     private Skin skin;
     private Stage stage;
-    private TextButton toggleShadowMapButton;
+
+    private Label shadowMappingLabel;
+    private CheckBox shadowMapCheckbox;
+
+
+    //private TextButton toggleShadowMapButton;
     private TextButton backButton;
     private InputMultiplexer multiplexer;
 
@@ -79,10 +84,6 @@ public class SettingsState implements GameState {
         stage.act();
         stage.draw();
 
-        if(toggleShadowMapButton.isPressed() && Gdx.input.justTouched()){
-            Config.SHADOWMAPPING_ENABLED = !Config.SHADOWMAPPING_ENABLED;
-            setShadowMapButtonText();
-        }
 
         if(backButton.isPressed()&& Gdx.input.justTouched()){
             this.exit();
@@ -90,14 +91,7 @@ public class SettingsState implements GameState {
         }
     }
 
-    private void setShadowMapButtonText(){
-        if(Config.SHADOWMAPPING_ENABLED){
-            toggleShadowMapButton.setText("Shadow mapping enabled");
-        }
-        else{
-            toggleShadowMapButton.setText("Shadow mapping disabled");
-        }
-    }
+
     @Override
     public void init(ProjectD projectD) {
 
@@ -107,8 +101,9 @@ public class SettingsState implements GameState {
 
         settingsHeading = new Label("Settings Menu", skin);
 
-        toggleShadowMapButton = new TextButton("", skin); // Use the initialized skin
-        setShadowMapButtonText();
+
+        //toggleShadowMapButton = new TextButton("", skin); // Use the initialized skin
+        //setShadowMapButtonText();
         //toggleShadowMapButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 + 45);
         //stage.addActor(toggleShadowMapButton);
 
@@ -125,6 +120,10 @@ public class SettingsState implements GameState {
         aaSlider.setValue(Config.AA_SAMPLES);
         aaLabel = new Label("AA Samples", skin);
         aaValueLabel = new Label("", skin);
+
+        shadowMappingLabel = new Label("Shadow mapping", skin);
+        shadowMapCheckbox = new CheckBox("", skin);
+        shadowMapCheckbox.setChecked(true);
 
         //moveSpeedIn = new TextField("5", skin);
         //moveSpeedIn.setMessageText("Movement Speed");
@@ -145,7 +144,8 @@ public class SettingsState implements GameState {
         table.add(aaSlider);
         table.add(aaValueLabel).padRight(300);
         table.row();
-        table.add(toggleShadowMapButton).expandY().width(600).height(60);
+        table.add(shadowMappingLabel).expandY();
+        table.add(shadowMapCheckbox).padRight(300);;
         table.row();
         table.add(backButton).expandY().width(450).height(60);
         table.row();
@@ -177,6 +177,12 @@ public class SettingsState implements GameState {
                 float value = slider.getValue();
                 Config.AA_SAMPLES = ((int) value);
                 updateAAlabel();
+            }
+        });
+
+        shadowMapCheckbox.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
             }
         });
 
