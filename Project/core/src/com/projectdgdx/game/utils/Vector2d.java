@@ -19,4 +19,8 @@ public class Vector2d {
         return this;
     }
 
+    public float getAngle() {
+        return (float)Math.toDegrees(Math.atan2(z, x));
+    }
+
 }

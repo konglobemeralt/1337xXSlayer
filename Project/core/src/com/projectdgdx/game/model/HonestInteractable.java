@@ -9,3 +9,4 @@ public interface HonestInteractable {
     public abstract void honestInteract();
     public abstract Vector3 getPosition();
 }
+

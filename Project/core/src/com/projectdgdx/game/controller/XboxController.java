@@ -33,6 +33,13 @@ public class XboxController extends InputController implements ControllerListene
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
+//        System.out.println("AxisCode: " + axisCode + " : " + value);
+        if(axisCode == 2) { //Left-right left stick
+            getModel().getLeftStick().x = value;
+        }
+        if(axisCode == 3) { //Top-down left stick
+            getModel().getLeftStick().z = value;
+        }
         return false;
     }
 

@@ -2,9 +2,12 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.*;
@@ -13,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
@@ -27,9 +31,11 @@ import java.util.Random;
 public class InGameState implements GameState {
 
     private FPSLogger fps;
+    private InputMultiplexer multiplexer;
 
     private PerspectiveCamera cam;
     private CameraInputController camController;
+
     private ModelBatch modelBatch;
     private ModelBatch shadowBatch;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
@@ -45,7 +51,6 @@ public class InGameState implements GameState {
 
     Random rand;
     Map map;
-
 
 
     public void loadAssets(){
@@ -101,10 +106,33 @@ public class InGameState implements GameState {
 
     public void createEnvironment(){
         environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.5f, 0.4f, 0.4f, 1f));
-        environment.add((shadowLight = new DirectionalShadowLight(4048, 4048, 100f, 100f, 0.1f, 1500f)).set(0.8f, 0.7f, 0.6f, -1f, -.4f,
-                -.2f));
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
+                Config.AMBIENT_LIGHT_R,
+                Config.AMBIENT_LIGHT_G,
+                Config.AMBIENT_LIGHT_B,
+                Config.AMBIENT_LIGHT_A));
+        if(Config.SHADOWMAPPING_ENABLED){
+        environment.add((shadowLight = new DirectionalShadowLight(Config.SHADOW_MAP_WIDTH,
+                Config.SHADOW_MAP_HEIGHT,
+                Config.SHADOW_MAP_VIEWPORT_WIDTH,
+                Config.SHADOW_MAP_VIEWPORT_HEIGHT,
+                Config.SHADOW_MAP_NEAR,
+                Config.SHADOW_MAP_FAR)).set(
+                Config.SUN_LIGHT_R,
+                Config.SUN_LIGHT_G,
+                Config.SUN_LIGHT_B,
+                Config.SUN_LIGHT_X,
+                Config.SUN_LIGHT_Y,
+                Config.SUN_LIGHT_Z));
         environment.shadowMap = shadowLight;
+        }else{
+            environment.add(new DirectionalLight().set(Config.SUN_LIGHT_R,
+                    Config.SUN_LIGHT_G,
+                    Config.SUN_LIGHT_B,
+                    Config.SUN_LIGHT_X,
+                    Config.SUN_LIGHT_Y,
+                    Config.SUN_LIGHT_Z));
+        }
         environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
                 35, 15f, 45f, 100f));
 
@@ -113,13 +141,18 @@ public class InGameState implements GameState {
 
 
     public void createCamera(){
-        cam = new PerspectiveCamera(25, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(110f, 120f, 135f);
         cam.lookAt(0f, 0f, 0f);
-        cam.near = 0.01f;
-        cam.far = 500f;
+        cam.near = Config.CAMERA_NEAR;
+        cam.far = Config.CAMERA_FAR;
         camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(camController);
+        camController.forwardTarget = true;
+
+        multiplexer.addProcessor(camController);// Make the stage consume events
+        Gdx.input.setInputProcessor(multiplexer);
+
+        cam.update();
     }
 
     public void render () {
@@ -128,6 +161,7 @@ public class InGameState implements GameState {
 
         if (loading && AssetManager.update())
             doneLoading();
+
         cam.update();
 
         for(AnimationController controllerInstance: animationControllers){
@@ -142,7 +176,9 @@ public class InGameState implements GameState {
         if(!loading)
             moveModel(instances.get(2));
 
-        renderShadowMap();
+        if(Config.SHADOWMAPPING_ENABLED) {
+            renderShadowMap();
+        }
         renderToScreen();
 
     }
@@ -152,7 +188,6 @@ public class InGameState implements GameState {
         for (ModelInstance instance : instances) {
             modelBatch.render(instance, environment);
         }
-
         modelBatch.end();
     }
 
@@ -171,18 +206,22 @@ public class InGameState implements GameState {
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             instance.transform.trn(Config.MOVE_SPEED, 0, 0);
+            //cam.position.set(cam.position.x + Config.MOVE_SPEED, cam.position.y, cam.position.z);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             instance.transform.trn(-Config.MOVE_SPEED, 0, 0);
+            //cam.position.set(cam.position.x - Config.MOVE_SPEED, cam.position.y, cam.position.z);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             instance.transform.trn(0, 0, -Config.MOVE_SPEED);
+            //cam.position.set(cam.position.x, cam.position.y, cam.position.z -Config.MOVE_SPEED);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             instance.transform.trn(0, 0, Config.MOVE_SPEED);
+            //cam.position.set(cam.position.x, cam.position.y, cam.position.z +Config.MOVE_SPEED);
         }
 
 
@@ -199,11 +238,25 @@ public class InGameState implements GameState {
     }
 
     public void update(ProjectD projectD){
+
         render();
-        moveModel(this.instances.get(1));
+        moveModel(this.instances.get(3));
+
+        //TODO Controller testing:
+		if(Controllers.getControllers().size >= 1) {
+			ModelInstance modelInstance = this.instances.get(3);
+			InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
+			Vector3 position = modelInstance.transform.getTranslation(new Vector3());
+			modelInstance.transform.setToRotation(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
+			modelInstance.transform.setTranslation(position);
+			modelInstance.transform.trn(inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+			System.out.println( inputModel.getLeftStick().getAngle());
+		}
     }
 
     public void init(ProjectD projectD){
+        this.multiplexer = projectD.getMultiplexer();
+
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
         rand = new Random();
@@ -215,10 +268,9 @@ public class InGameState implements GameState {
         shader = new BaseShader();
         shader.init();
 
-        modelBatch = new ModelBatch();
-
         fps = new FPSLogger();
     }
+
 
 
 }
