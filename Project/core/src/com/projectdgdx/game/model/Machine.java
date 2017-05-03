@@ -9,7 +9,7 @@ public class Machine extends StaticObject implements HonestInteractable {
     public Machine(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
         super(position, scale, rotation, id);
     }
-
+//w
     @Override
     public void honestInteract(PlayableCharacter player){
 
