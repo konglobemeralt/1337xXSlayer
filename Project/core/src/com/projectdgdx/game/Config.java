@@ -21,6 +21,7 @@ public class Config {
     public static final boolean RESIZABLE = false;
     public static final boolean V_SYNC_ENABLED = false;
     public static final int FPS_CAP = 10000;
+    public static final boolean FULLSCREEN_ENABLED = false;
 
     //LIGHTS AND SHADOW MAPPING
     public static boolean SHADOWMAPPING_ENABLED = true;
