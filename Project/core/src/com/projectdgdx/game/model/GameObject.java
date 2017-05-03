@@ -1,32 +1,33 @@
 package com.projectdgdx.game.model;
 
 import com.badlogic.gdx.math.Vector3;
+import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * Created by Hampus on 2017-03-26.
  */
 public abstract class GameObject {
-    private Vector3 position;
-    private Vector3 scale;
-    private Vector3 rotation;
+    private Vector3d position;
+    private Vector3d scale;
+    private Vector3d rotation;
     private String id;
 
-    public GameObject(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
+    public GameObject(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         this.position = position;
         this.scale = scale;
         this.rotation = rotation;
         this.id = id;
     }
 
-    public void setPosition(Vector3 position) {
+    public void setPosition(Vector3d position) {
         this.position = position;
     }
 
-    public void setScale(Vector3 scale) {
+    public void setScale(Vector3d scale) {
         this.scale = scale;
     }
 
-    public void setRotation(Vector3 rotation) {
+    public void setRotation(Vector3d rotation) {
         this.rotation = rotation;
     }
 
@@ -34,15 +35,15 @@ public abstract class GameObject {
         this.id = id;
     }
 
-    public Vector3 getPosition() {
+    public Vector3d getPosition() {
         return position;
     }
 
-    public Vector3 getRotation() {
+    public Vector3d getRotation() {
         return rotation;
     }
 
-    public Vector3 getScale() {
+    public Vector3d getScale() {
         return scale;
     }
 
