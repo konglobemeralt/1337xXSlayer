@@ -7,6 +7,6 @@ public class InSpotlightState implements CharacterState {
 
     @Override
     public void move() {
-        
+        // Use spotlight move
     }
 }

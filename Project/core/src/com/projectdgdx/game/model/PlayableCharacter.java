@@ -42,7 +42,7 @@ public abstract class PlayableCharacter extends Character {
     public void honestInteract(List<HonestInteractable> interactables){
         for (HonestInteractable i: interactables){
             if (canHonestInteract(i)){
-                i.honestInteract();
+                i.honestInteract(this);
             }
         }
     }

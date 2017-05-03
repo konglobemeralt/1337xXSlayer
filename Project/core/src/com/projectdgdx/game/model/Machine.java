@@ -11,7 +11,7 @@ public class Machine extends StaticObject implements HonestInteractable {
     }
 
     @Override
-    public void honestInteract() { //TODO
+    public void honestInteract(PlayableCharacter player){
 
     }
 

@@ -18,6 +18,9 @@ public abstract class Character extends Entity {
     /**
      * Sets the starting state of a character
      */
+    public void setState(CharacterState newState){
+        this.state = newState;
+    }
 
     protected abstract void setStartingState();
 

@@ -10,7 +10,6 @@ public class Spotlight extends Entity {
         super(position, scale, rotation, id);
     }
 
-
     @Override
     public boolean isColliding(Vector3 vec) {
         return false;
