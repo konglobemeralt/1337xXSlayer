@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.*;
+import com.badlogic.gdx.math.Affine2;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
@@ -244,8 +247,12 @@ public class InGameState implements GameState {
 			ModelInstance modelInstance = this.instances.get(3);
 			InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
 			Vector3 position = modelInstance.transform.getTranslation(new Vector3());
-			modelInstance.transform.setToRotation(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
-			modelInstance.transform.setTranslation(position);
+			Vector3 scale = modelInstance.transform.getScale(new Vector3());
+			Quaternion quaternion = new Quaternion();
+			quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
+			Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+			modelInstance.transform.set(matrix4);
+
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 			System.out.println( inputModel.getLeftStick().getAngle());
