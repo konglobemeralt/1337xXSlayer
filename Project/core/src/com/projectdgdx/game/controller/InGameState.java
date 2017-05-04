@@ -17,10 +17,7 @@ import com.projectdgdx.game.Config;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.InputModel;
-import com.projectdgdx.game.utils.AssetManager;
-import com.projectdgdx.game.utils.AssetsFinder;
-import com.projectdgdx.game.utils.Map;
-import com.projectdgdx.game.utils.MapParser;
+import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.view.BaseShader;
 
 import java.util.Random;
@@ -73,10 +70,10 @@ public class InGameState implements GameState {
             ModelInstance npcInstance;
             System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
             npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-            npcInstance.transform.setToTranslation(gameObject.getPosition());
-            Vector3 scale = gameObject.getScale();
+            npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+            Vector3d scale = gameObject.getScale();
             npcInstance.transform.scale(scale.x, scale.y, scale.z);
-            Vector3 rotation = gameObject.getRotation();
+            Vector3d rotation = gameObject.getRotation();
             npcInstance.transform.rotate(Vector3.X, rotation.x);
             npcInstance.transform.rotate(Vector3.Y, rotation.y);
             npcInstance.transform.rotate(Vector3.Z, rotation.z);
