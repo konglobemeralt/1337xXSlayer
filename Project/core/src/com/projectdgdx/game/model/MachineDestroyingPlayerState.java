@@ -12,6 +12,6 @@ public class MachineDestroyingPlayerState implements CharacterState {
     }
     @Override
     public void move(Vector3d vector) {
-        
+
     }
 }

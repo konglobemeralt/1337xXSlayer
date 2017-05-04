@@ -10,9 +10,10 @@ public class MachineInteractingPlayerState implements CharacterState {
 
     MachineInteractingPlayerState(HonestInteractable machine){
         this.machine = machine;
+        //TODO start timer that releases player after set amount of time
     }
     @Override
     public void move(Vector3d vector) {
-
+        //Player is stationary during machine interaction
     }
 }
