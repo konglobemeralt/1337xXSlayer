@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.TimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
