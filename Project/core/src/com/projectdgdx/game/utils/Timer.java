@@ -10,7 +10,7 @@ public class Timer implements Runnable{
     private int timerValue;
     private long ticTime;
 
-    Timer(int timerValue, long ticTime){
+    public Timer(int timerValue, long ticTime){
         this.timerValue = timerValue;
                 this.ticTime = ticTime;
     }

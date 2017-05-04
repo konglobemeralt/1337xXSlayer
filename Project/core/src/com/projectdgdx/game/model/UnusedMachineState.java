@@ -7,7 +7,7 @@ public class UnusedMachineState implements MachineState {
 
     @Override
     public void honestInteract(PlayableCharacter player, HonestInteractable hi) {
-        player.setState(new MachineInteractingPlayerState(hi));
+        player.setState(new MachineInteractingPlayerState(hi, player));
     }
 
     @Override
