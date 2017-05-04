@@ -1,6 +1,8 @@
 package com.projectdgdx.game.controller;
 
 /**
+ * SettingsState provides an UI to configure the game settings
+ *
  * Created by Jesper on 2017-05-01.
  */
 
@@ -49,9 +51,16 @@ public class SettingsState implements GameState {
 
     private Table table;
 
-    private void createBasicSkin(){
 
-        skin = new Skin(Gdx.files.internal("GUIStyle/uiskin.json"));
+    /**
+     * createBasicSkin reads an internalGUI file and creates a skin
+     *
+     * @param path Path to the GUIskin file
+     * @return A new skin
+     */
+    private Skin createBasicSkin(String path){
+
+        return new Skin(Gdx.files.internal(path));
 
         //  //Create a font
      //  BitmapFont font = new BitmapFont();
@@ -74,6 +83,7 @@ public class SettingsState implements GameState {
      //  skin.add("default", textButtonStyle);
 
     }
+
 
     @Override
     public void update(ProjectD projectD) {
@@ -99,7 +109,7 @@ public class SettingsState implements GameState {
 
         this.stage = new Stage();
 
-        createBasicSkin();
+        skin = createBasicSkin(Config.UI_SKIN_PATH);
 
         settingsHeading = new Label("Settings Menu", skin);
 
@@ -212,6 +222,9 @@ public class SettingsState implements GameState {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    /**
+     * updateFOVlabel updates the FOVlabel value
+     **/
     private void updateFOVlabel()
     {
         float value = Config.CAMERA_FOV;
