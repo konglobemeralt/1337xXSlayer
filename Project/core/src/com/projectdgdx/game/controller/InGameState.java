@@ -239,7 +239,7 @@ public class InGameState implements GameState {
         render();
 
         //TODO Controller testing:
-		if(Controllers.getControllers().size >= 1) {
+		if(projectD.getInpuControllers().size() >= 1) {
 			ModelInstance modelInstance = this.instances.get(3);
 			InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
 			Vector3 position = modelInstance.transform.getTranslation(new Vector3());

@@ -27,8 +27,8 @@ public class Config {
     public static boolean SHADOWMAPPING_ENABLED = true;
     public static final int SHADOW_MAP_HEIGHT = 4048;
     public static final int SHADOW_MAP_WIDTH = 4048;
-    public static final float SHADOW_MAP_VIEWPORT_HEIGHT = 100;
-    public static final float SHADOW_MAP_VIEWPORT_WIDTH = 100;
+    public static final float SHADOW_MAP_VIEWPORT_HEIGHT = 500;
+    public static final float SHADOW_MAP_VIEWPORT_WIDTH = 500;
     public static final float SHADOW_MAP_NEAR = 0.01f;
     public static final float SHADOW_MAP_FAR = 1500f;
 
