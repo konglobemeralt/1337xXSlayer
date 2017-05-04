@@ -78,13 +78,20 @@ public class ProjectD extends ApplicationAdapter {
 		}
 
 
-
-		for(Controller controller : Controllers.getControllers()) {
-            XboxController xboxController = new XboxController();
-            controller.addListener(xboxController);
-            xboxController.setModel(new InputModel());
-            inputController.add(xboxController);
+        if(Controllers.getControllers().size >= 1) {
+            for(Controller controller : Controllers.getControllers()) {
+                XboxController xboxController = new XboxController();
+                controller.addListener(xboxController);
+                xboxController.setModel(new InputModel());
+                inputController.add(xboxController);
+            }
+        } else {
+            KeyboardController keyboardController = new KeyboardController();
+            keyboardController.setModel(new InputModel());
+            multiplexer.addProcessor(keyboardController);
+            inputController.add(keyboardController);
         }
+
 
 
 

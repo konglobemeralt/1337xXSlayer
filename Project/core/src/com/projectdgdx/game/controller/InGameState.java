@@ -202,32 +202,6 @@ public class InGameState implements GameState {
         shadowLight.end();
     }
 
-    private void moveModel(ModelInstance instance){
-
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            instance.transform.trn(Config.MOVE_SPEED * Gdx.graphics.getDeltaTime(), 0, 0);
-            //cam.position.set(cam.position.x + Config.MOVE_SPEED, cam.position.y, cam.position.z);
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            instance.transform.trn(-Config.MOVE_SPEED * Gdx.graphics.getDeltaTime(), 0, 0);
-            //cam.position.set(cam.position.x - Config.MOVE_SPEED, cam.position.y, cam.position.z);
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            instance.transform.trn(0, 0, -Config.MOVE_SPEED * Gdx.graphics.getDeltaTime());
-            //cam.position.set(cam.position.x, cam.position.y, cam.position.z -Config.MOVE_SPEED);
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            instance.transform.trn(0, 0, Config.MOVE_SPEED * Gdx.graphics.getDeltaTime());
-            //cam.position.set(cam.position.x, cam.position.y, cam.position.z +Config.MOVE_SPEED);
-        }
-
-
-    }
-
-
     public void dispose () {
         modelBatch.dispose();
         instances.clear();
@@ -237,22 +211,19 @@ public class InGameState implements GameState {
     public void update(ProjectD projectD){
         render();
 
-        //TODO Controller testing:
-		if(projectD.getInpuControllers().size() >= 1) {
-			ModelInstance modelInstance = this.instances.get(3);
-			InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
-			Vector3 position = modelInstance.transform.getTranslation(new Vector3());
-			Vector3 scale = modelInstance.transform.getScale(new Vector3());
-			Quaternion quaternion = new Quaternion();
-			quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
-			Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-			modelInstance.transform.set(matrix4);
+        //TODO Add support for more controllers here through projectD.getInpuControllers()
+        ModelInstance modelInstance = this.instances.get(3);
+        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
+        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
+        Vector3 scale = modelInstance.transform.getScale(new Vector3());
+        Quaternion quaternion = new Quaternion();
+        quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
+        Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+        modelInstance.transform.set(matrix4);
 
-			float deltaTime = Gdx.graphics.getDeltaTime();
-			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
-		}else{
-            moveModel(this.instances.get(3));
-        }
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+
     }
 
 
