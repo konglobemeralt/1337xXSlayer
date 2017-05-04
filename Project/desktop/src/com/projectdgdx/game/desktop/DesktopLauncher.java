@@ -14,9 +14,9 @@ public class DesktopLauncher {
 		config.height =  Config.SCREEN_HEIGHT;
 		config.resizable = Config.RESIZABLE;
 		config.vSyncEnabled = Config.V_SYNC_ENABLED;
-		config.samples = Config.AA_SAMPLES;
 		config.foregroundFPS = Config.FPS_CAP;
 		config.fullscreen = Config.FULLSCREEN_ENABLED;
+		config.samples = Config.AA_SAMPLES;
 		new LwjglApplication(new ProjectD(), config);
 
 	}
