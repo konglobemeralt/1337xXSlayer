@@ -8,7 +8,7 @@ import com.projectdgdx.game.utils.Vector3d;
 public class NormalPlayerState implements CharacterState {
 
     @Override
-    public void move(Vector3d vector) { //TODO
+    public void move(Vector3d vector) {
 
     }
 }

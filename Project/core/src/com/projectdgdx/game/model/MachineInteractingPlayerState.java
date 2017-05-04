@@ -7,20 +7,22 @@ import com.projectdgdx.game.utils.Vector3d;
  */
 public class MachineInteractingPlayerState implements CharacterState, TimerListener {
     private HonestInteractable machine;
+    private PlayableCharacter currentPlayer;
 
-    MachineInteractingPlayerState(HonestInteractable machine){
+    MachineInteractingPlayerState(HonestInteractable machine, PlayableCharacter currentPlayer){
+        this.currentPlayer = currentPlayer;
         this.machine = machine;
         Timer timer = new Timer(5, 1000);
         timer.addListener(this);
-        //TODO start timer that releases player after set amount of time
     }
+
     @Override
     public void move(Vector3d vector) {
-        //Player is stationary during machine interaction
+        // Player is stationary during machine interaction
     }
 
     @Override
-    public void timeIsUp() { //TODO
-
+    public void timeIsUp() {
+        this.currentPlayer.setState(new NormalPlayerState());
     }
 }
