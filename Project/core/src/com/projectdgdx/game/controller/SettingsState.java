@@ -1,6 +1,8 @@
 package com.projectdgdx.game.controller;
 
 /**
+ * SettingsState creates and renders an UI to configure the game settings
+ *
  * Created by Jesper on 2017-05-01.
  */
 
@@ -42,6 +44,17 @@ public class SettingsState implements GameState {
     private Label aaValueLabel;
 
 
+    private Slider sunrSlider;
+    private Label sunrSliderLabel;
+    private Label sunrSliderValue;
+    private Slider sungSlider;
+    private Label sungSliderLabel;
+    private Label sungSliderValue;
+    private Slider sunbSlider;
+    private Label sunbSliderLabel;
+    private Label sunbSliderValue;
+
+
     private Label settingsHeading;
 
     private Label moveSpeedLabel;
@@ -49,31 +62,39 @@ public class SettingsState implements GameState {
 
     private Table table;
 
-    private void createBasicSkin(){
 
-        skin = new Skin(Gdx.files.internal("GUIStyle/uiskin.json"));
+    /**
+     * createBasicSkin reads an internalGUI file and creates a skin
+     *
+     * @param path Path to the GUIskin file
+     * @return A new skin
+     */
+    private Skin createBasicSkin(String path){
+
+        return new Skin(Gdx.files.internal(path));
 
         //  //Create a font
-     //  BitmapFont font = new BitmapFont();
-     //  skin = new Skin();
-     //  skin.add("default", font);
+        //  BitmapFont font = new BitmapFont();
+        //  skin = new Skin();
+        //  skin.add("default", font);
 
-     //  //Create a texture
-     //  Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
-     //  pixmap.setColor(Color.WHITE);
-     //  pixmap.fill();
-     //  skin.add("background",new Texture(pixmap));
+        //  //Create a texture
+        //  Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
+        //  pixmap.setColor(Color.WHITE);
+        //  pixmap.fill();
+        //  skin.add("background",new Texture(pixmap));
 
-     //  //Create a button style
-     //  TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-     //  textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
-     //  textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
-     //  textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY);
-     //  textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
-     //  textButtonStyle.font = skin.getFont("default");
-     //  skin.add("default", textButtonStyle);
+        //  //Create a button style
+        //  TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        //  textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
+        //  textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
+        //  textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY);
+        //  textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
+        //  textButtonStyle.font = skin.getFont("default");
+        //  skin.add("default", textButtonStyle);
 
     }
+
 
     @Override
     public void update(ProjectD projectD) {
@@ -99,7 +120,7 @@ public class SettingsState implements GameState {
 
         this.stage = new Stage();
 
-        createBasicSkin();
+        skin = createBasicSkin(Config.UI_SKIN_PATH);
 
         settingsHeading = new Label("Settings Menu", skin);
 
@@ -133,6 +154,23 @@ public class SettingsState implements GameState {
         moveSpeedIn.setPosition(30, 30);
         //stage.addActor(moveSpeedIn);
 
+        sunrSlider = new Slider(0, 100, 1, false, skin);
+        sunrSlider.setValue(Config.SUN_LIGHT_R);
+        sunrSliderLabel = new Label("Sun light R:", skin);
+        sunrSliderValue = new Label("", skin);
+
+        sungSlider = new Slider(0, 100, 1, false, skin);
+        sungSlider.setValue(Config.SUN_LIGHT_G);
+        sungSliderLabel = new Label("Sun light G:", skin);
+        sungSliderValue = new Label("", skin);
+
+        sunbSlider = new Slider(0, 100, 1, false, skin);
+        sunbSlider.setValue(Config.SUN_LIGHT_B);
+        sunbSliderLabel = new Label("Sun light B:", skin);
+        sunbSliderValue = new Label("", skin);
+
+
+
         table = new Table();
 
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -152,6 +190,18 @@ public class SettingsState implements GameState {
         table.row();
         table.add(moveSpeedLabel).expandY();
         table.add(moveSpeedIn).expandY();
+        table.row();
+        table.add(sunrSliderLabel).expandY();
+        table.add(sunrSlider);
+        table.add(sunrSliderValue).padRight(300);
+        table.row();
+        table.add(sungSliderLabel).expandY();
+        table.add(sungSlider);
+        table.add(sungSliderValue).padRight(300);
+        table.row();
+        table.add(sunbSliderLabel).expandY();
+        table.add(sunbSlider);
+        table.add(sunbSliderValue).padRight(300);
         table.row();
         table.add(backButton).expandY().width(450).height(60);
         table.row();
@@ -186,6 +236,45 @@ public class SettingsState implements GameState {
             }
         });
 
+        sunrSlider.addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                Slider slider = (Slider) actor;
+
+                float value = slider.getValue();
+                Config.SUN_LIGHT_R = ((int) value);
+                updateSunRLabel();
+            }
+        });
+
+        sungSlider.addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                Slider slider = (Slider) actor;
+
+                float value = slider.getValue();
+                Config.SUN_LIGHT_G = ((int) value);
+                updateSunGLabel();
+            }
+        });
+
+        sunbSlider.addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                Slider slider = (Slider) actor;
+
+                float value = slider.getValue();
+                Config.SUN_LIGHT_B = ((int) value);
+                updateSunBLabel();
+            }
+        });
+
         shadowMapCheckbox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
@@ -193,6 +282,7 @@ public class SettingsState implements GameState {
         });
 
         moveSpeedIn.setTextFieldListener(new TextField.TextFieldListener() {
+
             public void keyTyped (TextField textField, char key) {
 
                 if(textField.getText().length() > 0){
@@ -210,8 +300,13 @@ public class SettingsState implements GameState {
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
         Gdx.input.setInputProcessor(multiplexer);
+
+
     }
 
+    /**
+     * sets he updates the FOVlabel value
+     **/
     private void updateFOVlabel()
     {
         float value = Config.CAMERA_FOV;
@@ -222,6 +317,7 @@ public class SettingsState implements GameState {
         fovValueLabel.setText(String.valueOf(Config.CAMERA_FOV));
         fovValueLabel.invalidate();
     }
+
 
     private void updateAAlabel()
     {
@@ -234,10 +330,48 @@ public class SettingsState implements GameState {
         aaValueLabel.invalidate();
     }
 
+    private void updateSunRLabel()
+    {
+        float value = Config.SUN_LIGHT_R;
+
+        sunrSlider.setValue(value * 100);
+        sunrSlider.setAnimateDuration(0.3f);
+
+        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R));
+        sunrSliderValue.invalidate();
+    }
+
+    private void updateSunGLabel()
+    {
+        float value = Config.SUN_LIGHT_G;
+
+        sungSlider.setValue(value * 100f);
+        sungSlider.setAnimateDuration(0.3f);
+
+        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R));
+        sungSliderValue.invalidate();
+    }
+
+    private void updateSunBLabel()
+    {
+        float value = Config.SUN_LIGHT_B;
+
+        sunbSlider.setValue(value * 100f);
+        sunbSlider.setAnimateDuration(0.3f);
+
+        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B));
+        sunbSliderValue.invalidate();
+    }
+
     @Override
     public void start() {
         updateFOVlabel();
         updateAAlabel();
+
+        updateSunRLabel();
+        updateSunGLabel();
+        updateSunBLabel();
+
     }
 
     @Override
