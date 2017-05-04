@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
  */
 public class Config {
 	static final boolean DEBUG = false;
-    public static final float MOVE_SPEED = 30f;
+    public static float MOVE_SPEED = 30f;
 
     //CAMERA VARIABLES
     public static int CAMERA_FOV = 25;

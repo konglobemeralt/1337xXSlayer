@@ -43,6 +43,8 @@ public class SettingsState implements GameState {
 
 
     private Label settingsHeading;
+
+    private Label moveSpeedLabel;
     private TextField moveSpeedIn;
 
     private Table table;
@@ -125,9 +127,10 @@ public class SettingsState implements GameState {
         shadowMapCheckbox = new CheckBox("", skin);
         shadowMapCheckbox.setChecked(true);
 
-        //moveSpeedIn = new TextField("5", skin);
-        //moveSpeedIn.setMessageText("Movement Speed");
-        //moveSpeedIn.setPosition(30, 30);
+        moveSpeedLabel = new Label("Movement Speed", skin);
+        moveSpeedIn = new TextField("30", skin);
+        moveSpeedIn.setMessageText("Movement Speed");
+        moveSpeedIn.setPosition(30, 30);
         //stage.addActor(moveSpeedIn);
 
         table = new Table();
@@ -145,7 +148,10 @@ public class SettingsState implements GameState {
         table.add(aaValueLabel).padRight(300);
         table.row();
         table.add(shadowMappingLabel).expandY();
-        table.add(shadowMapCheckbox).padRight(300);;
+        table.add(shadowMapCheckbox).padRight(160);
+        table.row();
+        table.add(moveSpeedLabel).expandY();
+        table.add(moveSpeedIn).expandY();
         table.row();
         table.add(backButton).expandY().width(450).height(60);
         table.row();
@@ -183,6 +189,19 @@ public class SettingsState implements GameState {
         shadowMapCheckbox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
+            }
+        });
+
+        moveSpeedIn.setTextFieldListener(new TextField.TextFieldListener() {
+            public void keyTyped (TextField textField, char key) {
+
+                if(textField.getText().length() > 0){
+                    Config.MOVE_SPEED = Integer.parseInt(textField.getText());
+                }
+                else{
+                    Config.MOVE_SPEED = Integer.parseInt(textField.getText());
+                }
+
             }
         });
 
