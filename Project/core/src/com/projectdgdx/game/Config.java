@@ -1,7 +1,5 @@
 package com.projectdgdx.game;
 
-import com.badlogic.gdx.Gdx;
-
 /**
  * Created by Eddie on 2017-04-28.
  */
@@ -22,6 +20,8 @@ public class Config {
     public static final boolean V_SYNC_ENABLED = false;
     public static final int FPS_CAP = 10000;
     public static final boolean FULLSCREEN_ENABLED = false;
+
+    public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
     //LIGHTS AND SHADOW MAPPING
     public static boolean SHADOWMAPPING_ENABLED = true;
@@ -47,7 +47,6 @@ public class Config {
     public static final float AMBIENT_LIGHT_A = 0.4f;
 
     //MENUES
-
     public static final float MENU_DEFAULTBACKGROUND_R = 0.2f;
     public static final float MENU_DEFAULTBACKGROUND_G = 0.2f;
     public static final float MENU_DEFAULTBACKGROUND_B = 0.2f;
