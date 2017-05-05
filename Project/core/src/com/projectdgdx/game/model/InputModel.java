@@ -32,13 +32,13 @@ public class InputModel {
     public PressedData getButtonA() {
         return buttonA;
     }
-    public PressedData setButtonB() {
+    public PressedData getButtonB() {
         return buttonB;
     }
-    public PressedData setButtonX() {
+    public PressedData getButtonnX() {
         return buttonX;
     }
-    public PressedData setButtonY() {
+    public PressedData getButtonnY() {
         return buttonY;
     }
 
