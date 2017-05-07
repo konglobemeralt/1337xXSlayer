@@ -33,6 +33,9 @@ public class InGameState implements GameState {
 
     private InputMultiplexer multiplexer;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Array<AnimationController> animationControllers = new Array<AnimationController>();
+    private AnimationController animController;
+
 
     private PerspectiveCamera cam;
     private CameraInputController camController;
@@ -42,7 +45,11 @@ public class InGameState implements GameState {
     Map map;
 
     private Model floor;
+    boolean loading;
 
+    public boolean isMapParsed(){
+        return loading;
+    }
 
     private void createFloor(){
         //Create a temp floor
@@ -71,17 +78,16 @@ public class InGameState implements GameState {
     }
 
     public void render () {
-
-       renderer.render(cam, instances);
-
+       renderer.render(cam, instances); //Pass renderInstances and camera to render
     }
 
-    public void dispose () {
-        instances.clear();
+    private void animate(){
+       for(AnimationController controllerInstance: animationControllers){
+           controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
+       }
     }
 
-    public void update(ProjectD projectD){
-
+    private void handleInput(ProjectD projectD){
         //TODO Add support for more controllers here through projectD.getInpuControllers()
         ModelInstance modelInstance = this.instances.get(3);
         InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
@@ -95,9 +101,17 @@ public class InGameState implements GameState {
         float deltaTime = Gdx.graphics.getDeltaTime();
         modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 
-        render();
     }
 
+    public void dispose () {
+        instances.clear();
+    }
+
+    public void update(ProjectD projectD){
+            handleInput(projectD);
+            animate();
+            render();
+    }
 
     public void init(ProjectD projectD){
         rand = new Random();
@@ -110,13 +124,49 @@ public class InGameState implements GameState {
 
     }
 
+    private void generateRenderInstances(){
+
+        loading = true;
+
+        for (GameObject gameObject : map.getGameObjects()) {
+            ModelInstance npcInstance;
+            System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
+            npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
+            npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+            Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+            npcInstance.transform.scale(scale.x, scale.y, scale.z);
+            Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+            npcInstance.transform.rotate(Vector3.X, rotation.x);
+            npcInstance.transform.rotate(Vector3.Y, rotation.y);
+            npcInstance.transform.rotate(Vector3.Z, rotation.z);
+
+            if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
+                animController = new AnimationController(npcInstance);
+                animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
+                    @Override
+                    public void onEnd(AnimationController.AnimationDesc animation) {
+                    }
+
+                    @Override
+                    public void onLoop(AnimationController.AnimationDesc animation) {
+                        //   Gdx.app.log("INFO", "Animation Ended");
+                    }
+                });
+                animationControllers.add(animController);
+            }
+            instances.add(npcInstance);
+        }
+
+    }
+
     @Override
     public void start() {
+        generateRenderInstances();
         createCamera();
         createFloor();
 
         renderer = new RenderManager();
-        renderer.init(map);
+        renderer.init();
     }
 
     @Override

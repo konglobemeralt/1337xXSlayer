@@ -7,19 +7,10 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.model.GameObject;
-import com.projectdgdx.game.utils.AssetManager;
-import com.projectdgdx.game.utils.AssetsFinder;
-import com.projectdgdx.game.utils.Map;
-import com.projectdgdx.game.utils.VectorConverter;
-
-import java.util.Random;
 
 /**
  * Created by konglobemeralt on 2017-05-07.
@@ -32,29 +23,15 @@ public class RenderManager {
     private FPSLogger fps;
 
     public Array<ModelInstance> instances = new Array<ModelInstance>();
-    public Array<AnimationController> animationControllers = new Array<AnimationController>();
-    private AnimationController animController;
 
     public Environment environment;
     DirectionalShadowLight shadowLight;
-    public boolean loading;
     public Shader shader;
 
-    private Random rand;
-
-    Map map;
 
     public void render (PerspectiveCamera cam, Array<ModelInstance> instances) {
         this.instances = instances;
         fps.log();
-
-        if (loading && AssetManager.update())
-            doneLoading();
-
-
-        for(AnimationController controllerInstance: animationControllers){
-            controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
-        }
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -88,12 +65,10 @@ public class RenderManager {
         shadowLight.end();
     }
 
-    public void loadAssets(){
+    public void createBatches(){
         modelBatch = new ModelBatch();
         shadowBatch = new ModelBatch(new DepthShaderProvider());
 
-
-        loading = true;
     }
 
 
@@ -129,53 +104,13 @@ public class RenderManager {
         environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
                 35, 15f, 45f, 100f));
 
-
     }
 
 
-    private void doneLoading() {
 
-        for (GameObject gameObject : map.getGameObjects()) {
-            ModelInstance npcInstance;
-            System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
-            npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-            npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
-            Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-            npcInstance.transform.scale(scale.x, scale.y, scale.z);
-            Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-            npcInstance.transform.rotate(Vector3.X, rotation.x);
-            npcInstance.transform.rotate(Vector3.Y, rotation.y);
-            npcInstance.transform.rotate(Vector3.Z, rotation.z);
-
-            if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
-                animController = new AnimationController(npcInstance);
-                animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
-                    @Override
-                    public void onEnd(AnimationController.AnimationDesc animation) {
-                    }
-
-                    @Override
-                    public void onLoop(AnimationController.AnimationDesc animation) {
-                        //   Gdx.app.log("INFO", "Animation Ended");
-                    }
-                });
-                animationControllers.add(animController);
-            }
-            instances.add(npcInstance);
-        }
-
-        loading = false;
-
-        shader = new BaseShader();
-        shader.init();
-    }
-
-    public void init(Map map){
-        rand = new Random();
-        this.map = map;
-
+    public void init(){
         createEnvironment();
-        loadAssets();
+        createBatches();
 
         shader = new BaseShader();
         shader.init();
@@ -185,10 +120,9 @@ public class RenderManager {
 
     public void dispose () {
         modelBatch.dispose();
+        shadowBatch.dispose();
         instances.clear();
-        AssetManager.dispose();
     }
-
 
 
 }

@@ -20,7 +20,6 @@ public class Config {
     public static final boolean V_SYNC_ENABLED = false;
     public static final int FPS_CAP = 10000;
     public static final boolean FULLSCREEN_ENABLED = false;
-    public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
