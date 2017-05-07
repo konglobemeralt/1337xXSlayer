@@ -44,8 +44,7 @@ public class InGameState implements GameState {
     Random rand;
     Map map;
 
-
-
+    private Model floor;
 
 
     private void moveModel(ModelInstance instance){
@@ -73,10 +72,19 @@ public class InGameState implements GameState {
 
     }
 
+    private void createFloor(){
+        //Create a temp floor
+        ModelBuilder modelBuilder = new ModelBuilder();
+        floor = modelBuilder.createBox(500f, 1f, 500f,
+                new Material(ColorAttribute.createDiffuse(Color.WHITE)),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        instances.add(new ModelInstance(floor));
+
+    }
 
     public void update(ProjectD projectD){
 
-        renderer.render(cam);
+        renderer.render(cam, instances);
 
         //TODO Controller testing:
         //TODO MOVE ACTUAL OBJECTS INSTEAD OF GRAPHIC INSTANCES
@@ -93,8 +101,9 @@ public class InGameState implements GameState {
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 		}else{
-		    //if(instances.size>0)
-            //moveModel(this.instances.get(3));
+		    if(instances.size>0)
+            moveModel(this.instances.get(3));
+
         }
     }
 
@@ -119,13 +128,16 @@ public class InGameState implements GameState {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
 
-        renderer = new RenderManager();
-        renderer.init(map);
+
     }
 
     @Override
     public void start() {
         createCamera();
+        createFloor();
+
+        renderer = new RenderManager();
+        renderer.init(map);
     }
 
     @Override

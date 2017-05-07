@@ -37,15 +37,14 @@ public class RenderManager {
     public Environment environment;
     DirectionalShadowLight shadowLight;
     public boolean loading;
-    private Model floor;
     public Shader shader;
 
     private Random rand;
 
     Map map;
 
-    public void render (PerspectiveCamera cam) {
-
+    public void render (PerspectiveCamera cam, Array<ModelInstance> instances) {
+        this.instances = instances;
         fps.log();
 
         if (loading && AssetManager.update())
@@ -60,9 +59,6 @@ public class RenderManager {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
-
-        if(!loading)
-            //moveModel(instances.get(2));
 
             if(Config.SHADOWMAPPING_ENABLED) {
                 renderShadowMap(cam);
@@ -94,12 +90,6 @@ public class RenderManager {
         modelBatch = new ModelBatch();
         shadowBatch = new ModelBatch(new DepthShaderProvider());
 
-        //Create a temp floor
-        ModelBuilder modelBuilder = new ModelBuilder();
-        floor = modelBuilder.createBox(500f, 1f, 500f,
-                new Material(ColorAttribute.createDiffuse(Color.WHITE)),
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        instances.add(new ModelInstance(floor));
 
         loading = true;
     }
