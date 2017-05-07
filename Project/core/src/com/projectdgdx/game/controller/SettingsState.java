@@ -334,10 +334,10 @@ public class SettingsState implements GameState {
     {
         float value = Config.SUN_LIGHT_R;
 
-        sunrSlider.setValue(value * 100);
+        sunrSlider.setValue(value);
         sunrSlider.setAnimateDuration(0.3f);
 
-        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R));
+        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + "%");
         sunrSliderValue.invalidate();
     }
 
@@ -345,10 +345,10 @@ public class SettingsState implements GameState {
     {
         float value = Config.SUN_LIGHT_G;
 
-        sungSlider.setValue(value * 100f);
+        sungSlider.setValue(value);
         sungSlider.setAnimateDuration(0.3f);
 
-        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R));
+        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ "%");
         sungSliderValue.invalidate();
     }
 
@@ -356,10 +356,10 @@ public class SettingsState implements GameState {
     {
         float value = Config.SUN_LIGHT_B;
 
-        sunbSlider.setValue(value * 100f);
+        sunbSlider.setValue(value);
         sunbSlider.setAnimateDuration(0.3f);
 
-        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B));
+        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ "%");
         sunbSliderValue.invalidate();
     }
 
