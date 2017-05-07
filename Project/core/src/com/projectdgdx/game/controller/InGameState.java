@@ -36,15 +36,15 @@ public class InGameState implements GameState {
 
     private InputMultiplexer multiplexer;
     public Array<ModelInstance> instances = new Array<ModelInstance>();
+
+    private PerspectiveCamera cam;
+    private CameraInputController camController;
+
     RenderManager renderer;
     Random rand;
     Map map;
 
 
-    public void render () {
-
-       renderer.render();
-    }
 
 
 
@@ -76,7 +76,7 @@ public class InGameState implements GameState {
 
     public void update(ProjectD projectD){
 
-        render();
+        renderer.render(cam);
 
         //TODO Controller testing:
         //TODO MOVE ACTUAL OBJECTS INSTEAD OF GRAPHIC INSTANCES
@@ -93,30 +93,39 @@ public class InGameState implements GameState {
 			float deltaTime = Gdx.graphics.getDeltaTime();
 			modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 		}else{
-           // moveModel(this.instances.get(3));
+		    //if(instances.size>0)
+            //moveModel(this.instances.get(3));
         }
     }
 
 
+    public void createCamera(){
+        cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam.position.set(110f, 120f, 135f);
+        cam.lookAt(0f, 0f, 0f);
+        cam.near = Config.CAMERA_NEAR;
+        cam.far = Config.CAMERA_FAR;
+        camController = new CameraInputController(cam);
+        camController.forwardTarget = true;
+        multiplexer.addProcessor(camController);
+        cam.update();
+    }
+
     public void init(ProjectD projectD){
-        this.multiplexer = projectD.getMultiplexer();
+        rand = new Random();
 
-
+        this.multiplexer = projectD.getMultiplexer(); //Handle debug camera control input
 
         MapParser parser = new MapParser();
-
         map = parser.parse("BasicMapTest");
-        rand = new Random();
 
         renderer = new RenderManager();
         renderer.init(map);
-
     }
 
     @Override
     public void start() {
-        renderer.createEnvironment();
-        renderer.createCamera();
+        createCamera();
     }
 
     @Override

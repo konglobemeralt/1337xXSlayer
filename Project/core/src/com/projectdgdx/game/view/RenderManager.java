@@ -1,7 +1,6 @@
 package com.projectdgdx.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
@@ -9,18 +8,15 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
-import com.projectdgdx.game.utils.MapParser;
 
 import java.util.Random;
 
@@ -34,10 +30,6 @@ public class RenderManager {
 
     private FPSLogger fps;
 
-    private PerspectiveCamera cam;
-    private CameraInputController camController;
-
-
     public Array<ModelInstance> instances = new Array<ModelInstance>();
     public Array<AnimationController> animationControllers = new Array<AnimationController>();
     private AnimationController animController;
@@ -48,23 +40,21 @@ public class RenderManager {
     private Model floor;
     public Shader shader;
 
+    private Random rand;
 
-    Random rand;
     Map map;
 
-
-    public void render () {
+    public void render (PerspectiveCamera cam) {
 
         fps.log();
 
         if (loading && AssetManager.update())
             doneLoading();
 
-        cam.update();
 
-       // for(AnimationController controllerInstance: animationControllers){
-       //     controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
-       // }
+        for(AnimationController controllerInstance: animationControllers){
+            controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
+        }
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -75,13 +65,13 @@ public class RenderManager {
             //moveModel(instances.get(2));
 
             if(Config.SHADOWMAPPING_ENABLED) {
-                renderShadowMap();
+                renderShadowMap(cam);
             }
-        renderToScreen();
+        renderToScreen(cam);
 
     }
 
-    private void renderToScreen(){
+    private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
             modelBatch.render(instance, environment);
@@ -89,7 +79,7 @@ public class RenderManager {
         modelBatch.end();
     }
 
-    private void renderShadowMap(){
+    private void renderShadowMap(PerspectiveCamera cam){
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
@@ -151,19 +141,6 @@ public class RenderManager {
     }
 
 
-    public void createCamera(){
-        cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(110f, 120f, 135f);
-        cam.lookAt(0f, 0f, 0f);
-        cam.near = Config.CAMERA_NEAR;
-        cam.far = Config.CAMERA_FAR;
-        camController = new CameraInputController(cam);
-        camController.forwardTarget = true;
-
-
-        cam.update();
-    }
-
     private void doneLoading() {
 
         for (GameObject gameObject : map.getGameObjects()) {
@@ -202,9 +179,10 @@ public class RenderManager {
     }
 
     public void init(Map map){
-
+        rand = new Random();
         this.map = map;
 
+        createEnvironment();
         loadAssets();
 
         shader = new BaseShader();
