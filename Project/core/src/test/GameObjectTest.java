@@ -3,6 +3,7 @@ package test;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.Supervisor;
+import com.projectdgdx.game.utils.Vector3d;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
@@ -10,17 +11,17 @@ import org.junit.Assert;
 
 public class GameObjectTest {
 
-    Vector3 testPos;
-    Vector3 testRotate;
-    Vector3 testScale;
+    Vector3d testPos;
+    Vector3d testRotate;
+    Vector3d testScale;
     String testId;
     GameObject testGO;
 
     @Before
     public void setup(){
-        testPos = new Vector3(1,1,1);
-        testScale = new Vector3(1,1,1);
-        testRotate = new Vector3(1,1,1);
+        testPos = new Vector3d(1,1,1);
+        testScale = new Vector3d(1,1,1);
+        testRotate = new Vector3d(1,1,1);
         testId = "testId";
         // Since GameObject is an abstract class it is needed to create an instance of one of its
         // subclasses to test the code inherited from GameObject.

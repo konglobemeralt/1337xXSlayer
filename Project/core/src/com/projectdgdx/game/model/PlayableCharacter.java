@@ -1,6 +1,7 @@
 package com.projectdgdx.game.model;
 
 import com.badlogic.gdx.math.Vector3;
+import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public abstract class PlayableCharacter extends Character {
 
-    public PlayableCharacter(Vector3 position, Vector3 scale, Vector3 rotation, String id) {
+    public PlayableCharacter(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
     }
 
@@ -20,7 +21,7 @@ public abstract class PlayableCharacter extends Character {
      */
 
     public void reactToInput(){
-        this.state.move();
+        this.state.move(new Vector3d(1,1,1));
     }
 
     /**
@@ -42,7 +43,7 @@ public abstract class PlayableCharacter extends Character {
     public void honestInteract(List<HonestInteractable> interactables){
         for (HonestInteractable i: interactables){
             if (canHonestInteract(i)){
-                i.honestInteract();
+                i.honestInteract(this);
             }
         }
     }
@@ -53,8 +54,9 @@ public abstract class PlayableCharacter extends Character {
      * @return
      */
     protected boolean canHonestInteract(HonestInteractable i){
-        float value = this.getPosition().dst2(i.getPosition()) - GlobalVariables.machineActDistance;
-        return value < 0;
+        //float value = this.getPosition().dst2(i.getPosition()) - GlobalVariables.machineActDistance;
+        //return value < 0;
+        return true;
     }
 
     @Override

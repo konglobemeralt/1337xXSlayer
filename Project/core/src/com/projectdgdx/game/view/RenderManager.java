@@ -17,6 +17,7 @@ import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.AssetsFinder;
 import com.projectdgdx.game.utils.Map;
+import com.projectdgdx.game.utils.VectorConverter;
 
 import java.util.Random;
 
@@ -59,6 +60,7 @@ public class RenderManager {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+
 
             if(Config.SHADOWMAPPING_ENABLED) {
                 renderShadowMap(cam);
@@ -137,10 +139,10 @@ public class RenderManager {
             ModelInstance npcInstance;
             System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
             npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-            npcInstance.transform.setToTranslation(gameObject.getPosition());
-            Vector3 scale = gameObject.getScale();
+            npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+            Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
             npcInstance.transform.scale(scale.x, scale.y, scale.z);
-            Vector3 rotation = gameObject.getRotation();
+            Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
             npcInstance.transform.rotate(Vector3.X, rotation.x);
             npcInstance.transform.rotate(Vector3.Y, rotation.y);
             npcInstance.transform.rotate(Vector3.Z, rotation.z);

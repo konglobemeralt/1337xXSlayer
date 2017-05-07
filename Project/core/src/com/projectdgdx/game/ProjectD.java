@@ -1,6 +1,7 @@
 package com.projectdgdx.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
@@ -76,13 +77,23 @@ public class ProjectD extends ApplicationAdapter {
 			this.setState(GameStates.MAINMENU);
 		}
 
-        XboxController xboxController = new XboxController();
-        if(Controllers.getControllers().size >= 1) {
-			Controllers.getControllers().get(0).addListener(xboxController); //TODO add this line
-		}
 
-        xboxController.setModel(new InputModel());
-        inputController.add(xboxController);
+        if(Controllers.getControllers().size >= 1) {
+            for(Controller controller : Controllers.getControllers()) {
+                XboxController xboxController = new XboxController();
+                controller.addListener(xboxController);
+                xboxController.setModel(new InputModel());
+                inputController.add(xboxController);
+            }
+        } else {
+            KeyboardController keyboardController = new KeyboardController();
+            keyboardController.setModel(new InputModel());
+            multiplexer.addProcessor(keyboardController);
+            inputController.add(keyboardController);
+        }
+
+
+
 
     }
 
