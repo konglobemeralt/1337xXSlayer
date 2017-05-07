@@ -20,6 +20,7 @@ public class Config {
     public static final boolean V_SYNC_ENABLED = false;
     public static final int FPS_CAP = 10000;
     public static final boolean FULLSCREEN_ENABLED = false;
+    public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
@@ -37,9 +38,9 @@ public class Config {
     public static final float SUN_LIGHT_Y = -0.4f;
     public static final float SUN_LIGHT_Z = -0.2f;
 
-    public static final float SUN_LIGHT_R = 0.8f;
-    public static final float SUN_LIGHT_G= 0.7f;
-    public static final float SUN_LIGHT_B = 0.6f;
+    public static float SUN_LIGHT_R = 80;
+    public static float SUN_LIGHT_G= 70;
+    public static float SUN_LIGHT_B = 60;
 
     public static final float AMBIENT_LIGHT_R = 0.5f;
     public static final float AMBIENT_LIGHT_G = 0.4f;
