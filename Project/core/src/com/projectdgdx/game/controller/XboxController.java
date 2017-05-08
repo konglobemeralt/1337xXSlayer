@@ -58,14 +58,29 @@ public class XboxController extends InputController implements ControllerListene
         return false;
     }
 
+
+    /**
+     * This method checks for the deadzone of a xbox controller.
+     * @param value
+     * @return True or false of being within the deadzone.
+     */
+    private boolean isWithinDeadZone(float value) {
+        return (value <= 0.2f && value >= -0.2f);
+    }
+
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-//        System.out.println("AxisCode: " + axisCode + " : " + value);
-        if(axisCode == 2) { //Left-right left stick
+        System.out.println("AxisCode: " + axisCode + " : " + value);
+
+//        System.out.println(value);
+        if(isWithinDeadZone(value)) {
+            value = 0;
+        }
+        if(axisCode == 1 ) { //Left-right left stick
             getModel().getLeftStick().x = value;
         }
-        if(axisCode == 3) { //Top-down left stick
-            getModel().getLeftStick().z = value;
+        if(axisCode == 0) { //Top-down left stick
+            getModel().getLeftStick().z = -value;
         }
         return false;
     }
