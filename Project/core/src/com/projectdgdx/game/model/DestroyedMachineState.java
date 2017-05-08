@@ -26,7 +26,7 @@ public class DestroyedMachineState implements MachineState, SpotlightListener{
 
     @Override
     public boolean isDetected(Vector3d pos) {
-        return
+        return true;
     }
 
     @Override
