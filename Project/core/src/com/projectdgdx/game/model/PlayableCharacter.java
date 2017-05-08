@@ -64,9 +64,8 @@ public abstract class PlayableCharacter extends Character {
      * @return
      */
     protected boolean canHonestInteract(HonestInteractable hi){
-        //float value = this.getPosition().dst2(hi.getPosition()) - GlobalVariables.machineActDistance;
-        //return value < 0;
-        return true;
+        float value = this.getPosition().distanceTo(hi.getPosition()) - GlobalVariables.machineActDistance;
+        return value < 0;
     }
 
     protected void setStartingState(){

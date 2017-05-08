@@ -59,7 +59,4 @@ public abstract class GameObject {
         this.position.y += y;
     }
 
-    public float distanceTo(Vector3d compVector){
-        return 0.1f;
-    }
 }
