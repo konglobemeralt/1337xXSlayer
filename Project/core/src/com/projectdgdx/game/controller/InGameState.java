@@ -21,11 +21,15 @@ import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.InputModel;
+import com.projectdgdx.game.model.PlayableCharacter;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.view.BaseShader;
 import com.projectdgdx.game.view.RenderManager;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * InGameState controls everything that is ingame.
@@ -41,6 +45,9 @@ public class InGameState implements GameState {
 
     private PerspectiveCamera cam;
     private CameraInputController camController;
+
+    HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
+
 
     RenderManager renderer;
     Random rand;
@@ -90,28 +97,46 @@ public class InGameState implements GameState {
     }
 
     private void handleInput(ProjectD projectD){
-        //TODO Add support for more controllers here through projectD.getInpuControllers()
-        ModelInstance modelInstance = this.instances.get(3);
-        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
-        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
-        System.out.println(inputModel.getLeftStick().getLength());
-        if(inputModel.getLeftStick().getLength() >= 0.1f || inputModel.getLeftStick().getLength() <= -0.1f) {
-            Vector3 scale = modelInstance.transform.getScale(new Vector3());
-            Quaternion quaternion = new Quaternion();
 
 
-            quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
-
-            Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-            modelInstance.transform.set(matrix4);
-        }
         float deltaTime = Gdx.graphics.getDeltaTime();
-        modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+        for(InputController inputController : projectD.getInpuControllers()) {
+            InputModel inputModel = inputController.getModel();
+            if(controllerPlayerMap.containsKey(inputController)) {
+                PlayableCharacter player = controllerPlayerMap.get(inputController);
+                player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
+                player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
 
-        if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
-            this.stop(projectD);
-            projectD.setState(GameStates.SETTINGS);
+            }
+
+
+
+            if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
+                this.stop(projectD);
+                projectD.setState(GameStates.SETTINGS);
+            }
         }
+
+
+//        //TODO Add support for more controllers here through projectD.getInpuControllers()
+//        ModelInstance modelInstance = this.instances.get(3);
+//        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
+//        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
+//        System.out.println(inputModel.getLeftStick().getLength());
+//        if(inputModel.getLeftStick().getLength() >= 0.1f || inputModel.getLeftStick().getLength() <= -0.1f) {
+//            Vector3 scale = modelInstance.transform.getScale(new Vector3());
+//            Quaternion quaternion = new Quaternion();
+//
+//
+//            quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
+//
+//            Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+//            modelInstance.transform.set(matrix4);
+//        }
+//        float deltaTime = Gdx.graphics.getDeltaTime();
+
+
+
 
     }
 
@@ -131,6 +156,19 @@ public class InGameState implements GameState {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
 
+
+        List<PlayableCharacter> players = map.getPlayers();
+        for(int j = 0; j < 100; j++) {
+            System.out.println(players.size());
+        }
+        int i = 0;
+        for(InputController input : projectD.getInpuControllers()) {
+            if(i < players.size()) {
+                controllerPlayerMap.put(input, players.get(i));
+                System.out.println("Found " + i + " players");
+            }
+            i++;
+        }
     }
 
     private void generateRenderInstances(){
