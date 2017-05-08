@@ -107,17 +107,17 @@ public class RenderManager {
                     Config.SHADOW_MAP_VIEWPORT_HEIGHT,
                     Config.SHADOW_MAP_NEAR,
                     Config.SHADOW_MAP_FAR)).set(
-                    Config.SUN_LIGHT_R,
-                    Config.SUN_LIGHT_G,
-                    Config.SUN_LIGHT_B,
+                    Config.SUN_LIGHT_R/100f,
+                    Config.SUN_LIGHT_G/100f,
+                    Config.SUN_LIGHT_B/100f,
                     Config.SUN_LIGHT_X,
                     Config.SUN_LIGHT_Y,
                     Config.SUN_LIGHT_Z));
             environment.shadowMap = shadowLight;
         }else{
-            environment.add(new DirectionalLight().set(Config.SUN_LIGHT_R,
-                    Config.SUN_LIGHT_G,
-                    Config.SUN_LIGHT_B,
+            environment.add(new DirectionalLight().set(Config.SUN_LIGHT_R/100f,
+                    Config.SUN_LIGHT_G/100f,
+                    Config.SUN_LIGHT_B/100f,
                     Config.SUN_LIGHT_X,
                     Config.SUN_LIGHT_Y,
                     Config.SUN_LIGHT_Z));

@@ -244,7 +244,7 @@ public class SettingsState implements GameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.SUN_LIGHT_R = ((int) value);
+                Config.SUN_LIGHT_R = ((int) value );
                 updateSunRLabel();
             }
         });

@@ -166,6 +166,7 @@ public class InGameState implements GameState {
 
         renderer = new RenderManager();
         renderer.init();
+
     }
 
     @Override
