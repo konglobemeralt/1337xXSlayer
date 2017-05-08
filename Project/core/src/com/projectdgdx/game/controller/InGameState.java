@@ -121,7 +121,6 @@ public class InGameState implements GameState {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
 
-
     }
 
     private void generateRenderInstances(){

@@ -10,10 +10,15 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.projectdgdx.game.Config;
 
 /**
  * Created by konglobemeralt on 2017-04-05.
+ *
+ * Basic shader class that creates a basic render pipeline from a vertex and fragment
+ * shaders defined in .gls files.
  */
+
 public class BaseShader implements Shader {
 
     ShaderProgram shader;
@@ -28,8 +33,8 @@ public class BaseShader implements Shader {
 
     @Override
     public void init () {
-        String vert = Gdx.files.internal("shaders/vertexShader.glsl").readString();
-        String frag = Gdx.files.internal("shaders/fragmentShader.glsl").readString();
+        String vert = Gdx.files.internal(Config.VERTEX_SHADER_PATH).readString();
+        String frag = Gdx.files.internal(Config.FRAGMENT_SHADER_PATH).readString();
         shader = new ShaderProgram(vert, frag);
         if (!shader.isCompiled())
             throw new GdxRuntimeException(shader.getLog());

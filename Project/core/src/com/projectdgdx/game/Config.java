@@ -22,6 +22,8 @@ public class Config {
     public static final boolean FULLSCREEN_ENABLED = false;
 
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
+    public static final String VERTEX_SHADER_PATH = "shaders/vertexShader.glsl";
+    public static final String FRAGMENT_SHADER_PATH = "shaders/fragmentShader.glsl";
 
     //LIGHTS AND SHADOW MAPPING
     public static boolean SHADOWMAPPING_ENABLED = true;

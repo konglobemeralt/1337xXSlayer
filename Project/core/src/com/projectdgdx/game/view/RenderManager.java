@@ -14,6 +14,9 @@ import com.projectdgdx.game.Config;
 
 /**
  * Created by konglobemeralt on 2017-05-07.
+ *
+ * Class handeling rendering graphical objects to the screen
+ * and various graphical special effects.
  */
 public class RenderManager {
 
@@ -46,6 +49,12 @@ public class RenderManager {
 
     }
 
+    /**
+     * renderToScreen renders graphical objects to screen
+     *
+     * @param cam PerspectiveCam the current camera
+     */
+
     private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
         for (ModelInstance instance : instances) {
@@ -53,6 +62,12 @@ public class RenderManager {
         }
         modelBatch.end();
     }
+
+    /**
+     * renderShadowMap creates a shadow map to be used by renderToScreen
+     *
+     * @param cam PerspectiveCam the current camera
+     */
 
     private void renderShadowMap(PerspectiveCamera cam){
         shadowLight.begin(Vector3.Zero, cam.direction);
@@ -65,13 +80,19 @@ public class RenderManager {
         shadowLight.end();
     }
 
+    /**
+     * createBatches creates the batches for rendering
+     *
+     */
     public void createBatches(){
         modelBatch = new ModelBatch();
         shadowBatch = new ModelBatch(new DepthShaderProvider());
-
     }
 
-
+    /**
+     * createEnvironment creates the enviroment
+     *
+     */
     public void createEnvironment(){
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
@@ -105,8 +126,6 @@ public class RenderManager {
                 35, 15f, 45f, 100f));
 
     }
-
-
 
     public void init(){
         createEnvironment();
