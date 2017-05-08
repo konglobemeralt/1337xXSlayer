@@ -16,14 +16,14 @@ public abstract class Entity extends GameObject {
      * @return True if moving does not cause a collision.
      */
 
-    protected abstract boolean isColliding(Vector3 v);
+    protected abstract boolean isColliding(Vector3d v);
 
     /**
      * Changes the entity's position by translation by vector v.
      * @param v The vector used for translation.
      */
 
-    public void move(Vector3 v){
+    public void move(Vector3d v){
         if (isColliding(v)){
             this.addPositionX(v.x);
             this.addPositionY(v.y);

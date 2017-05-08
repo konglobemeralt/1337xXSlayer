@@ -10,6 +10,7 @@ public class Player extends Character {
     public Player(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
     }
+    // May be useless
 
     @Override
     public void setStartingState() {

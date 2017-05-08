@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model;
 
-import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.List;
@@ -10,9 +9,13 @@ import java.util.List;
  */
 public abstract class PlayableCharacter extends Character {
 
+    protected PlayerState state;
+
     public PlayableCharacter(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
+        this.setStartingState();
     }
+
 
     /**
      * Recieves the movement inputs and delegates it to the state machine.
@@ -22,6 +25,13 @@ public abstract class PlayableCharacter extends Character {
 
     public void reactToInput(){
         this.state.move(new Vector3d(1,1,1));
+    }
+
+    /**
+     * Sets the starting state of a character
+     */
+    public void setState(PlayerState newState){
+        this.state = newState;
     }
 
     /**
@@ -50,16 +60,14 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      *
-     * @param i
+     * @param hi
      * @return
      */
-    protected boolean canHonestInteract(HonestInteractable i){
-        //float value = this.getPosition().dst2(i.getPosition()) - GlobalVariables.machineActDistance;
-        //return value < 0;
-        return true;
+    protected boolean canHonestInteract(HonestInteractable hi){
+        float value = this.getPosition().distanceTo(hi.getPosition()) - GlobalVariables.machineActDistance;
+        return value < 0;
     }
 
-    @Override
     protected void setStartingState(){
         this.state = new NormalPlayerState();
     }

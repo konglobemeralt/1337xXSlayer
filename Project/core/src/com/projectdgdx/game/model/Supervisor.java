@@ -22,7 +22,7 @@ public class Supervisor extends PlayableCharacter {
     }
 
     @Override
-    public boolean isColliding(Vector3 vec) {
+    public boolean isColliding(Vector3d vec) {
         return false;
     }
 }
