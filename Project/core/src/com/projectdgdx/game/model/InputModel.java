@@ -11,6 +11,7 @@ public class InputModel {
     private PressedData buttonB = new PressedData();
     private PressedData buttonX = new PressedData();
     private PressedData buttonY = new PressedData();
+    private PressedData menuButton = new PressedData();
 
     public Vector2d getLeftStick() {
         return leftStick;
@@ -28,6 +29,9 @@ public class InputModel {
     public void setButtonY(boolean isPressed) {
         buttonY.setPressed(isPressed);
     }
+    public void setMenuButton(boolean isPressed) {
+        menuButton.setPressed(isPressed);
+    }
 
     public PressedData getButtonA() {
         return buttonA;
@@ -41,12 +45,16 @@ public class InputModel {
     public PressedData getButtonY() {
         return buttonY;
     }
+    public PressedData getMenuButton() {
+        return menuButton;
+    }
 
     public void resetButtonCounts() {
         buttonA.resetCount();
         buttonB.resetCount();
         buttonX.resetCount();
         buttonY.resetCount();
+        menuButton.resetCount();
     }
 
 }

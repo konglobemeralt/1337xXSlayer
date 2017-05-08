@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
+import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.InputModel;
@@ -101,6 +102,11 @@ public class InGameState implements GameState {
         float deltaTime = Gdx.graphics.getDeltaTime();
         modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 
+        if(inputModel.getMenuButton().isPressed()){
+            this.exit();
+            projectD.setState(GameStates.SETTINGS);
+        }
+
     }
 
     public void dispose () {
@@ -175,6 +181,8 @@ public class InGameState implements GameState {
     }
 
     public void exit(){
+        this.stop();
+        this.dispose();
         renderer.dispose();
     }
 
