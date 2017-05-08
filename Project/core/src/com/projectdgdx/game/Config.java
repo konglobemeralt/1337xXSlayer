@@ -15,7 +15,7 @@ public class Config {
 
     //CAMERA VARIABLES
     public static int CAMERA_FOV = 55;
-    public static final float CAMERA_NEAR = 0.001f;
+    public static final float CAMERA_NEAR = 1f;
     public static final float CAMERA_FAR = 500f;
 
     /************SHADOW MAPPING VARIABLES************/
@@ -33,7 +33,7 @@ public class Config {
     /************GRAPHICS VARIABLES************/
 
     //GRAPHICS SETTINGS
-    public static int AA_SAMPLES = 20;
+    public static int AA_SAMPLES = 8;
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
     public static final boolean RESIZABLE = false;
