@@ -69,7 +69,10 @@ public class ProjectD extends ApplicationAdapter {
                 xboxController.setModel(new InputModel());
                 inputController.add(xboxController);
             }
-        } else {
+        }
+
+        //Add a keyboard controller if there are not enough gamepads
+        if(Controllers.getControllers().size < 4) {
             KeyboardController keyboardController = new KeyboardController();
             keyboardController.setModel(new InputModel());
             multiplexer.addProcessor(keyboardController);
