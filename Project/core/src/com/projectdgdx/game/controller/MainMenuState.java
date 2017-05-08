@@ -149,7 +149,7 @@ public class MainMenuState implements GameState {
 
     @Override
     public void stop(ProjectD projectD) {
-
+        stage.dispose();
     }
 
     @Override
