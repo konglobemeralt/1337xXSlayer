@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by konglobemeralt on 2017-04-03.
+ *
+ * Facade for libdx asset manager
+ *
  */
 public class AssetManager {
 
