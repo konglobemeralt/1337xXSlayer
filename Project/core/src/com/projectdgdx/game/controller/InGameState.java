@@ -119,18 +119,19 @@ public class InGameState implements GameState {
 
 
         for (GameObject gameObject : map.getGameObjects()) {
-            ModelInstance npcInstance;
-            npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-            npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+            // Create a ModelInstance for GameObject gameObject
+            ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
+            modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
             Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-            npcInstance.transform.scale(scale.x, scale.y, scale.z);
+            modelInstance.transform.scale(scale.x, scale.y, scale.z);
             Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-            npcInstance.transform.rotate(Vector3.X, rotation.x);
-            npcInstance.transform.rotate(Vector3.Y, rotation.y);
-            npcInstance.transform.rotate(Vector3.Z, rotation.z);
+            modelInstance.transform.rotate(Vector3.X, rotation.x);
+            modelInstance.transform.rotate(Vector3.Y, rotation.y);
+            modelInstance.transform.rotate(Vector3.Z, rotation.z);
 
-            if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
-                AnimationController animController = new AnimationController(npcInstance);
+            //Check for worker or player animation from id
+            if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
+                AnimationController animController = new AnimationController(modelInstance);
                 animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
                     @Override
                     public void onEnd(AnimationController.AnimationDesc animation) {
@@ -143,8 +144,9 @@ public class InGameState implements GameState {
                 });
                 animationControllers.add(animController);
             }
-//            instances.add(npcInstance);
-            objectsMap.put(gameObject, npcInstance);
+
+            //Add GameObject and ModelInstance to a map that keeps them together
+            objectsMap.put(gameObject, modelInstance);
 
         }
 
@@ -161,8 +163,6 @@ public class InGameState implements GameState {
     }
 
     public void updateModelInstaces() {
-//        Set<GameObject, ModelInstance>
-
         for(java.util.Map.Entry<GameObject, ModelInstance> entrySet : objectsMap.entrySet()) {
             ModelInstance modelInstance = entrySet.getValue();
             GameObject gameObject = entrySet.getKey();
