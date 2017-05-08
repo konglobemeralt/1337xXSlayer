@@ -26,6 +26,8 @@ public class MainMenuState implements GameState {
     private Stage stage;
     private TextButton newGameButton;
     private TextButton settingsButton;
+    private TextButton exitButton;
+
     private InputMultiplexer multiplexer;
     private Label mainMenuHeading;
     private Table table;
@@ -73,6 +75,11 @@ public class MainMenuState implements GameState {
             this.exit(projectD);
             projectD.setState(GameStates.SETTINGS);
         }
+
+        else if(exitButton.isPressed()){
+            this.exit(projectD);
+            Gdx.app.exit();
+        }
     }
 
     @Override
@@ -88,6 +95,8 @@ public class MainMenuState implements GameState {
 
         settingsButton = new TextButton("Settings", skin);
 
+        exitButton = new TextButton("Exit Game", skin);
+
         table = new Table();
 
         table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -97,6 +106,8 @@ public class MainMenuState implements GameState {
         table.add(newGameButton).expandX().width(600).height(60);
         table.row();
         table.add(settingsButton).expandX().width(600).height(60);
+        table.row();
+        table.add(exitButton).expandX().width(600).height(60);
         table.row();
 
         stage.addActor(table);
@@ -118,7 +129,7 @@ public class MainMenuState implements GameState {
 
     @Override
     public void exit(ProjectD projectD) {
-        stage.dispose();
+        //stage.dispose();
     }
 
 

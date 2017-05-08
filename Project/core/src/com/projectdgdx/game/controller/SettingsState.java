@@ -28,7 +28,7 @@ public class SettingsState implements GameState {
 
 
     //private TextButton toggleShadowMapButton;
-    private TextButton backButton;
+    private TextButton mainMenuButton;
     private InputMultiplexer multiplexer;
 
     private Slider fovSlider;
@@ -103,10 +103,15 @@ public class SettingsState implements GameState {
         stage.act();
         stage.draw();
 
-
-        if(backButton.isPressed()&& Gdx.input.justTouched()){
-            this.exit(projectD);
+        if(projectD.getInpuControllers().get(0).getModel().getMenuButton().isPressed()
+                && projectD.getInpuControllers().get(0).getModel().getMenuButton().getPressedCount() >= 1){
+            this.stop(projectD);
             projectD.setState(GameStates.INGAME);
+        }
+
+        if(mainMenuButton.isPressed()&& Gdx.input.justTouched()){
+            this.exit(projectD);
+            projectD.setState(GameStates.MAINMENU);
         }
     }
 
@@ -126,9 +131,9 @@ public class SettingsState implements GameState {
         //toggleShadowMapButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 + 45);
         //stage.addActor(toggleShadowMapButton);
 
-        backButton = new TextButton("Start Game", skin);
-        //backButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
-        //stage.addActor(backButton);
+        mainMenuButton = new TextButton("To Main Menu", skin);
+        //mainMenuButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
+        //stage.addActor(mainMenuButton);
 
         fovSlider = new Slider(5, 120, 1, false, skin);
         fovSlider.setValue(Config.CAMERA_FOV);
@@ -199,7 +204,7 @@ public class SettingsState implements GameState {
         table.add(sunbSlider);
         table.add(sunbSliderValue).padRight(300);
         table.row();
-        table.add(backButton).expandY().width(450).height(60);
+        table.add(mainMenuButton).expandY().width(450).height(60);
         table.row();
 
 
