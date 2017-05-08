@@ -12,7 +12,7 @@ public class UnusedMachineState implements MachineState {
 
     @Override
     public void dishonestInteract(PlayableCharacter player, DishonestInteractable di) {
-        player.setState(new MachineDestroyingPlayerState(di));
+        player.setState(new MachineDestroyingPlayerState(di, player));
 
     }
 }

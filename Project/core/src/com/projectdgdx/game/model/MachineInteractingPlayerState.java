@@ -14,6 +14,7 @@ public class MachineInteractingPlayerState implements PlayerState, TimerListener
     MachineInteractingPlayerState(HonestInteractable machine, PlayableCharacter currentPlayer){
         this.currentPlayer = currentPlayer;
         this.machine = machine;
+        // Play some kind of animation
         Timer timer = new Timer(3, 1000);
         timer.addListener(this);
     }
@@ -25,6 +26,7 @@ public class MachineInteractingPlayerState implements PlayerState, TimerListener
 
     @Override
     public void timeIsUp() {
+        this.machine.updateTimer();
         this.currentPlayer.setState(new NormalPlayerState());
     }
 }

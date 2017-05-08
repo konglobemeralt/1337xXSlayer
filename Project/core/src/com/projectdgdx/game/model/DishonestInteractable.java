@@ -9,4 +9,6 @@ import com.projectdgdx.game.utils.Vector3d;
 public interface DishonestInteractable {
     void dishonestInteract(PlayableCharacter player);
     Vector3d getPosition();
+    void setState(MachineState newState);
+
 }
