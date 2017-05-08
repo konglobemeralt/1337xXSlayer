@@ -72,8 +72,11 @@ public class InGameState implements GameState {
             InputModel inputModel = inputController.getModel();
             if(controllerPlayerMap.containsKey(inputController)) {
                 PlayableCharacter player = controllerPlayerMap.get(inputController);
-                player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
-                player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
+                if(inputModel.getLeftStick().getLength() != 0) {
+                    player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
+                    player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
+                }
+
 
             }
 
@@ -107,6 +110,9 @@ public class InGameState implements GameState {
             }
             i++;
         }
+
+        generateRenderInstances();
+
     }
 
     private void generateRenderInstances(){
@@ -147,8 +153,6 @@ public class InGameState implements GameState {
     @Override
     public void start(ProjectD projectD) {
         this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
-
-        generateRenderInstances();
         createCamera();
 
         renderer = new RenderManager();
