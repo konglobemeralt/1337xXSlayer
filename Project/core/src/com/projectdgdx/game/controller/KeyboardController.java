@@ -31,18 +31,18 @@ public class KeyboardController extends InputController implements InputProcesso
     public boolean keyUp(int keycode) {
         // A really small value is kept to keep angle
         if(keycode == 51 || keycode == 19) { //Up
-            getModel().getLeftStick().z = 0.001f;
+            getModel().getLeftStick().z = 0;
         }
         if(keycode == 29 || keycode == 21) { //Left
-            getModel().getLeftStick().x = -0.001f;
+            getModel().getLeftStick().x = 0;
         }
 
         if(keycode == 47 || keycode == 20) { //Down
-            getModel().getLeftStick().z = -0.001f;
+            getModel().getLeftStick().z = 0;
         }
 
         if(keycode == 32 || keycode == 22) { //Right
-            getModel().getLeftStick().x = 0.001f;
+            getModel().getLeftStick().x = 0;
         }
         return false;
     }
