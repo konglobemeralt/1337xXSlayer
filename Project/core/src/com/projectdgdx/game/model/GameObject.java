@@ -60,6 +60,6 @@ public abstract class GameObject {
     }
 
     public float distanceTo(Vector3d compVector){
-
+        return 0.1f;
     }
 }
