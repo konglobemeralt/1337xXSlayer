@@ -3,16 +3,27 @@ package com.projectdgdx.game.model;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Vector3d;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Eddie on 2017-04-03.
  */
 public class Spotlight extends Entity {
-    public Spotlight(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
+    private List<SpotlightListener> listeners = new ArrayList();
+    private int spotlightRadius;
+
+    public Spotlight(Vector3d position, Vector3d scale, Vector3d rotation, String id, int spotlightRadius) {
         super(position, scale, rotation, id);
+        this.spotlightRadius = spotlightRadius;
     }
 
     @Override
-    public boolean isColliding(Vector3 vec) {
+    public boolean isColliding(Vector3d vec) {
         return false;
+    }
+
+    void addListener(SpotlightListener slListener){
+        listeners.add(slListener);
     }
 }
