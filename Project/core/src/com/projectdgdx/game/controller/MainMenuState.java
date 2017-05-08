@@ -66,11 +66,11 @@ public class MainMenuState implements GameState {
         stage.draw();
 
         if(newGameButton.isPressed()){
-            this.exit();
+            this.exit(projectD);
             projectD.setState(GameStates.INGAME);
         }
         else if(settingsButton.isPressed()){
-            this.exit();
+            this.exit(projectD);
             projectD.setState(GameStates.SETTINGS);
         }
     }
@@ -107,17 +107,17 @@ public class MainMenuState implements GameState {
     }
 
     @Override
-    public void start() {
+    public void start(ProjectD projectD) {
 
     }
 
     @Override
-    public void stop() {
+    public void stop(ProjectD projectD) {
 
     }
 
     @Override
-    public void exit() {
+    public void exit(ProjectD projectD) {
         stage.dispose();
     }
 

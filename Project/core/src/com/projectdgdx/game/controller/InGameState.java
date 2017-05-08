@@ -102,8 +102,8 @@ public class InGameState implements GameState {
         float deltaTime = Gdx.graphics.getDeltaTime();
         modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
 
-        if(inputModel.getMenuButton().isPressed()){
-            this.exit();
+        if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
+            this.stop(projectD);
             projectD.setState(GameStates.SETTINGS);
         }
 
@@ -121,8 +121,6 @@ public class InGameState implements GameState {
 
     public void init(ProjectD projectD){
         rand = new Random();
-
-        this.multiplexer = projectD.getMultiplexer(); //Handle debug camera control input
 
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
@@ -165,7 +163,9 @@ public class InGameState implements GameState {
     }
 
     @Override
-    public void start() {
+    public void start(ProjectD projectD) {
+        this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
+
         generateRenderInstances();
         createCamera();
         createFloor();
@@ -176,12 +176,12 @@ public class InGameState implements GameState {
     }
 
     @Override
-    public void stop() {
-
+    public void stop(ProjectD projectD) {
+        projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
     }
 
-    public void exit(){
-        this.stop();
+    public void exit(ProjectD projectD){
+        this.stop(projectD);
         this.dispose();
         renderer.dispose();
     }

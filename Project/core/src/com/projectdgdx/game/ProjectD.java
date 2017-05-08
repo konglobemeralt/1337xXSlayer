@@ -40,10 +40,10 @@ public class ProjectD extends ApplicationAdapter {
 
     public void setState(GameStates newState) {
         if(currentState != null){
-            currentState.stop();
+            currentState.stop(this);
         }
         this.currentState = gameStates.get(newState);
-        this.currentState.start();
+        this.currentState.start(this);
     }
 
     public List<InputController> getInpuControllers() {
@@ -105,7 +105,7 @@ public class ProjectD extends ApplicationAdapter {
 
     @Override
     public void dispose(){
-        this.currentState.exit();
+        this.currentState.exit(this);
     }
 
     public InputMultiplexer getMultiplexer() {

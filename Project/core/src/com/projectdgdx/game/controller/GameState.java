@@ -8,8 +8,8 @@ import com.projectdgdx.game.ProjectD;
 public interface GameState {
     void update(ProjectD projectD);
     void init(ProjectD projectD);
-    void exit();
+    void exit(ProjectD projectD);
 
-    void start();
-    void stop();
+    void start(ProjectD projectD);
+    void stop(ProjectD projectD);
 }

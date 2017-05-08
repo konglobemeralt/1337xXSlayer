@@ -8,10 +8,6 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -109,7 +105,7 @@ public class SettingsState implements GameState {
 
 
         if(backButton.isPressed()&& Gdx.input.justTouched()){
-            this.exit();
+            this.exit(projectD);
             projectD.setState(GameStates.INGAME);
         }
     }
@@ -364,7 +360,7 @@ public class SettingsState implements GameState {
     }
 
     @Override
-    public void start() {
+    public void start(ProjectD projectD) {
         updateFOVlabel();
         updateAAlabel();
 
@@ -375,12 +371,11 @@ public class SettingsState implements GameState {
     }
 
     @Override
-    public void stop() {
-
+    public void stop(ProjectD projectD) {
+        projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
     }
 
     @Override
-    public void exit() {
-        stage.dispose();
+    public void exit(ProjectD projectD) {
     }
 }
