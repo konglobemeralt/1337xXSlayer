@@ -2,6 +2,9 @@ package com.projectdgdx.game;
 
 /**
  * Created by Eddie on 2017-04-28.
+ *
+ * Class containing various settings variables for the game.
+ *
  */
 public class Config {
 	static final boolean DEBUG = false;
@@ -21,6 +24,7 @@ public class Config {
     public static final int FPS_CAP = 10000;
     public static final boolean FULLSCREEN_ENABLED = false;
 
+    //PATHS TO VARIOUS THINGS
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
     public static final String VERTEX_SHADER_PATH = "shaders/vertexShader.glsl";
     public static final String FRAGMENT_SHADER_PATH = "shaders/fragmentShader.glsl";
@@ -34,7 +38,7 @@ public class Config {
     public static final float SHADOW_MAP_NEAR = 0.01f;
     public static final float SHADOW_MAP_FAR = 1500f;
 
-
+    //LIGHTING VARIABLES
     public static final float SUN_LIGHT_X = -1f;
     public static final float SUN_LIGHT_Y = -0.4f;
     public static final float SUN_LIGHT_Z = -0.2f;
