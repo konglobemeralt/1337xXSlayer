@@ -76,7 +76,7 @@ public class Config {
 
     //PATHS GUI STYLE
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
-    
+
     /************MODEL VARIABLES************/
 
     //MODEL RADIUS'S
