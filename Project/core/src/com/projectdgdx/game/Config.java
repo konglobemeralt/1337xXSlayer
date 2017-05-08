@@ -8,7 +8,7 @@ package com.projectdgdx.game;
  */
 
 public class Config {
-	static final boolean DEBUG = false;
+    static final boolean DEBUG = false;
     public static float MOVE_SPEED = 30f;
 
     /************CAMERA VARIABLES************/
@@ -33,7 +33,7 @@ public class Config {
     /************GRAPHICS VARIABLES************/
 
     //GRAPHICS SETTINGS
-    public static int AA_SAMPLES = 20;
+    public static int AA_SAMPLES = 8;
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
     public static final boolean RESIZABLE = false;
