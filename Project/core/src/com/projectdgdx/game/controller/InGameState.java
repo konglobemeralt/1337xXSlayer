@@ -28,6 +28,7 @@ import com.projectdgdx.game.view.RenderManager;
 import java.util.Random;
 
 /**
+ * InGameState controls everything that is ingame.
  * Created by Eddie on 2017-04-28.
  */
 public class InGameState implements GameState {
