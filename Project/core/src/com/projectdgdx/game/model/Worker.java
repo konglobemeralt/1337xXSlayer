@@ -12,11 +12,7 @@ public class Worker extends Character {
     }
 
     @Override
-    public void setStartingState() {
-    }
-
-    @Override
-    public boolean isColliding(Vector3 vec) {
+    public boolean isColliding(Vector3d vec) {
         return false;
     }
 }
