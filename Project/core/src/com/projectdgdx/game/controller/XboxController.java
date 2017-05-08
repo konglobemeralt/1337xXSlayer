@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.model.InputModel;
 
 /**
+ * This controller handles input from a xBox controller. It is a valid input for the game.
+ *
  * Created by Eddie on 2017-04-28.
  */
 public class XboxController extends InputController implements ControllerListener {
