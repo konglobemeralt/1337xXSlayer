@@ -25,8 +25,8 @@ public class DestroyedMachineState implements MachineState, SpotlightListener{
     }
 
     @Override
-    public boolean isDetected(Vector3d pos) {
-        return true;
+    public boolean isDetected(Vector3d spotlightPos, int radius) {
+        return this.machinePosition.isInRadius(spotlightPos, radius);
     }
 
     @Override

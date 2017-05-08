@@ -30,7 +30,7 @@ public class Spotlight extends Entity {
 
     private void checkListenerDetection(Vector3d v){
         for(SpotlightListener sl : listeners){
-            if(sl.isDetected(v)){
+            if(sl.isDetected(v, this.spotlightRadius)){
                 sl.detect();
             }
         }
