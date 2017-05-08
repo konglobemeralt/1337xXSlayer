@@ -23,13 +23,11 @@ import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.InputModel;
 import com.projectdgdx.game.model.PlayableCharacter;
 import com.projectdgdx.game.utils.*;
+import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.view.BaseShader;
 import com.projectdgdx.game.view.RenderManager;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * InGameState controls everything that is ingame.
@@ -47,6 +45,7 @@ public class InGameState implements GameState {
     private CameraInputController camController;
 
     HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
+    HashMap<GameObject, ModelInstance> objectsMap = new HashMap<>();
 
 
     RenderManager renderer;
@@ -87,7 +86,7 @@ public class InGameState implements GameState {
     }
 
     public void render () {
-       renderer.render(cam, instances); //Pass renderInstances and camera to render
+       renderer.render(cam, objectsMap.values()); //Pass renderInstances and camera to render
     }
 
     private void animate(){
@@ -148,6 +147,7 @@ public class InGameState implements GameState {
             handleInput(projectD);
             animate();
             render();
+            updateModelInstaces();
     }
 
     public void init(ProjectD projectD){
@@ -156,12 +156,8 @@ public class InGameState implements GameState {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
 
-
-        List<PlayableCharacter> players = map.getPlayers();
-        for(int j = 0; j < 100; j++) {
-            System.out.println(players.size());
-        }
         int i = 0;
+        List<PlayableCharacter> players = map.getPlayers();
         for(InputController input : projectD.getInpuControllers()) {
             if(i < players.size()) {
                 controllerPlayerMap.put(input, players.get(i));
@@ -201,7 +197,9 @@ public class InGameState implements GameState {
                 });
                 animationControllers.add(animController);
             }
-            instances.add(npcInstance);
+//            instances.add(npcInstance);
+            objectsMap.put(gameObject, npcInstance);
+
         }
 
     }
@@ -217,6 +215,24 @@ public class InGameState implements GameState {
         renderer = new RenderManager();
         renderer.init();
 
+    }
+
+    public void updateModelInstaces() {
+//        Set<GameObject, ModelInstance>
+
+        for(java.util.Map.Entry<GameObject, ModelInstance> entrySet : objectsMap.entrySet()) {
+            ModelInstance modelInstance = entrySet.getValue();
+            GameObject gameObject = entrySet.getKey();
+            Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
+            Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+            Quaternion quaternion = new Quaternion();
+
+
+            quaternion.set(Vector3.Y, VectorConverter.convertToLibgdx(gameObject.getRotation()).y); //TODO fix the addition of 90 degrees
+
+            Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+            modelInstance.transform.set(matrix4);
+        }
     }
 
     @Override
