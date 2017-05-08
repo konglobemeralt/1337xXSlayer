@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
+import com.projectdgdx.game.model.InputModel;
+import com.projectdgdx.game.utils.Vector3d;
 
 import static com.badlogic.gdx.Gdx.gl20;
 
@@ -31,6 +33,7 @@ public class MainMenuState implements GameState {
     private InputMultiplexer multiplexer;
     private Label mainMenuHeading;
     private Table table;
+    private int controllerPosition = 0;
 
     private void createBasicSkin(){
 
@@ -79,6 +82,28 @@ public class MainMenuState implements GameState {
         else if(exitButton.isPressed()){
             this.exit(projectD);
             Gdx.app.exit();
+        }
+
+
+        //TODO more logic for handeling movement of controllers or keyboards in menus
+        for(InputController inputController : projectD.getInpuControllers()) {
+            InputModel inputModel = inputController.getModel();
+
+            float controllerValue = inputModel.getLeftStick().z;
+            if(controllerValue != 0) {
+                if(controllerValue < 0 && controllerPosition > 0) {
+                    controllerPosition--;
+                }else if(controllerValue < 0 && controllerPosition < 4) {
+                    controllerPosition++;
+                }
+//                switch (controllerValue) {
+//                }
+            }
+
+            if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
+                this.stop(projectD);
+                projectD.setState(GameStates.SETTINGS);
+            }
         }
     }
 
