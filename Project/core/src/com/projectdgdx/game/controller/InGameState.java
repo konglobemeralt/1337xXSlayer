@@ -96,8 +96,6 @@ public class InGameState implements GameState {
     }
 
     private void handleInput(ProjectD projectD){
-
-
         float deltaTime = Gdx.graphics.getDeltaTime();
         for(InputController inputController : projectD.getInpuControllers()) {
             InputModel inputModel = inputController.getModel();
@@ -115,28 +113,6 @@ public class InGameState implements GameState {
                 projectD.setState(GameStates.SETTINGS);
             }
         }
-
-
-//        //TODO Add support for more controllers here through projectD.getInpuControllers()
-//        ModelInstance modelInstance = this.instances.get(3);
-//        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
-//        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
-//        System.out.println(inputModel.getLeftStick().getLength());
-//        if(inputModel.getLeftStick().getLength() >= 0.1f || inputModel.getLeftStick().getLength() <= -0.1f) {
-//            Vector3 scale = modelInstance.transform.getScale(new Vector3());
-//            Quaternion quaternion = new Quaternion();
-//
-//
-//            quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
-//
-//            Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-//            modelInstance.transform.set(matrix4);
-//        }
-//        float deltaTime = Gdx.graphics.getDeltaTime();
-
-
-
-
     }
 
     public void dispose () {
@@ -161,7 +137,6 @@ public class InGameState implements GameState {
         for(InputController input : projectD.getInpuControllers()) {
             if(i < players.size()) {
                 controllerPlayerMap.put(input, players.get(i));
-                System.out.println("Found " + i + " players");
             }
             i++;
         }
@@ -173,7 +148,6 @@ public class InGameState implements GameState {
 
         for (GameObject gameObject : map.getGameObjects()) {
             ModelInstance npcInstance;
-            System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
             npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
             npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
             Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
