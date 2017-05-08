@@ -38,6 +38,9 @@ public class XboxController extends InputController implements ControllerListene
         if(buttonCode == 3) { // y
             this.getModel().setButtonY(true);
         }
+        if(buttonCode == 7) { // start
+            this.getModel().setMenuButton(true);
+        }
         return false;
     }
 
@@ -56,6 +59,9 @@ public class XboxController extends InputController implements ControllerListene
         }
         if(buttonCode == 3) { // y
             this.getModel().setButtonY(false);
+        }
+        if(buttonCode == 7) { // start
+            this.getModel().setMenuButton(false);
         }
         return false;
     }
