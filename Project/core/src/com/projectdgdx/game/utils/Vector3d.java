@@ -21,4 +21,8 @@ public class Vector3d {
         return this;
     }
 
+    public float getLength() {
+        return (float)Math.sqrt(x*x + y*y + z*z);
+    }
+
 }

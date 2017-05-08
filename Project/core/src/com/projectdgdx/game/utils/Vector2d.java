@@ -23,4 +23,8 @@ public class Vector2d {
         return (float)Math.toDegrees(Math.atan2(z, x));
     }
 
+    public float getLength() {
+        return (float)Math.sqrt(x*x + z*z);
+    }
+
 }
