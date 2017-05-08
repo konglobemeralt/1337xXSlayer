@@ -14,14 +14,27 @@ public abstract class InputController {
     final private UUID uuid = UUID.randomUUID();
     private InputModel inputModel;
 
+
+    /**
+     *
+     * @param newModel InputModel to be associated with this InputController
+     */
     public void setModel(InputModel newModel){
         this.inputModel = newModel;
     }
 
+    /**
+     *
+     * @return InputModel that has all data associated with this InputController
+     */
     public InputModel getModel(){
         return inputModel;
     }
 
+    /**
+     *
+     * @return A unique id for this InputController
+     */
     public UUID getUUID(){
         return uuid;
     }
