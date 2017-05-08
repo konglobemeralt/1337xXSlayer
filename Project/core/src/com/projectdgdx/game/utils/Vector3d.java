@@ -25,9 +25,12 @@ public class Vector3d {
         return (float)Math.sqrt(x*x + y*y + z*z);
     }
 
+<<<<<<< HEAD
+=======
     public float distanceTo(Vector3d compVector){
         Vector3d distanceVector = new Vector3d(compVector.x-x, compVector.y-y, compVector.z-z);
         return distanceVector.getLength();
     }
 
+>>>>>>> e36d0f6f23f4fc51cd95d70a46c2f917f6dd6d2c
 }

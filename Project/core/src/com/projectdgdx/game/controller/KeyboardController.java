@@ -24,6 +24,10 @@ public class KeyboardController extends InputController implements InputProcesso
         if(keycode == 32 || keycode == 22) { //Right
             getModel().getLeftStick().x = 1;
         }
+
+        if(keycode == 131) { //ESCAPE
+            getModel().setMenuButton(true);
+        }
         return false;
     }
 
@@ -43,6 +47,10 @@ public class KeyboardController extends InputController implements InputProcesso
 
         if(keycode == 32 || keycode == 22) { //Right
             getModel().getLeftStick().x = 0;
+        }
+
+        if(keycode == 131) { //ESCAPE
+            getModel().setMenuButton(false);
         }
         return false;
     }

@@ -8,10 +8,6 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -32,7 +28,7 @@ public class SettingsState implements GameState {
 
 
     //private TextButton toggleShadowMapButton;
-    private TextButton backButton;
+    private TextButton mainMenuButton;
     private InputMultiplexer multiplexer;
 
     private Slider fovSlider;
@@ -107,10 +103,15 @@ public class SettingsState implements GameState {
         stage.act();
         stage.draw();
 
-
-        if(backButton.isPressed()&& Gdx.input.justTouched()){
-            this.exit();
+        if(projectD.getInpuControllers().get(0).getModel().getMenuButton().isPressed()
+                && projectD.getInpuControllers().get(0).getModel().getMenuButton().getPressedCount() >= 1){
+            this.stop(projectD);
             projectD.setState(GameStates.INGAME);
+        }
+
+        if(mainMenuButton.isPressed()&& Gdx.input.justTouched()){
+            this.exit(projectD);
+            projectD.setState(GameStates.MAINMENU);
         }
     }
 
@@ -130,9 +131,9 @@ public class SettingsState implements GameState {
         //toggleShadowMapButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 + 45);
         //stage.addActor(toggleShadowMapButton);
 
-        backButton = new TextButton("Start Game", skin);
-        //backButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
-        //stage.addActor(backButton);
+        mainMenuButton = new TextButton("To Main Menu", skin);
+        //mainMenuButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
+        //stage.addActor(mainMenuButton);
 
         fovSlider = new Slider(5, 120, 1, false, skin);
         fovSlider.setValue(Config.CAMERA_FOV);
@@ -203,7 +204,7 @@ public class SettingsState implements GameState {
         table.add(sunbSlider);
         table.add(sunbSliderValue).padRight(300);
         table.row();
-        table.add(backButton).expandY().width(450).height(60);
+        table.add(mainMenuButton).expandY().width(450).height(60);
         table.row();
 
 
@@ -244,7 +245,7 @@ public class SettingsState implements GameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.SUN_LIGHT_R = ((int) value);
+                Config.SUN_LIGHT_R = ((int) value );
                 updateSunRLabel();
             }
         });
@@ -364,7 +365,7 @@ public class SettingsState implements GameState {
     }
 
     @Override
-    public void start() {
+    public void start(ProjectD projectD) {
         updateFOVlabel();
         updateAAlabel();
 
@@ -375,12 +376,11 @@ public class SettingsState implements GameState {
     }
 
     @Override
-    public void stop() {
-
+    public void stop(ProjectD projectD) {
+        projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
     }
 
     @Override
-    public void exit() {
-        stage.dispose();
+    public void exit(ProjectD projectD) {
     }
 }

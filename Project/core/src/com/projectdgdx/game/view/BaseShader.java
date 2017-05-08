@@ -62,7 +62,6 @@ public class BaseShader implements Shader {
 
     @Override
     public void render (Renderable renderable) {
-
         shader.setUniformMatrix("u_worldTrans", renderable.worldTransform);
         //shader.setUniformf(u_color, MathUtils.random(), MathUtils.random(), MathUtils.random());
 
