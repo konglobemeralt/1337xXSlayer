@@ -19,6 +19,24 @@ public class Spotlight extends Entity {
     }
 
     @Override
+    public  void move(Vector3d v){
+        if(listeners.size() == 0){
+            super.move(v);
+        } else{
+            checkListenerDetection(v);
+            super.move(v);
+        }
+    }
+
+    private void checkListenerDetection(Vector3d v){
+        for(SpotlightListener sl : listeners){
+            if(sl.isDetected(v)){
+                sl.detect();
+            }
+        }
+    }
+
+    @Override
     public boolean isColliding(Vector3d vec) {
         return false;
     }

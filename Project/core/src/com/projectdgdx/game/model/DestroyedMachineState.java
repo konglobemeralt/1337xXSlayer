@@ -7,7 +7,7 @@ import com.projectdgdx.game.utils.Vector3d;
  */
 public class DestroyedMachineState implements MachineState, SpotlightListener{
 
-    boolean detected = false;
+    private boolean detected = false;
     private Vector3d machinePosition;
 
     public DestroyedMachineState(Vector3d machinePosition){
@@ -16,12 +16,12 @@ public class DestroyedMachineState implements MachineState, SpotlightListener{
 
     @Override
     public void honestInteract(PlayableCharacter player, HonestInteractable hi) {
-        //TODO play a sound? Might not be useful
+        // Play a sound? Might not be useful
     }
 
     @Override
     public void dishonestInteract(PlayableCharacter player, DishonestInteractable di) {
-        //TODO play a sound? Might not be useful
+        // Play a sound? Might not be useful
     }
 
     @Override
@@ -31,6 +31,11 @@ public class DestroyedMachineState implements MachineState, SpotlightListener{
 
     @Override
     public void detect() {
-        // Play animation
+        if(!this.detected) {
+            this.detected = true;
+            // Play animation of machine getting destroyed
+
+            // TODO reason if this should be removed as a listener and how?
+        }
     }
 }
