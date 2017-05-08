@@ -80,6 +80,8 @@ public class GameObjectInit {
                   return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "saboteur.basic");
               case "Player":
                    return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "player.basic");
+                case "Floor": //TODO REPLACE WITH SOMETHING RELEVANT FOR STATIC OBJECTS
+                return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
               default:
                 System.out.println("TAG OF TYPE: " + type + " not supported");
                 return null;
