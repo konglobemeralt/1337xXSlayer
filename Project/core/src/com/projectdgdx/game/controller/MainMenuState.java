@@ -110,6 +110,11 @@ public class MainMenuState implements GameState {
     @Override
     public void init(ProjectD projectD) {
 
+
+    }
+
+    @Override
+    public void start(ProjectD projectD) {
         this.stage = new Stage();
 
         createBasicSkin();
@@ -140,10 +145,6 @@ public class MainMenuState implements GameState {
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
         Gdx.input.setInputProcessor(multiplexer);
-    }
-
-    @Override
-    public void start(ProjectD projectD) {
 
     }
 
