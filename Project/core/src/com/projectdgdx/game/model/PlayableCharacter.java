@@ -16,7 +16,6 @@ public abstract class PlayableCharacter extends Character {
         this.setStartingState();
     }
 
-
     /**
      * Recieves the movement inputs and delegates it to the state machine.
      * TODO Will buttons be handled here or go directly to the functions?
@@ -38,7 +37,7 @@ public abstract class PlayableCharacter extends Character {
      * The character preforms a covert action.
      */
 
-    public abstract void dishonestInteract();
+    public abstract void dishonestInteract(List<DishonestInteractable> dishonestInteractables);
 
     /**
      * The character uses it's special ability.
@@ -72,6 +71,11 @@ public abstract class PlayableCharacter extends Character {
         this.state = new NormalPlayerState();
     }
 
-
+    @Override
+    public void move(Vector3d v){
+        if(!isColliding(v)){
+            this.state.move(v);
+        }
+    }
 
 }

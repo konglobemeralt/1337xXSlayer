@@ -3,6 +3,8 @@ package com.projectdgdx.game.model;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Vector3d;
 
+import java.util.List;
+
 /**
  * Created by Eddie on 2017-04-03.
  */
@@ -12,8 +14,17 @@ public class Saboteur extends PlayableCharacter{
     }
 
     @Override
-    public void dishonestInteract() {
+    public void dishonestInteract(List<DishonestInteractable> dishonestInteractables) {
+        for(DishonestInteractable di : dishonestInteractables){
+            if(this.canDishonestInteract(di)){
+                di.dishonestInteract(this);
+            }
+        }
+    }
 
+    private boolean canDishonestInteract(DishonestInteractable di){
+        float value = this.getPosition().distanceTo(di.getPosition()) - GlobalVariables.machineActDistance;
+        return value < 0;
     }
 
     @Override
