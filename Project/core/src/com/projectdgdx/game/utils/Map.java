@@ -1,7 +1,9 @@
 package com.projectdgdx.game.utils;
 
 import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.PlayableCharacter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +31,20 @@ public abstract class Map {
      */
     public List<GameObject> getGameObjects() {
         return gameObjects;
+    }
+
+    /**
+     * A method to get all player objects in the map
+     * @return List of players
+     */
+    public List<PlayableCharacter> getPlayers() {
+        List<PlayableCharacter> players = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof PlayableCharacter) {
+                players.add((PlayableCharacter)gameObject);
+            }
+        }
+        return players;
     }
 
 
