@@ -70,7 +70,7 @@ public class XboxController extends InputController implements ControllerListene
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        System.out.println("AxisCode: " + axisCode + " : " + value);
+//        System.out.println("AxisCode: " + axisCode + " : " + value);
 
 //        System.out.println(value);
         if(isWithinDeadZone(value)) {
