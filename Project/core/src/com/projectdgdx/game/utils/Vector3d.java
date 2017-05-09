@@ -30,6 +30,14 @@ public class Vector3d {
         return distanceVector.getLength();
     }
 
+    public  Vector3d normalised(){
+        return new Vector3d(x/getLength(), y/getLength(), z/getLength());
+    }
+
+    public Vector3d vectorTo(Vector3d compVector){
+        return new Vector3d(compVector.x-x, compVector.y-y, compVector.z-z);
+    }
+
     public boolean isInRadius(Vector3d compVector, float radius){
         return this.distanceTo(compVector) <= radius;
     }
