@@ -3,6 +3,8 @@ package com.projectdgdx.game.model;
 import com.projectdgdx.game.utils.Vector2d;
 
 /**
+ * InputModel provides a way to store input data which enables multiple types of controllers. Like xbox and keyboard
+ *
  * Created by Eddie on 2017-04-28.
  */
 public class InputModel {

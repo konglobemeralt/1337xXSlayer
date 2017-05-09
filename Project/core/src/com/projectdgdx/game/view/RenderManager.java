@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 
+import java.util.Collection;
+
 /**
  * Created by konglobemeralt on 2017-05-07.
  *
@@ -25,14 +27,14 @@ public class RenderManager {
 
     private FPSLogger fps;
 
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
+    public Collection<ModelInstance> instances;
 
     public Environment environment;
     DirectionalShadowLight shadowLight;
     public Shader shader;
 
 
-    public void render (PerspectiveCamera cam, Array<ModelInstance> instances) {
+    public void render (PerspectiveCamera cam, Collection<ModelInstance> instances) {
         this.instances = instances;
         fps.log();
 
@@ -131,10 +133,14 @@ public class RenderManager {
         createEnvironment();
         createBatches();
 
-        shader = new BaseShader();
-        shader.init();
+        createShaders();
 
         fps = new FPSLogger();
+    }
+
+    private void createShaders(){
+        shader = new BaseShader();
+        shader.init();
     }
 
     public void dispose () {

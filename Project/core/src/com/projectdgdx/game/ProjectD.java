@@ -62,6 +62,22 @@ public class ProjectD extends ApplicationAdapter {
     public void create(){
 
         multiplexer = new InputMultiplexer();
+        if(Controllers.getControllers().size >= 1) {
+            for(Controller controller : Controllers.getControllers()) {
+                XboxController xboxController = new XboxController();
+                controller.addListener(xboxController);
+                xboxController.setModel(new InputModel());
+                inputController.add(xboxController);
+            }
+        }
+
+        //Add a keyboard controller if there are not enough gamepads
+        if(Controllers.getControllers().size < 4) {
+            KeyboardController keyboardController = new KeyboardController();
+            keyboardController.setModel(new InputModel());
+            multiplexer.addProcessor(keyboardController);
+            inputController.add(keyboardController);
+        }
 
         gameStates.put(GameStates.MAINMENU, new MainMenuState());
         gameStates.get(GameStates.MAINMENU).init(this);
@@ -76,21 +92,6 @@ public class ProjectD extends ApplicationAdapter {
 		} else {
 			this.setState(GameStates.MAINMENU);
 		}
-
-
-        if(Controllers.getControllers().size >= 1) {
-            for(Controller controller : Controllers.getControllers()) {
-                XboxController xboxController = new XboxController();
-                controller.addListener(xboxController);
-                xboxController.setModel(new InputModel());
-                inputController.add(xboxController);
-            }
-        } else {
-            KeyboardController keyboardController = new KeyboardController();
-            keyboardController.setModel(new InputModel());
-            multiplexer.addProcessor(keyboardController);
-            inputController.add(keyboardController);
-        }
 
 
 

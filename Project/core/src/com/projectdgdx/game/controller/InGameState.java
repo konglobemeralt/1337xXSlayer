@@ -1,17 +1,10 @@
 package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.*;
-import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
@@ -21,11 +14,12 @@ import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.InputModel;
+import com.projectdgdx.game.model.PlayableCharacter;
 import com.projectdgdx.game.utils.*;
-import com.projectdgdx.game.view.BaseShader;
+import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.view.RenderManager;
 
-import java.util.Random;
+import java.util.*;
 
 /**
  * InGameState controls everything that is ingame.
@@ -34,37 +28,20 @@ import java.util.Random;
 public class InGameState implements GameState {
 
     private InputMultiplexer multiplexer;
-    public Array<ModelInstance> instances = new Array<ModelInstance>();
-    public Array<AnimationController> animationControllers = new Array<AnimationController>();
-    private AnimationController animController;
-
+    private  Array<AnimationController> animationControllers = new Array<AnimationController>();
 
     private PerspectiveCamera cam;
     private CameraInputController camController;
 
-    RenderManager renderer;
-    Random rand;
-    Map map;
-
-    private Model floor;
-    boolean loading;
-
-    public boolean isMapParsed(){
-        return loading;
-    }
-
-    private void createFloor(){
-        //Create a temp floor
-        ModelBuilder modelBuilder = new ModelBuilder();
-        floor = modelBuilder.createBox(500f, 1f, 500f,
-                new Material(ColorAttribute.createDiffuse(Color.WHITE)),
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        instances.add(new ModelInstance(floor));
-
-    }
+    private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
+    private HashMap<GameObject, ModelInstance> objectsMap = new HashMap<>();
 
 
-    public void createCamera(){
+    private RenderManager renderer;
+    private Random rand;
+    private Map map;
+
+    private void createCamera(){
         cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(110f, 120f, 135f);
         cam.lookAt(0f, 0f, 0f);
@@ -80,7 +57,7 @@ public class InGameState implements GameState {
     }
 
     public void render () {
-       renderer.render(cam, instances); //Pass renderInstances and camera to render
+       renderer.render(cam, objectsMap.values()); //Pass renderInstances and camera to render
     }
 
     private void animate(){
@@ -90,39 +67,33 @@ public class InGameState implements GameState {
     }
 
     private void handleInput(ProjectD projectD){
-        //TODO Add support for more controllers here through projectD.getInpuControllers()
-        ModelInstance modelInstance = this.instances.get(3);
-        InputModel inputModel = projectD.getInpuControllers().get(0).getModel();
-        Vector3 position = modelInstance.transform.getTranslation(new Vector3());
-        System.out.println(inputModel.getLeftStick().getLength());
-        if(inputModel.getLeftStick().getLength() >= 0.1f || inputModel.getLeftStick().getLength() <= -0.1f) {
-            Vector3 scale = modelInstance.transform.getScale(new Vector3());
-            Quaternion quaternion = new Quaternion();
-
-
-            quaternion.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90); //TODO fix the addition of 90 degrees
-
-            Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-            modelInstance.transform.set(matrix4);
-        }
         float deltaTime = Gdx.graphics.getDeltaTime();
-        modelInstance.transform.trn(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED);
+        for(InputController inputController : projectD.getInpuControllers()) {
+            InputModel inputModel = inputController.getModel();
+            if(controllerPlayerMap.containsKey(inputController)) {
+                PlayableCharacter player = controllerPlayerMap.get(inputController);
+                if(inputModel.getLeftStick().getLength() != 0) {
+                    player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
+                    player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
+                }
 
-        if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
-            this.stop(projectD);
-            projectD.setState(GameStates.SETTINGS);
+
+            }
+
+
+
+            if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
+                this.stop(projectD);
+                projectD.setState(GameStates.SETTINGS);
+            }
         }
-
-    }
-
-    public void dispose () {
-        instances.clear();
     }
 
     public void update(ProjectD projectD){
             handleInput(projectD);
             animate();
             render();
+            updateModelInstaces();
     }
 
     public void init(ProjectD projectD){
@@ -131,26 +102,36 @@ public class InGameState implements GameState {
         MapParser parser = new MapParser();
         map = parser.parse("BasicMapTest");
 
+        int i = 0;
+        List<PlayableCharacter> players = map.getPlayers();
+        for(InputController input : projectD.getInpuControllers()) {
+            if(i < players.size()) {
+                controllerPlayerMap.put(input, players.get(i));
+            }
+            i++;
+        }
+
+        generateRenderInstances();
+
     }
 
     private void generateRenderInstances(){
 
-        loading = true;
 
         for (GameObject gameObject : map.getGameObjects()) {
-            ModelInstance npcInstance;
-            System.out.println(AssetsFinder.getModelPath(gameObject.getId()));
-            npcInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-            npcInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+            // Create a ModelInstance for GameObject gameObject
+            ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
+            modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
             Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-            npcInstance.transform.scale(scale.x, scale.y, scale.z);
+            modelInstance.transform.scale(scale.x, scale.y, scale.z);
             Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-            npcInstance.transform.rotate(Vector3.X, rotation.x);
-            npcInstance.transform.rotate(Vector3.Y, rotation.y);
-            npcInstance.transform.rotate(Vector3.Z, rotation.z);
+            modelInstance.transform.rotate(Vector3.X, rotation.x);
+            modelInstance.transform.rotate(Vector3.Y, rotation.y);
+            modelInstance.transform.rotate(Vector3.Z, rotation.z);
 
-            if(gameObject.getId() == "worker.basic" || gameObject.getId() == "player.basic") {
-                animController = new AnimationController(npcInstance);
+            //Check for worker or player animation from id
+            if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
+                AnimationController animController = new AnimationController(modelInstance);
                 animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
                     @Override
                     public void onEnd(AnimationController.AnimationDesc animation) {
@@ -163,7 +144,10 @@ public class InGameState implements GameState {
                 });
                 animationControllers.add(animController);
             }
-            instances.add(npcInstance);
+
+            //Add GameObject and ModelInstance to a map that keeps them together
+            objectsMap.put(gameObject, modelInstance);
+
         }
 
     }
@@ -171,14 +155,32 @@ public class InGameState implements GameState {
     @Override
     public void start(ProjectD projectD) {
         this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
-
-        generateRenderInstances();
         createCamera();
-        createFloor();
 
         renderer = new RenderManager();
         renderer.init();
 
+    }
+
+    public void updateModelInstaces() {
+        for(java.util.Map.Entry<GameObject, ModelInstance> entrySet : objectsMap.entrySet()) {
+            ModelInstance modelInstance = entrySet.getValue();
+            GameObject gameObject = entrySet.getKey();
+            Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
+            Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+            Quaternion quaternion = new Quaternion();
+
+            //TODO ugly solution for rotation
+			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+			modelInstance.transform.setToRotation(0,0,0,0,0,0);
+			modelInstance.transform.rotate(Vector3.X, rotation.x);
+			modelInstance.transform.rotate(Vector3.Y, rotation.y);
+			modelInstance.transform.rotate(Vector3.Z, rotation.z);
+			quaternion = modelInstance.transform.getRotation(new Quaternion());
+
+			Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+            modelInstance.transform.set(matrix4);
+        }
     }
 
     @Override
@@ -188,7 +190,6 @@ public class InGameState implements GameState {
 
     public void exit(ProjectD projectD){
         this.stop(projectD);
-        this.dispose();
         renderer.dispose();
     }
 
