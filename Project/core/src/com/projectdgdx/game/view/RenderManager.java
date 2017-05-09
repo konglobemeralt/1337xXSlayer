@@ -12,7 +12,10 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
+import javafx.util.Pair;
 
 
 import java.util.Collection;
@@ -31,7 +34,7 @@ public class RenderManager {
 
     private FPSLogger fps;
 
-    public Collection<ModelInstance> instances;
+    public Collection<Pair<ModelInstance, btCollisionObject>> instances;
 
     public Environment environment;
     DirectionalShadowLight shadowLight;
@@ -40,7 +43,7 @@ public class RenderManager {
     Random rand;
 
 
-    public void render (PerspectiveCamera cam, Collection<ModelInstance> instances) {
+    public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
         fps.log();
 
@@ -65,8 +68,8 @@ public class RenderManager {
 
     private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
-        for (ModelInstance instance : instances) {
-            modelBatch.render(instance, environment);
+        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
+            modelBatch.render(instance.getKey(), environment);
         }
         modelBatch.end();
     }
@@ -81,8 +84,8 @@ public class RenderManager {
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
-        for (ModelInstance instance : instances) {
-            shadowBatch.render(instance, environment);
+        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
+            shadowBatch.render(instance.getKey(), environment);
         }
         shadowBatch.end();
         shadowLight.end();

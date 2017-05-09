@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
@@ -18,6 +21,7 @@ import com.projectdgdx.game.model.PlayableCharacter;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.view.RenderManager;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -34,7 +38,11 @@ public class InGameState implements GameState {
     private CameraInputController camController;
 
     private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
-    private HashMap<GameObject, ModelInstance> objectsMap = new HashMap<>();
+    private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
+
+    //Bullet
+	btDefaultCollisionConfiguration collisionConfig;
+	btCollisionDispatcher dispatcher;
 
 
     private RenderManager renderer;
@@ -97,6 +105,9 @@ public class InGameState implements GameState {
     }
 
     public void init(ProjectD projectD){
+		Bullet.init();
+		collisionConfig = new btDefaultCollisionConfiguration();
+		dispatcher = new btCollisionDispatcher(collisionConfig);
         rand = new Random();
 
         MapParser parser = new MapParser();
@@ -112,6 +123,7 @@ public class InGameState implements GameState {
         }
 
         generateRenderInstances();
+
 
     }
 
@@ -144,9 +156,20 @@ public class InGameState implements GameState {
                 });
                 animationControllers.add(animController);
             }
+            //Add a box around object that will be used for physics
+			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
+            System.out.println(boundingBox.getDimensions(new Vector3()).toString());
+			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()));
+			btCollisionObject collisionObject = new btCollisionObject();
+			collisionObject.setCollisionShape(collisionShape);
+			collisionObject.setWorldTransform(modelInstance.transform);
 
-            //Add GameObject and ModelInstance to a map that keeps them together
-            objectsMap.put(gameObject, modelInstance);
+
+
+
+
+			//Add GameObject and ModelInstance to a map that keeps them together
+            objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
 
         }
 
@@ -163,8 +186,8 @@ public class InGameState implements GameState {
     }
 
     public void updateModelInstaces() {
-        for(java.util.Map.Entry<GameObject, ModelInstance> entrySet : objectsMap.entrySet()) {
-            ModelInstance modelInstance = entrySet.getValue();
+        for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
+            ModelInstance modelInstance = entrySet.getValue().getKey();
             GameObject gameObject = entrySet.getKey();
             Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
             Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
@@ -190,8 +213,42 @@ public class InGameState implements GameState {
 
     public void exit(ProjectD projectD){
         this.stop(projectD);
+
+        //Dispose physics objects
+		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
+			entrySet.getValue().getValue().dispose();
+		}
+		dispatcher.dispose();
+		collisionConfig.dispose();
+
+		//Dispose graphic
         renderer.dispose();
     }
+
+	boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
+		CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
+		CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
+
+		btCollisionAlgorithmConstructionInfo ci = new btCollisionAlgorithmConstructionInfo();
+		ci.setDispatcher1(dispatcher);
+		btCollisionAlgorithm algorithm = new btBoxBoxCollisionAlgorithm(null, ci, co0.wrapper, co1.wrapper);
+
+		btDispatcherInfo info = new btDispatcherInfo();
+		btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
+
+		algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
+
+		boolean r = result.getPersistentManifold().getNumContacts() > 0;
+
+		result.dispose();
+		info.dispose();
+		algorithm.dispose();
+		ci.dispose();
+		co1.dispose();
+		co0.dispose();
+
+		return r;
+	}
 
 
 
