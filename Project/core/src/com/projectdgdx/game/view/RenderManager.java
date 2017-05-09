@@ -125,7 +125,7 @@ public class RenderManager {
                     Config.SUN_LIGHT_Z));
         }
         environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
-                35, 15f, 45f, 100f));
+                2, 20, 2, 620f));
 
     }
 

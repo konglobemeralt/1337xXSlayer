@@ -29,7 +29,7 @@ public class Vector3d {
         Vector3d distanceVector = new Vector3d(compVector.x-x, compVector.y-y, compVector.z-z);
         return distanceVector.getLength();
     }
-    
+
     public boolean isInRadius(Vector3d compVector, float radius){
         return this.distanceTo(compVector) <= radius;
     }
