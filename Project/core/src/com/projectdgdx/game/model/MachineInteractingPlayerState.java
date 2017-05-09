@@ -8,12 +8,12 @@ import com.projectdgdx.game.utils.Vector3d;
  * Created by Emil Jansson on 2017-05-04.
  */
 public class MachineInteractingPlayerState implements PlayerState, TimerListener {
-    private HonestInteractable machine;
+    private Machine machine;
     private PlayableCharacter currentPlayer;
 
     MachineInteractingPlayerState(HonestInteractable machine, PlayableCharacter currentPlayer){
         this.currentPlayer = currentPlayer;
-        this.machine = machine;
+        this.machine = (Machine) machine;
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
         timer.addListener(this);

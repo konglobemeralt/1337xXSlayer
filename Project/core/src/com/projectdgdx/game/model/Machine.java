@@ -42,7 +42,6 @@ public class Machine extends StaticObject implements HonestInteractable, Dishone
         this.setState(new DestroyedMachineState(this.getPosition()));
     }
 
-    @Override
     public void updateTimer() {
         this.machineCounter.setTimerValue(30);
     }

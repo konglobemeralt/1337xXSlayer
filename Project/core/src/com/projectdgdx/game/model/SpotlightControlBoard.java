@@ -19,8 +19,4 @@ public class SpotlightControlBoard extends StaticObject implements HonestInterac
         player.setState(new InSpotlightState(this.spotlight));
     }
 
-    @Override
-    public void updateTimer() {
-        // Empty, this method is for machines and this is kind of a hack for the moment
-    }
 }

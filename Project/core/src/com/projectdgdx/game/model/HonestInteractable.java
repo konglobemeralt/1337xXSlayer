@@ -8,6 +8,5 @@ import com.projectdgdx.game.utils.Vector3d;
 public interface HonestInteractable {
     public abstract void honestInteract(PlayableCharacter player);
     public abstract Vector3d getPosition();
-    public void updateTimer();
 }
 
