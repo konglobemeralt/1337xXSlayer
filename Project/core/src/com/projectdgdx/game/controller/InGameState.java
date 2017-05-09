@@ -47,6 +47,17 @@ public class InGameState implements GameState {
     private Random rand;
     private Map map;
 
+//    class CollisionListener extends ContactListener {
+//        @Override
+//        public boolean onContactAdded (btManifoldPoint cp, btCollisionObjectWrapper colObj0Wrap, int partId0, int index0,
+//                                       btCollisionObjectWrapper colObj1Wrap, int partId1, int index1) {
+////            instances.get(colObj0Wrap.getCollisionObject().getUserValue()).moving = false;
+////            instances.get(colObj1Wrap.getCollisionObject().getUserValue()).moving = false;
+//            System.out.println("Collision!");
+//            return true;
+//        }
+//    }
+
     private void createCamera(){
         cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(110f, 120f, 135f);
@@ -158,7 +169,8 @@ public class InGameState implements GameState {
 			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
             System.out.println(boundingBox.getDimensions(new Vector3()).toString());
 
-			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()));
+//			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
+			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
 //			btCollisionShape collisionShape = new btBoxShape(new Vector3(100f, 100f, 100f));
 			btCollisionObject collisionObject = new btCollisionObject();
 			collisionObject.setCollisionShape(collisionShape);
@@ -185,6 +197,7 @@ public class InGameState implements GameState {
             ModelInstance modelInstance = entrySet.getValue().getKey();
             GameObject gameObject = entrySet.getKey();
             btCollisionObject collisionObject = entrySet.getValue().getValue();
+            Vector3 oldPosition = modelInstance.transform.getTranslation(new Vector3());
 
             //Check for entity
             if(gameObject instanceof Entity) {
@@ -201,19 +214,28 @@ public class InGameState implements GameState {
 				quaternion = modelInstance.transform.getRotation(new Quaternion());
 
 				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-				modelInstance.transform.set(matrix4);
-				collisionObject.setWorldTransform(modelInstance.transform);
+
+				collisionObject.setWorldTransform(matrix4);
 
 
 				//Check collisions
-				if(gameObject instanceof PlayableCharacter) {
-					for(StaticObject staticObject : map.getStaticObjects()) {
-						if(checkCollision(collisionObject, objectsMap.get(staticObject).getValue())) {
-							System.out.println("COLLIISISISONN!!");
-						}
-//							System.out.println(checkCollision(collisionObject, objectsMap.get(staticObject).getValue()));
-					}
-				}
+                boolean collision = false;
+                for(StaticObject staticObject : map.getStaticObjects()) {
+                    if(checkCollision(collisionObject, objectsMap.get(staticObject).getValue())) {
+                        collision = true;
+                        break;
+                    }
+                }
+
+                if(collision) {
+                    System.out.println("COLLISION!");
+                    matrix4 = new Matrix4(oldPosition, quaternion, scale);
+                    modelInstance.transform.set(matrix4);
+                    collisionObject.setWorldTransform(matrix4);
+                    gameObject.setPosition(new Vector3d(oldPosition.x, oldPosition.y, oldPosition.z));
+                } else {
+                    modelInstance.transform.set(matrix4);
+                }
 
 			}
         }
@@ -238,30 +260,28 @@ public class InGameState implements GameState {
         renderer.dispose();
     }
 
-	boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
-		CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
-		CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
-		System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
+	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
+        CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
+        CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
+//        System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
 
-		btCollisionAlgorithmConstructionInfo ci = new btCollisionAlgorithmConstructionInfo();
-		ci.setDispatcher1(dispatcher);
-		btCollisionAlgorithm algorithm = new btBoxBoxCollisionAlgorithm(null, ci, co0.wrapper, co1.wrapper);
 
-		btDispatcherInfo info = new btDispatcherInfo();
-		btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
+        btCollisionAlgorithm algorithm = dispatcher.findAlgorithm(co0.wrapper, co1.wrapper);
 
-		algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
+        btDispatcherInfo info = new btDispatcherInfo();
+        btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
 
-		boolean r = result.getPersistentManifold().getNumContacts() > 0;
+        algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
 
-		result.dispose();
-		info.dispose();
-		algorithm.dispose();
-		ci.dispose();
-		co1.dispose();
-		co0.dispose();
+        boolean r = result.getPersistentManifold().getNumContacts() > 0;
 
-		return r;
+        dispatcher.freeCollisionAlgorithm(algorithm.getCPointer());
+        result.dispose();
+        info.dispose();
+        co1.dispose();
+        co0.dispose();
+
+        return r;
 	}
 
 
