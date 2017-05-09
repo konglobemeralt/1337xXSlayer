@@ -18,6 +18,30 @@ public class Worker extends Character {
         super(position, scale, rotation, id);
     }
 
+    public AINode getTargetNode() {
+        return targetNode;
+    }
+
+    public void setTargetNode(AINode targetNode) {
+        this.targetNode = targetNode;
+    }
+
+    public AINode getLastNode() {
+        return lastNode;
+    }
+
+    public void setLastNode(AINode lastNode) {
+        this.lastNode = lastNode;
+    }
+
+    public WorkerState getState() {
+        return state;
+    }
+
+    public void setState(WorkerState state) {
+        this.state = state;
+    }
+
     public void reactOnUpdate(){
         this.state.reactOnUpdate(this);
     }

@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model.AI;
 
+import com.projectdgdx.game.model.GlobalVariables;
+import com.projectdgdx.game.model.ModelDataHandler;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Timer;
 
@@ -26,12 +28,11 @@ public class StrikingWorkerState implements  WorkerState {
 
     }
 
-    private void actAngry(){ //TODO Animations, maybe walking around
+    private void actAngry(){ //TODO Animations, maybe walking around LOW PRIORITY
 
     }
 
     private boolean isInStrikeZone(Worker worker){
-       //return worker.getPosition().isInRadius(ModelDataHandler.getStrikeZonePosition);
-        return true; //TODO
+       return worker.getPosition().isInRadius(ModelDataHandler.getStrikeZone().getPosition(), GlobalVariables.strikeZoneRadius);
     }
 }
