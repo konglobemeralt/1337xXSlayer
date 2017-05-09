@@ -13,6 +13,10 @@ public abstract class Character extends Entity {
         super(position, scale, rotation, id);
     }
 
+    public abstract void beenCaught();
 
+    public boolean hasBeenCaught(){
+        return true;
+    }
 
 }
