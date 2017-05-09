@@ -171,8 +171,9 @@ public class InGameState implements GameState {
             Quaternion quaternion = new Quaternion();
 
 
+            quaternion.set(Vector3.X, VectorConverter.convertToLibgdx(gameObject.getRotation()).x); //TODO fix the addition of 90 degrees
             quaternion.set(Vector3.Y, VectorConverter.convertToLibgdx(gameObject.getRotation()).y); //TODO fix the addition of 90 degrees
-
+            quaternion.set(Vector3.Z, VectorConverter.convertToLibgdx(gameObject.getRotation()).z); //TODO fix the addition of 90 degrees
             Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
             modelInstance.transform.set(matrix4);
         }
