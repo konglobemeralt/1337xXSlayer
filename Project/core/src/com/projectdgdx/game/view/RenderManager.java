@@ -133,10 +133,14 @@ public class RenderManager {
         createEnvironment();
         createBatches();
 
-        shader = new BaseShader();
-        shader.init();
+        createShaders();
 
         fps = new FPSLogger();
+    }
+
+    private void createShaders(){
+        shader = new BaseShader();
+        shader.init();
     }
 
     public void dispose () {
