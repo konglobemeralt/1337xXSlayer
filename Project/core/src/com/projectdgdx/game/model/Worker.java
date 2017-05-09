@@ -23,6 +23,11 @@ public class Worker extends Character {
     }
 
     @Override
+    public void beenCaught() {
+
+    }
+
+    @Override
     public boolean isColliding(Vector3d vec) {
         return false;
     }

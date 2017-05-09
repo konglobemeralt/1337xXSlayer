@@ -33,6 +33,11 @@ public class Saboteur extends PlayableCharacter{
     }
 
     @Override
+    public void beenCaught() {
+
+    }
+
+    @Override
     public boolean isColliding(Vector3d vec) {
         return false;
     }
