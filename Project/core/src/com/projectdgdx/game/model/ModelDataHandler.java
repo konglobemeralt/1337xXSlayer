@@ -11,6 +11,16 @@ public class ModelDataHandler {
     private static List<DishonestInteractable> dishonestInteractables;
     private static List<Character> characters;
 
+    private static StrikeZone strikeZone;
+
+    public static StrikeZone getStrikeZone() {
+        return strikeZone;
+    }
+
+    public static void setStrikeZone(StrikeZone strikeZone) {
+        ModelDataHandler.strikeZone = strikeZone;
+    }
+
     public List<HonestInteractable> getHonestInteractables() {
         return honestInteractables;
     }
