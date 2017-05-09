@@ -24,6 +24,11 @@ public class Supervisor extends PlayableCharacter {
     }
 
     @Override
+    public void beenCaught() {
+        this.setState(new CapturedPlayerState(this));
+    }
+
+    @Override
     public boolean isColliding(Vector3d vec) {
         return false;
     }

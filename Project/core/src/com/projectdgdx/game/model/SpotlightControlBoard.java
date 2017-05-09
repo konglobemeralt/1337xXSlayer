@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model;
 
-import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
@@ -16,7 +15,7 @@ public class SpotlightControlBoard extends StaticObject implements HonestInterac
 
     @Override
     public void honestInteract(PlayableCharacter player) {
-        player.setState(new InSpotlightState(this.spotlight));
+        player.setState(new InSpotlightPlayerState(this.spotlight));
     }
 
 }
