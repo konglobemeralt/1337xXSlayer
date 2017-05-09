@@ -5,4 +5,5 @@ package com.projectdgdx.game.model;
  */
 public class GlobalVariables {
     public static final float machineActDistance = 1;
+    public static final float workerSpeed = 1;
 }
