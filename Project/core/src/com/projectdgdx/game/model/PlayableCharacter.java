@@ -1,5 +1,6 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public abstract class PlayableCharacter extends Character {
      * @return
      */
     protected boolean canHonestInteract(HonestInteractable hi){
-        float value = this.getPosition().distanceTo(hi.getPosition()) - GlobalVariables.machineActDistance;
+        float value = this.getPosition().distanceTo(hi.getPosition()) - Config.honestActDistance;
         return value < 0;
     }
 

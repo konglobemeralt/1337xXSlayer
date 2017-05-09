@@ -68,7 +68,7 @@ public class Config {
 
     /************MENU VARIABLES************/
 
-    //MENUE BACKGROUND COLOR
+    //MENU BACKGROUND COLOR
     public static final float MENU_DEFAULTBACKGROUND_R = 0.2f;
     public static final float MENU_DEFAULTBACKGROUND_G = 0.2f;
     public static final float MENU_DEFAULTBACKGROUND_B = 0.2f;
@@ -77,4 +77,10 @@ public class Config {
     //PATHS GUI STYLE
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
+
+    /************MODEL VARIABLES************/
+
+    //MODEL RADIUS'S
+    public static final float honestActDistance = 1;
+    public static final float useAbilityActDistance = 1;
 }

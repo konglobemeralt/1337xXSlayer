@@ -7,32 +7,32 @@ import java.util.List;
  */
 public class ModelDataHandler {
 
-    private List<HonestInteractable> honestInteractables;
-    private List<DishonestInteractable> dishonestInteractables;
-    private List<Character> characters;
+    private static List<HonestInteractable> honestInteractables;
+    private static List<DishonestInteractable> dishonestInteractables;
+    private static List<Character> characters;
 
     public List<HonestInteractable> getHonestInteractables() {
         return honestInteractables;
     }
 
-    public void setHonestInteractables(List<HonestInteractable> honestInteractables) {
-        this.honestInteractables = honestInteractables;
+    public static void setHonestInteractables(List<HonestInteractable> honestInteractables) {
+        honestInteractables = honestInteractables;
     }
 
-    public List<DishonestInteractable> getDishonestInteractables() {
+    public static List<DishonestInteractable> getDishonestInteractables() {
         return dishonestInteractables;
     }
 
-    public void setDishonestInteractables(List<DishonestInteractable> dishonestInteractables) {
-        this.dishonestInteractables = dishonestInteractables;
+    public static void setDishonestInteractables(List<DishonestInteractable> dishonestInteractables) {
+        dishonestInteractables = dishonestInteractables;
     }
 
-    public List<Character> getCharacters() {
+    public static List<Character> getCharacters() {
         return characters;
     }
 
-    public void setCharacters(List<Character> characters) {
-        this.characters = characters;
+    public static void setCharacters(List<Character> characters) {
+        characters = characters;
     }
 
 
