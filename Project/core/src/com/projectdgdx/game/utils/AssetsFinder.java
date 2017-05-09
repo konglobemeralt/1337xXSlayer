@@ -18,7 +18,7 @@ public class AssetsFinder {
         textureMap.put("supervisor.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
         textureMap.put("saboteur.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
         textureMap.put("player.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
-        textureMap.put("floor.basic", new String[]{"floor.g3db", "metal.jpg"});
+        textureMap.put("floor.basic", new String[]{"floor2.g3db", "metal.jpg"});
     }
 
     /**
