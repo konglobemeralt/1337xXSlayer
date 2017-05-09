@@ -39,6 +39,10 @@ public class SettingsState implements GameState {
     private Label aaLabel;
     private Label aaValueLabel;
 
+    private Slider discoSlider;
+    private Label disoLabel;
+    private Label discoValueLabel;
+
 
     private Slider sunrSlider;
     private Label sunrSliderLabel;
@@ -145,6 +149,11 @@ public class SettingsState implements GameState {
         aaLabel = new Label("AA Samples", skin);
         aaValueLabel = new Label("", skin);
 
+        discoSlider = new Slider(0, 100, 1, false, skin);
+        discoSlider.setValue(Config.DISCO_FACTOR);
+        disoLabel = new Label("Disco Factor", skin);
+        discoValueLabel = new Label("", skin);
+
         shadowMappingLabel = new Label("Shadow mapping", skin);
         shadowMapCheckbox = new CheckBox("", skin);
         shadowMapCheckbox.setChecked(true);
@@ -185,6 +194,10 @@ public class SettingsState implements GameState {
         table.add(aaLabel).expandY();
         table.add(aaSlider);
         table.add(aaValueLabel).padRight(300);
+        table.row();
+        table.add(disoLabel).expandY();
+        table.add(discoSlider);
+        table.add(discoValueLabel).padRight(300);
         table.row();
         table.add(shadowMappingLabel).expandY();
         table.add(shadowMapCheckbox).padRight(160);
@@ -234,6 +247,19 @@ public class SettingsState implements GameState {
                 float value = slider.getValue();
                 Config.AA_SAMPLES = ((int) value);
                 updateAAlabel();
+            }
+        });
+
+        discoSlider.addListener(new ChangeListener()
+        {
+            @Override
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                Slider slider = (Slider) actor;
+
+                float value = slider.getValue();
+                Config.DISCO_FACTOR = ((int) value);
+                updateDiscoLabel();
             }
         });
 
@@ -319,6 +345,16 @@ public class SettingsState implements GameState {
         fovValueLabel.invalidate();
     }
 
+    private void updateDiscoLabel()
+    {
+        float value = Config.DISCO_FACTOR;
+
+        discoSlider.setValue(value);
+        discoSlider.setAnimateDuration(0.3f);
+
+        discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
+        discoValueLabel.invalidate();
+    }
 
     private void updateAAlabel()
     {
@@ -338,7 +374,7 @@ public class SettingsState implements GameState {
         sunrSlider.setValue(value);
         sunrSlider.setAnimateDuration(0.3f);
 
-        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + "%");
+        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + " %");
         sunrSliderValue.invalidate();
     }
 
@@ -349,7 +385,7 @@ public class SettingsState implements GameState {
         sungSlider.setValue(value);
         sungSlider.setAnimateDuration(0.3f);
 
-        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ "%");
+        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ " %");
         sungSliderValue.invalidate();
     }
 
@@ -360,12 +396,13 @@ public class SettingsState implements GameState {
         sunbSlider.setValue(value);
         sunbSlider.setAnimateDuration(0.3f);
 
-        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ "%");
+        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ " %");
         sunbSliderValue.invalidate();
     }
 
     @Override
     public void start(ProjectD projectD) {
+        updateDiscoLabel();
         updateFOVlabel();
         updateAAlabel();
 

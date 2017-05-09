@@ -66,6 +66,8 @@ public class Config {
     public static final float AMBIENT_LIGHT_B = 0.4f;
     public static final float AMBIENT_LIGHT_A = 0.4f;
 
+    public static int DISCO_FACTOR = 0;
+
     /************MENU VARIABLES************/
 
     //MENU BACKGROUND COLOR
