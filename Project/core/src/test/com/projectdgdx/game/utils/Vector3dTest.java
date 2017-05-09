@@ -32,4 +32,13 @@ public class Vector3dTest {
 
         assertTrue(vector.x == 3 && vector.y == 4 && vector .z == 5);
     }
+
+    @Test
+    public void testVectorDistance(){
+        // Verify that the distance between two vectors/points is correct according to linear algebra
+        Vector3d distVec = new Vector3d(1,1,2);
+        int distance = 1;
+        assertTrue(Math.abs(vector.distanceTo(distVec)-distance) < 0.000001);
+
+    }
 }
