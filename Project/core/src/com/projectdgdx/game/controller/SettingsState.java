@@ -95,7 +95,11 @@ public class SettingsState implements GameState {
 
     }
 
-
+    /**
+     * update clears the screen and renders the settings menu
+     *
+     * @param projectD Project
+     */
     @Override
     public void update(ProjectD projectD) {
         Gdx.gl.glClearColor(Config.MENU_DEFAULTBACKGROUND_R,
@@ -119,7 +123,11 @@ public class SettingsState implements GameState {
         }
     }
 
-
+    /**
+     * Initiates the settings menu, creating all the buttons adding listners, and ordering them in a row table.
+     *
+     * @param projectD Project
+     */
     @Override
     public void init(ProjectD projectD) {
 
@@ -332,7 +340,7 @@ public class SettingsState implements GameState {
     }
 
     /**
-     * sets he updates the FOVlabel value
+     * Updates the FOV value label
      **/
     private void updateFOVlabel()
     {
@@ -345,6 +353,9 @@ public class SettingsState implements GameState {
         fovValueLabel.invalidate();
     }
 
+    /**
+     * Updates the disco factor value label
+     **/
     private void updateDiscoLabel()
     {
         float value = Config.DISCO_FACTOR;
@@ -356,6 +367,9 @@ public class SettingsState implements GameState {
         discoValueLabel.invalidate();
     }
 
+    /**
+     * Updates the AAfactor value label
+     **/
     private void updateAAlabel()
     {
         float value = Config.AA_SAMPLES;
@@ -367,6 +381,9 @@ public class SettingsState implements GameState {
         aaValueLabel.invalidate();
     }
 
+    /**
+     * Updates the sun R label
+     **/
     private void updateSunRLabel()
     {
         float value = Config.SUN_LIGHT_R;
@@ -378,6 +395,9 @@ public class SettingsState implements GameState {
         sunrSliderValue.invalidate();
     }
 
+    /**
+     * Updates the sun G label
+     **/
     private void updateSunGLabel()
     {
         float value = Config.SUN_LIGHT_G;
@@ -389,6 +409,9 @@ public class SettingsState implements GameState {
         sungSliderValue.invalidate();
     }
 
+    /**
+     * Updates the sun B label
+     **/
     private void updateSunBLabel()
     {
         float value = Config.SUN_LIGHT_B;
@@ -400,6 +423,11 @@ public class SettingsState implements GameState {
         sunbSliderValue.invalidate();
     }
 
+    /**
+     * Starts the settings menu state, updating the buttons value.
+     *
+     * @param projectD Project
+     */
     @Override
     public void start(ProjectD projectD) {
         updateDiscoLabel();
@@ -411,6 +439,7 @@ public class SettingsState implements GameState {
         updateSunBLabel();
 
     }
+
 
     @Override
     public void stop(ProjectD projectD) {
