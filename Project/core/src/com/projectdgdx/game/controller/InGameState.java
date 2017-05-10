@@ -41,11 +41,32 @@ public class InGameState implements GameState {
     //Bullet
 	btDefaultCollisionConfiguration collisionConfig;
 	btCollisionDispatcher dispatcher;
+<<<<<<< HEAD
+=======
+	CollisionListener collisionListener;
+	btBroadphaseInterface broadphase;
+	btCollisionWorld collisionWorld;
+
+	//Collision flags
+	final static short STATIC_FLAG = 1<<8;
+	final static short ENTITY_FLAG = 1<<9;
+	final static short ALL_FLAG = -1;
+>>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
 
 
     private RenderManager renderer;
     private Random rand;
     private Map map;
+
+    class CollisionListener extends ContactListener {
+        @Override
+		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
+//			instances.get(userValue0).moving = false;
+//			instances.get(userValue1).moving = false;
+			System.out.println("test");
+			return true;
+		}
+    }
 
     private void createCamera(){
         cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -100,12 +121,24 @@ public class InGameState implements GameState {
             animate();
             render();
             updateModelInstaces();
+			collisionWorld.performDiscreteCollisionDetection();
     }
 
     public void init(ProjectD projectD){
+<<<<<<< HEAD
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
+=======
+    	//Bullet inits
+		Bullet.init();
+		collisionConfig = new btDefaultCollisionConfiguration();
+		dispatcher = new btCollisionDispatcher(collisionConfig);
+		broadphase = new btDbvtBroadphase();
+		collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
+		collisionListener = new CollisionListener();
+
+>>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
         rand = new Random();
 
         MapParser parser = new MapParser();
@@ -158,11 +191,28 @@ public class InGameState implements GameState {
 			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
             System.out.println(boundingBox.getDimensions(new Vector3()).toString());
 
+<<<<<<< HEAD
 			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()));
 //			btCollisionShape collisionShape = new btBoxShape(new Vector3(100f, 100f, 100f));
 			btCollisionObject collisionObject = new btCollisionObject();
 			collisionObject.setCollisionShape(collisionShape);
 			collisionObject.setWorldTransform(modelInstance.transform);
+=======
+			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
+			btCollisionObject collisionObject = new btCollisionObject();
+			collisionObject.setCollisionShape(collisionShape);
+			collisionObject.setWorldTransform(modelInstance.transform);
+			collisionObject.setUserValue(gameObject.hashCode());
+			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
+
+			if(gameObject instanceof Entity) {
+				collisionWorld.addCollisionObject(collisionObject, ENTITY_FLAG, STATIC_FLAG);
+			}else {
+				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
+			}
+
+
+>>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
 
 			//Add GameObject and ModelInstance to a map that keeps them together
             objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
@@ -202,6 +252,7 @@ public class InGameState implements GameState {
 
 				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
 				modelInstance.transform.set(matrix4);
+<<<<<<< HEAD
 				collisionObject.setWorldTransform(modelInstance.transform);
 
 
@@ -215,6 +266,9 @@ public class InGameState implements GameState {
 					}
 				}
 
+=======
+				collisionObject.setWorldTransform(matrix4);
+>>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
 			}
         }
     }
@@ -233,11 +287,20 @@ public class InGameState implements GameState {
 		}
 		dispatcher.dispose();
 		collisionConfig.dispose();
+<<<<<<< HEAD
+=======
+		collisionListener.dispose();
+		collisionWorld.dispose();
+		broadphase.dispose();
+>>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
 
 		//Dispose graphic
         renderer.dispose();
+
+
     }
 
+<<<<<<< HEAD
 	boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
 		CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
 		CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
@@ -262,6 +325,30 @@ public class InGameState implements GameState {
 		co0.dispose();
 
 		return r;
+=======
+	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
+        CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
+        CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
+//        System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
+
+
+        btCollisionAlgorithm algorithm = dispatcher.findAlgorithm(co0.wrapper, co1.wrapper);
+
+        btDispatcherInfo info = new btDispatcherInfo();
+        btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
+
+        algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
+
+        boolean r = result.getPersistentManifold().getNumContacts() > 0;
+
+        dispatcher.freeCollisionAlgorithm(algorithm.getCPointer());
+        result.dispose();
+        info.dispose();
+        co1.dispose();
+        co0.dispose();
+
+        return r;
+>>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
 	}
 
 
