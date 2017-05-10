@@ -5,4 +5,5 @@
 	<Machine x="-50" y="0" z="-60" rotationX="0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" ></Machine>
     <Supervisor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Supervisor>
     <Floor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Floor>
+    <WorkerNode x="0" y="5" z="0" rotationX="180" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></WorkerNode>
 </Map>

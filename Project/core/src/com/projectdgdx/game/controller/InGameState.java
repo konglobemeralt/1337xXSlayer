@@ -113,8 +113,15 @@ public class InGameState implements GameState {
 		}
 	}
 
+	private void handleWorkers(){
+	    for (Worker worker : map.getWorkers()){
+	        worker.reactOnUpdate();
+        }
+    }
+
 	public void update(ProjectD projectD){
 		handleInput(projectD);
+		handleWorkers();
 		animate();
 		render();
 		updateModelInstaces();

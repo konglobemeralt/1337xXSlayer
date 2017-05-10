@@ -13,9 +13,10 @@ public abstract class AINode extends GameObject {
     private ArrayList<AINode> connectingNodes = new ArrayList<AINode>();
     private ArrayList<Double> connectionStrengths = new ArrayList<Double>();
 
-    public AINode(Vector3d pos){
-        super(pos,null,null, "AINode");
+    public AINode(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
+        super(position, scale, rotation, id);
     }
+
 
     public void addConnection(AINode node, double strength){
         connectingNodes.add(node);

@@ -1,9 +1,8 @@
 package com.projectdgdx.game.utils;
 
-import com.projectdgdx.game.model.Entity;
-import com.projectdgdx.game.model.GameObject;
-import com.projectdgdx.game.model.PlayableCharacter;
-import com.projectdgdx.game.model.StaticObject;
+import com.projectdgdx.game.model.*;
+import com.projectdgdx.game.model.AI.AINode;
+import com.projectdgdx.game.model.AI.WorkerNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +48,41 @@ public abstract class Map {
         return players;
     }
 
+    public List<Worker> getWorkers() {
+        List<Worker> workers = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof Worker) {
+                workers.add((Worker)gameObject);
+            }
+        }
+        return workers;
+    }
+
+    public List<AINode> getAINodes() {
+        List<AINode> nodes = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof AINode) {
+                nodes.add((AINode)gameObject);
+            }
+        }
+        return nodes;
+    }
+
+    public List<WorkerNode> getWorkerNodes() {
+        List<WorkerNode> nodes = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof WorkerNode) {
+                nodes.add((WorkerNode)gameObject);
+            }
+        }
+        return nodes;
+    }
+
     public List<Entity> getEntities() {
         List<Entity> entities = new ArrayList<>();
         for(GameObject gameObject : gameObjects) {
             if(gameObject instanceof Entity) {
-                entities.add((PlayableCharacter)gameObject);
+                entities.add((Entity) gameObject);
             }
         }
         return entities;
