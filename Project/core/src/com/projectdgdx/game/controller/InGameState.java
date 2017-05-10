@@ -144,8 +144,13 @@ public class InGameState implements GameState {
 		map = parser.parse("BasicMapTest");
 
 		//Init nodes
-		for(AINode node : map.getAINodes()) {
+		List<AINode> nodeList =  map.getAINodes();
+		for(AINode node : nodeList) {
 			node.init(map.getAINodes());
+		}
+
+		for (Worker worker : map.getWorkers()){
+			worker.setTargetNode(nodeList.get(rand.nextInt(nodeList.size())));
 		}
 
 		int i = 0;

@@ -5,7 +5,11 @@
 	<Machine x="-50" y="0" z="-60" rotationX="0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" ></Machine>
     <Supervisor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Supervisor>
     <Floor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Floor>
-    <WorkerNode x="0" y="5" z="0" rotationX="180" nodeId="1" nodeFriends="2,3"></WorkerNode>
-    <WorkerNode x="0" y="5" z="0" rotationX="180" nodeId="2" nodeFriends="1"></WorkerNode>
-    <WorkerNode x="0" y="5" z="0" rotationX="180" nodeId="3" nodeFriends="2"></WorkerNode>
+    <WorkerNode x="50" y="0" z="0" rotationX="180" nodeId="1" nodeFriends="2,3"></WorkerNode>
+    <WorkerNode x="50" y="0" z="50" rotationX="180" nodeId="2" nodeFriends="1"></WorkerNode>
+    <WorkerNode x="0" y="0" z="-50" rotationX="180" nodeId="3" nodeFriends="2"></WorkerNode>
+    <Worker x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
+    <Worker x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
+
+
 </Map>

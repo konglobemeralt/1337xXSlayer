@@ -82,10 +82,10 @@ public class Config {
     /************MODEL VARIABLES************/
 
     //MODEL RADIUS'S
-    public static final float HONEST_ACT_DISTANCE = 1;
-    public static final float USE_ABILITY_ACT_DISTANCE = 1;
-    public static final float STRIKE_ZONE_RADIUS = 1;
-    public static final float WORKER_NODE_RADIUS = 1;
+    public static final float HONEST_ACT_DISTANCE = 5;
+    public static final float USE_ABILITY_ACT_DISTANCE = 5;
+    public static final float STRIKE_ZONE_RADIUS = 10;
+    public static final float WORKER_NODE_RADIUS = 5;
 
     //MODEL ATTRIBUTES
     public static final float WORKER_SPEED = 1;
