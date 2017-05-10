@@ -35,6 +35,7 @@ public class RenderManager {
 
     public Collection<Pair<ModelInstance, btCollisionObject>> instances;
 
+    public Environment pointLights;
     public Environment environment;
     DirectionalShadowLight shadowLight;
     public Shader shader;
@@ -44,7 +45,7 @@ public class RenderManager {
     public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
         fps.log();
-
+        createLights();
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
@@ -67,7 +68,7 @@ public class RenderManager {
     private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
         for (Pair<ModelInstance, btCollisionObject> instance : instances) {
-            modelBatch.render(instance.getKey(), environment);
+            modelBatch.render(instance.getKey(), pointLights);
         }
         modelBatch.end();
     }
@@ -111,6 +112,17 @@ public class RenderManager {
      * createEnvironment creates the enviroment
      *
      */
+
+    public void createLights(){
+        pointLights = new Environment();
+        for(int i = 0; i < Config.DISCO_FACTOR; i++){
+            pointLights.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
+                    (rand.nextInt(300)-100) , rand.nextInt(20)-5,  (rand.nextInt(300)-100), 70f));
+
+        }
+
+    }
+
     public void createEnvironment(){
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
@@ -140,11 +152,7 @@ public class RenderManager {
                     Config.SUN_LIGHT_Y,
                     Config.SUN_LIGHT_Z));
         }
-        for(int i = 0; i < Config.DISCO_FACTOR; i++){
-            environment.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
-                    (rand.nextInt(300)-100) , rand.nextInt(20)-5,  (rand.nextInt(300)-100), 70f));
 
-        }
 
     }
 
