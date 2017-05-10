@@ -58,7 +58,6 @@ public class RenderManager {
         this.instances = instances;
 //        fps.log();
 
-
         if(Config.DISCO_FACTOR > 0){
             lifeTime += Gdx.graphics.getDeltaTime();
             if (lifeTime > discoDelay) {
