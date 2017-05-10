@@ -267,11 +267,12 @@ public class InGameState implements GameState {
 	}
 
 	public void exit(ProjectD projectD){
-		this.stop(projectD);
-
 		//Dispose physics objects
 		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
-			entrySet.getValue().getValue().dispose();
+			btCollisionObject collisionObject = entrySet.getValue().getValue();
+			if(collisionObject != null) {
+				collisionObject.dispose();
+			}
 		}
 		dispatcher.dispose();
 		collisionConfig.dispose();
@@ -282,7 +283,7 @@ public class InGameState implements GameState {
 		//Dispose graphic
 		renderer.dispose();
 
-
+		this.stop(projectD);
 	}
 
 	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {

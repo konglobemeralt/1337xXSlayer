@@ -42,4 +42,11 @@ public class Vector3d {
         return this.distanceTo(compVector) <= radius;
     }
 
+    public Vector3d scale(float scalar) {
+        this.x *= scalar;
+        this.y *= scalar;
+        this.z *= scalar;
+        return this;
+    }
+
 }

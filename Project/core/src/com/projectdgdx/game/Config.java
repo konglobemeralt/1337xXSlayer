@@ -88,5 +88,5 @@ public class Config {
     public static final float WORKER_NODE_RADIUS = 5;
 
     //MODEL ATTRIBUTES
-    public static final float WORKER_SPEED = 1;
+    public static final float WORKER_SPEED = 20f;
 }

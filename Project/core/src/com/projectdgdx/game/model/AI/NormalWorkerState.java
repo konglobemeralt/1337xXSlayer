@@ -1,5 +1,6 @@
 package com.projectdgdx.game.model.AI;
 
+import com.badlogic.gdx.Gdx;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Vector3d;
@@ -17,6 +18,6 @@ public class NormalWorkerState implements WorkerState {
         }
 
         Vector3d vectorToTarget = worker.getPosition().vectorTo(worker.getTargetNode().getPosition());
-        worker.move(vectorToTarget.normalised());
+        worker.move((vectorToTarget.normalised()).scale(Gdx.graphics.getDeltaTime()*Config.WORKER_SPEED));
     }
 }
