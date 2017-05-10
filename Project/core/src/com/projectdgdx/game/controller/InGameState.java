@@ -45,6 +45,11 @@ public class InGameState implements GameState {
 	btBroadphaseInterface broadphase;
 	btCollisionWorld collisionWorld;
 
+	//Collision flags
+	final static short STATIC_FLAG = 1<<8;
+	final static short ENTITY_FLAG = 1<<9;
+	final static short ALL_FLAG = -1;
+
 
     private RenderManager renderer;
     private Random rand;
@@ -183,7 +188,14 @@ public class InGameState implements GameState {
 			collisionObject.setWorldTransform(modelInstance.transform);
 			collisionObject.setUserValue(gameObject.hashCode());
 			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-			collisionWorld.addCollisionObject(collisionObject);
+
+			if(gameObject instanceof Entity) {
+				collisionWorld.addCollisionObject(collisionObject, ENTITY_FLAG, STATIC_FLAG);
+			}else {
+				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
+			}
+
+
 
 			//Add GameObject and ModelInstance to a map that keeps them together
             objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
