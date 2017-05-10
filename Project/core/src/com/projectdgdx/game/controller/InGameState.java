@@ -8,16 +8,18 @@ import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
-import com.projectdgdx.game.model.GameObject;
-import com.projectdgdx.game.model.InputModel;
-import com.projectdgdx.game.model.PlayableCharacter;
+import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.view.RenderManager;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -34,12 +36,34 @@ public class InGameState implements GameState {
     private CameraInputController camController;
 
     private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
-    private HashMap<GameObject, ModelInstance> objectsMap = new HashMap<>();
+    private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
+
+    //Bullet
+	btDefaultCollisionConfiguration collisionConfig;
+	btCollisionDispatcher dispatcher;
+	CollisionListener collisionListener;
+	btBroadphaseInterface broadphase;
+	btCollisionWorld collisionWorld;
+
+	//Collision flags
+	final static short STATIC_FLAG = 1<<8;
+	final static short ENTITY_FLAG = 1<<9;
+	final static short ALL_FLAG = -1;
 
 
     private RenderManager renderer;
     private Random rand;
     private Map map;
+
+    class CollisionListener extends ContactListener {
+        @Override
+		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
+//			instances.get(userValue0).moving = false;
+//			instances.get(userValue1).moving = false;
+			System.out.println("test");
+			return true;
+		}
+    }
 
     private void createCamera(){
         cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -94,9 +118,18 @@ public class InGameState implements GameState {
             animate();
             render();
             updateModelInstaces();
+			collisionWorld.performDiscreteCollisionDetection();
     }
 
     public void init(ProjectD projectD){
+    	//Bullet inits
+		Bullet.init();
+		collisionConfig = new btDefaultCollisionConfiguration();
+		dispatcher = new btCollisionDispatcher(collisionConfig);
+		broadphase = new btDbvtBroadphase();
+		collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
+		collisionListener = new CollisionListener();
+
         rand = new Random();
 
         MapParser parser = new MapParser();
@@ -112,6 +145,7 @@ public class InGameState implements GameState {
         }
 
         generateRenderInstances();
+
 
     }
 
@@ -144,10 +178,27 @@ public class InGameState implements GameState {
                 });
                 animationControllers.add(animController);
             }
+            //Add a box around object that will be used for physics
+			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
+            System.out.println(boundingBox.getDimensions(new Vector3()).toString());
 
-            //Add GameObject and ModelInstance to a map that keeps them together
-            objectsMap.put(gameObject, modelInstance);
+			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
+			btCollisionObject collisionObject = new btCollisionObject();
+			collisionObject.setCollisionShape(collisionShape);
+			collisionObject.setWorldTransform(modelInstance.transform);
+			collisionObject.setUserValue(gameObject.hashCode());
+			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 
+			if(gameObject instanceof Entity) {
+				collisionWorld.addCollisionObject(collisionObject, ENTITY_FLAG, STATIC_FLAG);
+			}else {
+				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
+			}
+
+
+
+			//Add GameObject and ModelInstance to a map that keeps them together
+            objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
         }
 
     }
@@ -163,23 +214,29 @@ public class InGameState implements GameState {
     }
 
     public void updateModelInstaces() {
-        for(java.util.Map.Entry<GameObject, ModelInstance> entrySet : objectsMap.entrySet()) {
-            ModelInstance modelInstance = entrySet.getValue();
+        for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
+            ModelInstance modelInstance = entrySet.getValue().getKey();
             GameObject gameObject = entrySet.getKey();
-            Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
-            Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-            Quaternion quaternion = new Quaternion();
+            btCollisionObject collisionObject = entrySet.getValue().getValue();
 
-            //TODO ugly solution for rotation
-			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-			modelInstance.transform.setToRotation(0,0,0,0,0,0);
-			modelInstance.transform.rotate(Vector3.X, rotation.x);
-			modelInstance.transform.rotate(Vector3.Y, rotation.y);
-			modelInstance.transform.rotate(Vector3.Z, rotation.z);
-			quaternion = modelInstance.transform.getRotation(new Quaternion());
+            //Check for entity
+            if(gameObject instanceof Entity) {
+				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
+				Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+				Quaternion quaternion = new Quaternion();
 
-			Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-            modelInstance.transform.set(matrix4);
+				//TODO ugly solution for rotation
+				Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+				modelInstance.transform.setToRotation(0,0,0,0,0,0);
+				modelInstance.transform.rotate(Vector3.X, rotation.x);
+				modelInstance.transform.rotate(Vector3.Y, rotation.y);
+				modelInstance.transform.rotate(Vector3.Z, rotation.z);
+				quaternion = modelInstance.transform.getRotation(new Quaternion());
+
+				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+				modelInstance.transform.set(matrix4);
+				collisionObject.setWorldTransform(matrix4);
+			}
         }
     }
 
@@ -190,8 +247,46 @@ public class InGameState implements GameState {
 
     public void exit(ProjectD projectD){
         this.stop(projectD);
+
+        //Dispose physics objects
+		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
+			entrySet.getValue().getValue().dispose();
+		}
+		dispatcher.dispose();
+		collisionConfig.dispose();
+		collisionListener.dispose();
+		collisionWorld.dispose();
+		broadphase.dispose();
+
+		//Dispose graphic
         renderer.dispose();
+
+
     }
+
+	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
+        CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
+        CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
+//        System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
+
+
+        btCollisionAlgorithm algorithm = dispatcher.findAlgorithm(co0.wrapper, co1.wrapper);
+
+        btDispatcherInfo info = new btDispatcherInfo();
+        btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
+
+        algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
+
+        boolean r = result.getPersistentManifold().getNumContacts() > 0;
+
+        dispatcher.freeCollisionAlgorithm(algorithm.getCPointer());
+        result.dispose();
+        info.dispose();
+        co1.dispose();
+        co0.dispose();
+
+        return r;
+	}
 
 
 

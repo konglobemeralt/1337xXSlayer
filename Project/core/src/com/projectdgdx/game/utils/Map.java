@@ -1,7 +1,9 @@
 package com.projectdgdx.game.utils;
 
+import com.projectdgdx.game.model.Entity;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.PlayableCharacter;
+import com.projectdgdx.game.model.StaticObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,26 @@ public abstract class Map {
             }
         }
         return players;
+    }
+
+    public List<Entity> getEntities() {
+        List<Entity> entities = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof Entity) {
+                entities.add((PlayableCharacter)gameObject);
+            }
+        }
+        return entities;
+    }
+
+    public List<StaticObject> getStaticObjects() {
+        List<StaticObject> staticObjects = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof StaticObject) {
+                staticObjects.add((StaticObject) gameObject);
+            }
+        }
+        return staticObjects;
     }
 
 

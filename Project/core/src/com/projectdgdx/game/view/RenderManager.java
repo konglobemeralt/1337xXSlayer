@@ -7,16 +7,14 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
-import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
-import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
-import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
-
+import javafx.util.Pair;
 
 import java.util.Collection;
-import java.util.Random;
 
 /**
  * Created by konglobemeralt on 2017-05-07.
@@ -31,16 +29,14 @@ public class RenderManager {
 
     private FPSLogger fps;
 
-    public Collection<ModelInstance> instances;
+    public Collection<Pair<ModelInstance, btCollisionObject>> instances;
 
     public Environment environment;
     DirectionalShadowLight shadowLight;
     public Shader shader;
 
-    Random rand;
 
-
-    public void render (PerspectiveCamera cam, Collection<ModelInstance> instances) {
+    public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
         fps.log();
 
@@ -65,8 +61,8 @@ public class RenderManager {
 
     private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
-        for (ModelInstance instance : instances) {
-            modelBatch.render(instance, environment);
+        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
+            modelBatch.render(instance.getKey(), environment);
         }
         modelBatch.end();
     }
@@ -81,8 +77,8 @@ public class RenderManager {
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
-        for (ModelInstance instance : instances) {
-            shadowBatch.render(instance, environment);
+        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
+            shadowBatch.render(instance.getKey(), environment);
         }
         shadowBatch.end();
         shadowLight.end();
@@ -93,16 +89,7 @@ public class RenderManager {
      *
      */
     public void createBatches(){
-
-        DefaultShader.Config config = new DefaultShader.Config();
-        config.numDirectionalLights = 8 + Config.DISCO_FACTOR;
-        config.numPointLights = 100;
-        config.numSpotLights = 0;
-
-        ShaderProvider shaderProvider = new DefaultShaderProvider(config);
-
-        modelBatch = new ModelBatch(shaderProvider);
-        //modelBatch = new ModelBatch();
+        modelBatch = new ModelBatch();
         shadowBatch = new ModelBatch(new DepthShaderProvider());
     }
 
@@ -139,27 +126,12 @@ public class RenderManager {
                     Config.SUN_LIGHT_Y,
                     Config.SUN_LIGHT_Z));
         }
-
-
-        for(int i = 0; i < Config.DISCO_FACTOR; i++){
-            environment.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
-                    (rand.nextInt(300)-100) , rand.nextInt(20)-5,  (rand.nextInt(300)-100), 70f));
-
-        }
-
-        //environment.add(new PointLight().set(0.1f, 0.3f, 1f,
-        //        50, 10, 0, 70f));
-//
-        //environment.add(new PointLight().set(1f, 0.3f, 0.3f,
-        //        -30, 10, 0, 70f));
-//
-        //environment.add(new PointLight().set(0.2f, 1f, 0.3f,
-        //        0, 10, 50, 70f));
+        environment.add(new PointLight().set(0.9f, 0.3f, 0.3f,
+                35, 15f, 45f, 100f));
 
     }
 
     public void init(){
-        rand = new Random();
         createEnvironment();
         createBatches();
 
