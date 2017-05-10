@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
+import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
@@ -44,12 +45,13 @@ public class InGameState implements GameState {
 	btCollisionDispatcher dispatcher;
 	CollisionListener collisionListener;
 	btBroadphaseInterface broadphase;
-	btCollisionWorld collisionWorld;
+	btDynamicsWorld dynamicsWorld;
+	btConstraintSolver constraintSolver;
 
 	//Collision flags
 	final static short STATIC_FLAG = 1<<8;
 	final static short ENTITY_FLAG = 1<<9;
-	final static short NODE_FLAG = -1;
+	final static short ALL_FLAG = -1;
 
 
 	private RenderManager renderer;
@@ -61,16 +63,116 @@ public class InGameState implements GameState {
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			GameObject gameObject0 = map.getGameObjects().get(userValue0);
 			GameObject gameObject1 = map.getGameObjects().get(userValue1);
-//			instances.get(userValue0).moving = false;
-//			instances.get(userValue1).moving = false;
-//			if(gameObject0 instanceof Entity && gameObject1 instanceof StaticObject) {
-//				System.out.println("COliison");
-//				gameObject0.setPosition(gameObject0.getOldPosition());
-//			}else if(gameObject0 instanceof StaticObject && gameObject1 instanceof Entity) {
-//				gameObject1.setPosition(gameObject0.getOldPosition());
 //			}
-//			System.out.println(map.getGameObjects().get(userValue0).getId() + " collision with: " + map.getGameObjects().get(userValue1).getId());
+//			System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
 			return true;
+		}
+	}
+
+	private void generateRenderInstances(){
+
+		Vector3 localInertia = new Vector3();
+		for (GameObject gameObject : map.getGameObjects()) {
+			// Create a ModelInstance for GameObject gameObject
+			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
+			modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+			Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+			modelInstance.transform.scale(scale.x, scale.y, scale.z);
+			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+			modelInstance.transform.rotate(Vector3.X, rotation.x);
+			modelInstance.transform.rotate(Vector3.Y, rotation.y);
+			modelInstance.transform.rotate(Vector3.Z, rotation.z);
+
+			//Check for worker or player animation from id
+			if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
+				AnimationController animController = new AnimationController(modelInstance);
+				animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
+					@Override
+					public void onEnd(AnimationController.AnimationDesc animation) {
+					}
+
+					@Override
+					public void onLoop(AnimationController.AnimationDesc animation) {
+						//   Gdx.app.log("INFO", "Animation Ended");
+					}
+				});
+				animationControllers.add(animController);
+			}
+			//Add a box around object that will be used for physics
+			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
+			btCollisionShape collisionShape;
+			collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
+
+
+
+			btRigidBody collisionObject;
+			if(gameObject instanceof StaticObject) {
+				localInertia.set(0, 0, 0);
+				collisionObject = new btRigidBody(0f, null, collisionShape, new Vector3());
+			} else {
+				collisionShape.calculateLocalInertia(1f, localInertia);
+				collisionObject = new btRigidBody(1f, null, collisionShape, localInertia);
+			}
+
+			collisionObject.setCollisionShape(collisionShape);
+			if(gameObject instanceof Floor) {
+//				System.out.println(collisionObject.getWorldTransform());
+//				System.out.println(modelInstance.transform.toString());
+
+				//TODO this line only seem to work if floor scale is (1,1,1)
+				collisionObject.setWorldTransform(modelInstance.transform);
+			}else {
+				collisionObject.setWorldTransform(modelInstance.transform);
+			}
+			collisionObject.setUserValue(map.getGameObjects().indexOf(gameObject));
+			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
+
+			if(gameObject instanceof Entity) {
+				dynamicsWorld.addRigidBody(collisionObject, ENTITY_FLAG, STATIC_FLAG);
+			}else if(gameObject instanceof AINode) {
+				//Ignore ainode
+				collisionObject = null;
+			} else if(gameObject instanceof StaticObject) {
+				dynamicsWorld.addRigidBody(collisionObject, STATIC_FLAG, ALL_FLAG);
+			}
+
+
+
+			//Add GameObject and ModelInstance to a map that keeps them together
+			objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
+		}
+
+	}
+
+	public void updateModelInstaces() {
+		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
+			ModelInstance modelInstance = entrySet.getValue().getKey();
+			GameObject gameObject = entrySet.getKey();
+			btCollisionObject collisionObject = entrySet.getValue().getValue();
+//
+//			//Check for entity
+//			if(gameObject instanceof Entity) {
+//				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
+//				Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+//				Quaternion quaternion = new Quaternion();
+//
+//				//TODO ugly solution for rotation
+//				Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+//				modelInstance.transform.setToRotation(0,0,0,0,0,0);
+//				modelInstance.transform.rotate(Vector3.X, rotation.x);
+//				modelInstance.transform.rotate(Vector3.Y, rotation.y);
+//				modelInstance.transform.rotate(Vector3.Z, rotation.z);
+//				quaternion = modelInstance.transform.getRotation(new Quaternion());
+//
+//				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
+////				modelInstance.transform.set(matrix4);
+////				collisionObject.getWorldTransform(modelInstance.transform);
+//			}
+
+			if(modelInstance != null && gameObject != null) {
+				collisionObject.getWorldTransform(modelInstance.transform);
+			}
+
 		}
 	}
 
@@ -129,12 +231,17 @@ public class InGameState implements GameState {
     }
 
 	public void update(ProjectD projectD){
-		handleInput(projectD);
-		handleWorkers();
-		animate();
-		render();
+//		handleInput(projectD);
+//		handleWorkers();
+		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 		updateModelInstaces();
-		collisionWorld.performDiscreteCollisionDetection();
+
+
+//		animate();
+		render();
+
+
 	}
 
 	public void init(ProjectD projectD){
@@ -143,7 +250,9 @@ public class InGameState implements GameState {
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
-		collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
+		constraintSolver = new btSequentialImpulseConstraintSolver();
+		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld.setGravity(new Vector3(0, -3f, 0));
 		collisionListener = new CollisionListener();
 
 		rand = new Random();
@@ -175,61 +284,6 @@ public class InGameState implements GameState {
 
 	}
 
-	private void generateRenderInstances(){
-
-
-		for (GameObject gameObject : map.getGameObjects()) {
-			// Create a ModelInstance for GameObject gameObject
-			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-			modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
-			Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-			modelInstance.transform.scale(scale.x, scale.y, scale.z);
-			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-			modelInstance.transform.rotate(Vector3.X, rotation.x);
-			modelInstance.transform.rotate(Vector3.Y, rotation.y);
-			modelInstance.transform.rotate(Vector3.Z, rotation.z);
-
-			//Check for worker or player animation from id
-			if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
-				AnimationController animController = new AnimationController(modelInstance);
-				animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
-					@Override
-					public void onEnd(AnimationController.AnimationDesc animation) {
-					}
-
-					@Override
-					public void onLoop(AnimationController.AnimationDesc animation) {
-						//   Gdx.app.log("INFO", "Animation Ended");
-					}
-				});
-				animationControllers.add(animController);
-			}
-			//Add a box around object that will be used for physics
-			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
-
-			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
-			btCollisionObject collisionObject = new btCollisionObject();
-			collisionObject.setCollisionShape(collisionShape);
-			collisionObject.setWorldTransform(modelInstance.transform);
-			collisionObject.setUserValue(map.getGameObjects().indexOf(gameObject));
-			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-
-			if(gameObject instanceof Entity) {
-				collisionWorld.addCollisionObject(collisionObject, ENTITY_FLAG, STATIC_FLAG);
-			}else if(gameObject instanceof Floor || gameObject instanceof AINode) {
-				//Ignore floor
-				collisionObject = null;
-			} else {
-				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
-			}
-
-
-
-			//Add GameObject and ModelInstance to a map that keeps them together
-			objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
-		}
-
-	}
 
 	@Override
 	public void start(ProjectD projectD) {
@@ -239,33 +293,6 @@ public class InGameState implements GameState {
 		renderer = new RenderManager();
 		renderer.init();
 
-	}
-
-	public void updateModelInstaces() {
-		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
-			ModelInstance modelInstance = entrySet.getValue().getKey();
-			GameObject gameObject = entrySet.getKey();
-			btCollisionObject collisionObject = entrySet.getValue().getValue();
-
-			//Check for entity
-			if(gameObject instanceof Entity) {
-				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
-				Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-				Quaternion quaternion = new Quaternion();
-
-				//TODO ugly solution for rotation
-				Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-				modelInstance.transform.setToRotation(0,0,0,0,0,0);
-				modelInstance.transform.rotate(Vector3.X, rotation.x);
-				modelInstance.transform.rotate(Vector3.Y, rotation.y);
-				modelInstance.transform.rotate(Vector3.Z, rotation.z);
-				quaternion = modelInstance.transform.getRotation(new Quaternion());
-
-				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-				modelInstance.transform.set(matrix4);
-				collisionObject.setWorldTransform(matrix4);
-			}
-		}
 	}
 
 	@Override
@@ -284,8 +311,9 @@ public class InGameState implements GameState {
 		dispatcher.dispose();
 		collisionConfig.dispose();
 		collisionListener.dispose();
-		collisionWorld.dispose();
+		dynamicsWorld.dispose();
 		broadphase.dispose();
+		constraintSolver.dispose();
 
 		//Dispose graphic
 		renderer.dispose();

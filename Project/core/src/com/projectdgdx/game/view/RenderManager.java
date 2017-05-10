@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
@@ -89,6 +91,18 @@ public class RenderManager {
         modelBatch.begin(cam);
         for (Pair<ModelInstance, btCollisionObject> instance : instances) {
             modelBatch.render(instance.getKey(), environment);
+
+            if(Config.DEBUG) {
+                ModelBuilder modelBuilder = new ModelBuilder();
+                Vector3 dimensions = instance.getKey().calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3());
+                Model model = modelBuilder.createBox(dimensions.x, dimensions.y, dimensions.z,
+                        new Material(ColorAttribute.createDiffuse(Color.RED)),
+                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                ModelInstance modelInstance = new ModelInstance(model);
+                modelInstance.transform = instance.getKey().transform;
+                modelBatch.render(modelInstance, environment);
+
+            }
         }
         modelBatch.end();
     }
