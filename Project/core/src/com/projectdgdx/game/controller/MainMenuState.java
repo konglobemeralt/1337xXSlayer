@@ -20,6 +20,7 @@ import com.projectdgdx.game.utils.Vector3d;
 import static com.badlogic.gdx.Gdx.gl20;
 
 /**
+ * Main menu state displays and handles the main menu
  * Created by Eddie on 2017-04-28.
  */
 public class MainMenuState implements GameState {
