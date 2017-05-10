@@ -4,6 +4,7 @@ import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Emil Jansson on 2017-05-08.
@@ -13,8 +14,12 @@ public abstract class AINode extends GameObject {
     private ArrayList<AINode> connectingNodes = new ArrayList<AINode>();
     private ArrayList<Double> connectionStrengths = new ArrayList<Double>();
 
-    public AINode(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
+    int nodeId;
+    List<Integer> friendList;
+    public AINode(Vector3d position, Vector3d scale, Vector3d rotation, String id, int nodeId, List<Integer> friendList) {
         super(position, scale, rotation, id);
+        this.nodeId = nodeId;
+        this.friendList  = friendList;
     }
 
 
@@ -49,6 +54,17 @@ public abstract class AINode extends GameObject {
             }
         }
         return connectingNodes.get(i);
+    }
+
+    public int getNodeId() {
+        return nodeId;
+    }
+    public void init(List<AINode> nodeList) {
+        for(AINode node : nodeList) {
+            if(friendList.contains(node.getNodeId())) {
+                addConnection(node, 1);
+            }
+        }
     }
 
 }

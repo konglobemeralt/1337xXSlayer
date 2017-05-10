@@ -16,6 +16,7 @@ import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.*;
+import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.utils.Map;
 import com.projectdgdx.game.view.RenderManager;
@@ -141,6 +142,11 @@ public class InGameState implements GameState {
 
 		MapParser parser = new MapParser();
 		map = parser.parse("BasicMapTest");
+
+		//Init nodes
+		for(AINode node : map.getAINodes()) {
+			node.init(map.getAINodes());
+		}
 
 		int i = 0;
 		List<PlayableCharacter> players = map.getPlayers();
