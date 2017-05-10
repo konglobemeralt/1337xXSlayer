@@ -54,8 +54,9 @@ public class Supervisor extends PlayableCharacter {
     }
 
     public void catsch(List<Character> characters){
-        Character closestCharacter;
-
+        List<Character> charactersInRadius = getCharactersInRadius(characters);
+        Character closestCharacter = getClosestCharacter(charactersInRadius);
+        closestCharacter.beenCaught();
     }
 
     @Override
