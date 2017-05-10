@@ -363,6 +363,21 @@ public class SettingsState implements GameState {
         discoSlider.setValue(value);
         discoSlider.setAnimateDuration(0.3f);
 
+    /**
+     * Updates the disco factor value label
+     **/
+
+    private void updateDiscoLabel()
+    {
+        float value1 = Config.DISCO_FACTOR;
+
+        discoSlider.setValue(value1);
+        discoSlider.setAnimateDuration(0.3f);
+
+        discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
+        discoValueLabel.invalidate();
+    }
+
         discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
         discoValueLabel.invalidate();
     }
