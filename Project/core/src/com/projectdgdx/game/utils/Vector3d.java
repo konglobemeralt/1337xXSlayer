@@ -53,4 +53,8 @@ public class Vector3d {
         return "[" + x + "," + y + "," + z + "]";
     }
 
+    public float getXZAngle() {
+        return (float)Math.toDegrees(Math.atan2(z, x));
+    }
+
 }

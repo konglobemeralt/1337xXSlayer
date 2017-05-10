@@ -21,6 +21,7 @@ public class NormalWorkerState implements WorkerState {
 
         Vector3d moveVector = vectorToTarget.normalised().scale(Gdx.graphics.getDeltaTime()*Config.WORKER_SPEED);
         moveVector.y = 0;
+        worker.setRotation(new Vector3d(0, moveVector.getXZAngle() - 90, 0));
         worker.move(moveVector);
     }
 }
