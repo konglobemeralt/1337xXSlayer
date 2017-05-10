@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
 <Map>
     <Supervisor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Supervisor>
-    <Floor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Floor>
-    <WorkerNode x="20" y="0" z="0" rotationX="0" nodeId="1" nodeFriends="2,3" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
+    <Floor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="5" scaleY="5" scaleZ="5"></Floor>
+    <WorkerNode x="40" y="0" z="0" rotationX="0" nodeId="1" nodeFriends="2,3" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
     <WorkerNode x="20" y="0" z="20" rotationX="0" nodeId="2" nodeFriends="1" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
-    <WorkerNode x="0" y="0" z="-20" rotationX="0" nodeId="3" nodeFriends="2" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
+    <WorkerNode x="0" y="0" z="-20" rotationX="0" nodeId="3" nodeFriends="4,2,1" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
+    <WorkerNode x="0" y="0" z="-40" rotationX="0" nodeId="4" nodeFriends="5" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
+    <WorkerNode x="0" y="0" z="-60" rotationX="0" nodeId="5" nodeFriends="6" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
+    <WorkerNode x="20" y="0" z="-80" rotationX="0" nodeId="6" nodeFriends="1,2" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
     <Worker x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
     <Worker x="5" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
     <Worker x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
+    <Machine x="-30" y="0" z="-50" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Machine>
 
 
 </Map>
