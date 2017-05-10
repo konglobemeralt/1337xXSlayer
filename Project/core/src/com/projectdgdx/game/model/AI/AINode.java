@@ -53,6 +53,7 @@ public abstract class AINode extends GameObject {
                 break;
             }
         }
+        System.out.println(nodeId + ":: " + connectingNodes.get(0).getNodeId() + " " + connectingNodes.get(1).getNodeId()   + " MOVING TO:  " + connectingNodes.get(i).getNodeId());
         return connectingNodes.get(i);
     }
 

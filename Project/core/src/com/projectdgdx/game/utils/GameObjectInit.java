@@ -88,7 +88,7 @@ public class GameObjectInit {
               case "Saboteur":
                   return new Saboteur(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "saboteur.basic");
               case "WorkerNode":
-                    return new WorkerNode(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "player.basic", nodeId, nodeFriends) {
+                    return new WorkerNode(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "node.worker", nodeId, nodeFriends) {
                     };
               case "Floor":
                     return new Floor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
