@@ -13,10 +13,6 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import javafx.util.Pair;
-<<<<<<< HEAD
-
-=======
->>>>>>> b5f9f7768f194a14f44ed4bbb6d3ad5a9e3b9527
 
 import java.util.Collection;
 
@@ -50,9 +46,9 @@ public class RenderManager {
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
 
-            if(Config.SHADOWMAPPING_ENABLED) {
-                renderShadowMap(cam);
-            }
+        if(Config.SHADOWMAPPING_ENABLED) {
+            renderShadowMap(cam);
+        }
         renderToScreen(cam);
 
     }

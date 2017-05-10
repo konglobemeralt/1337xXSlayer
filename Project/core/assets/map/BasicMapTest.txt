@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <Map>
-    <Supervisor x="10.000" y="2.0000" z="-53.0000" rotationX="0.0" rotationY="23.0" rotationZ="0" scaleX="1.5" scaleY="1.5" scaleZ="1.5"></Supervisor>
-    <Supervisor x="10.000" y="2.0000" z="-53.0000" rotationX="0.0" rotationY="23.0" rotationZ="0" scaleX="1.5" scaleY="1.5" scaleZ="1.5"></Supervisor>
-    <Floor x="0.000" y="0.0000" z="0.0000" rotationX="0.0" rotationY="23.0" rotationZ="0" scaleX="1.5" scaleY="1.5" scaleZ="1.5"></Floor>
+	<Machine x="50" y="0" z="60" rotationX="0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" ></Machine>
+	<Machine x="30" y="0" z="30" rotationX="0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" ></Machine>
+	<Machine x="-50" y="0" z="-60" rotationX="0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" ></Machine>
+    <Supervisor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Supervisor>
+    <Floor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Floor>
 </Map>
-
