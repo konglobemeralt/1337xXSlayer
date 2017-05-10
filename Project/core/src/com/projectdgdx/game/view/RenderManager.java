@@ -56,7 +56,7 @@ public class RenderManager {
 
     public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
-        fps.log();
+//        fps.log();
 
 
         if(Config.DISCO_FACTOR > 0){

@@ -85,7 +85,7 @@ public class Config {
     public static final float HONEST_ACT_DISTANCE = 5;
     public static final float USE_ABILITY_ACT_DISTANCE = 5;
     public static final float STRIKE_ZONE_RADIUS = 10;
-    public static final float WORKER_NODE_RADIUS = 5;
+    public static final float WORKER_NODE_RADIUS = 1;
 
     //MODEL ATTRIBUTES
     public static final float WORKER_SPEED = 20f;

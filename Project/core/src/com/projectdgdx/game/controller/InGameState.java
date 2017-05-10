@@ -49,7 +49,7 @@ public class InGameState implements GameState {
 	//Collision flags
 	final static short STATIC_FLAG = 1<<8;
 	final static short ENTITY_FLAG = 1<<9;
-	final static short ALL_FLAG = -1;
+	final static short NODE_FLAG = -1;
 
 
 	private RenderManager renderer;
@@ -198,7 +198,6 @@ public class InGameState implements GameState {
 			}
 			//Add a box around object that will be used for physics
 			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
-			System.out.println(boundingBox.getDimensions(new Vector3()).toString());
 
 			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
 			btCollisionObject collisionObject = new btCollisionObject();
@@ -209,7 +208,7 @@ public class InGameState implements GameState {
 
 			if(gameObject instanceof Entity) {
 				collisionWorld.addCollisionObject(collisionObject, ENTITY_FLAG, STATIC_FLAG);
-			}else if(gameObject instanceof Floor) {
+			}else if(gameObject instanceof Floor || gameObject instanceof AINode) {
 				//Ignore floor
 				collisionObject = null;
 			} else {
