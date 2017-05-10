@@ -19,15 +19,20 @@ public class Spotlight extends Entity {
     }
 
     @Override
-    public  void move(Vector3d v){
+    public void move(Vector3d v){
         if(listeners.size() == 0){
             super.move(v);
         } else{
-            checkListenerDetection(v);
             super.move(v);
+            checkListenerDetection(this.getPosition());
+
         }
     }
 
+    /**
+     * This method is used when the spotlight moves to verify if it hovers over a machine that has been destroyed.
+     * @param v position of the Spotlight.
+     */
     private void checkListenerDetection(Vector3d v){
         for(SpotlightListener sl : listeners){
             if(sl.isDetected(v, this.spotlightRadius)){
