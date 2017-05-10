@@ -84,4 +84,9 @@ public class Config {
     //MODEL RADIUS'S
     public static final float honestActDistance = 1;
     public static final float useAbilityActDistance = 1;
+    public static final float strikeZoneRadius = 1;
+    public static final float workerNodeRadius = 1;
+
+    //MODEL ATTRIBUTES
+    public static final float workerSpeed = 1;
 }
