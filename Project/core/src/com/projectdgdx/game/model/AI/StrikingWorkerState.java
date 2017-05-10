@@ -33,6 +33,6 @@ public class StrikingWorkerState implements  WorkerState {
     }
 
     private boolean isInStrikeZone(Worker worker){
-       return worker.getPosition().isInRadius(ModelDataHandler.getStrikeZone().getPosition(), Config.strikeZoneRadius);
+       return worker.getPosition().isInRadius(ModelDataHandler.getStrikeZone().getPosition(), Config.STRIKE_ZONE_RADIUS);
     }
 }

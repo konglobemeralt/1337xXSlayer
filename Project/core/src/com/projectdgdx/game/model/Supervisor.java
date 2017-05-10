@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model;
 
-import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -50,7 +49,7 @@ public class Supervisor extends PlayableCharacter {
     }
 
     private boolean canCatch(Character character){
-        return this.getPosition().isInRadius(character.getPosition(), Config.useAbilityActDistance);
+        return this.getPosition().isInRadius(character.getPosition(), Config.USE_ABILITY_ACT_DISTANCE);
     }
 
     public void catsch(List<Character> characters){
