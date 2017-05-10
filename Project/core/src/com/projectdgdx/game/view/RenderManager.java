@@ -41,6 +41,8 @@ public class RenderManager {
 
 
     public void render (PerspectiveCamera cam, Collection<ModelInstance> instances) {
+       createEnvironment();
+
         this.instances = instances;
         fps.log();
 
