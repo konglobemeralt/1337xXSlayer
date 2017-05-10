@@ -5,6 +5,7 @@ import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Emil Jansson on 2017-05-08.
@@ -53,8 +54,10 @@ public abstract class AINode extends GameObject {
                 break;
             }
         }
-        System.out.println(nodeId + ":: " + connectingNodes.get(0).getNodeId() + " " + connectingNodes.get(1).getNodeId()   + " MOVING TO:  " + connectingNodes.get(i).getNodeId());
-        return connectingNodes.get(i);
+        //        System.out.println(nodeId + ":: " + connectingNodes.get(0).getNodeId() + " " + connectingNodes.get(1).getNodeId()   + " MOVING TO:  " + connectingNodes.get(i).getNodeId());
+
+        //TODO FOR NOW USE RANDOM
+        return connectingNodes.get(new Random().nextInt(connectingNodes.size()));
     }
 
     public int getNodeId() {

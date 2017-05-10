@@ -13,14 +13,12 @@ public class NormalWorkerState implements WorkerState {
     @Override
     public void reactOnUpdate(Worker worker) { //TODO
         if (worker.getPosition().isInRadius(worker.getTargetNode().getPosition(), Config.WORKER_NODE_RADIUS)){
-            System.out.println("Lastnode: " + worker.getTargetNode().getNodeId());
             worker.setLastNode(worker.getTargetNode());
             worker.setTargetNode(worker.getTargetNode().getNextNode());
-            System.out.println("Newnode: " + worker.getTargetNode().getNodeId());
-
         }
 
         Vector3d vectorToTarget = worker.getPosition().vectorTo(worker.getTargetNode().getPosition());
+
         Vector3d moveVector = vectorToTarget.normalised().scale(Gdx.graphics.getDeltaTime()*Config.WORKER_SPEED);
         moveVector.y = 0;
         worker.move(moveVector);

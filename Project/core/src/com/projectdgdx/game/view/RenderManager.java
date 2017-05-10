@@ -43,7 +43,7 @@ public class RenderManager {
 
     public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
-        fps.log();
+//        fps.log();
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
