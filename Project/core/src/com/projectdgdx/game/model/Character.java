@@ -19,7 +19,7 @@ public abstract class Character extends Entity {
 
     public abstract void beenCaught();
 
-    // Maybe cone instead of radius
+    // Maybe cone instead of radius when checking for the players that are interesting
     private List<Character> getCharactersInRadius(List<Character> characters){
         List<Character> charactersInRadius = new ArrayList<>();
         for(Character c : characters){
