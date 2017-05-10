@@ -55,8 +55,8 @@ public abstract class GameObject {
         this.position.x += x;
     }
 
-    public void addPositionZ(float z){
-        this.position.z += z;
+    public void addPositionY(float y){
+        this.position.y += y;
     }
 
 }

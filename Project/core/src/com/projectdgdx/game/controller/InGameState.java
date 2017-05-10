@@ -59,9 +59,17 @@ public class InGameState implements GameState {
 	class CollisionListener extends ContactListener {
 		@Override
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
+			GameObject gameObject0 = map.getGameObjects().get(userValue0);
+			GameObject gameObject1 = map.getGameObjects().get(userValue1);
 //			instances.get(userValue0).moving = false;
 //			instances.get(userValue1).moving = false;
-			System.out.println("Collision!");
+//			if(gameObject0 instanceof Entity && gameObject1 instanceof StaticObject) {
+//				System.out.println("COliison");
+//				gameObject0.setPosition(gameObject0.getOldPosition());
+//			}else if(gameObject0 instanceof StaticObject && gameObject1 instanceof Entity) {
+//				gameObject1.setPosition(gameObject0.getOldPosition());
+//			}
+//			System.out.println(map.getGameObjects().get(userValue0).getId() + " collision with: " + map.getGameObjects().get(userValue1).getId());
 			return true;
 		}
 	}
@@ -203,7 +211,7 @@ public class InGameState implements GameState {
 			btCollisionObject collisionObject = new btCollisionObject();
 			collisionObject.setCollisionShape(collisionShape);
 			collisionObject.setWorldTransform(modelInstance.transform);
-			collisionObject.setUserValue(gameObject.hashCode());
+			collisionObject.setUserValue(map.getGameObjects().indexOf(gameObject));
 			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 
 			if(gameObject instanceof Entity) {

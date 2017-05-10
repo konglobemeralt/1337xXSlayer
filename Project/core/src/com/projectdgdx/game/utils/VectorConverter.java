@@ -15,4 +15,8 @@ public class VectorConverter {
     public static Vector2 convertToLibgdx(Vector2d vector){
         return new Vector2(vector.x, vector.z);
     }
+
+    public static Vector3d convertFromLibgdx(Vector3 vector){
+        return new Vector3d(vector.x, vector.y, vector.z);
+    }
 }
