@@ -11,7 +11,7 @@ public class NormalWorkerState implements WorkerState {
 
     @Override
     public void reactOnUpdate(Worker worker) { //TODO
-        if (worker.getPosition().isInRadius(worker.getTargetNode().getPosition(), Config.workerNodeRadius)){
+        if (worker.getPosition().isInRadius(worker.getTargetNode().getPosition(), Config.WORKER_NODE_RADIUS)){
             worker.setLastNode(worker.getTargetNode());
             worker.setTargetNode(worker.getTargetNode().getNextNode());
         }
