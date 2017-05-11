@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Emil Jansson on 2017-05-11.
  */
-public class MachineInteractingWorkerState implements WorkerState {
+public class MachineInteractingWorkerState implements iWorkerState {
     private Machine machine;
 
     public MachineInteractingWorkerState(Machine machine){

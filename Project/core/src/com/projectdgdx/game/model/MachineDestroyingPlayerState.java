@@ -1,20 +1,20 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.TimerListener;
+import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * Created by Emil Jansson on 2017-05-04.
  */
-public class MachineDestroyingPlayerState implements PlayerState, TimerListener {
+public class MachineDestroyingPlayerState implements iPlayerState, iTimerListener {
 
     // This is where we write what actually will happen when dishonest interacting
 
-    DishonestInteractable machine;
+    iDishonestInteractable machine;
     PlayableCharacter currentUser;
 
-    MachineDestroyingPlayerState(DishonestInteractable machine, PlayableCharacter currentPlayer){
+    MachineDestroyingPlayerState(iDishonestInteractable machine, PlayableCharacter currentPlayer){
         this.machine = machine;
         this.currentUser = currentPlayer;
         // Play some kind of animation

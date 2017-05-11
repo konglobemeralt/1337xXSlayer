@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Emil Jansson on 2017-05-04.
  */
 public class Timer implements Runnable{
-    private ArrayList<TimerListener> listeners = new ArrayList<TimerListener>();
+    private ArrayList<iTimerListener> listeners = new ArrayList<iTimerListener>();
     private int timerValue;
     private long ticTime;
 
@@ -15,7 +15,7 @@ public class Timer implements Runnable{
                 this.ticTime = ticTime;
     }
 
-    public void addListener(TimerListener listener){
+    public void addListener(iTimerListener listener){
         listeners.add(listener);
     }
 
@@ -37,7 +37,7 @@ public class Timer implements Runnable{
     }
 
     private void notifyListenersTimeUp(){
-        for (TimerListener listener : listeners){
+        for (iTimerListener listener : listeners){
             listener.timeIsUp();
         }
     }

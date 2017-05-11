@@ -15,7 +15,7 @@ public class Supervisor extends PlayableCharacter {
     }
 
     @Override
-    public void dishonestInteract(List<DishonestInteractable> dishonestInteractables) {
+    public void dishonestInteract(List<iDishonestInteractable> dishonestInteractables) {
         // Should be empty since a supervisor can not sabotage the machines.
     }
 

@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class ModelDataHandler {
 
-    private static List<HonestInteractable> honestInteractables;
-    private static List<DishonestInteractable> dishonestInteractables;
+    private static List<iHonestInteractable> honestInteractables;
+    private static List<iDishonestInteractable> dishonestInteractables;
     private static List<Character> characters;
 
     private static StrikeZone strikeZone;
@@ -21,19 +21,19 @@ public class ModelDataHandler {
         ModelDataHandler.strikeZone = strikeZone;
     }
 
-    public List<HonestInteractable> getHonestInteractables() {
+    public List<iHonestInteractable> getHonestInteractables() {
         return honestInteractables;
     }
 
-    public static void setHonestInteractables(List<HonestInteractable> honestInteractables) {
+    public static void setHonestInteractables(List<iHonestInteractable> honestInteractables) {
         honestInteractables = honestInteractables;
     }
 
-    public static List<DishonestInteractable> getDishonestInteractables() {
+    public static List<iDishonestInteractable> getDishonestInteractables() {
         return dishonestInteractables;
     }
 
-    public static void setDishonestInteractables(List<DishonestInteractable> dishonestInteractables) {
+    public static void setDishonestInteractables(List<iDishonestInteractable> dishonestInteractables) {
         dishonestInteractables = dishonestInteractables;
     }
 

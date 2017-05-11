@@ -7,7 +7,7 @@ import com.projectdgdx.game.ProjectD;
  *
  * Created by Eddie on 2017-04-28.
  */
-public interface GameState {
+public interface iGameState {
     /**
      * Updates the current gameState.
      *
