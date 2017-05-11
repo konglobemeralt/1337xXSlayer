@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <Map>
-    <Supervisor x="0" y="20" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Supervisor>
-    <Floor x="0" y="-0.5" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Floor>
-    <Supervisor x="40" y="20" z="0" rotationX="0" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></Supervisor>
+    <Supervisor x="0" y="0" z="0" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Supervisor>
+    <Machine x="-40" y="0" z="0" rotationX="0" scaleX="1" scaleY="1" scaleZ="1"></Machine>
 
 
 

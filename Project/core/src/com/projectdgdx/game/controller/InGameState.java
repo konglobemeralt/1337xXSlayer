@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.*;
+import com.badlogic.gdx.physics.bullet.linearmath.btQuaternion;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
@@ -63,6 +64,7 @@ public class InGameState implements GameState {
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			GameObject gameObject0 = map.getGameObjects().get(userValue0);
 			GameObject gameObject1 = map.getGameObjects().get(userValue1);
+//			System.out.println("COLLISION!");
 //			}
 //			System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
 			return true;
@@ -115,7 +117,11 @@ public class InGameState implements GameState {
 			}
 
 			collisionObject.setCollisionShape(collisionShape);
+//			collisionObject.setFriction(6f);
+			collisionObject.setLinearFactor(new Vector3(1,1,1));
+			collisionObject.setAngularFactor(new Vector3(0,0,0));
 			if(gameObject instanceof Floor) {
+//				collisionObject.setFriction(4f);
 //				System.out.println(collisionObject.getWorldTransform());
 //				System.out.println(modelInstance.transform.toString());
 
@@ -132,6 +138,8 @@ public class InGameState implements GameState {
 			}else if(gameObject instanceof AINode) {
 				//Ignore ainode
 				collisionObject = null;
+//			}else if(gameObject instanceof Floor) {
+//				collisionObject = null;
 			} else if(gameObject instanceof StaticObject) {
 				dynamicsWorld.addRigidBody(collisionObject, STATIC_FLAG, ALL_FLAG);
 			}
@@ -149,9 +157,9 @@ public class InGameState implements GameState {
 			ModelInstance modelInstance = entrySet.getValue().getKey();
 			GameObject gameObject = entrySet.getKey();
 			btCollisionObject collisionObject = entrySet.getValue().getValue();
-//
-//			//Check for entity
-//			if(gameObject instanceof Entity) {
+
+			//Check for entity
+			if(gameObject instanceof Entity) {
 //				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
 //				Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
 //				Quaternion quaternion = new Quaternion();
@@ -165,11 +173,14 @@ public class InGameState implements GameState {
 //				quaternion = modelInstance.transform.getRotation(new Quaternion());
 //
 //				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-////				modelInstance.transform.set(matrix4);
-////				collisionObject.getWorldTransform(modelInstance.transform);
-//			}
+//				modelInstance.transform.set(matrix4);
+//				collisionObject.getWorldTransform(modelInstance.transform);
+//				collisionObject.setWorldTransform(matrix4);
 
-			if(modelInstance != null && gameObject != null) {
+			}
+
+
+			if(modelInstance != null && collisionObject != null) {
 				collisionObject.getWorldTransform(modelInstance.transform);
 			}
 
@@ -207,9 +218,32 @@ public class InGameState implements GameState {
 			InputModel inputModel = inputController.getModel();
 			if(controllerPlayerMap.containsKey(inputController)) {
 				PlayableCharacter player = controllerPlayerMap.get(inputController);
+				btRigidBody rigidBody = ((btRigidBody)objectsMap.get(player).getValue());
+				Quaternion rotation = new Quaternion();
+//				rotation.set(Vector3.X, 0);
+//				rotation.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
+//				rotation.set(Vector3.Z, 0);
+				rotation.setEulerAngles(inputModel.getLeftStick().getAngle() + 90, 0, 0);
+
+
 				if(inputModel.getLeftStick().getLength() != 0) {
-					player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
-					player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
+//					rigidBody.setCenterOfMassTransform(transform);
+
+					Matrix4 transform = rigidBody.getWorldTransform();
+					Vector3 position = transform.getTranslation(new Vector3());
+					Vector3 scale = transform.getTranslation(new Vector3());
+
+
+					scale = new Vector3(1,1,1);
+
+					rigidBody.setWorldTransform(new Matrix4(position,rotation,scale));
+//					rigidBody.setCenterOfMassTransform(rigidBody.getCenterOfMassTransform().set(rotation));
+
+					rigidBody.applyCentralForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
+					rigidBody.setDamping(0.03f, 0);
+				}else {
+					rigidBody.setDamping(4f, 0);
+
 				}
 
 
@@ -231,10 +265,11 @@ public class InGameState implements GameState {
     }
 
 	public void update(ProjectD projectD){
-//		handleInput(projectD);
+
 //		handleWorkers();
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+		handleInput(projectD);
 		updateModelInstaces();
 
 
@@ -252,7 +287,7 @@ public class InGameState implements GameState {
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld.setGravity(new Vector3(0, -3f, 0));
+		dynamicsWorld.setGravity(new Vector3(0, -1, 0));
 		collisionListener = new CollisionListener();
 
 		rand = new Random();
