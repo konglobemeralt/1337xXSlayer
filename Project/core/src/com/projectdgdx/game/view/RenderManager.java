@@ -13,9 +13,8 @@ import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.model.Spotlight;
 import com.projectdgdx.game.utils.Vector3d;
 import javafx.util.Pair;
 
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
 
 /**
  * Created by konglobemeralt on 2017-05-07.
@@ -46,25 +44,21 @@ public class RenderManager {
     //TODO: MERGE WITH SPOT OBJECT TO CREATE VIABLE OBJECT
     private List<PointLight> pointLightList =  new ArrayList();
     private List<Vector3d> pointLightPos =  new ArrayList();
+    private PointLight renderSpot;
+    private Vector3d renderSpotPos;
 
-    public Environment pointLights;
     public Environment environment;
     DirectionalShadowLight shadowLight;
     public Shader shader;
 
     Random rand;
 
-    public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
+    public void render (PerspectiveCamera cam, Spotlight spotlight, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
         fps.log();
 
-        if(Config.DISCO_FACTOR > 0){
-            lifeTime += Gdx.graphics.getDeltaTime();
-            if (lifeTime > discoDelay) {
-                updateLights();
-                lifeTime = 0;
-            }
-        }
+        handleLights(spotlight);
+
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -76,6 +70,21 @@ public class RenderManager {
             renderShadowMap(cam);
         }
         renderToScreen(cam);
+
+    }
+
+
+    private void handleLights(Spotlight spotlight){
+
+        updateSpotLight(spotlight);
+
+        if(Config.DISCO_FACTOR > 0){
+            lifeTime += Gdx.graphics.getDeltaTime();
+            if (lifeTime > discoDelay) {
+                updateLights();
+                lifeTime = 0;
+            }
+        }
 
     }
 
@@ -117,8 +126,8 @@ public class RenderManager {
     public void createBatches(){
 
         DefaultShader.Config config = new DefaultShader.Config();
-        config.numDirectionalLights = 8 + Config.DISCO_FACTOR;
-        config.numPointLights = 100;
+        config.numDirectionalLights = 1;
+        config.numPointLights = 8 + Config.DISCO_FACTOR;
         config.numSpotLights = 0;
 
         ShaderProvider shaderProvider = new DefaultShaderProvider(config);
@@ -134,6 +143,35 @@ public class RenderManager {
      */
 
 
+
+    public void updateSpotLight(Spotlight spot){
+            environment.remove(renderSpot);
+            //pointLightList.remove(p);
+        moveSpotLight(spot);
+        //createLights();
+    }
+
+    public void createSpotLight(){
+            PointLight light = new PointLight().set(0, 0, 0,
+                        0 , 0,  0, 0f);
+            environment.add(light);
+            renderSpot = light;
+            //renderSpotPos = spot.getPosition();
+
+    }
+
+    public void moveSpotLight(Spotlight spot){
+        renderSpotPos = spot.getPosition();
+
+        PointLight light = new PointLight().set(1, 0, 0,
+                spot.getPosition().x , spot.getPosition().y,  spot.getPosition().z, 1500f);
+        environment.add(light);
+        renderSpot = light;
+        renderSpotPos = spot.getPosition();
+
+
+    }
+    //*******
 
     public void updateLights(){
         for(PointLight p: pointLightList){
@@ -166,10 +204,8 @@ public class RenderManager {
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
                     pointLightPos.get(i).x , pointLightPos.get(i).y,  pointLightPos.get(i).z, 70f);
             environment.add(light);
-            pointLightList.add(light);
+            pointLightList.get(i).set(light);
         }
-
-
 
     }
 
@@ -212,6 +248,11 @@ public class RenderManager {
         createBatches();
         createLights();
         createShaders();
+
+        renderSpot = new PointLight().set(0, 0, 0,
+                0 , 0,  0, 0f);
+        renderSpotPos = new Vector3d(0, 0, 0);
+        createSpotLight();
 
         fps = new FPSLogger();
     }

@@ -80,7 +80,8 @@ public class GameObjectInit {
             case "Machine":
                 return new Machine(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "machine.basic");
             case "SpotControl":
-                //return new SpotlightControlBoard(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "control.basic"); Need to add Spotlight
+                Spotlight light = new Spotlight(new Vector3d(1, 5, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "spotlight.controlboard", 5) ;
+                return new SpotlightControlBoard(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "control.basic", light);
               case "Worker":
                   return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "worker.basic");
               case "Supervisor":
