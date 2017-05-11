@@ -207,7 +207,7 @@ public class InGameState implements GameState {
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 //		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld.setGravity(new Vector3(0, -1, 0));
+		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
 		collisionListener = new CollisionListener();
 
 
