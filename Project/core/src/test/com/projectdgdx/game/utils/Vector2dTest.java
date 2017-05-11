@@ -32,4 +32,22 @@ public class Vector2dTest {
 
         assertTrue(vector.x == 3 && vector.z == 4);
     }
+
+    @Test
+    public void getAngleVector2d(){
+        // Verify that angle calculation gets performed accurately
+        Vector2d newVec = new Vector2d(0,1);
+        vector.add(newVec);
+
+        assertTrue(newVec.getAngle() == 90);
+    }
+
+    @Test
+    public void getLengthVector2d(){
+        // Verify that angle length calculation gets performed accurately
+        Vector2d newVec = new Vector2d(0,1);
+        vector.add(newVec);
+
+        assertTrue(newVec.getLength() == 1);
+    }
 }

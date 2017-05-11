@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
+ * Basic GameObject data structure.
+ *
  * Created by Hampus on 2017-03-26.
  */
 public abstract class GameObject {

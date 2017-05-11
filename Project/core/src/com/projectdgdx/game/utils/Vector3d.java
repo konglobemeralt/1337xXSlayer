@@ -34,7 +34,7 @@ public class Vector3d {
         return new Vector3d(x/getLength(), y/getLength(), z/getLength());
     }
 
-    public Vector3d vectorTo(Vector3d compVector){
+    public Vector3d subtractVectorFrom(Vector3d compVector){
         return new Vector3d(compVector.x-x, compVector.y-y, compVector.z-z);
     }
 

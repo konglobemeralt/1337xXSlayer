@@ -1,9 +1,7 @@
 package com.projectdgdx.game.model.AI;
 
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.model.HonestInteractable;
 import com.projectdgdx.game.model.Machine;
-import com.projectdgdx.game.model.ModelDataHandler;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
@@ -29,9 +27,9 @@ public class MachineInteractingWorkerState implements WorkerState {
                 //TODO animate working the machine
             }else{
                 //TODO Functional decomposition
-                Vector3d workerVector =  worker.getLastNode().getPosition().vectorTo(worker.getPosition());
+                Vector3d workerVector =  worker.getLastNode().getPosition().subtractVectorFrom(worker.getPosition());
                 // Vector3d lastNodeVector = new Vector3d(0,0,0);
-                Vector3d targetNodeVector = worker.getLastNode().getPosition().vectorTo(worker.getTargetNode().getPosition());
+                Vector3d targetNodeVector = worker.getLastNode().getPosition().subtractVectorFrom(worker.getTargetNode().getPosition());
 
                 Vector3d returnPoint = workerVector.projectOn(targetNodeVector);
 
@@ -45,7 +43,7 @@ public class MachineInteractingWorkerState implements WorkerState {
             }
 
         }else {
-            worker.move(worker.getPosition().vectorTo(machine.getPosition()).normalised());
+            worker.move(worker.getPosition().subtractVectorFrom(machine.getPosition()).normalised());
         }
 
     }
