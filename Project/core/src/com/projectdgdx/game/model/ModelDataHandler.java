@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.utils.Vector3d;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,9 @@ public class ModelDataHandler {
     private static List<HonestInteractable> honestInteractables;
     private static List<DishonestInteractable> dishonestInteractables;
     private static List<Character> characters;
+
+    // Placeholder values
+    private static Blackout blackout = new Blackout(new Vector3d(1,1,1), new Vector3d(1,1,1), new Vector3d(1,1,1), "Blackout");
 
     private static StrikeZone strikeZone;
 
@@ -45,5 +50,8 @@ public class ModelDataHandler {
         characters = characters;
     }
 
+    public static Blackout getBlackout() {
+        return blackout;
+    }
 
 }

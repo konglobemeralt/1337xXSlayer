@@ -9,6 +9,9 @@ import java.util.List;
  * Created by Eddie on 2017-04-03.
  */
 public class Saboteur extends PlayableCharacter{
+
+    private int blakoutsLeft = 2;
+
     public Saboteur(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
     }
@@ -28,8 +31,9 @@ public class Saboteur extends PlayableCharacter{
     }
 
     @Override
-    public void useAbility() {
-
+    public void useAbility(){
+        ModelDataHandler.getBlackout().setPosition(this.getPosition());
+        ModelDataHandler.getBlackout().activate();
     }
 
     @Override
