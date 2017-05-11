@@ -337,7 +337,6 @@ public class InGameState implements GameState {
 		dispatcher.dispose();
 		collisionConfig.dispose();
 		collisionListener.dispose();
-		collisionWorld.dispose();
 		broadphase.dispose();
 
 		//Dispose graphic

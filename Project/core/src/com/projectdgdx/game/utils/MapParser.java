@@ -104,7 +104,7 @@ public class MapParser {
     /**
      * parse will convert a xml file to a Map object
      *
-     * @param mapName
+     * @param mapName String
      * @return Returns a map containing all the information provided in the xml file
      */
     public Map parse(String mapName) {

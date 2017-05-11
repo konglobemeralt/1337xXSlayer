@@ -29,6 +29,7 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      * Sets the starting state of a character
+     * @param newState PlayerState
      */
     public void setState(PlayerState newState){
         this.state = newState;
@@ -36,8 +37,8 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      * The character preforms a covert action.
+     * @param List<DishonestInteractable> dishonestInteractables
      */
-
     public abstract void dishonestInteract(List<DishonestInteractable> dishonestInteractables);
 
     /**
@@ -61,8 +62,8 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      *
-     * @param hi
-     * @return
+     * @param hi HonestInteractable
+     * @return boolean value depending on if HonestInteract is possible or not
      */
     protected boolean canHonestInteract(HonestInteractable hi){
         float value = this.getPosition().distanceTo(hi.getPosition()) - Config.HONEST_ACT_DISTANCE;
@@ -74,9 +75,9 @@ public abstract class PlayableCharacter extends Character {
     }
 
     @Override
-    public void move(Vector3d v){
-        if(!isColliding(v)){
-            this.state.move(v);
+    public void move(Vector3d vec){
+        if(!isColliding(vec)){
+            this.state.move(vec);
         }
     }
 

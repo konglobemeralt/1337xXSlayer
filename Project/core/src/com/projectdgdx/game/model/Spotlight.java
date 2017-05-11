@@ -19,11 +19,11 @@ public class Spotlight extends Entity {
     }
 
     @Override
-    public void move(Vector3d v){
+    public void move(Vector3d vec){
         if(listeners.size() == 0){
-            super.move(v);
+            super.move(vec);
         } else{
-            super.move(v);
+            super.move(vec);
             checkListenerDetection(this.getPosition());
 
         }
