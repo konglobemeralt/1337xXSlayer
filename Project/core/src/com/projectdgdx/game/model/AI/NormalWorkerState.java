@@ -19,7 +19,7 @@ public class NormalWorkerState implements WorkerState {
 
         Vector3d vectorToTarget = worker.getPosition().vectorTo(worker.getTargetNode().getPosition());
 
-        Vector3d moveVector = vectorToTarget.normalised().scale(Gdx.graphics.getDeltaTime()*Config.WORKER_SPEED);
+        Vector3d moveVector = vectorToTarget.normalised().scale(Gdx.graphics.getDeltaTime());
         moveVector.y = 0;
         worker.setRotation(new Vector3d(0, moveVector.getXZAngle() - 90, 0));
         worker.move(moveVector);
