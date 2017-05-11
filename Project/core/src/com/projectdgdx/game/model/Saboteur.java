@@ -32,8 +32,11 @@ public class Saboteur extends PlayableCharacter{
 
     @Override
     public void useAbility(){
-        ModelDataHandler.getBlackout().setPosition(this.getPosition());
-        ModelDataHandler.getBlackout().activate();
+        if(this.blakoutsLeft > 0){
+            ModelDataHandler.getBlackout().setPosition(this.getPosition());
+            ModelDataHandler.getBlackout().activate();
+            this.blakoutsLeft--;
+        }
     }
 
     @Override
