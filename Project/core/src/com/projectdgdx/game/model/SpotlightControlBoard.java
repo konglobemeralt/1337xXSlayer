@@ -18,4 +18,8 @@ public class SpotlightControlBoard extends StaticObject implements HonestInterac
         player.setState(new InSpotlightPlayerState(this.spotlight));
     }
 
+    public Spotlight getSpotlight() {
+        return spotlight;
+    }
+
 }
