@@ -1,8 +1,10 @@
 package com.projectdgdx.game.model;
 
 import com.badlogic.gdx.math.Vector3;
+import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.model.AI.NormalWorkerState;
+import com.projectdgdx.game.model.AI.StrikingWorkerState;
 import com.projectdgdx.game.model.AI.WorkerState;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -50,7 +52,12 @@ public class Worker extends Character {
 
     @Override
     public void beenCaught() {
+        this.state = new StrikingWorkerState();
+    }
 
+    @Override
+    public void move(Vector3d vector3d){
+        super.move(vector3d.scale(Config.MOVE_SPEED));
     }
 
     @Override

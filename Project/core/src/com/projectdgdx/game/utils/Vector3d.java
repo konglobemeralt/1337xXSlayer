@@ -49,6 +49,14 @@ public class Vector3d {
         return this;
     }
 
+    public float dotProduct(Vector3d vector){
+        return this.x * vector.x + this.y * vector.y + this.z * vector.z;
+    }
+
+    public Vector3d projectOn(Vector3d baseVector){
+        return baseVector.scale(this.dotProduct(baseVector)/(baseVector.dotProduct(baseVector)));
+    }
+
     public String toString() {
         return "[" + x + "," + y + "," + z + "]";
     }

@@ -53,11 +53,11 @@ public abstract class AINode extends GameObject {
             if (strenghtSum > threshold){
                 break;
             }
+            i++;
         }
         //        System.out.println(nodeId + ":: " + connectingNodes.get(0).getNodeId() + " " + connectingNodes.get(1).getNodeId()   + " MOVING TO:  " + connectingNodes.get(i).getNodeId());
 
-        //TODO FOR NOW USE RANDOM
-        return connectingNodes.get(new Random().nextInt(connectingNodes.size()));
+        return connectingNodes.get(i);
     }
 
     public int getNodeId() {
