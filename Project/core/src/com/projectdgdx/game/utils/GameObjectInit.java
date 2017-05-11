@@ -26,8 +26,6 @@ public class GameObjectInit {
     private float rotationY = 0;
     private float rotationZ = 0;
 
-    private Polygon polygon = null;
-
     private float spawnRate = 1;
     private boolean spawnRateRandom = false;
     private float spawnDelay = 0;
@@ -60,8 +58,6 @@ public class GameObjectInit {
         rotationX = gameObjectInit.rotationX;
         rotationY = gameObjectInit.rotationY;
         rotationZ = gameObjectInit.rotationZ;
-
-        polygon = gameObjectInit.polygon;
 
         spawnRate = gameObjectInit.spawnRate;
         spawnRateRandom = gameObjectInit.spawnRateRandom;
@@ -127,9 +123,6 @@ public class GameObjectInit {
                 break;
             case "rotationZ":
                 rotationZ = Float.parseFloat(value);
-                break;
-            case "polygon":
-                // TODO Handle polygons
                 break;
             case "nodeId":
                 nodeId = Integer.parseInt(value);
