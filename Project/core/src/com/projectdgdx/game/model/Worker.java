@@ -1,5 +1,6 @@
 package com.projectdgdx.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.AI.AINode;
@@ -57,7 +58,7 @@ public class Worker extends Character {
 
     @Override
     public void move(Vector3d vector3d){
-        super.move(vector3d.scale(Config.MOVE_SPEED));
+        super.move(vector3d.scale(Config.MOVE_SPEED).scale(Gdx.graphics.getDeltaTime())); //TODO remove libGDX dependency
     }
 
     @Override

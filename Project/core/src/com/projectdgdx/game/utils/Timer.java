@@ -43,7 +43,8 @@ public class Timer implements Runnable{
     }
 
     public void start(){
-        new Thread(this);
+        Thread thread = new Thread(this);
+        thread.start();
     }
 
 
@@ -51,7 +52,8 @@ public class Timer implements Runnable{
     public void run() {
         while (this.timerValue > 0){
             try {
-                wait(this.ticTime);
+                //wait(this.ticTime);
+                Thread.sleep(this.ticTime);
             }catch(Exception e){}
             this.timerValue--;
         }
