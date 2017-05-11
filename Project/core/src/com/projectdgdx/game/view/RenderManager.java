@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
+import com.projectdgdx.game.controller.GameObjectContainer;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
 import javafx.util.Pair;
@@ -43,7 +44,7 @@ public class RenderManager {
     private float lifeTime;
     private float discoDelay = 0.03f; //2 seconds.
 
-    public Collection<Pair<ModelInstance, btCollisionObject>> instances;
+    public Collection<GameObjectContainer> instances;
 
     //TODO: MERGE WITH SPOT OBJECT TO CREATE VIABLE OBJECT
     private List<PointLight> pointLightList =  new ArrayList();
@@ -56,7 +57,7 @@ public class RenderManager {
 
     Random rand;
 
-    public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
+    public void render (PerspectiveCamera cam, Collection<GameObjectContainer> instances) {
         this.instances = instances;
         fps.log();
 
@@ -89,17 +90,17 @@ public class RenderManager {
 
     private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
-        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
-            modelBatch.render(instance.getKey(), environment);
+        for (GameObjectContainer instance : instances) {
+            modelBatch.render(instance.getGraphicObject(), environment);
 
             if(Config.DEBUG) {
                 ModelBuilder modelBuilder = new ModelBuilder();
-                Vector3 dimensions = instance.getKey().calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3());
+                Vector3 dimensions = instance.getGraphicObject().calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3());
                 Model model = modelBuilder.createBox(dimensions.x, dimensions.y, dimensions.z,
                         new Material(ColorAttribute.createDiffuse(Color.RED)),
                         VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
                 ModelInstance modelInstance = new ModelInstance(model);
-                modelInstance.transform = instance.getKey().transform;
+                modelInstance.transform = instance.getGraphicObject().transform;
                 modelBatch.render(modelInstance, environment);
 
             }
@@ -117,8 +118,8 @@ public class RenderManager {
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
-        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
-            shadowBatch.render(instance.getKey(), environment);
+        for (GameObjectContainer instance : instances) {
+            shadowBatch.render(instance.getGraphicObject(), environment);
         }
         shadowBatch.end();
         shadowLight.end();

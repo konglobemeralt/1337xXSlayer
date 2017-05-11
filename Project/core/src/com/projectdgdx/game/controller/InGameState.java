@@ -40,7 +40,7 @@ public class InGameState implements GameState {
 	private CameraInputController camController;
 
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
-	private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
+	private HashMap<GameObject, GameObjectContainer> objectsMap = new HashMap<>();
 
 	//Bullet
 	btDefaultCollisionConfiguration collisionConfig;
@@ -74,19 +74,6 @@ public class InGameState implements GameState {
 		}
 	}
 
-	static class MyMotionState extends btMotionState {
-		Matrix4 transform;
-		@Override
-		public void getWorldTransform (Matrix4 worldTrans) {
-			worldTrans.set(transform);
-		}
-		@Override
-		public void setWorldTransform (Matrix4 worldTrans) {
-			System.out.println("asdasd");
-			transform.set(worldTrans);
-		}
-	}
-
 	private void generateRenderInstances(){
 
 		Vector3 localInertia = new Vector3();
@@ -116,88 +103,19 @@ public class InGameState implements GameState {
 				});
 				animationControllers.add(animController);
 			}
-			//Add a box around object that will be used for physics
-			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
-			btCollisionShape collisionShape;
-			collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
 
-
-
-			btRigidBody collisionObject;
-			if(gameObject instanceof StaticObject) {
-				localInertia.set(0, 0, 0);
-				collisionObject = new btRigidBody(0f, null, collisionShape, new Vector3());
-			} else {
-				collisionShape.calculateLocalInertia(1f, localInertia);
-				collisionObject = new btRigidBody(1f, null, collisionShape, localInertia);
-			}
-
-			collisionObject.setCollisionShape(collisionShape);
-//			collisionObject.setFriction(6f);
-			collisionObject.setLinearFactor(new Vector3(1,1,1));
-			collisionObject.setAngularFactor(new Vector3(0,0,0));
-
-			collisionObject.proceedToTransform(modelInstance.transform);
-			MyMotionState motionState = new MyMotionState();
-			motionState.transform = modelInstance.transform;
-			collisionObject.setUserValue(map.getGameObjects().indexOf(gameObject));
-			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-
-			collisionObject.setMotionState(motionState);
-
+			GameObjectContainer gameObjectContainer;
 			if(gameObject instanceof Entity) {
-				dynamicsWorld.addRigidBody(collisionObject, ENTITY_FLAG, STATIC_FLAG);
-			}else if(gameObject instanceof AINode) {
-				//Ignore ainode
-				collisionObject = null;
-//			}else if(gameObject instanceof Floor) {
-//				collisionObject = null;
-			} else if(gameObject instanceof StaticObject) {
-				dynamicsWorld.addRigidBody(collisionObject, STATIC_FLAG, ALL_FLAG);
+				gameObjectContainer = new EntityContainer(gameObject, modelInstance, dynamicsWorld, map);
+			} else {
+				gameObjectContainer = new GameObjectContainer(gameObject, modelInstance, dynamicsWorld, map);
 			}
-
-
 
 
 			//Add GameObject and ModelInstance to a map that keeps them together
-			objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
+			objectsMap.put(gameObject, gameObjectContainer);
 		}
 
-	}
-
-	public void updateModelInstaces() {
-		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
-			ModelInstance modelInstance = entrySet.getValue().getKey();
-			GameObject gameObject = entrySet.getKey();
-			btCollisionObject collisionObject = entrySet.getValue().getValue();
-
-			//Check for entity
-			if(gameObject instanceof Entity) {
-//				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
-//				Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-//				Quaternion quaternion = new Quaternion();
-//
-//				//TODO ugly solution for rotation
-//				Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-//				modelInstance.transform.setToRotation(0,0,0,0,0,0);
-//				modelInstance.transform.rotate(Vector3.X, rotation.x);
-//				modelInstance.transform.rotate(Vector3.Y, rotation.y);
-//				modelInstance.transform.rotate(Vector3.Z, rotation.z);
-//				quaternion = modelInstance.transform.getRotation(new Quaternion());
-//
-//				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-//				modelInstance.transform.set(matrix4);
-//				collisionObject.getWorldTransform(modelInstance.transform);
-//				collisionObject.setWorldTransform(matrix4);
-
-			}
-
-
-//			if(modelInstance != null && collisionObject != null) {
-//				collisionObject.getWorldTransform(modelInstance.transform);
-//			}
-
-		}
 	}
 
 	private void createCamera(){
@@ -231,42 +149,26 @@ public class InGameState implements GameState {
 			InputModel inputModel = inputController.getModel();
 			if(controllerPlayerMap.containsKey(inputController)) {
 				PlayableCharacter player = controllerPlayerMap.get(inputController);
-				btRigidBody rigidBody = ((btRigidBody)objectsMap.get(player).getValue());
-				Quaternion rotation = new Quaternion();
-//				rotation.set(Vector3.X, 0);
-//				rotation.set(Vector3.Y, inputModel.getLeftStick().getAngle() + 90);
-//				rotation.set(Vector3.Z, 0);
-				rotation.setEulerAngles(inputModel.getLeftStick().getAngle() + 90, 0, 0);
+				EntityContainer playerContainer = (EntityContainer)objectsMap.get(player);
+				btRigidBody physicsObject = playerContainer.getPhysicsObject();
 
-
-//				System.out.println(inputModel.getLeftStick().getLength());
 				if(inputModel.getLeftStick().getLength() != 0) {
-//					rigidBody.setCenterOfMassTransform(transform);
 
-					Matrix4 transform = rigidBody.getWorldTransform();
-					Vector3 position = transform.getTranslation(new Vector3().add(0,0.2f,0));
-					Vector3 scale = VectorConverter.convertToLibgdx(player.getScale());
-
-
-//					scale = new Vector3(1,1,1);
-
-					rigidBody.setWorldTransform(new Matrix4(position,rotation,scale));
-//					rigidBody.setCenterOfMassTransform(rigidBody.getCenterOfMassTransform().set(rotation));
-
-					rigidBody.applyCentralForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
-					rigidBody.setDamping(0.4f, 0);
+					playerContainer.applyForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
+					playerContainer.updateRotation(new Vector3(0, inputModel.getLeftStick().getAngle() + 90, 0));
+					physicsObject.setDamping(0.4f, 0);
 				}else {
-					rigidBody.setDamping(1f, 0);
+//					System.out.println(physicsObject.getLinearSleepingThreshold());
 
+
+					physicsObject.setDamping(1f, 0);
 				}
-				Vector3 linearVelocity = rigidBody.getLinearVelocity();
+
+				Vector3 linearVelocity = physicsObject.getLinearVelocity();
 				if(linearVelocity.len() > 30) {
 					linearVelocity.scl(30f/linearVelocity.len());
-					rigidBody.setLinearVelocity(rigidBody.getLinearVelocity().clamp(-30f, 30f));
+					physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
 				}
-
-
-
 			}
 
 
@@ -290,7 +192,7 @@ public class InGameState implements GameState {
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 		handleInput(projectD);
-		updateModelInstaces();
+//		updateModelInstaces();
 
 
 //		animate();
@@ -306,7 +208,8 @@ public class InGameState implements GameState {
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
-		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+//		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, -1, 0));
 		collisionListener = new CollisionListener();
 
@@ -358,11 +261,8 @@ public class InGameState implements GameState {
 
 	public void exit(ProjectD projectD){
 		//Dispose physics objects
-		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
-			btCollisionObject collisionObject = entrySet.getValue().getValue();
-			if(collisionObject != null) {
-				collisionObject.dispose();
-			}
+		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
+			gameObjectContainer.dispose();
 		}
 		dispatcher.dispose();
 		collisionConfig.dispose();
