@@ -18,6 +18,10 @@ public class Config {
     public static final float CAMERA_NEAR = 1f;
     public static final float CAMERA_FAR = 500f;
 
+    public static final float CAMERA_X = 0f;
+    public static final float CAMERA_Y = 120;
+    public static final float CAMERA_Z = 30f;
+
     /************SHADOW MAPPING VARIABLES************/
 
     //SHADOW MAPPING
