@@ -151,7 +151,7 @@ public class InGameState implements GameState {
 		rand = new Random();
 
 		MapParser parser = new MapParser();
-		map = parser.parse("BasicMapTest");
+		map = parser.parse("BasicMapAdvanced");
 
 		//Init nodes
 		List<AINode> nodeList =  map.getAINodes();

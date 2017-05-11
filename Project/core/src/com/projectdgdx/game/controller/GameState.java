@@ -8,10 +8,36 @@ import com.projectdgdx.game.ProjectD;
  * Created by Eddie on 2017-04-28.
  */
 public interface GameState {
+    /**
+     * Updates the current gameState.
+     *
+     * @param projectD ProjectD
+     *
+     */
     void update(ProjectD projectD);
+
+    /**
+     * Initates the current gameState.
+     *
+     * @param projectD ProjectD
+     *
+     */
     void init(ProjectD projectD);
+
+    /**
+     * Exits the current gameState.
+     *
+     * @param projectD ProjectD
+     *
+     */
     void exit(ProjectD projectD);
 
+    /**
+     * Starts the current gameState.
+     *
+     * @param projectD ProjectD
+     *
+     */
     void start(ProjectD projectD);
     void stop(ProjectD projectD);
 }
