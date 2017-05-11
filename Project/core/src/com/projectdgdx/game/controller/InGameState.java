@@ -34,10 +34,12 @@ public class InGameState implements GameState {
 	private  Array<AnimationController> animationControllers = new Array<AnimationController>();
 
 	private PerspectiveCamera cam;
+	private Spotlight spotlight;
 	private CameraInputController camController;
 
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
 	private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
+
 
 	//Bullet
 	btDefaultCollisionConfiguration collisionConfig;
@@ -90,7 +92,7 @@ public class InGameState implements GameState {
 	}
 
 	public void render () {
-		renderer.render(cam, objectsMap.values()); //Pass renderInstances and camera to render
+		renderer.render(cam, spotlight, objectsMap.values()); //Pass renderInstances and camera to render
 	}
 
 	private void animate(){
@@ -239,6 +241,8 @@ public class InGameState implements GameState {
 		renderer = new RenderManager();
 		renderer.init();
 
+		spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "null", 1);
+
 	}
 
 	public void updateModelInstaces() {
@@ -264,6 +268,11 @@ public class InGameState implements GameState {
 				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
 				modelInstance.transform.set(matrix4);
 				collisionObject.setWorldTransform(matrix4);
+			}
+
+			//Check for spotlightControl and get spotlight
+			if(gameObject instanceof SpotlightControlBoard) {
+				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
 			}
 		}
 	}
