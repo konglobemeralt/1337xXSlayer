@@ -14,9 +14,11 @@ import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.model.Entity;
+import com.projectdgdx.game.model.Floor;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.StaticObject;
 import com.projectdgdx.game.utils.Map;
+import com.projectdgdx.game.utils.VectorConverter;
 
 /**
  * Created by Hampus on 2017-05-11.
@@ -32,7 +34,7 @@ public class GameObjectContainer implements Disposable {
 	final static short ENTITY_FLAG = 1<<9;
 	final static short ALL_FLAG = -1;
 
-	static class MyMotionState extends btMotionState {
+	class MyMotionState extends btMotionState {
 		Matrix4 transform;
 
 		@Override
@@ -42,7 +44,7 @@ public class GameObjectContainer implements Disposable {
 
 		@Override
 		public void setWorldTransform (Matrix4 worldTrans) {
-//			System.out.println("ASDSDAOKDS");
+			gameObject.setPosition(VectorConverter.convertFromLibgdx(worldTrans.getTranslation(new Vector3())));
 			transform.set(worldTrans);
 		}
 	}
@@ -54,21 +56,30 @@ public class GameObjectContainer implements Disposable {
 		this.graphicObject = graphicObject;
 		this.physicsObject = generatePhysicsProperties();
 
+		//Disable movements in y:
+		physicsObject.setLinearFactor(new Vector3(1,1,1));
+
+		//Setup motion state
 		MyMotionState motionState = new MyMotionState();
 		motionState.transform = graphicObject.transform;
+		physicsObject.setMotionState(motionState);
 
+		//Set binding to GameObject within Map
 		physicsObject.setUserValue(map.getGameObjects().indexOf(gameObject));
 		physicsObject.setCollisionFlags(physicsObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 
-		physicsObject.setMotionState(motionState);
-
+		//Add PhysicsObject to dynamicworld, depends on GameObject type
 		if(gameObject instanceof Entity) {
 			dynamicsWorld.addRigidBody(physicsObject, ENTITY_FLAG, STATIC_FLAG);
 		}else if(gameObject instanceof AINode) {
 			physicsObject = null;
+		} else if(gameObject instanceof Floor) {
+			//Ignore floor it's pointless for now
 		} else if(gameObject instanceof StaticObject) {
-			dynamicsWorld.addRigidBody(physicsObject, STATIC_FLAG, ALL_FLAG);
+			dynamicsWorld.addRigidBody(physicsObject, STATIC_FLAG, ENTITY_FLAG);
 		}
+
+
 	}
 
 	public btRigidBody generatePhysicsProperties() {

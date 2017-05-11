@@ -156,11 +156,8 @@ public class InGameState implements GameState {
 
 					playerContainer.applyForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
 					playerContainer.updateRotation(new Vector3(0, inputModel.getLeftStick().getAngle() + 90, 0));
-					physicsObject.setDamping(0.4f, 0);
+					physicsObject.setDamping(0.6f, 0);
 				}else {
-//					System.out.println(physicsObject.getLinearSleepingThreshold());
-
-
 					physicsObject.setDamping(1f, 0);
 				}
 
@@ -195,7 +192,7 @@ public class InGameState implements GameState {
 //		updateModelInstaces();
 
 
-//		animate();
+		animate();
 		render();
 
 

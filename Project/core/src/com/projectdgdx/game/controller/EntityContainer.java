@@ -20,7 +20,6 @@ public class EntityContainer extends GameObjectContainer {
 	}
 
 	public void applyForce(Vector3 forceVector) {
-		System.out.println("FORCEE!!! " + forceVector.toString());
 		this.physicsObject.applyCentralImpulse(forceVector);
 	}
 
