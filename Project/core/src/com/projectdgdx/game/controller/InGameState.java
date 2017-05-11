@@ -76,6 +76,10 @@ public class InGameState implements GameState {
 		}
 	}
 
+	/**
+	 * Creates a camera to be used for rendering using the settings in the config file
+	 *
+	 */
 	private void createCamera(){
 		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(40f, 50f, 40f);
@@ -85,22 +89,37 @@ public class InGameState implements GameState {
 		camController = new CameraInputController(cam);
 		camController.forwardTarget = true;
 
+		//Add a camera controller to the input multiplexer to enable a movable debug camera.
 		multiplexer.addProcessor(camController);// Make the stage consume events
 		Gdx.input.setInputProcessor(multiplexer);
 
 		cam.update();
 	}
 
+	/**
+	 * Renders the game
+	 *
+	 */
 	public void render () {
-		renderer.render(cam, spotlight, objectsMap.values()); //Pass renderInstances and camera to render
+		renderer.render(cam, spotlight, objectsMap.values()); //Pass render Instances and camera to render
 	}
 
+	/**
+	 * Updates animation controllers
+	 *
+	 */
 	private void animate(){
 		for(AnimationController controllerInstance: animationControllers){
 			controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);
 		}
 	}
 
+	/**
+	 * Handles user input.
+	 *
+	 * @param projectD ProjectD
+	 *
+	 */
 	private void handleInput(ProjectD projectD){
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		for(InputController inputController : projectD.getInpuControllers()) {
@@ -115,8 +134,7 @@ public class InGameState implements GameState {
 
 			}
 
-
-
+			//Checks if escape button has been pressed.
 			if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
 				this.stop(projectD);
 				projectD.setState(GameStates.SETTINGS);
@@ -124,11 +142,16 @@ public class InGameState implements GameState {
 		}
 	}
 
+	/**
+	 * Handles workers currently in play
+	 *
+	 */
 	private void handleWorkers(){
 	    for (Worker worker : map.getWorkers()){
 	        worker.reactOnUpdate();
         }
     }
+
 
 	public void update(ProjectD projectD){
 		handleInput(projectD);
@@ -177,9 +200,11 @@ public class InGameState implements GameState {
 
 	}
 
+	/**
+	 * Converts map data to game objects to be used in model.
+	 * Adds animation controllers and collision objects when appropriate.
+	 */
 	private void generateRenderInstances(){
-
-
 		for (GameObject gameObject : map.getGameObjects()) {
 			// Create a ModelInstance for GameObject gameObject
 			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
@@ -197,11 +222,12 @@ public class InGameState implements GameState {
 				animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
 					@Override
 					public void onEnd(AnimationController.AnimationDesc animation) {
+						//Do something when the animation ends.
 					}
 
 					@Override
 					public void onLoop(AnimationController.AnimationDesc animation) {
-						//   Gdx.app.log("INFO", "Animation Ended");
+						//Do something for every loop of an animation.
 					}
 				});
 				animationControllers.add(animController);
@@ -224,7 +250,10 @@ public class InGameState implements GameState {
 			} else {
 				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
 			}
-
+			//Check for spotlightControl and get spotlight
+			if(gameObject instanceof SpotlightControlBoard) {
+				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
+			}
 
 
 			//Add GameObject and ModelInstance to a map that keeps them together
@@ -245,6 +274,10 @@ public class InGameState implements GameState {
 
 	}
 
+	/**
+	 * Updates the graphical objects
+	 *
+	 */
 	public void updateModelInstaces() {
 		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
 			ModelInstance modelInstance = entrySet.getValue().getKey();
@@ -270,7 +303,7 @@ public class InGameState implements GameState {
 				collisionObject.setWorldTransform(matrix4);
 			}
 
-			//Check for spotlightControl and get spotlight
+			//Check for spotlightControl and update spotlight
 			if(gameObject instanceof SpotlightControlBoard) {
 				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
 			}

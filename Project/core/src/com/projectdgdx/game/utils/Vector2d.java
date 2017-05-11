@@ -1,6 +1,8 @@
 package com.projectdgdx.game.utils;
 
 /**
+ * Data structure handling 2D vectors
+ *
  * Created by konglobemeralt on 2017-04-27.
  */
 

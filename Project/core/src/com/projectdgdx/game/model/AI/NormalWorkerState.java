@@ -36,7 +36,7 @@ public class NormalWorkerState implements WorkerState, TimerListener {
             changeNodes(worker);
         }
 
-        Vector3d vectorToTarget = worker.getPosition().vectorTo(worker.getTargetNode().getPosition());
+        Vector3d vectorToTarget = worker.getPosition().subtractVectorFrom(worker.getTargetNode().getPosition());
 
         Vector3d moveVector = vectorToTarget.normalised();
         // TODO remove if problem free: moveVector.y = 0;
