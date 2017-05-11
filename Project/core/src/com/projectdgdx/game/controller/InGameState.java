@@ -76,6 +76,10 @@ public class InGameState implements GameState {
 		}
 	}
 
+	/**
+	 * Creates a camera to be used for rendering using the settings in the config file
+	 *
+	 */
 	private void createCamera(){
 		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(40f, 50f, 40f);
@@ -85,16 +89,25 @@ public class InGameState implements GameState {
 		camController = new CameraInputController(cam);
 		camController.forwardTarget = true;
 
+		//Add a camera controller to the input multiplexer to enable a movable debug camera.
 		multiplexer.addProcessor(camController);// Make the stage consume events
 		Gdx.input.setInputProcessor(multiplexer);
 
 		cam.update();
 	}
 
+	/**
+	 * Renders the game using camera and
+	 *
+	 */
 	public void render () {
-		renderer.render(cam, spotlight, objectsMap.values()); //Pass renderInstances and camera to render
+		renderer.render(cam, spotlight, objectsMap.values()); //Pass render Instances and camera to render
 	}
 
+	/**
+	 * Renders the game
+	 *
+	 */
 	private void animate(){
 		for(AnimationController controllerInstance: animationControllers){
 			controllerInstance.update(Gdx.graphics.getDeltaTime() + rand.nextFloat() * 0.02f);

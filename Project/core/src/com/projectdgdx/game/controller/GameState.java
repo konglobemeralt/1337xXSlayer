@@ -39,5 +39,12 @@ public interface GameState {
      *
      */
     void start(ProjectD projectD);
+
+    /**
+     * Stops the current gameState.
+     *
+     * @param projectD ProjectD
+     *
+     */
     void stop(ProjectD projectD);
 }
