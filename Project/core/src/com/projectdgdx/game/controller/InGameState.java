@@ -82,7 +82,7 @@ public class InGameState implements iGameState {
 	 */
 	private void createCamera(){
 		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(40f, 50f, 40f);
+		cam.position.set(Config.CAMERA_X, Config.CAMERA_Y, Config.CAMERA_Z);
 		cam.lookAt(0f, 0f, 0f);
 		cam.near = Config.CAMERA_NEAR;
 		cam.far = Config.CAMERA_FAR;
