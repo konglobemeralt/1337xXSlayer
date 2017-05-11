@@ -25,7 +25,6 @@ public class NormalWorkerState implements WorkerState, TimerListener {
 
     @Override
     public void reactOnUpdate(Worker worker) {
-        System.out.println(timer.getTimerValue());
         if (!isWaiting){
             act(worker);
         }
@@ -64,11 +63,9 @@ public class NormalWorkerState implements WorkerState, TimerListener {
     public void timeIsUp() {
         if (!isWaiting){
             isWaiting = true;
-            //timer.setTimerValue(new Random().nextInt(4)+1);
             startTimerAndListen(new Random().nextInt(200), 10);
         }else{
             isWaiting = false;
-            //timer.setTimerValue(new Random().nextInt(40) + 10);
             startTimerAndListen(new Random().nextInt(10), 1000);
         }
     }
