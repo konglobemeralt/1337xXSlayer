@@ -8,7 +8,7 @@ import com.projectdgdx.game.utils.Timer;
 /**
  * Created by Emil Jansson on 2017-05-09.
  */
-public class StrikingWorkerState implements  WorkerState {
+public class StrikingWorkerState implements iWorkerState {
 
     @Override
     public void reactOnUpdate(Worker worker) {

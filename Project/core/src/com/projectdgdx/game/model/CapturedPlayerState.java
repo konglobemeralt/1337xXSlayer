@@ -1,13 +1,13 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.TimerListener;
+import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * Created by Eddie on 2017-05-09.
  */
-public class CapturedPlayerState implements PlayerState, TimerListener {
+public class CapturedPlayerState implements iPlayerState, iTimerListener {
 
     PlayableCharacter player;
 

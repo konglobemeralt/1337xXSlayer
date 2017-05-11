@@ -17,15 +17,15 @@ public class Saboteur extends PlayableCharacter{
     }
 
     @Override
-    public void dishonestInteract(List<DishonestInteractable> dishonestInteractables) {
-        for(DishonestInteractable di : dishonestInteractables){
+    public void dishonestInteract(List<iDishonestInteractable> dishonestInteractables) {
+        for(iDishonestInteractable di : dishonestInteractables){
             if(this.canDishonestInteract(di)){
                 di.dishonestInteract(this);
             }
         }
     }
 
-    private boolean canDishonestInteract(DishonestInteractable di){
+    private boolean canDishonestInteract(iDishonestInteractable di){
         float value = this.getPosition().distanceTo(di.getPosition()) - Config.HONEST_ACT_DISTANCE;
         return value < 0;
     }

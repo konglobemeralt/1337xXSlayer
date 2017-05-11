@@ -3,38 +3,21 @@ package com.projectdgdx.game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g3d.*;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalShadowLight;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
-import com.badlogic.gdx.graphics.g3d.utils.*;
-import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.controller.*;
-import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.InputModel;
-import com.projectdgdx.game.view.BaseShader;
-import com.projectdgdx.game.utils.AssetManager;
-import com.projectdgdx.game.utils.AssetsFinder;
-import com.projectdgdx.game.utils.Map;
-
-import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.utils.MapParser;
-import com.sun.org.apache.xpath.internal.objects.XBoolean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class ProjectD extends ApplicationAdapter {
 
-    private GameState currentState;
+    private iGameState currentState;
     private List<InputController> inputController = new ArrayList();
 
     private InputMultiplexer multiplexer;
 
-    public GameState getState() {
+    public iGameState getState() {
         return currentState;
     }
 
@@ -55,7 +38,7 @@ public class ProjectD extends ApplicationAdapter {
     }
 
 
-	public HashMap<GameStates, GameState> gameStates = new HashMap<GameStates, GameState>();
+	public HashMap<GameStates, iGameState> gameStates = new HashMap<GameStates, iGameState>();
 
 
     @Override

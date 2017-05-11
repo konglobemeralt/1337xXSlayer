@@ -18,7 +18,7 @@ import com.projectdgdx.game.ProjectD;
 
 import static com.badlogic.gdx.Gdx.gl20;
 
-public class SettingsState implements GameState {
+public class SettingsState implements iGameState {
 
     private Skin skin;
     private Stage stage;

@@ -28,7 +28,7 @@ import java.util.*;
  * InGameState controls everything that is ingame.
  * Created by Eddie on 2017-04-28.
  */
-public class InGameState implements GameState {
+public class InGameState implements iGameState {
 
 	private InputMultiplexer multiplexer;
 	private  Array<AnimationController> animationControllers = new Array<AnimationController>();

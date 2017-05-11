@@ -1,10 +1,9 @@
 package com.projectdgdx.game.model.AI;
 
-import com.badlogic.gdx.Gdx;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.TimerListener;
+import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.Random;
@@ -12,7 +11,7 @@ import java.util.Random;
 /**
  * Created by Emil Jansson on 2017-05-09.
  */
-public class NormalWorkerState implements WorkerState, TimerListener {
+public class NormalWorkerState implements iWorkerState, iTimerListener {
 
     private Timer timer;
 

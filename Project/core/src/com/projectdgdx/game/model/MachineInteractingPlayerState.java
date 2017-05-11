@@ -1,17 +1,17 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.TimerListener;
+import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * Created by Emil Jansson on 2017-05-04.
  */
-public class MachineInteractingPlayerState implements PlayerState, TimerListener {
+public class MachineInteractingPlayerState implements iPlayerState, iTimerListener {
     private Machine machine;
     private PlayableCharacter currentPlayer;
 
-    MachineInteractingPlayerState(HonestInteractable machine, PlayableCharacter currentPlayer){
+    MachineInteractingPlayerState(iHonestInteractable machine, PlayableCharacter currentPlayer){
         this.currentPlayer = currentPlayer;
         this.machine = (Machine) machine;
         // Play some kind of animation

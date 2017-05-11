@@ -2,10 +2,6 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,7 +11,6 @@ import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
 import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.InputModel;
-import com.projectdgdx.game.utils.Vector3d;
 
 import static com.badlogic.gdx.Gdx.gl20;
 
@@ -23,7 +18,7 @@ import static com.badlogic.gdx.Gdx.gl20;
  * Main menu state displays and handles the main menu
  * Created by Eddie on 2017-04-28.
  */
-public class MainMenuState implements GameState {
+public class MainMenuState implements iGameState {
 
     private Skin skin;
     private Stage stage;

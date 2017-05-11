@@ -10,7 +10,7 @@ import java.util.List;
  */
 public abstract class PlayableCharacter extends Character {
 
-    protected PlayerState state;
+    protected iPlayerState state;
 
     public PlayableCharacter(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
@@ -29,17 +29,17 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      * Sets the starting state of a character
-     * @param newState PlayerState
+     * @param newState iPlayerState
      */
-    public void setState(PlayerState newState){
+    public void setState(iPlayerState newState){
         this.state = newState;
     }
 
     /**
      * The character preforms a covert action.
-     * @param List<DishonestInteractable> dishonestInteractables
+     * @param List<iDishonestInteractable> dishonestInteractables
      */
-    public abstract void dishonestInteract(List<DishonestInteractable> dishonestInteractables);
+    public abstract void dishonestInteract(List<iDishonestInteractable> dishonestInteractables);
 
     /**
      * The character uses it's special ability.
@@ -51,8 +51,8 @@ public abstract class PlayableCharacter extends Character {
      * @param interactables The list of objects the character tries to interact with.
      */
 
-    public void honestInteract(List<HonestInteractable> interactables){
-        for (HonestInteractable i: interactables){
+    public void honestInteract(List<iHonestInteractable> interactables){
+        for (iHonestInteractable i: interactables){
             if (canHonestInteract(i)){
                 i.honestInteract(this);
             }
@@ -61,10 +61,10 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      *
-     * @param hi HonestInteractable
+     * @param hi iHonestInteractable
      * @return boolean value depending on if HonestInteract is possible or not
      */
-    protected boolean canHonestInteract(HonestInteractable hi){
+    protected boolean canHonestInteract(iHonestInteractable hi){
         float value = this.getPosition().distanceTo(hi.getPosition()) - Config.HONEST_ACT_DISTANCE;
         return value < 0;
     }

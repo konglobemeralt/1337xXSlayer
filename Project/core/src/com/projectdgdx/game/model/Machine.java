@@ -1,18 +1,18 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.TimerListener;
+import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * Created by Hampus on 2017-04-03.
  */
 
-public class Machine extends StaticObject implements HonestInteractable, DishonestInteractable, TimerListener {
+public class Machine extends StaticObject implements iHonestInteractable, iDishonestInteractable, iTimerListener {
 
     private Timer machineCounter;
 
-    protected MachineState state;
+    protected iMachineState state;
 
     public Machine(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
@@ -33,7 +33,7 @@ public class Machine extends StaticObject implements HonestInteractable, Dishone
     }
 
     @Override
-    public void setState(MachineState newState) {
+    public void setState(iMachineState newState) {
         this.state = newState;
     }
 

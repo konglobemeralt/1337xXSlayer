@@ -5,7 +5,7 @@ import com.projectdgdx.game.utils.Vector3d;
 /**
  * Created by Emil Jansson on 2017-05-03.
  */
-public class DestroyedMachineState implements MachineState, SpotlightListener{
+public class DestroyedMachineState implements iMachineState, iSpotlightListener {
 
     private boolean detected = false;
     private Vector3d machinePosition;
@@ -15,12 +15,12 @@ public class DestroyedMachineState implements MachineState, SpotlightListener{
     }
 
     @Override
-    public void honestInteract(PlayableCharacter player, HonestInteractable hi) {
+    public void honestInteract(PlayableCharacter player, iHonestInteractable hi) {
         // Play a sound? Might not be useful
     }
 
     @Override
-    public void dishonestInteract(PlayableCharacter player, DishonestInteractable di) {
+    public void dishonestInteract(PlayableCharacter player, iDishonestInteractable di) {
         // Play a sound? Might not be useful
     }
 
