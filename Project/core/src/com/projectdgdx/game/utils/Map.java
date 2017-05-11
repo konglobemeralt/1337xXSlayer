@@ -78,6 +78,26 @@ public abstract class Map {
         return nodes;
     }
 
+    public List<HonestInteractable> getHonestInteractables() {
+        List<HonestInteractable> hi = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof HonestInteractable) {
+                hi.add((HonestInteractable)gameObject);
+            }
+        }
+        return hi;
+    }
+
+    public List<DishonestInteractable> getDishonestInteractables() {
+        List<DishonestInteractable> di = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof DishonestInteractable) {
+                di.add((DishonestInteractable)gameObject);
+            }
+        }
+        return di;
+    }
+
     public List<Entity> getEntities() {
         List<Entity> entities = new ArrayList<>();
         for(GameObject gameObject : gameObjects) {
