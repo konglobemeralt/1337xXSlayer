@@ -117,8 +117,8 @@ public class RenderManager {
     public void createBatches(){
 
         DefaultShader.Config config = new DefaultShader.Config();
-        config.numDirectionalLights = 8 + Config.DISCO_FACTOR;
-        config.numPointLights = 100;
+        config.numDirectionalLights = 1;
+        config.numPointLights = 8 + Config.DISCO_FACTOR;
         config.numSpotLights = 0;
 
         ShaderProvider shaderProvider = new DefaultShaderProvider(config);
@@ -166,7 +166,7 @@ public class RenderManager {
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
                     pointLightPos.get(i).x , pointLightPos.get(i).y,  pointLightPos.get(i).z, 70f);
             environment.add(light);
-            pointLightList.add(light);
+            pointLightList.get(i).set(light);
         }
 
 
