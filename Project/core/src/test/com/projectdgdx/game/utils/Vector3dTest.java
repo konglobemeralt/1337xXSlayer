@@ -62,7 +62,7 @@ public class Vector3dTest {
         // TODO vet ej vad skriva
         Vector3d testVector1 = new Vector3d(74,82,17);
         Vector3d testVector2 = new Vector3d(-13, 52, -64);
-        Vector3d Vector1to2  = testVector1.vectorTo(testVector2);
+        Vector3d Vector1to2  = testVector1.subtractVectorFrom(testVector2);
         assertTrue(Math.abs(Vector1to2.x - (-13-74)) < 0.000001);
         assertTrue(Math.abs(Vector1to2.y - (52-82)) < 0.000001);
         assertTrue(Math.abs(Vector1to2.z - (-64-17)) < 0.000001);

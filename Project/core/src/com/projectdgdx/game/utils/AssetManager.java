@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class AssetManager {
 
-   static  private com.badlogic.gdx.assets.AssetManager rawAssets;
+    static  private com.badlogic.gdx.assets.AssetManager rawAssets;
 
     static private TextureLoader.TextureParameter param;
 
