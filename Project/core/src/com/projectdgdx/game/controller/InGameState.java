@@ -143,13 +143,13 @@ public class InGameState implements iGameState {
 
 
 			}
-			inputModel.resetButtonCounts();
-
 			//Checks if escape button has been pressed.
 			if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
 				this.stop(projectD);
 				projectD.setState(GameStates.SETTINGS);
 			}
+
+			inputModel.resetButtonCounts();
 		}
 	}
 
