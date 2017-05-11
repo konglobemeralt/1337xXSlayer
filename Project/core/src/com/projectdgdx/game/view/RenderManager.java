@@ -139,11 +139,8 @@ public class RenderManager {
 
     /**
      * createEnvironment creates the enviroment
-     *
+     * @param spot SpotLight
      */
-
-
-
     public void updateSpotLight(Spotlight spot){
             environment.remove(renderSpot);
             //pointLightList.remove(p);
