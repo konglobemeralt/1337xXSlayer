@@ -54,6 +54,7 @@ public abstract class PlayableCharacter extends Character {
     public void honestInteract(List<iHonestInteractable> interactables){
         for (iHonestInteractable i: interactables){
             if (canHonestInteract(i)){
+                System.out.println("HonestInteract"); //TODO this is debug
                 i.honestInteract(this);
             }
         }
