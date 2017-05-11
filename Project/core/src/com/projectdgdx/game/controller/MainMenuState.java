@@ -36,9 +36,15 @@ public class MainMenuState implements GameState {
     private Table table;
     private int controllerPosition = 0;
 
-    private void createBasicSkin(){
+    /**
+     * createBasicSkin reads an internalGUI file and creates a skin
+     *
+     * @param path Path to the GUIskin file
+     * @return A new skin
+     */
+    private Skin createBasicSkin(String path){
 
-        skin = new Skin(Gdx.files.internal("GUIStyle/uiskin.json"));
+        return new Skin(Gdx.files.internal(path));
        // //Create a font
        // BitmapFont font = new BitmapFont();
        // skin = new Skin();
@@ -110,15 +116,13 @@ public class MainMenuState implements GameState {
 
     @Override
     public void init(ProjectD projectD) {
-
-
     }
 
     @Override
     public void start(ProjectD projectD) {
         this.stage = new Stage();
 
-        createBasicSkin();
+        skin = createBasicSkin(Config.UI_SKIN_PATH);
 
         mainMenuHeading = new Label("Project D", skin);
 

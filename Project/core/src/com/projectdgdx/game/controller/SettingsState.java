@@ -137,41 +137,40 @@ public class SettingsState implements GameState {
 
         settingsHeading = new Label("Settings Menu", skin);
 
-
-        //toggleShadowMapButton = new TextButton("", skin); // Use the initialized skin
-        //setShadowMapButtonText();
-        //toggleShadowMapButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 + 45);
-        //stage.addActor(toggleShadowMapButton);
-
         mainMenuButton = new TextButton("To Main Menu", skin);
-        //mainMenuButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2 - 45);
-        //stage.addActor(mainMenuButton);
 
+        /** Field of view slider  **/
         fovSlider = new Slider(5, 120, 1, false, skin);
         fovSlider.setValue(Config.CAMERA_FOV);
         fovLabel = new Label("FOV", skin);
         fovValueLabel = new Label("", skin);
 
+        /** AA slider  **/
         aaSlider = new Slider(0, 20, 1, false, skin);
         aaSlider.setValue(Config.AA_SAMPLES);
         aaLabel = new Label("AA Samples", skin);
         aaValueLabel = new Label("", skin);
 
+        /** Disco slider  **/
         discoSlider = new Slider(0, 100, 1, false, skin);
         discoSlider.setValue(Config.DISCO_FACTOR);
         disoLabel = new Label("Disco Factor", skin);
         discoValueLabel = new Label("", skin);
 
+        /** Shadow mapping checkbox  **/
         shadowMappingLabel = new Label("Shadow mapping", skin);
         shadowMapCheckbox = new CheckBox("", skin);
         shadowMapCheckbox.setChecked(true);
 
+        /** Movement Speed textfield  **/
         moveSpeedLabel = new Label("Movement Speed", skin);
         moveSpeedIn = new TextField("30", skin);
         moveSpeedIn.setMessageText("Movement Speed");
         moveSpeedIn.setPosition(30, 30);
         //stage.addActor(moveSpeedIn);
 
+
+        /** Sun RGB sliders  **/
         sunrSlider = new Slider(0, 100, 1, false, skin);
         sunrSlider.setValue(Config.SUN_LIGHT_R);
         sunrSliderLabel = new Label("Sun light R:", skin);
