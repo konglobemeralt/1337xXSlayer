@@ -36,7 +36,7 @@ public class Config {
     public static int AA_SAMPLES = 8;
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
-    public static final boolean RESIZABLE = false;
+    public static final boolean RESIZABLE = true;
     public static final boolean V_SYNC_ENABLED = false;
     public static final int FPS_CAP = 10000;
     public static final boolean FULLSCREEN_ENABLED = false;
@@ -82,11 +82,11 @@ public class Config {
     /************MODEL VARIABLES************/
 
     //MODEL RADIUS'S
-    public static final float honestActDistance = 1;
-    public static final float useAbilityActDistance = 1;
-    public static final float strikeZoneRadius = 1;
-    public static final float workerNodeRadius = 1;
+    public static final float HONEST_ACT_DISTANCE = 5;
+    public static final float USE_ABILITY_ACT_DISTANCE = 5;
+    public static final float STRIKE_ZONE_RADIUS = 10;
+    public static final float WORKER_NODE_RADIUS = 1;
 
     //MODEL ATTRIBUTES
-    public static final float workerSpeed = 1;
+    public static final float WORKER_SPEED = 20f;
 }

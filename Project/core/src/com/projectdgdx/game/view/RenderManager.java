@@ -12,11 +12,18 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
+import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
+import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.Vector3d;
+import javafx.util.Pair;
 
-
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  * Created by konglobemeralt on 2017-05-07.
@@ -31,18 +38,33 @@ public class RenderManager {
 
     private FPSLogger fps;
 
-    public Collection<ModelInstance> instances;
+    private float lifeTime;
+    private float discoDelay = 0.03f; //2 seconds.
 
+    public Collection<Pair<ModelInstance, btCollisionObject>> instances;
+
+    //TODO: MERGE WITH SPOT OBJECT TO CREATE VIABLE OBJECT
+    private List<PointLight> pointLightList =  new ArrayList();
+    private List<Vector3d> pointLightPos =  new ArrayList();
+
+    public Environment pointLights;
     public Environment environment;
     DirectionalShadowLight shadowLight;
     public Shader shader;
 
     Random rand;
 
-
-    public void render (PerspectiveCamera cam, Collection<ModelInstance> instances) {
+    public void render (PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
         this.instances = instances;
         fps.log();
+
+        if(Config.DISCO_FACTOR > 0){
+            lifeTime += Gdx.graphics.getDeltaTime();
+            if (lifeTime > discoDelay) {
+                updateLights();
+                lifeTime = 0;
+            }
+        }
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -50,9 +72,9 @@ public class RenderManager {
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
 
-            if(Config.SHADOWMAPPING_ENABLED) {
-                renderShadowMap(cam);
-            }
+        if(Config.SHADOWMAPPING_ENABLED) {
+            renderShadowMap(cam);
+        }
         renderToScreen(cam);
 
     }
@@ -65,8 +87,8 @@ public class RenderManager {
 
     private void renderToScreen(PerspectiveCamera cam){
         modelBatch.begin(cam);
-        for (ModelInstance instance : instances) {
-            modelBatch.render(instance, environment);
+        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
+            modelBatch.render(instance.getKey(), environment);
         }
         modelBatch.end();
     }
@@ -81,8 +103,8 @@ public class RenderManager {
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
-        for (ModelInstance instance : instances) {
-            shadowBatch.render(instance, environment);
+        for (Pair<ModelInstance, btCollisionObject> instance : instances) {
+            shadowBatch.render(instance.getKey(), environment);
         }
         shadowBatch.end();
         shadowLight.end();
@@ -110,6 +132,47 @@ public class RenderManager {
      * createEnvironment creates the enviroment
      *
      */
+
+
+
+    public void updateLights(){
+        for(PointLight p: pointLightList){
+            environment.remove(p);
+            //pointLightList.remove(p);
+        }
+        moveLights();
+        //createLights();
+    }
+
+    public void createLights(){
+        for(int i = 0; i < Config.DISCO_FACTOR; i++){
+            Vector3d pos = new Vector3d(rand.nextInt(300)-100, rand.nextInt(20)-5, rand.nextInt(300)-100);
+            PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
+                    pos.x , pos.y,  pos.z, 70f);
+            environment.add(light);
+            pointLightList.add(light);
+            pointLightPos.add(pos);
+
+        }
+
+    }
+
+    public void moveLights(){
+        for(int i = 0; i < Config.DISCO_FACTOR; i++){
+            pointLightPos.get(i).x += rand.nextFloat() * (5f + 5f) + -5f;
+            pointLightPos.get(i).y += rand.nextFloat() * (1f +1f) + -1f;
+            pointLightPos.get(i).z += rand.nextFloat() * (5f + 5f) + -5f;
+
+            PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
+                    pointLightPos.get(i).x , pointLightPos.get(i).y,  pointLightPos.get(i).z, 70f);
+            environment.add(light);
+            pointLightList.add(light);
+        }
+
+
+
+    }
+
     public void createEnvironment(){
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
@@ -141,28 +204,13 @@ public class RenderManager {
         }
 
 
-        for(int i = 0; i < Config.DISCO_FACTOR; i++){
-            environment.add(new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
-                    (rand.nextInt(300)-100) , rand.nextInt(20)-5,  (rand.nextInt(300)-100), 70f));
-
-        }
-
-        //environment.add(new PointLight().set(0.1f, 0.3f, 1f,
-        //        50, 10, 0, 70f));
-//
-        //environment.add(new PointLight().set(1f, 0.3f, 0.3f,
-        //        -30, 10, 0, 70f));
-//
-        //environment.add(new PointLight().set(0.2f, 1f, 0.3f,
-        //        0, 10, 50, 70f));
-
     }
 
     public void init(){
         rand = new Random();
         createEnvironment();
         createBatches();
-
+        createLights();
         createShaders();
 
         fps = new FPSLogger();
@@ -178,6 +226,7 @@ public class RenderManager {
         shadowBatch.dispose();
         instances.clear();
     }
+
 
 
 }

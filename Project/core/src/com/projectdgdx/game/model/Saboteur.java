@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model;
 
-import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -24,7 +23,7 @@ public class Saboteur extends PlayableCharacter{
     }
 
     private boolean canDishonestInteract(DishonestInteractable di){
-        float value = this.getPosition().distanceTo(di.getPosition()) - Config.honestActDistance;
+        float value = this.getPosition().distanceTo(di.getPosition()) - Config.HONEST_ACT_DISTANCE;
         return value < 0;
     }
 
@@ -35,7 +34,7 @@ public class Saboteur extends PlayableCharacter{
 
     @Override
     public void beenCaught() {
-
+        // Here we want to change state to "EndGameState" probably by using an "EndGameListener"-isch kind of solution
     }
 
     @Override

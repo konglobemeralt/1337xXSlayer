@@ -18,6 +18,5 @@ public class DesktopLauncher {
 		config.fullscreen = Config.FULLSCREEN_ENABLED;
 		config.samples = Config.AA_SAMPLES;
 		new LwjglApplication(new ProjectD(), config);
-
 	}
 }

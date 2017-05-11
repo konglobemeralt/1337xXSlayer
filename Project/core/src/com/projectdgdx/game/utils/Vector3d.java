@@ -39,7 +39,22 @@ public class Vector3d {
     }
 
     public boolean isInRadius(Vector3d compVector, float radius){
-        return this.distanceTo(compVector) <= radius;
+        return distanceTo(compVector) <= radius;
+    }
+
+    public Vector3d scale(float scalar) {
+        this.x *= scalar;
+        this.y *= scalar;
+        this.z *= scalar;
+        return this;
+    }
+
+    public String toString() {
+        return "[" + x + "," + y + "," + z + "]";
+    }
+
+    public float getXZAngle() {
+        return (float)Math.toDegrees(Math.atan2(z, x));
     }
 
 }

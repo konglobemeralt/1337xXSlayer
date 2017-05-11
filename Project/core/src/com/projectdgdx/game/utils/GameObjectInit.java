@@ -1,6 +1,11 @@
 package com.projectdgdx.game.utils;
 
 import com.projectdgdx.game.model.*;
+import com.projectdgdx.game.model.AI.AINode;
+import com.projectdgdx.game.model.AI.WorkerNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Hampus on 2017-03-26.
@@ -27,6 +32,10 @@ public class GameObjectInit {
     private boolean spawnRateRandom = false;
     private float spawnDelay = 0;
     private float aliveLimit = 10;
+
+    //Node
+    private int nodeId = 0;
+    private List<Integer> nodeFriends = new ArrayList<>();
 
     /**
      * The constructor for GameObjectInit requires a type
@@ -77,11 +86,12 @@ public class GameObjectInit {
               case "Supervisor":
                   return new Supervisor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "supervisor.basic");
               case "Saboteur":
-                  return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "saboteur.basic");
-              case "Player":
-                   return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "player.basic");
-                case "Floor": //TODO REPLACE WITH SOMETHING RELEVANT FOR STATIC OBJECTS
-                return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
+                  return new Saboteur(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "saboteur.basic");
+              case "WorkerNode":
+                    return new WorkerNode(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "node.worker", nodeId, nodeFriends) {
+                    };
+              case "Floor":
+                    return new Floor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
               default:
                 System.out.println("TAG OF TYPE: " + type + " not supported");
                 return null;
@@ -119,6 +129,15 @@ public class GameObjectInit {
                 break;
             case "polygon":
                 // TODO Handle polygons
+                break;
+            case "nodeId":
+                nodeId = Integer.parseInt(value);
+                break;
+            case "nodeFriends":
+                for(String friend : value.split(",")) {
+                    nodeFriends.add(Integer.parseInt(friend));
+                }
+//                className = value;
                 break;
             case "className":
 //                className = value;
