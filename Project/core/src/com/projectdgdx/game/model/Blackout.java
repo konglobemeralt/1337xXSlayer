@@ -1,13 +1,13 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.TimerListener;
+import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * Created by Eddie on 2017-05-11.
  */
-public class Blackout extends GameObject implements TimerListener{
+public class Blackout extends GameObject implements iTimerListener {
 
     /**
      * The blackout class is a "graphical" class that is based on an ability that the Saboteur has. A
