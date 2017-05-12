@@ -6,7 +6,8 @@ import com.projectdgdx.game.utils.Vector3d;
 import java.util.List;
 
 /**
- * Created by Eddie on 2017-04-03.
+ * The PlayableCharacter is the abstract superclass for all the objects that a physical player can control
+ * eg. Supervisors and Saboteurs.
  */
 public abstract class PlayableCharacter extends Character {
 
@@ -21,14 +22,14 @@ public abstract class PlayableCharacter extends Character {
      * Recieves the movement inputs and delegates it to the state machine.
      * TODO Will buttons be handled here or go directly to the functions?
      * TODO  ANSWER: Will call functions. We want to separate all input handling from the model.
+     * // TODO What does this even do????????????
      */
-
     public void reactToInput(){
         this.state.move(new Vector3d(1,1,1));
     }
 
     /**
-     * Sets the starting state of a character
+     * Sets the internal state of a character.
      * @param newState iPlayerState
      */
     public void setState(iPlayerState newState){
@@ -37,7 +38,7 @@ public abstract class PlayableCharacter extends Character {
 
     /**
      * The character preforms a covert action.
-     * @param List<iDishonestInteractable> dishonestInteractables
+     * @param dishonestInteractables , a list of the objects that can be interacted with in a dishonest way.
      */
     public abstract void dishonestInteract(List<iDishonestInteractable> dishonestInteractables);
 
@@ -47,10 +48,9 @@ public abstract class PlayableCharacter extends Character {
     public abstract void useAbility();
 
     /**
-     * The character tries to interact with nearby interactable objects.
-     * @param interactables The list of objects the character tries to interact with.
+     * The character tries to interact with nearby honest objects.
+     * @param interactables The list of objects the character tries to honest interact with.
      */
-
     public void honestInteract(List<iHonestInteractable> interactables){
         for (iHonestInteractable i: interactables){
             if (canHonestInteract(i)){
@@ -61,7 +61,7 @@ public abstract class PlayableCharacter extends Character {
     }
 
     /**
-     *
+     * Verifies if any honest object is close enough to interact with.
      * @param hi iHonestInteractable
      * @return boolean value depending on if HonestInteract is possible or not
      */
@@ -70,6 +70,9 @@ public abstract class PlayableCharacter extends Character {
         return value < 0;
     }
 
+    /**
+     * Sets the starting state of the PlayableCharacter.
+     */
     protected void setStartingState(){
         this.state = new NormalPlayerState();
     }

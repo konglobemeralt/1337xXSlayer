@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Eddie on 2017-04-03.
+ * The Spotlight is used to detect the damage that has been done to a Machine when sabotaged.
+ * When a Machine is Sabotaged it will play a sound but it won't show which machine that has
+ * been destroyed. When the Spotlight hovers over the destroyed Machine
  */
 public class Spotlight extends Entity {
     private List<iSpotlightListener> listeners = new ArrayList();
@@ -30,7 +32,8 @@ public class Spotlight extends Entity {
 
     /**
      * This method is used when the spotlight moves to verify if it hovers over a machine that has been destroyed.
-     * @param v position of the Spotlight.
+     * If a destroyed Machine is detected it will react to it.
+     * @param v , relative position of the Spotlight.
      */
     private void checkListenerDetection(Vector3d v){
         for(iSpotlightListener sl : listeners){
@@ -45,6 +48,10 @@ public class Spotlight extends Entity {
         return false;
     }
 
+    /**
+     * Add Listeners to the Spotlight. The Listeners listen for when the Spotlight hovers over them.
+     * @param slListener
+     */
     void addListener(iSpotlightListener slListener){
         listeners.add(slListener);
     }

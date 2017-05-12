@@ -6,7 +6,8 @@ import com.projectdgdx.game.utils.Vector3d;
 import java.util.List;
 
 /**
- * Created by Eddie on 2017-04-03.
+ * The Saboteur is the dishonest character in our game with the mission to bring down the factory.
+ * It can sabotage the machines and if detected escape by "blackout" a part of the factory around him.
  */
 public class Saboteur extends PlayableCharacter{
 
@@ -25,6 +26,11 @@ public class Saboteur extends PlayableCharacter{
         }
     }
 
+    /**
+     * Verfies if the Saboteur is in distance to any object that is possible to dishonest interact with.
+     * @param di , the object that the the Saboteur want to know if it can dishonest interact with.
+     * @return
+     */
     private boolean canDishonestInteract(iDishonestInteractable di){
         float value = this.getPosition().distanceTo(di.getPosition()) - Config.HONEST_ACT_DISTANCE;
         return value < 0;
