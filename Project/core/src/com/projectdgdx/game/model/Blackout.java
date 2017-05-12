@@ -23,6 +23,10 @@ public class Blackout extends GameObject implements iTimerListener {
         super(position, scale, rotation, id);
     }
 
+    /**
+     * This method will activate the blackout, which means a timer will be started and the
+     * black cylinder will pop up in a radius around the player.
+     */
     public void activate(){
         Timer blackoutTime = new Timer(3,1000);
         blackoutTime.addListener(this);

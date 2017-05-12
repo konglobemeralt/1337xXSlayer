@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Hampus on 2017-04-03.
+ * The Entity class is for all GameObjects that can move. Eg the Spotlight and all characters.
  */
 public abstract class Entity extends GameObject {
     public Entity(Vector3d position, Vector3d scale, Vector3d rotation, String id) {

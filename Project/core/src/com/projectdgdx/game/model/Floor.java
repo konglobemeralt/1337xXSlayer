@@ -3,7 +3,7 @@ package com.projectdgdx.game.model;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Hampus on 2017-05-10.
+ * The Floor class is purely made for the GUI and for some collision handling.
  */
 public class Floor extends StaticObject {
 	public Floor(Vector3d position, Vector3d scale, Vector3d rotation, String id) {

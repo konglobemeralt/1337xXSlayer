@@ -5,7 +5,8 @@ import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Hampus on 2017-04-03.
+ * The Machine class is the interactable machine object that is a main part of the game logic.
+ * The Supervisors quest is to save the Machines from getting destroyed by the Saboteur.
  */
 
 public class Machine extends StaticObject implements iHonestInteractable, iDishonestInteractable, iTimerListener {
@@ -27,7 +28,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
         state.honestInteract(player, this);
     }
 
-
+    @Override
     public void dishonestInteract(PlayableCharacter player) {
         state.dishonestInteract(player, this);
     }
@@ -42,7 +43,14 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
         this.setState(new DestroyedMachineState(this.getPosition()));
     }
 
+    /**
+     * Thi method is used to update the internal timer of the machine. If the timer goes down to 0
+     * the machine will set itself to destroyed.
+     */
     public void updateTimer() {
         this.machineCounter.setTimerValue(30);
-    }
+    } // TODO instead add a new timer. This is how the timer works.
+
+    // TODO We need to have a listener that will listen to how many machines that are destroyed so
+    // TODO that the game will end when a certain amount of machines have been destroyed.
 }

@@ -5,7 +5,8 @@ import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Eddie on 2017-05-09.
+ * This state is used when a Supervisor catch another Supervisor. The Supervisors will stand still
+ * and "argue" for 3 seconds before they both can move again.
  */
 public class CapturedPlayerState implements iPlayerState, iTimerListener {
 

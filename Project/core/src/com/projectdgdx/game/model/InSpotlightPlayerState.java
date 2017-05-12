@@ -3,7 +3,7 @@ package com.projectdgdx.game.model;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Eddie on 2017-05-03.
+ * This player state is for when any player interacts with the spotlight.
  */
 public class InSpotlightPlayerState implements iPlayerState {
     private Spotlight spotlight;
@@ -12,6 +12,11 @@ public class InSpotlightPlayerState implements iPlayerState {
         this.spotlight = spotlight;
     }
 
+    /**
+     * Instead of using the usual move method thta moves the player controlled charater the
+     * player will now move the Spotlight instead.
+     * @param vector , the input from the controller. The vector is relative to the Spotlights position.
+     */
     @Override
     public void move(Vector3d vector) {
         this.spotlight.move(vector);
