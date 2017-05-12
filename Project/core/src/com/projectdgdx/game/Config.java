@@ -96,5 +96,5 @@ public class Config {
     public static final float WORKER_SPEED = 20f;
 
     /************LEVEL SELECTION************/
-    public static String LEVEL_IN_PLAY = "basicMap.txt";
+    public static String LEVEL_IN_PLAY = "basicMapAdvanced.txt";
 }

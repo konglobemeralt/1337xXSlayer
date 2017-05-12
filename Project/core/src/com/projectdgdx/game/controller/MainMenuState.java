@@ -83,6 +83,7 @@ public class MainMenuState implements iGameState {
 
         if(newGameButton.isPressed()){
             this.exit(projectD);
+            projectD.resetState(GameStates.INGAME);
             projectD.setState(GameStates.INGAME);
         }
         else if(settingsButton.isPressed()){

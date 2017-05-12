@@ -29,6 +29,11 @@ public class ProjectD extends ApplicationAdapter {
         this.currentState.start(this);
     }
 
+    public void resetState(GameStates stateToReset) {
+        gameStates.get(stateToReset).stop(this);
+        gameStates.get(stateToReset).init(this);
+    }
+
     public List<InputController> getInpuControllers() {
         return inputController;
     }
