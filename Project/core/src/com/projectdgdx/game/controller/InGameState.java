@@ -3,7 +3,9 @@ package com.projectdgdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.*;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.*;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
@@ -23,6 +25,8 @@ import com.projectdgdx.game.view.RenderManager;
 import javafx.util.Pair;
 
 import java.util.*;
+
+import static com.badlogic.gdx.graphics.Texture.TextureWrap.Repeat;
 
 /**
  * InGameState controls everything that is ingame.
@@ -242,6 +246,8 @@ public class InGameState implements iGameState {
 			modelInstance.transform.rotate(Vector3.Y, rotation.y);
 			modelInstance.transform.rotate(Vector3.Z, rotation.z);
 
+
+
 			//Check for worker or player animation from id
 			if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
 				AnimationController animController = new AnimationController(modelInstance);
@@ -258,6 +264,25 @@ public class InGameState implements iGameState {
 				});
 				animationControllers.add(animController);
 			}
+
+
+            if(Config.AESTHETICS_ENABLED){
+                generateAesthetics(gameObject, modelInstance);
+
+                if(gameObject.getId().equalsIgnoreCase(("Machine.basic"))){
+                    modelInstance = new ModelInstance(AssetManager.getModel("David.g3db"));
+                    modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+                    scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+                    modelInstance.transform.scale(scale.x * 3, scale.y * 3, scale.z * 3);
+                    rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+                    modelInstance.transform.rotate(Vector3.X, rotation.x);
+                    modelInstance.transform.rotate(Vector3.Y, rotation.y);
+                    modelInstance.transform.rotate(Vector3.Z, rotation.z);
+
+                }
+            }
+
+
 			//Add a box around object that will be used for physics
 			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
 
@@ -357,6 +382,33 @@ public class InGameState implements iGameState {
 
 		this.stop(projectD);
 	}
+
+	private void generateAesthetics(GameObject gameObject, ModelInstance modelInstance){
+        if(gameObject.getId().equalsIgnoreCase(("control.basic"))){
+
+
+            Texture aestheticTexture = new Texture(Gdx.files.internal("aestheticControlboard.png"), true);
+
+
+            Material Material = modelInstance .materials.get(0);
+            Material.set(TextureAttribute.createDiffuse(aestheticTexture));
+
+        }
+
+
+        if(gameObject.getId().equalsIgnoreCase(("floor.basic"))){
+            Texture aestheticTexture = new Texture(Gdx.files.internal("aestheticFloor.png"), true);
+            aestheticTexture.setWrap(Repeat, Repeat);
+            aestheticTexture.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
+            TextureRegion imgTextureRegion = new TextureRegion(aestheticTexture);
+            imgTextureRegion.setRegion(0,0,aestheticTexture.getWidth()*50,aestheticTexture.getHeight()*50);
+
+            Material Material = modelInstance .materials.get(0);
+            Material.set(TextureAttribute.createDiffuse(imgTextureRegion));
+
+        }
+
+    }
 
 	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
 		CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);

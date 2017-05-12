@@ -26,6 +26,9 @@ public class SettingsState implements iGameState {
     private Label shadowMappingLabel;
     private CheckBox shadowMapCheckbox;
 
+    private Label aestheticsLabel;
+    private CheckBox aestheticsCheckbox;
+
     private TextButton mainMenuButton;
     private InputMultiplexer multiplexer;
 
@@ -255,6 +258,12 @@ public class SettingsState implements iGameState {
         shadowMapCheckbox = new CheckBox("", skin);
         shadowMapCheckbox.setChecked(true);
 
+        /** Aesthetics checkbox  **/
+        aestheticsLabel = new Label("A E S T H E T I C S", skin);
+        aestheticsCheckbox = new CheckBox("", skin);
+        aestheticsCheckbox.setChecked(false);
+
+
         /** Movement Speed textfield  **/
         moveSpeedLabel = new Label("Movement Speed", skin);
         moveSpeedIn = new TextField("30", skin);
@@ -304,6 +313,9 @@ public class SettingsState implements iGameState {
         table.row();
         table.add(moveSpeedLabel).expandY();
         table.add(moveSpeedIn).expandY();
+        table.row();
+        table.add(aestheticsLabel).expandY();
+        table.add(aestheticsCheckbox).padRight(160);
         table.row();
         table.add(sunrSliderLabel).expandY();
         table.add(sunrSlider);
@@ -405,6 +417,12 @@ public class SettingsState implements iGameState {
         shadowMapCheckbox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
+            }
+        });
+
+        aestheticsCheckbox.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                Config.AESTHETICS_ENABLED = shadowMapCheckbox.isChecked();
             }
         });
 

@@ -44,6 +44,7 @@ public class Config {
     public static final boolean V_SYNC_ENABLED = false;
     public static final int FPS_CAP = 10000;
     public static final boolean FULLSCREEN_ENABLED = false;
+    public static boolean AESTHETICS_ENABLED = false;
 
     /************SHADER VARIABLES************/
 
