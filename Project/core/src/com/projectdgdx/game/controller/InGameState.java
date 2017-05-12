@@ -274,7 +274,7 @@ public class InGameState implements iGameState {
                     modelInstance = new ModelInstance(AssetManager.getModel("David.g3db"));
                     modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
                     scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-                    modelInstance.transform.scale(scale.x * 3, scale.y * 3, scale.z * 3);
+                    modelInstance.transform.scale(scale.x * 5, scale.y * 5, scale.z * 5);
                     rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
                     modelInstance.transform.rotate(Vector3.X, rotation.x);
                     modelInstance.transform.rotate(Vector3.Y, rotation.y);
@@ -413,7 +413,7 @@ public class InGameState implements iGameState {
             aestheticTexture.setWrap(Repeat, Repeat);
             aestheticTexture.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
             TextureRegion imgTextureRegion = new TextureRegion(aestheticTexture);
-            imgTextureRegion.setRegion(0,0,aestheticTexture.getWidth()*50,aestheticTexture.getHeight()*50);
+            imgTextureRegion.setRegion(0,0,aestheticTexture.getWidth()*20,aestheticTexture.getHeight()*20);
 
             Material Material = modelInstance .materials.get(0);
             Material.set(TextureAttribute.createDiffuse(imgTextureRegion));
