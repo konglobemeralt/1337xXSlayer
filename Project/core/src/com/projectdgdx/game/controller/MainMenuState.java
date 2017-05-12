@@ -177,7 +177,8 @@ public class MainMenuState implements iGameState {
                 Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
             }
         });
-
+        //Set to first selection as default
+        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
 
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
