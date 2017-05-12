@@ -26,8 +26,6 @@ public class SettingsState implements iGameState {
     private Label shadowMappingLabel;
     private CheckBox shadowMapCheckbox;
 
-
-    //private TextButton toggleShadowMapButton;
     private TextButton mainMenuButton;
     private InputMultiplexer multiplexer;
 
@@ -43,7 +41,6 @@ public class SettingsState implements iGameState {
     private Label disoLabel;
     private Label discoValueLabel;
 
-
     private Slider sunrSlider;
     private Label sunrSliderLabel;
     private Label sunrSliderValue;
@@ -54,7 +51,6 @@ public class SettingsState implements iGameState {
     private Label sunbSliderLabel;
     private Label sunbSliderValue;
 
-
     private Label settingsHeading;
 
     private Label moveSpeedLabel;
@@ -62,38 +58,6 @@ public class SettingsState implements iGameState {
 
     private Table table;
 
-
-    /**
-     * createBasicSkin reads an internalGUI file and creates a skin
-     *
-     * @param path Path to the GUIskin file
-     * @return A new skin
-     */
-    private Skin createBasicSkin(String path){
-
-        return new Skin(Gdx.files.internal(path));
-
-        //  //Create a font
-        //  BitmapFont font = new BitmapFont();
-        //  skin = new Skin();
-        //  skin.add("default", font);
-
-        //  //Create a texture
-        //  Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
-        //  pixmap.setColor(Color.WHITE);
-        //  pixmap.fill();
-        //  skin.add("background",new Texture(pixmap));
-
-        //  //Create a button style
-        //  TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        //  textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
-        //  textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
-        //  textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY);
-        //  textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
-        //  textButtonStyle.font = skin.getFont("default");
-        //  skin.add("default", textButtonStyle);
-
-    }
 
     /**
      * update clears the screen and renders the settings menu
@@ -131,6 +95,135 @@ public class SettingsState implements iGameState {
     @Override
     public void init(ProjectD projectD) {
 
+        createMenu();
+        this.multiplexer = projectD.getMultiplexer();
+        multiplexer.addProcessor(stage);// Make the stage consume events
+        Gdx.input.setInputProcessor(multiplexer);
+
+
+    }
+
+    /**
+     * Starts the settings menu state, updating the buttons value.
+     *
+     * @param projectD Project
+     */
+    @Override
+    public void start(ProjectD projectD) {
+        updateDiscoLabel();
+        updateFOVlabel();
+        updateAAlabel();
+
+        updateSunRLabel();
+        updateSunGLabel();
+        updateSunBLabel();
+
+    }
+
+    @Override
+    public void stop(ProjectD projectD) {
+        projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+    }
+
+    @Override
+    public void exit(ProjectD projectD) {
+    }
+
+    /**
+     * createBasicSkin reads an internalGUI file and creates a skin
+     *
+     * @param path Path to the GUIskin file
+     * @return A new skin
+     */
+    private Skin createBasicSkin(String path){
+        return new Skin(Gdx.files.internal(path));
+    }
+
+    /**
+     * Updates the FOV value label
+     **/
+    private void updateFOVlabel()
+    {
+        float value = Config.CAMERA_FOV;
+
+        fovSlider.setValue(value);
+        fovSlider.setAnimateDuration(0.3f);
+
+        fovValueLabel.setText(String.valueOf(Config.CAMERA_FOV));
+        fovValueLabel.invalidate();
+    }
+
+    /**
+     * Updates the disco factor value label
+     **/
+    private void updateDiscoLabel()
+    {
+        float value = Config.DISCO_FACTOR;
+
+        discoSlider.setValue(value);
+        discoSlider.setAnimateDuration(0.3f);
+
+        discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
+        discoValueLabel.invalidate();
+    }
+
+    /**
+     * Updates the AAfactor value label
+     **/
+    private void updateAAlabel()
+    {
+        float value = Config.AA_SAMPLES;
+
+        aaSlider.setValue(value);
+        aaSlider.setAnimateDuration(0.3f);
+
+        aaValueLabel.setText(String.valueOf(Config.AA_SAMPLES));
+        aaValueLabel.invalidate();
+    }
+
+    /**
+     * Updates the sun R label
+     **/
+    private void updateSunRLabel()
+    {
+        float value = Config.SUN_LIGHT_R;
+
+        sunrSlider.setValue(value);
+        sunrSlider.setAnimateDuration(0.3f);
+
+        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + " %");
+        sunrSliderValue.invalidate();
+    }
+
+    /**
+     * Updates the sun G label
+     **/
+    private void updateSunGLabel()
+    {
+        float value = Config.SUN_LIGHT_G;
+
+        sungSlider.setValue(value);
+        sungSlider.setAnimateDuration(0.3f);
+
+        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ " %");
+        sungSliderValue.invalidate();
+    }
+
+    /**
+     * Updates the sun B label
+     **/
+    private void updateSunBLabel()
+    {
+        float value = Config.SUN_LIGHT_B;
+
+        sunbSlider.setValue(value);
+        sunbSlider.setAnimateDuration(0.3f);
+
+        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ " %");
+        sunbSliderValue.invalidate();
+    }
+
+    private void createMenu(){
         this.stage = new Stage();
 
         skin = createBasicSkin(Config.UI_SKIN_PATH);
@@ -331,121 +424,6 @@ public class SettingsState implements iGameState {
 
         stage.addActor(table);
 
-        this.multiplexer = projectD.getMultiplexer();
-        multiplexer.addProcessor(stage);// Make the stage consume events
-        Gdx.input.setInputProcessor(multiplexer);
-
-
     }
 
-    /**
-     * Updates the FOV value label
-     **/
-    private void updateFOVlabel()
-    {
-        float value = Config.CAMERA_FOV;
-
-        fovSlider.setValue(value);
-        fovSlider.setAnimateDuration(0.3f);
-
-        fovValueLabel.setText(String.valueOf(Config.CAMERA_FOV));
-        fovValueLabel.invalidate();
-    }
-
-    /**
-     * Updates the disco factor value label
-     **/
-    private void updateDiscoLabel()
-    {
-        float value = Config.DISCO_FACTOR;
-
-        discoSlider.setValue(value);
-        discoSlider.setAnimateDuration(0.3f);
-
-        discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
-        discoValueLabel.invalidate();
-    }
-
-    /**
-     * Updates the AAfactor value label
-     **/
-    private void updateAAlabel()
-    {
-        float value = Config.AA_SAMPLES;
-
-        aaSlider.setValue(value);
-        aaSlider.setAnimateDuration(0.3f);
-
-        aaValueLabel.setText(String.valueOf(Config.AA_SAMPLES));
-        aaValueLabel.invalidate();
-    }
-
-    /**
-     * Updates the sun R label
-     **/
-    private void updateSunRLabel()
-    {
-        float value = Config.SUN_LIGHT_R;
-
-        sunrSlider.setValue(value);
-        sunrSlider.setAnimateDuration(0.3f);
-
-        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + " %");
-        sunrSliderValue.invalidate();
-    }
-
-    /**
-     * Updates the sun G label
-     **/
-    private void updateSunGLabel()
-    {
-        float value = Config.SUN_LIGHT_G;
-
-        sungSlider.setValue(value);
-        sungSlider.setAnimateDuration(0.3f);
-
-        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ " %");
-        sungSliderValue.invalidate();
-    }
-
-    /**
-     * Updates the sun B label
-     **/
-    private void updateSunBLabel()
-    {
-        float value = Config.SUN_LIGHT_B;
-
-        sunbSlider.setValue(value);
-        sunbSlider.setAnimateDuration(0.3f);
-
-        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ " %");
-        sunbSliderValue.invalidate();
-    }
-
-    /**
-     * Starts the settings menu state, updating the buttons value.
-     *
-     * @param projectD Project
-     */
-    @Override
-    public void start(ProjectD projectD) {
-        updateDiscoLabel();
-        updateFOVlabel();
-        updateAAlabel();
-
-        updateSunRLabel();
-        updateSunGLabel();
-        updateSunBLabel();
-
-    }
-
-
-    @Override
-    public void stop(ProjectD projectD) {
-        projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
-    }
-
-    @Override
-    public void exit(ProjectD projectD) {
-    }
 }
