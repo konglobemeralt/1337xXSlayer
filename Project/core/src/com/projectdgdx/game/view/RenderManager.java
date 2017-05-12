@@ -39,8 +39,6 @@ public class RenderManager {
     private float lifeTime;
     private float discoDelay = 0.03f; //2 seconds.
 
-    public Collection<Pair<ModelInstance, btCollisionObject>> instances;
-
     //TODO: MERGE WITH SPOT OBJECT TO CREATE VIABLE OBJECT
     private List<PointLight> pointLightList =  new ArrayList();
     private List<Vector3d> pointLightPos =  new ArrayList();
@@ -54,8 +52,7 @@ public class RenderManager {
     Random rand;
 
     public void render (PerspectiveCamera cam, Spotlight spotlight, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
-        this.instances = instances;
-        //fps.log();
+                //fps.log();
 
         handleLights(spotlight);
 
@@ -67,9 +64,9 @@ public class RenderManager {
 
 
         if(Config.SHADOWMAPPING_ENABLED) {
-            renderShadowMap(cam);
+            renderShadowMap(cam, instances);
         }
-        renderToScreen(cam);
+        renderToScreen(cam, instances);
 
     }
 
@@ -94,7 +91,7 @@ public class RenderManager {
      * @param cam PerspectiveCam the current camera
      */
 
-    private void renderToScreen(PerspectiveCamera cam){
+    private void renderToScreen(PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances){
         modelBatch.begin(cam);
         for (Pair<ModelInstance, btCollisionObject> instance : instances) {
             modelBatch.render(instance.getKey(), environment);
@@ -108,7 +105,7 @@ public class RenderManager {
      * @param cam PerspectiveCam the current camera
      */
 
-    private void renderShadowMap(PerspectiveCamera cam){
+    private void renderShadowMap(PerspectiveCamera cam, Collection<Pair<ModelInstance, btCollisionObject>> instances){
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
@@ -262,7 +259,6 @@ public class RenderManager {
     public void dispose () {
         modelBatch.dispose();
         shadowBatch.dispose();
-        instances.clear();
     }
 
 
