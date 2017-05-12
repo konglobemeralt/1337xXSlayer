@@ -86,15 +86,22 @@ public class InGameState implements iGameState {
 		cam.lookAt(0f, 0f, 0f);
 		cam.near = Config.CAMERA_NEAR;
 		cam.far = Config.CAMERA_FAR;
-		camController = new CameraInputController(cam);
-		camController.forwardTarget = true;
-
-		//Add a camera controller to the input multiplexer to enable a movable debug camera.
-		multiplexer.addProcessor(camController);// Make the stage consume events
-		Gdx.input.setInputProcessor(multiplexer);
-
 		cam.update();
 	}
+
+    private void updateCamera(ProjectD projectD){
+        cam.fieldOfView = Config.CAMERA_FOV;
+
+        camController = new CameraInputController(cam);
+        camController.forwardTarget = true;
+
+        this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
+        //Add a camera controller to the input multiplexer to enable a movable debug camera.
+        multiplexer.addProcessor(camController);// Make the stage consume events
+        Gdx.input.setInputProcessor(multiplexer);
+        cam.update();
+    }
+
 
 	/**
 	 * Renders the game
@@ -185,7 +192,7 @@ public class InGameState implements iGameState {
 		rand = new Random();
 
 
-
+        createCamera();
 
 	}
 
@@ -253,8 +260,8 @@ public class InGameState implements iGameState {
 
 	@Override
 	public void start(ProjectD projectD) {
-		this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
-		createCamera();
+
+		updateCamera(projectD);
 
 		renderer = new RenderManager();
 		renderer.init();
