@@ -13,18 +13,18 @@
     <WorkerNode x="-50" y="0" z="-30" rotationX="0" nodeId="2" nodeFriends="1,2,3,4" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
     <WorkerNode x="50" y="0" z="-30"  rotationX="0" nodeId="3" nodeFriends="1,2,3,4" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
     <WorkerNode x="-50" y="0" z="30"  rotationX="0" nodeId="4" nodeFriends="1,2,3,4" scaleX="0.1" scaleY="0.1" scaleZ="0.1"></WorkerNode>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
+    <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="2" scaleY="2" scaleZ="2"></Worker>
 
     <SpotControl x="0" y="0.0000" z="0" rotationX="0.0" rotationY="0.0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" tag="SpotControl" prop="1.0"></SpotControl>
 </Map>

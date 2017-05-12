@@ -2,6 +2,7 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.*;
@@ -44,7 +45,7 @@ public class InGameState implements iGameState {
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
 	private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
 
-
+	private Music music;
 	//Bullet
 	btDefaultCollisionConfiguration collisionConfig;
 	btCollisionDispatcher dispatcher;
@@ -317,9 +318,16 @@ public class InGameState implements iGameState {
 	public void start(ProjectD projectD) {
 
 		updateCamera(projectD);
-
+		generateRenderInstances();
 		renderer = new RenderManager();
 		renderer.init();
+
+		if(Config.AESTHETICS_ENABLED){
+			music = Gdx.audio.newMusic(Gdx.files.internal("aestheticMusic.mp3"));
+			music.setLooping(true);
+			music.play();
+		}
+
 
 	}
 
@@ -362,6 +370,10 @@ public class InGameState implements iGameState {
 	@Override
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+
+		if(Config.AESTHETICS_ENABLED && music != null){
+			music.stop();
+		}
 	}
 
 	public void exit(ProjectD projectD){

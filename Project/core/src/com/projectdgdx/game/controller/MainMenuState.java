@@ -100,7 +100,6 @@ public class MainMenuState implements iGameState {
             }
 
             if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
-                this.stop(projectD);
                 projectD.setState(GameStates.SETTINGS);
             }
         }

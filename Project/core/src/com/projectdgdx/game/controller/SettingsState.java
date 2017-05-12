@@ -19,6 +19,7 @@ import com.projectdgdx.game.ProjectD;
 import static com.badlogic.gdx.Gdx.gl20;
 
 public class SettingsState implements iGameState {
+    private ProjectD projectD;
 
     private Skin skin;
     private Stage stage;
@@ -99,11 +100,19 @@ public class SettingsState implements iGameState {
     public void init(ProjectD projectD) {
 
         createMenu();
+        updateDiscoLabel();
+        updateFOVlabel();
+        updateAAlabel();
+
+        updateSunRLabel();
+        updateSunGLabel();
+        updateSunBLabel();
+
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
         Gdx.input.setInputProcessor(multiplexer);
 
-
+        this.projectD = projectD;
     }
 
     /**
@@ -113,6 +122,7 @@ public class SettingsState implements iGameState {
      */
     @Override
     public void start(ProjectD projectD) {
+
         updateDiscoLabel();
         updateFOVlabel();
         updateAAlabel();
@@ -126,10 +136,14 @@ public class SettingsState implements iGameState {
     @Override
     public void stop(ProjectD projectD) {
         projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+
+
     }
 
     @Override
     public void exit(ProjectD projectD) {
+
+
     }
 
     /**
@@ -422,7 +436,18 @@ public class SettingsState implements iGameState {
 
         aestheticsCheckbox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                Config.AESTHETICS_ENABLED = shadowMapCheckbox.isChecked();
+                Config.AESTHETICS_ENABLED = aestheticsCheckbox.isChecked();
+
+                if(aestheticsCheckbox.isChecked()){
+                    Config.SUN_LIGHT_R = 60f;
+                    Config.SUN_LIGHT_G = 70f;
+                    Config.SUN_LIGHT_B = 90f;
+                }
+                else{
+
+                }
+
+
             }
         });
 
