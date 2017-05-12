@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<Map>
+    <Machine x="-90" y="0" z="20" rotationX="0.0" rotationY="320" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Machine>
+    <Machine x="39" y="0" z="150" rotationX="0.0" rotationY="14" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Machine>
+    <Machine x="100" y="0" z="-40" rotationX="0.0" rotationY="34" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Machine>
+</Map>

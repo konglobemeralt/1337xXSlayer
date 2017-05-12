@@ -28,7 +28,7 @@ public class MapParser {
      */
     private void loadDocument(String mapName) {
         try {
-            FileHandle handle = Gdx.files.internal("map/" + mapName + ".txt");
+            FileHandle handle = Gdx.files.internal("map/" + mapName);
             File inputFile = handle.file();
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

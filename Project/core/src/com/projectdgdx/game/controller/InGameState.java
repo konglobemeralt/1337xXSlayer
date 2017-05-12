@@ -184,29 +184,7 @@ public class InGameState implements iGameState {
 
 		rand = new Random();
 
-		MapParser parser = new MapParser();
-		map = parser.parse("BasicMapAdvanced");
 
-		//Init nodes
-		List<AINode> nodeList =  map.getAINodes();
-		for(AINode node : nodeList) {
-			node.init(map.getAINodes());
-		}
-
-		for (Worker worker : map.getWorkers()){
-			worker.setTargetNode(nodeList.get(rand.nextInt(nodeList.size())));
-		}
-
-		int i = 0;
-		List<PlayableCharacter> players = map.getPlayers();
-		for(InputController input : projectD.getInpuControllers()) {
-			if(i < players.size()) {
-				controllerPlayerMap.put(input, players.get(i));
-			}
-			i++;
-		}
-
-		generateRenderInstances();
 
 
 	}
@@ -282,6 +260,31 @@ public class InGameState implements iGameState {
 		renderer.init();
 
 		spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "null", 1);
+
+
+		MapParser parser = new MapParser();
+		map = parser.parse(Config.LEVEL_IN_PLAY);
+
+		//Init nodes
+		List<AINode> nodeList =  map.getAINodes();
+		for(AINode node : nodeList) {
+			node.init(map.getAINodes());
+		}
+
+		for (Worker worker : map.getWorkers()){
+			worker.setTargetNode(nodeList.get(rand.nextInt(nodeList.size())));
+		}
+
+		int i = 0;
+		List<PlayableCharacter> players = map.getPlayers();
+		for(InputController input : projectD.getInpuControllers()) {
+			if(i < players.size()) {
+				controllerPlayerMap.put(input, players.get(i));
+			}
+			i++;
+		}
+
+		generateRenderInstances();
 
 	}
 
