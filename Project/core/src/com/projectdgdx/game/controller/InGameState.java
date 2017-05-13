@@ -370,6 +370,11 @@ public class InGameState implements iGameState {
 				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
 			}
 
+			// /Check for spotlightControl and update spotlight
+			if(gameObject instanceof Machine && Config.AESTHETICS_ENABLED) {
+				modelInstance.transform.rotate(Vector3.Y, 0.02f);
+			}
+
 			if(gameObject.getId().equalsIgnoreCase(("floor.basic")) && Config.AESTHETICS_ENABLED){
 
 				scrollTimer += 0.0007f;
