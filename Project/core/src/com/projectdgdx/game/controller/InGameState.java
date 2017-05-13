@@ -46,6 +46,7 @@ public class InGameState implements iGameState {
 	private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
 
 	private Music music;
+	private float scrollTimer = 0;
 	//Bullet
 	btDefaultCollisionConfiguration collisionConfig;
 	btCollisionDispatcher dispatcher;
@@ -113,6 +114,8 @@ public class InGameState implements iGameState {
 	 *
 	 */
 	public void render () {
+
+
 		renderer.render(cam, spotlight, objectsMap.values()); //Pass render Instances and camera to render
 	}
 
@@ -363,6 +366,23 @@ public class InGameState implements iGameState {
 			//Check for spotlightControl and update spotlight
 			if(gameObject instanceof SpotlightControlBoard) {
 				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
+			}
+
+			if(gameObject.getId().equalsIgnoreCase(("floor.basic")) && Config.AESTHETICS_ENABLED){
+
+				scrollTimer += 0.0007f;
+				if (scrollTimer > 1.0f)
+					scrollTimer -= 0.0f;
+
+				Texture aestheticTexture = new Texture(Gdx.files.internal("aestheticFloor.png"), true);
+				aestheticTexture.setWrap(Repeat, Repeat);
+				aestheticTexture.setFilter(Texture.TextureFilter.MipMap, Texture.TextureFilter.Nearest);
+				TextureRegion imgTextureRegion = new TextureRegion(aestheticTexture);
+				imgTextureRegion.setRegion(0,0,aestheticTexture.getWidth()*20,aestheticTexture.getHeight()*20);
+				imgTextureRegion.setV(scrollTimer);
+				Material Material = modelInstance .materials.get(0);
+				Material.set(TextureAttribute.createDiffuse(imgTextureRegion));
+
 			}
 		}
 	}
