@@ -137,6 +137,8 @@ public class InGameState implements iGameState {
 					//TODO Setting of player position must go through PlayerCharacters move()-function or the states will not work
 					player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
 					player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED)); //TODO Will be replaced by PlayerCharacters move function.
+
+					player.move(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
 				}
 				if(inputModel.getButtonA().getPressedCount()>0){
 					player.honestInteract(map.getHonestInteractables());

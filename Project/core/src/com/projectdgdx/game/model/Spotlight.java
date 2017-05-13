@@ -13,10 +13,20 @@ import java.util.List;
 public class Spotlight extends Entity {
     private List<iSpotlightListener> listeners = new ArrayList();
     private int spotlightRadius;
+    private Vector3d color = new Vector3d(1, 0, 0);
+
+    public Vector3d getColor() {
+        return color;
+    }
+
+    public void setColor(Vector3d color) {
+        this.color = color;
+    }
 
     public Spotlight(Vector3d position, Vector3d scale, Vector3d rotation, String id, int spotlightRadius) {
         super(position, scale, rotation, id);
         this.spotlightRadius = spotlightRadius;
+
     }
 
     @Override
