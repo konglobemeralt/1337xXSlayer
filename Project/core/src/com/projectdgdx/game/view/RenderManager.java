@@ -164,8 +164,8 @@ public class RenderManager {
     public void moveSpotLight(Spotlight spot){
         renderSpotPos = spot.getPosition();
 
-        PointLight light = new PointLight().set(1, 0, 0,
-                spot.getPosition().x , spot.getPosition().y,  spot.getPosition().z, 1500f);
+        PointLight light = new PointLight().set(spot.getColor().x, spot.getColor().y, spot.getColor().z,
+                spot.getPosition().x , spot.getPosition().y,  spot.getPosition().z, 500);
         environment.add(light);
         renderSpot = light;
         renderSpotPos = spot.getPosition();

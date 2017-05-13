@@ -5,7 +5,8 @@ import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Emil Jansson on 2017-05-04.
+ * This PlayerState is for when a Supervisor or Saboteur honest interacts with a machine.
+ * The will stand still for 3 seconds and then the Machines internal timer will be updated.
  */
 public class MachineInteractingPlayerState implements iPlayerState, iTimerListener {
     private Machine machine;

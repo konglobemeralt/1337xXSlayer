@@ -3,7 +3,8 @@ package com.projectdgdx.game.model;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Emil Jansson on 2017-05-09.
+ * The StrikeZone is where the Workers go when they've been caught by any Supervisor.
+ * When a certain amount of Workers Have entered the StrikeZone the Supervisors have lost the game.
  */
 public class StrikeZone extends GameObject{
 

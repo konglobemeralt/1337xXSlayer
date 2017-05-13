@@ -5,11 +5,10 @@ import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Emil Jansson on 2017-05-04.
+ * This is the PlayerState that the Saboteur enters when destroying a Machine.The Saboteur will stand
+ * still in 3 seconds before the Machine is destroyed.
  */
 public class MachineDestroyingPlayerState implements iPlayerState, iTimerListener {
-
-    // This is where we write what actually will happen when dishonest interacting
 
     iDishonestInteractable machine;
     PlayableCharacter currentUser;
@@ -31,5 +30,6 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
     public void timeIsUp() {
         this.currentUser.setState(new NormalPlayerState());
         this.machine.setState(new DestroyedMachineState(machine.getPosition()));
+        // TODO Add the destroyed machine state as a spotlightListener
     }
 }

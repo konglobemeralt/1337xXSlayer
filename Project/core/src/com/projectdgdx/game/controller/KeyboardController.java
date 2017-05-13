@@ -1,5 +1,6 @@
 package com.projectdgdx.game.controller;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -23,6 +24,14 @@ public class KeyboardController extends InputController implements InputProcesso
 
         if(keycode == 32 || keycode == 22) { //Right
             getModel().getLeftStick().x = 1;
+        }
+
+        if(keycode == Input.Keys.C) { //A button
+            getModel().setButtonA(true);
+        }
+
+        if(keycode == Input.Keys.X) { //B button
+            getModel().setButtonB(true);
         }
 
         if(keycode == 131) { //ESCAPE

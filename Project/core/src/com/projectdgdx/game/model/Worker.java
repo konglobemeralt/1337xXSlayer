@@ -9,7 +9,9 @@ import com.projectdgdx.game.model.AI.iWorkerState;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Hampus on 2017-04-03.
+ * A worker is a Character in the game that looks is controlled by the AI unit and walks around
+ * and simulate interaction with the Machines. Looks like the Supervisors and the Saboteur.
+ * Walks between a network of nodes.
  */
 public class Worker extends Character {
 
@@ -46,6 +48,9 @@ public class Worker extends Character {
         this.state = state;
     }
 
+    /**
+     * 
+     */
     public void reactOnUpdate(){
         this.state.reactOnUpdate(this);
     }

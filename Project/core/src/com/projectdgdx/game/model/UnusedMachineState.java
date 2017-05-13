@@ -1,7 +1,8 @@
 package com.projectdgdx.game.model;
 
 /**
- * Created by Emil Jansson on 2017-05-03.
+ * This state is the "normal" state for the machine. This is when nobody uses it and it isn't
+ * destroyed/sabotaged. Is in a standby mode waiting for someone to interact with it.
  */
 public class UnusedMachineState implements iMachineState {
 

@@ -13,7 +13,7 @@ public class InSpotlightPlayerState implements iPlayerState {
     }
 
     /**
-     * Instead of using the usual move method thta moves the player controlled charater the
+     * Instead of using the usual move method that moves the player controlled character the
      * player will now move the Spotlight instead.
      * @param vector , the input from the controller. The vector is relative to the Spotlights position.
      */
