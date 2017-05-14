@@ -208,8 +208,13 @@ public class InGameState implements iGameState {
 	        worker.reactOnUpdate();
 	        EntityContainer entityContainer = ((EntityContainer)objectsMap.get(worker));
 	        btRigidBody physicsObject = entityContainer.getPhysicsObject();
-			physicsObject.setDamping(0.6f, 0);
-	        entityContainer.applyForce(VectorConverter.convertToLibgdx(worker.getMoveForce()));
+			if(worker.getMoveForce().getLength() != 0) {
+				entityContainer.applyForce(VectorConverter.convertToLibgdx(worker.getMoveForce()));
+				physicsObject.setDamping(0.6f, 0);
+			} else {
+				physicsObject.setDamping(1f, 0);
+			}
+
 
 			Vector3 linearVelocity = physicsObject.getLinearVelocity();
 			if(linearVelocity.len() > 30) {
