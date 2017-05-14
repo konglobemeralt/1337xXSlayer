@@ -300,7 +300,7 @@ public class InGameState implements iGameState {
 	public void start(ProjectD projectD) {
 
 		updateCamera(projectD);
-
+		renderer.init(lights);
 
 	}
 
