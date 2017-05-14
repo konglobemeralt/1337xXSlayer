@@ -88,7 +88,7 @@ public class XboxController extends InputController implements ControllerListene
             getModel().getLeftStick().x = value;
         }
         if(axisCode == 0) { //Top-down left stick
-            getModel().getLeftStick().z = -value;
+            getModel().getLeftStick().z = value;
         }
         return false;
     }

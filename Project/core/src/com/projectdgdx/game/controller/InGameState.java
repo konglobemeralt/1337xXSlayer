@@ -11,6 +11,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
+import com.badlogic.gdx.physics.bullet.dynamics.*;
+import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
+import com.badlogic.gdx.physics.bullet.linearmath.btQuaternion;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.GameStates;
@@ -38,20 +41,22 @@ public class InGameState implements iGameState {
 	private CameraInputController camController;
 
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
-	private HashMap<GameObject, Pair<ModelInstance, btCollisionObject>> objectsMap = new HashMap<>();
-
+	private HashMap<GameObject, GameObjectContainer> objectsMap = new HashMap<>();
 
 	//Bullet
 	btDefaultCollisionConfiguration collisionConfig;
 	btCollisionDispatcher dispatcher;
 	CollisionListener collisionListener;
 	btBroadphaseInterface broadphase;
-	btCollisionWorld collisionWorld;
+	btDynamicsWorld dynamicsWorld;
+	btConstraintSolver constraintSolver;
+
+//	MyMotionState motionState;
 
 	//Collision flags
 	final static short STATIC_FLAG = 1<<8;
 	final static short ENTITY_FLAG = 1<<9;
-	final static short NODE_FLAG = -1;
+	final static short ALL_FLAG = -1;
 
 
 	private RenderManager renderer;
@@ -63,23 +68,57 @@ public class InGameState implements iGameState {
 		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
 			GameObject gameObject0 = map.getGameObjects().get(userValue0);
 			GameObject gameObject1 = map.getGameObjects().get(userValue1);
-//			instances.get(userValue0).moving = false;
-//			instances.get(userValue1).moving = false;
-//			if(gameObject0 instanceof Entity && gameObject1 instanceof StaticObject) {
-//				System.out.println("COliison");
-//				gameObject0.setPosition(gameObject0.getOldPosition());
-//			}else if(gameObject0 instanceof StaticObject && gameObject1 instanceof Entity) {
-//				gameObject1.setPosition(gameObject0.getOldPosition());
+//			System.out.println("COLLISION!");
 //			}
-//			System.out.println(map.getGameObjects().get(userValue0).getId() + " collision with: " + map.getGameObjects().get(userValue1).getId());
+			System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
 			return true;
 		}
 	}
 
-	/**
-	 * Creates a camera to be used for rendering using the settings in the config file
-	 *
-	 */
+	private void generateRenderInstances(){
+
+		Vector3 localInertia = new Vector3();
+		for (GameObject gameObject : map.getGameObjects()) {
+			// Create a ModelInstance for GameObject gameObject
+			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
+			modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
+			Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
+			modelInstance.transform.scale(scale.x, scale.y, scale.z);
+			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
+			modelInstance.transform.rotate(Vector3.X, rotation.x);
+			modelInstance.transform.rotate(Vector3.Y, rotation.y);
+			modelInstance.transform.rotate(Vector3.Z, rotation.z);
+
+			//Check for worker or player animation from id
+			if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
+				AnimationController animController = new AnimationController(modelInstance);
+				animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
+					@Override
+					public void onEnd(AnimationController.AnimationDesc animation) {
+					}
+
+					@Override
+					public void onLoop(AnimationController.AnimationDesc animation) {
+						//   Gdx.app.log("INFO", "Animation Ended");
+					}
+				});
+				animationControllers.add(animController);
+			}
+
+			GameObjectContainer gameObjectContainer;
+			if(gameObject instanceof Entity) {
+				gameObjectContainer = new EntityContainer(gameObject, modelInstance, dynamicsWorld, map);
+			} else {
+				gameObjectContainer = new GameObjectContainer(gameObject, modelInstance, dynamicsWorld, map);
+			}
+
+
+			//Add GameObject and ModelInstance to a map that keeps them together
+			objectsMap.put(gameObject, gameObjectContainer);
+		}
+
+	}
+
 	private void createCamera(){
 		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(Config.CAMERA_X, Config.CAMERA_Y, Config.CAMERA_Z);
@@ -133,207 +172,104 @@ public class InGameState implements iGameState {
 			InputModel inputModel = inputController.getModel();
 			if(controllerPlayerMap.containsKey(inputController)) {
 				PlayableCharacter player = controllerPlayerMap.get(inputController);
+				EntityContainer playerContainer = (EntityContainer)objectsMap.get(player);
+				btRigidBody physicsObject = playerContainer.getPhysicsObject();
+
 				if(inputModel.getLeftStick().getLength() != 0) {
-					//TODO Setting of player position must go through PlayerCharacters move()-function or the states will not work
-					player.setRotation(new Vector3d(0, inputModel.getLeftStick().getAngle() + 90, 0));
-					player.getPosition().add(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED)); //TODO Will be replaced by PlayerCharacters move function.
 
-					player.move(new Vector3d(deltaTime * inputModel.getLeftStick().x * Config.MOVE_SPEED, 0, deltaTime * -inputModel.getLeftStick().z * Config.MOVE_SPEED));
-				}
-				if(inputModel.getButtonA().getPressedCount()>0){
-					player.honestInteract(map.getHonestInteractables());
-				}
-				if(inputModel.getButtonB().getPressedCount()>0){
-					player.dishonestInteract(map.getDishonestInteractables());
-				}
-				if(inputModel.getButtonX().getPressedCount()>0){
-					player.useAbility();
+					playerContainer.applyForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
+					playerContainer.updateRotation(new Vector3(0, inputModel.getLeftStick().getAngle() + 90, 0));
+					physicsObject.setDamping(0.6f, 0);
+				}else {
+					physicsObject.setDamping(1f, 0);
 				}
 
-
-			}
-			//Checks if escape button has been pressed.
-			if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
-				this.stop(projectD);
-				projectD.setState(GameStates.SETTINGS);
+				Vector3 linearVelocity = physicsObject.getLinearVelocity();
+				if(linearVelocity.len() > 30) {
+					linearVelocity.scl(30f/linearVelocity.len());
+					physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
+				}
+                //Checks if escape button has been pressed.
+                if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
+                    this.stop(projectD);
+                    projectD.setState(GameStates.SETTINGS);
+                }
 			}
 
-			inputModel.resetButtonCounts();
 		}
 	}
 
-	/**
-	 * Handles workers currently in play
-	 *
-	 */
 	private void handleWorkers(){
 	    for (Worker worker : map.getWorkers()){
 	        worker.reactOnUpdate();
         }
     }
 
-
 	public void update(ProjectD projectD){
+
+//		handleWorkers();
+		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 		handleInput(projectD);
-		handleWorkers();
+//		updateModelInstaces();
+
+
 		animate();
 		render();
-		updateModelInstaces();
-		collisionWorld.performDiscreteCollisionDetection();
+
+
 	}
 
 	public void init(ProjectD projectD){
-        controllerPlayerMap = new HashMap<>();
-        objectsMap = new HashMap<>();
-
-	    //Bullet inits
+		//Bullet inits
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
-		collisionWorld = new btCollisionWorld(dispatcher, broadphase, collisionConfig);
+		constraintSolver = new btSequentialImpulseConstraintSolver();
+//		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
 		collisionListener = new CollisionListener();
 
 		rand = new Random();
 
-        createCamera();
+		MapParser parser = new MapParser();
+		map = parser.parse("BasicMapTest");
 
-        spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "null", 1);
-
-
-        MapParser parser = new MapParser();
-        map = parser.parse(Config.LEVEL_IN_PLAY);
-
-        //Init nodes
-        List<AINode> nodeList =  map.getAINodes();
-        for(AINode node : nodeList) {
-            node.init(map.getAINodes());
-        }
-
-        for (Worker worker : map.getWorkers()){
-            worker.setTargetNode(nodeList.get(rand.nextInt(nodeList.size())));
-        }
-
-        int i = 0;
-        List<PlayableCharacter> players = map.getPlayers();
-        for(InputController input : projectD.getInpuControllers()) {
-            if(i < players.size()) {
-                controllerPlayerMap.put(input, players.get(i));
-            }
-            i++;
-        }
-
-        generateRenderInstances();
-
-
-    }
-
-	/**
-	 * Converts map data to game objects to be used in model.
-	 * Adds animation controllers and collision objects when appropriate.
-	 */
-	private void generateRenderInstances(){
-		for (GameObject gameObject : map.getGameObjects()) {
-			// Create a ModelInstance for GameObject gameObject
-			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-			modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
-			Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-			modelInstance.transform.scale(scale.x, scale.y, scale.z);
-			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-			modelInstance.transform.rotate(Vector3.X, rotation.x);
-			modelInstance.transform.rotate(Vector3.Y, rotation.y);
-			modelInstance.transform.rotate(Vector3.Z, rotation.z);
-
-			//Check for worker or player animation from id
-			if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
-				AnimationController animController = new AnimationController(modelInstance);
-				animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
-					@Override
-					public void onEnd(AnimationController.AnimationDesc animation) {
-						//Do something when the animation ends.
-					}
-
-					@Override
-					public void onLoop(AnimationController.AnimationDesc animation) {
-						//Do something for every loop of an animation.
-					}
-				});
-				animationControllers.add(animController);
-			}
-			//Add a box around object that will be used for physics
-			BoundingBox boundingBox = modelInstance.model.calculateBoundingBox(new BoundingBox());
-
-			btCollisionShape collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));
-			btCollisionObject collisionObject = new btCollisionObject();
-			collisionObject.setCollisionShape(collisionShape);
-			collisionObject.setWorldTransform(modelInstance.transform);
-			collisionObject.setUserValue(map.getGameObjects().indexOf(gameObject));
-			collisionObject.setCollisionFlags(collisionObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
-
-			if(gameObject instanceof Entity) {
-				collisionWorld.addCollisionObject(collisionObject, ENTITY_FLAG, STATIC_FLAG);
-			}else if(gameObject instanceof Floor || gameObject instanceof AINode) {
-				//Ignore floor
-				collisionObject = null;
-			} else {
-				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
-			}
-			//Check for spotlightControl and get spotlight
-			if(gameObject instanceof SpotlightControlBoard) {
-				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
-			}
-
-
-			//Add GameObject and ModelInstance to a map that keeps them together
-			objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
+		//Init nodes
+		List<AINode> nodeList =  map.getAINodes();
+		for(AINode node : nodeList) {
+			node.init(map.getAINodes());
 		}
+
+		for (Worker worker : map.getWorkers()){
+			worker.setTargetNode(nodeList.get(rand.nextInt(nodeList.size())));
+		}
+
+		int i = 0;
+		List<PlayableCharacter> players = map.getPlayers();
+		for(InputController input : projectD.getInpuControllers()) {
+			if(i < players.size()) {
+				controllerPlayerMap.put(input, players.get(i));
+			}
+			i++;
+		}
+
+		generateRenderInstances();
+
 
 	}
 
+
 	@Override
 	public void start(ProjectD projectD) {
-
-		updateCamera(projectD);
+		this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
+		createCamera();
 
 		renderer = new RenderManager();
 		renderer.init();
 
-	}
-
-	/**
-	 * Updates the graphical objects
-	 *
-	 */
-	public void updateModelInstaces() {
-		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
-			ModelInstance modelInstance = entrySet.getValue().getKey();
-			GameObject gameObject = entrySet.getKey();
-			btCollisionObject collisionObject = entrySet.getValue().getValue();
-
-			//Check for entity
-			if(gameObject instanceof Entity) {
-				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
-				Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-				Quaternion quaternion = new Quaternion();
-
-				//TODO ugly solution for rotation
-				Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-				modelInstance.transform.setToRotation(0,0,0,0,0,0);
-				modelInstance.transform.rotate(Vector3.X, rotation.x);
-				modelInstance.transform.rotate(Vector3.Y, rotation.y);
-				modelInstance.transform.rotate(Vector3.Z, rotation.z);
-				quaternion = modelInstance.transform.getRotation(new Quaternion());
-
-				Matrix4 matrix4 = new Matrix4(position, quaternion, scale);
-				modelInstance.transform.set(matrix4);
-				collisionObject.setWorldTransform(matrix4);
-			}
-
-			//Check for spotlightControl and update spotlight
-			if(gameObject instanceof SpotlightControlBoard) {
-				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
-			}
-		}
 	}
 
 	@Override
@@ -343,16 +279,16 @@ public class InGameState implements iGameState {
 
 	public void exit(ProjectD projectD){
 		//Dispose physics objects
-		for(java.util.Map.Entry<GameObject, Pair<ModelInstance, btCollisionObject>> entrySet : objectsMap.entrySet()) {
-			btCollisionObject collisionObject = entrySet.getValue().getValue();
-			if(collisionObject != null) {
-				collisionObject.dispose();
-			}
+		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
+			gameObjectContainer.dispose();
 		}
 		dispatcher.dispose();
 		collisionConfig.dispose();
 		collisionListener.dispose();
+		dynamicsWorld.dispose();
 		broadphase.dispose();
+		constraintSolver.dispose();
+//		motionState.dispose();
 
 		//Dispose graphic
 		renderer.dispose();

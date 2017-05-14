@@ -35,6 +35,9 @@ public class GameObjectInit {
     private int nodeId = 0;
     private List<Integer> nodeFriends = new ArrayList<>();
 
+
+    private String id = null;
+
     /**
      * The constructor for GameObjectInit requires a type
      *
@@ -63,6 +66,7 @@ public class GameObjectInit {
         spawnRateRandom = gameObjectInit.spawnRateRandom;
         spawnDelay = gameObjectInit.spawnDelay;
         aliveLimit = gameObjectInit.aliveLimit;
+        id = gameObjectInit.id;
     }
 
 

@@ -65,4 +65,8 @@ public class Vector3d {
         return (float)Math.toDegrees(Math.atan2(z, x));
     }
 
+    public Vector3d getEuler() {
+        return new Vector3d((float)Math.toRadians(x), (float)Math.toRadians(y), (float)Math.toRadians(z));
+    }
+
 }

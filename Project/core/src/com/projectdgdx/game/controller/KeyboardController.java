@@ -12,14 +12,14 @@ public class KeyboardController extends InputController implements InputProcesso
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == 51 || keycode == 19) { //Up
-            getModel().getLeftStick().z = 1;
+            getModel().getLeftStick().z = -1;
         }
         if(keycode == 29 || keycode == 21) { //Left
             getModel().getLeftStick().x = -1;
         }
 
         if(keycode == 47 || keycode == 20) { //Down
-            getModel().getLeftStick().z = -1;
+            getModel().getLeftStick().z = 1;
         }
 
         if(keycode == 32 || keycode == 22) { //Right
