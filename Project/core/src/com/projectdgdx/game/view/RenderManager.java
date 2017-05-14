@@ -120,11 +120,11 @@ public class RenderManager {
      * createBatches creates the batches for rendering
      *
      */
-    public void createBatches(){
+    public void createBatches(int lightCount){
 
         DefaultShader.Config config = new DefaultShader.Config();
         config.numDirectionalLights = 1;
-        config.numPointLights = 8 + Config.DISCO_FACTOR;
+        config.numPointLights =  lightCount + Config.DISCO_FACTOR;
         config.numSpotLights = 0;
 
         ShaderProvider shaderProvider = new DefaultShaderProvider(config);
@@ -230,7 +230,7 @@ public class RenderManager {
     public void init(List<Spotlight>lights){
         rand = new Random();
         createEnvironment();
-        createBatches();
+        createBatches(lights.size());
         createDiscoLights();
         createPointLights(lights);
         createShaders();
@@ -248,6 +248,8 @@ public class RenderManager {
     public void dispose () {
         modelBatch.dispose();
         shadowBatch.dispose();
+        environment.clear();
+        pointLightList.clear();
     }
 
 

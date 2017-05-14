@@ -223,7 +223,8 @@ public class InGameState implements iGameState {
         }
 
         generateRenderInstances();
-
+		renderer = new RenderManager();
+		renderer.init(lights);
 
     }
 
@@ -278,6 +279,16 @@ public class InGameState implements iGameState {
 				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
 			}
 
+			//Check for spotlightControl and get spotlight
+			if(gameObject instanceof SpotlightControlBoard) {
+				lights.add(((SpotlightControlBoard)gameObject).getSpotlight());
+			}
+
+			//Check for machine and get spotlight
+			if(gameObject instanceof Machine) {
+				lights.add(((Machine)gameObject).getSpotLight());
+			}
+
 
 			//Add GameObject and ModelInstance to a map that keeps them together
 			objectsMap.put(gameObject, new Pair<ModelInstance, btCollisionObject>(modelInstance, collisionObject));
@@ -290,8 +301,6 @@ public class InGameState implements iGameState {
 
 		updateCamera(projectD);
 
-		renderer = new RenderManager();
-		renderer.init(lights);
 
 	}
 
@@ -341,6 +350,7 @@ public class InGameState implements iGameState {
 	@Override
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+		lights.clear();
 	}
 
 	public void exit(ProjectD projectD){
