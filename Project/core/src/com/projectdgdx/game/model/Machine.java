@@ -12,6 +12,7 @@ import com.projectdgdx.game.utils.Vector3d;
 public class Machine extends StaticObject implements iHonestInteractable, iDishonestInteractable, iTimerListener {
 
     private Timer machineCounter;
+    private Spotlight spot;
 
     protected iMachineState state;
 
@@ -19,18 +20,33 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
         super(position, scale, rotation, id);
         this.state = new UnusedMachineState();
 
+        this.spot = new Spotlight(new Vector3d(position.x, 30, position.z),
+                new Vector3d(1, 1, 1),
+                new Vector3d(1, 1, 1), 5, 50, "spotlight.machine") ;
+        this.spot.setColor(new Vector3d(0, 1, 0));
+
         this.machineCounter = new Timer(30, 1000);
         machineCounter.addListener(this);
+    }
+
+    public Spotlight getSpotLight() {
+        return spot;
+    }
+
+    public void setSpotLight(Spotlight spot) {
+        this.spot = spot;
     }
 
     @Override
     public void honestInteract(PlayableCharacter player) { //TODO  test commit
         state.honestInteract(player, this);
+        this.spot.setColor(new Vector3d(0,0,1));
     }
 
     @Override
     public void dishonestInteract(PlayableCharacter player) {
         state.dishonestInteract(player, this);
+        this.spot.setColor(new Vector3d(1,0,0));
     }
 
     @Override

@@ -35,6 +35,7 @@ public class InGameState implements iGameState {
 
 	private PerspectiveCamera cam;
 	private Spotlight spotlight;
+	private List<Spotlight>lights = new ArrayList<>();
 	private CameraInputController camController;
 
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
@@ -108,7 +109,7 @@ public class InGameState implements iGameState {
 	 *
 	 */
 	public void render () {
-		renderer.render(cam, spotlight, objectsMap.values()); //Pass render Instances and camera to render
+		renderer.render(cam, lights, objectsMap.values()); //Pass render Instances and camera to render
 	}
 
 	/**
@@ -198,8 +199,6 @@ public class InGameState implements iGameState {
 
         createCamera();
 
-        spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "null", 1);
-
 
         MapParser parser = new MapParser();
         map = parser.parse(Config.LEVEL_IN_PLAY);
@@ -278,10 +277,6 @@ public class InGameState implements iGameState {
 			} else {
 				collisionWorld.addCollisionObject(collisionObject, STATIC_FLAG, ENTITY_FLAG);
 			}
-			//Check for spotlightControl and get spotlight
-			if(gameObject instanceof SpotlightControlBoard) {
-				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
-			}
 
 
 			//Add GameObject and ModelInstance to a map that keeps them together
@@ -296,7 +291,7 @@ public class InGameState implements iGameState {
 		updateCamera(projectD);
 
 		renderer = new RenderManager();
-		renderer.init();
+		renderer.init(lights);
 
 	}
 
@@ -329,9 +324,16 @@ public class InGameState implements iGameState {
 				collisionObject.setWorldTransform(matrix4);
 			}
 
-			//Check for spotlightControl and update spotlight
+			//Check for spotlightControl and get spotlight
 			if(gameObject instanceof SpotlightControlBoard) {
-				spotlight = ((SpotlightControlBoard)gameObject).getSpotlight();
+				lights.remove(((SpotlightControlBoard)gameObject).getSpotlight());
+				lights.add(((SpotlightControlBoard)gameObject).getSpotlight());
+			}
+
+			//Check for machine and get spotlight
+			if(gameObject instanceof Machine) {
+				lights.remove(((Machine)gameObject).getSpotLight());
+				lights.add(((Machine)gameObject).getSpotLight());
 			}
 		}
 	}

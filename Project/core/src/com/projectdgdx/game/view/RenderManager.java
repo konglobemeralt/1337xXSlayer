@@ -51,10 +51,10 @@ public class RenderManager {
 
     Random rand;
 
-    public void render (PerspectiveCamera cam, Spotlight spotlight, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
+    public void render (PerspectiveCamera cam, List<Spotlight>lights, Collection<Pair<ModelInstance, btCollisionObject>> instances) {
                 //fps.log();
 
-        handleLights(spotlight);
+        handleLights(lights);
 
 
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -71,14 +71,14 @@ public class RenderManager {
     }
 
 
-    private void handleLights(Spotlight spotlight){
+    private void handleLights(List<Spotlight>lights){
 
-        updateSpotLight(spotlight);
+        updatePointLights(lights);
 
         if(Config.DISCO_FACTOR > 0){
             lifeTime += Gdx.graphics.getDeltaTime();
             if (lifeTime > discoDelay) {
-                updateLights();
+                updateDiscoLights();
                 lifeTime = 0;
             }
         }
@@ -136,38 +136,29 @@ public class RenderManager {
 
     /**
      * createEnvironment creates the enviroment
-     * @param spot SpotLight
+     * @param lights SpotLight
      */
-    public void updateSpotLight(Spotlight spot){
-            environment.remove(renderSpot);
-            //pointLightList.remove(p);
-        moveSpotLight(spot);
-        //createLights();
+    public void updatePointLights(List<Spotlight>lights){
+        for (PointLight p: pointLightList) {
+            environment.remove(p);
+        }
+        createPointLights(lights);
     }
 
-    public void createSpotLight(){
-            PointLight light = new PointLight().set(0, 0, 0,
-                        0 , 0,  0, 0f);
-            environment.add(light);
-            renderSpot = light;
+    public void createPointLights(List<Spotlight>lights){
+            for (Spotlight spot: lights) {
+                PointLight light = new PointLight().set(spot.getColor().x, spot.getColor().y, spot.getColor().z,
+                        spot.getPosition().x , spot.getPosition().y,  spot.getPosition().z, spot.getIntensity());
+                environment.add(light);
+                pointLightList.add(light);
             //renderSpotPos = spot.getPosition();
+            }
 
     }
 
-    public void moveSpotLight(Spotlight spot){
-        renderSpotPos = spot.getPosition();
-
-        PointLight light = new PointLight().set(spot.getColor().x, spot.getColor().y, spot.getColor().z,
-                spot.getPosition().x , spot.getPosition().y,  spot.getPosition().z, 500);
-        environment.add(light);
-        renderSpot = light;
-        renderSpotPos = spot.getPosition();
-
-
-    }
     //*******
 
-    public void updateLights(){
+    public void updateDiscoLights(){
         for(PointLight p: pointLightList){
             environment.remove(p);
             //pointLightList.remove(p);
@@ -176,7 +167,7 @@ public class RenderManager {
         //createLights();
     }
 
-    public void createLights(){
+    public void createDiscoLights(){
         for(int i = 0; i < Config.DISCO_FACTOR; i++){
             Vector3d pos = new Vector3d(rand.nextInt(300)-100, rand.nextInt(20)-5, rand.nextInt(300)-100);
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
@@ -236,17 +227,15 @@ public class RenderManager {
 
     }
 
-    public void init(){
+    public void init(List<Spotlight>lights){
         rand = new Random();
         createEnvironment();
         createBatches();
-        createLights();
+        createDiscoLights();
+        createPointLights(lights);
         createShaders();
 
-        renderSpot = new PointLight().set(0, 0, 0,
-                0 , 0,  0, 0f);
-        renderSpotPos = new Vector3d(0, 0, 0);
-        createSpotLight();
+
 
         fps = new FPSLogger();
     }
