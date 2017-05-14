@@ -77,7 +77,6 @@ public class InGameState implements iGameState {
 
 	private void generateRenderInstances(){
 
-		Vector3 localInertia = new Vector3();
 		for (GameObject gameObject : map.getGameObjects()) {
 			// Create a ModelInstance for GameObject gameObject
 			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
@@ -119,6 +118,10 @@ public class InGameState implements iGameState {
 
 	}
 
+	/**
+	 * Creates a camera to be used for rendering using the settings in the config file
+	 *
+	 */
 	private void createCamera(){
 		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(Config.CAMERA_X, Config.CAMERA_Y, Config.CAMERA_Z);
@@ -128,18 +131,19 @@ public class InGameState implements iGameState {
 		cam.update();
 	}
 
-    private void updateCamera(ProjectD projectD){
-        cam.fieldOfView = Config.CAMERA_FOV;
 
-        camController = new CameraInputController(cam);
-        camController.forwardTarget = true;
+	private void updateCamera(ProjectD projectD){
+		cam.fieldOfView = Config.CAMERA_FOV;
 
-        this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
-        //Add a camera controller to the input multiplexer to enable a movable debug camera.
-        multiplexer.addProcessor(camController);// Make the stage consume events
-        Gdx.input.setInputProcessor(multiplexer);
-        cam.update();
-    }
+		camController = new CameraInputController(cam);
+		camController.forwardTarget = true;
+
+		this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
+		//Add a camera controller to the input multiplexer to enable a movable debug camera.
+		multiplexer.addProcessor(camController);// Make the stage consume events
+		Gdx.input.setInputProcessor(multiplexer);
+		cam.update();
+	}
 
 
 	/**
@@ -234,6 +238,9 @@ public class InGameState implements iGameState {
 
 		rand = new Random();
 
+		createCamera();
+		spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "null", 1);
+
 		MapParser parser = new MapParser();
 		map = parser.parse(Config.LEVEL_IN_PLAY);
 
@@ -264,8 +271,7 @@ public class InGameState implements iGameState {
 
 	@Override
 	public void start(ProjectD projectD) {
-		this.multiplexer = new InputMultiplexer(projectD.getMultiplexer()); //Handle debug camera control input
-		createCamera();
+		updateCamera(projectD);
 
 		renderer = new RenderManager();
 		renderer.init();
