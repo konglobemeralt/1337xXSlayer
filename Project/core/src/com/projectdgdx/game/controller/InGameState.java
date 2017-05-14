@@ -235,7 +235,7 @@ public class InGameState implements iGameState {
 		rand = new Random();
 
 		MapParser parser = new MapParser();
-		map = parser.parse("BasicMapTest");
+		map = parser.parse(Config.LEVEL_IN_PLAY);
 
 		//Init nodes
 		List<AINode> nodeList =  map.getAINodes();
