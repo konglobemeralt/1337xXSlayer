@@ -206,6 +206,16 @@ public class InGameState implements iGameState {
 	private void handleWorkers(){
 	    for (Worker worker : map.getWorkers()){
 	        worker.reactOnUpdate();
+	        EntityContainer entityContainer = ((EntityContainer)objectsMap.get(worker));
+	        btRigidBody physicsObject = entityContainer.getPhysicsObject();
+			physicsObject.setDamping(0.6f, 0);
+	        entityContainer.applyForce(VectorConverter.convertToLibgdx(worker.getMoveForce()));
+
+			Vector3 linearVelocity = physicsObject.getLinearVelocity();
+			if(linearVelocity.len() > 30) {
+				linearVelocity.scl(30f/linearVelocity.len());
+				physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
+			}
         }
     }
 
@@ -215,6 +225,9 @@ public class InGameState implements iGameState {
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 		handleInput(projectD);
+
+		handleWorkers();
+//		for(map.getWorkers())
 //		updateModelInstaces();
 
 
@@ -239,7 +252,7 @@ public class InGameState implements iGameState {
 		rand = new Random();
 
 		createCamera();
-		spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), "null", 1);
+		spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 5, 1, "cool");
 
 		MapParser parser = new MapParser();
 		map = parser.parse(Config.LEVEL_IN_PLAY);

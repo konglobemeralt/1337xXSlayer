@@ -7,6 +7,9 @@ import com.projectdgdx.game.utils.Vector3d;
  * The Entity class is for all GameObjects that can move. Eg the Spotlight and all characters.
  */
 public abstract class Entity extends GameObject {
+
+    private Vector3d moveForce = new Vector3d(0,0,0);
+
     public Entity(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
     }
@@ -29,5 +32,13 @@ public abstract class Entity extends GameObject {
             this.addPositionZ(vec.z);
         }
 
+    }
+
+    public void setMoveForce(Vector3d vec) {
+        moveForce = vec;
+    }
+
+    public Vector3d getMoveForce() {
+        return moveForce;
     }
 }
