@@ -49,7 +49,7 @@ public class Worker extends Character {
     }
 
     /**
-     * 
+     *
      */
     public void reactOnUpdate(){
         this.state.reactOnUpdate(this);
