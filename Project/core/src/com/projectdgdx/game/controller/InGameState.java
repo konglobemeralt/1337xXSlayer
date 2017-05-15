@@ -28,7 +28,7 @@ import javafx.util.Pair;
 import java.util.*;
 
 /**
- * InGameState controls everything that is ingame.
+ * InGameState controls everything that is in game.
  * Created by Eddie on 2017-04-28.
  */
 public class InGameState implements iGameState {
@@ -175,7 +175,7 @@ public class InGameState implements iGameState {
 	}
 
 	/**
-	 * Handles user input.
+	 * Handles user input. // TODO more thorough docs
 	 *
 	 * @param projectD ProjectD
 	 *
@@ -213,6 +213,7 @@ public class InGameState implements iGameState {
 		}
 	}
 
+	// TODO docs
 	private void handleWorkers(){
 	    for (Worker worker : map.getWorkers()){
 	        worker.reactOnUpdate();
@@ -234,6 +235,7 @@ public class InGameState implements iGameState {
         }
     }
 
+<<<<<<< HEAD
 	private void handleLights(){
 		lightList.clear();
 		for (SpotlightControlBoard spotlightControlBoard : map.getSpotlightControlBoard()){
@@ -244,6 +246,7 @@ public class InGameState implements iGameState {
 			lightList.add(machine.getSpotLight());
 		}
 	}
+
 
 	public void update(ProjectD projectD){
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
@@ -265,7 +268,7 @@ public class InGameState implements iGameState {
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
-//		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		// dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
 		collisionListener = new CollisionListener();
@@ -277,7 +280,7 @@ public class InGameState implements iGameState {
 		MapParser parser = new MapParser();
 		map = parser.parse(Config.LEVEL_IN_PLAY);
 
-		//Init nodes
+		// Init nodes
 		List<AINode> nodeList =  map.getAINodes();
 		for(AINode node : nodeList) {
 			node.init(map.getAINodes());

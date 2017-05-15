@@ -7,13 +7,13 @@ public class UsedMachineState implements iMachineState { //Maybe not needed. If 
 
     @Override
     public void honestInteract(PlayableCharacter player, iHonestInteractable hi) {
-        //TODO Not sure what to do here? Schould characters push current user away or be blocked?
+        //TODO Not sure what to do here? Should characters push current user away or be blocked?
         
     }
 
     @Override
     public void dishonestInteract(PlayableCharacter player, iDishonestInteractable di) {
-        //TODO Not sure what to do here? Schould characters push current user away or be blocked?
+        //TODO Not sure what to do here? Should characters push current user away or be blocked?
 
     }
 }
