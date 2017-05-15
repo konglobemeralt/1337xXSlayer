@@ -26,6 +26,8 @@ public class NormalWorkerState implements iWorkerState, iTimerListener {
     public void reactOnUpdate(Worker worker) {
         if (!isWaiting){
             act(worker);
+        }else {
+            worker.setMoveForce(new Vector3d(0,0,0));
         }
     }
 

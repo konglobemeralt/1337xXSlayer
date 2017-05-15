@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.controller.GameObjectContainer;
+import com.projectdgdx.game.model.Character;
 import com.projectdgdx.game.model.Spotlight;
 import com.projectdgdx.game.utils.Vector3d;
 import javafx.util.Pair;
@@ -104,9 +105,18 @@ public class RenderManager {
             if(Config.DEBUG) {
                 ModelBuilder modelBuilder = new ModelBuilder();
                 Vector3 dimensions = instance.getGraphicObject().calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3());
-                Model model = modelBuilder.createBox(dimensions.x, dimensions.y, dimensions.z,
-                        new Material(ColorAttribute.createDiffuse(Color.RED)),
-                        VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+
+                Model model;
+                if(instance.getGameObject() instanceof Character) {
+                    model = modelBuilder.createCylinder(2, 5, 2,20,
+                            new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                }else {
+                    model = modelBuilder.createBox(dimensions.x, dimensions.y, dimensions.z,
+                            new Material(ColorAttribute.createDiffuse(Color.RED)),
+                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+                }
+
                 ModelInstance modelInstance = new ModelInstance(model);
                 modelInstance.transform = instance.getGraphicObject().transform;
                 modelBatch.render(modelInstance, environment);
