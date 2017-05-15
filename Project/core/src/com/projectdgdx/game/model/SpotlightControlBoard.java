@@ -17,8 +17,14 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
 
     @Override
     public void honestInteract(PlayableCharacter player) {
-        player.setState(new InSpotlightPlayerState(this.spotlight));
-        spotlight.setColor(new Vector3d(0, 1, 0));
+        player.setMoveForce(new Vector3d(0,0,0));
+        if (player.state.getClass().equals(new InSpotlightPlayerState(spotlight).getClass())){ //TODO this class check is weird
+            player.setState(new NormalPlayerState(player));
+        }else{
+            player.setState(new InSpotlightPlayerState(this.spotlight));
+            spotlight.setColor(new Vector3d(0, 1, 0));
+        }
+
     }
 
     public Spotlight getSpotlight() {

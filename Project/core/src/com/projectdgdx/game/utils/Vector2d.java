@@ -29,4 +29,8 @@ public class Vector2d {
         return (float)Math.sqrt(x*x + z*z);
     }
 
+    public String toString() {
+        return "[" + x + "," + z + "]";
+    }
+
 }

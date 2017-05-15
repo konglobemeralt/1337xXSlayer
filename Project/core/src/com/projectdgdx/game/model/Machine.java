@@ -38,7 +38,8 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
     }
 
     @Override
-    public void honestInteract(PlayableCharacter player) { //TODO  test commit
+    public void honestInteract(PlayableCharacter player) {
+        player.setMoveForce(new Vector3d(0,0,0));
         state.honestInteract(player, this);
         this.spot.setColor(new Vector3d(0,0,1));
     }

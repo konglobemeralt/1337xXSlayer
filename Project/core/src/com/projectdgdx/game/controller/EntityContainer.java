@@ -25,7 +25,7 @@ public class EntityContainer extends GameObjectContainer {
 
 	public void updateRotation(Vector3 rotation) {
 		Matrix4 transform = physicsObject.getWorldTransform();
-		Vector3 position = transform.getTranslation(new Vector3().add(0,0.2f,0));
+		Vector3 position = transform.getTranslation(new Vector3().add(0,0,0));
 		Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
 		Quaternion quaternion = new Quaternion();
 		quaternion.setEulerAngles(rotation.y, 0, 0);

@@ -18,6 +18,7 @@ public class MachineInteractingPlayerState implements iPlayerState, iTimerListen
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
         timer.addListener(this);
+        timer.start();
     }
 
     @Override

@@ -19,6 +19,7 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
         timer.addListener(this);
+        timer.start();
     }
 
     @Override

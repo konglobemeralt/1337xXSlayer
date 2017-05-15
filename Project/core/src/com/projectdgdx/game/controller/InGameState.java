@@ -120,6 +120,30 @@ public class InGameState implements iGameState {
 
 	}
 
+	public void updateEntities(List<Entity> entities) {
+		for(Entity entity : entities) {
+			EntityContainer entityContainer = ((EntityContainer)objectsMap.get(entity));
+			btRigidBody physicsObject = entityContainer.getPhysicsObject();
+			if(entity.getMoveForce().getLength() != 0) {
+				Vector3d moveForce = entity.getMoveForce().scale(5);
+				entityContainer.applyForce(VectorConverter.convertToLibgdx(moveForce));
+				Vector3d rotation = new Vector3d(moveForce.x, 0, -moveForce.z);
+				entityContainer.updateRotation(new Vector3(0,rotation.getXZAngle() + 90, 0)); //TODO should happen in model
+				physicsObject.setDamping(0.7f, 0);
+			} else {
+				physicsObject.setDamping(1f, 0);
+			}
+
+
+
+			Vector3 linearVelocity = physicsObject.getLinearVelocity();
+			if(linearVelocity.len() > 30) {
+				linearVelocity.scl(30f/linearVelocity.len());
+				physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
+			}
+		}
+	}
+
 	/**
 	 * Creates a camera to be used for rendering using the settings in the config file
 	 *
@@ -178,25 +202,10 @@ public class InGameState implements iGameState {
 			InputModel inputModel = inputController.getModel();
 			if(controllerPlayerMap.containsKey(inputController)) {
 				PlayableCharacter player = controllerPlayerMap.get(inputController);
-				EntityContainer playerContainer = (EntityContainer)objectsMap.get(player);
-				btRigidBody physicsObject = playerContainer.getPhysicsObject();
 
-				if(inputModel.getLeftStick().getLength() != 0) {
+				//Move player in controller direction
+				player.move(new Vector3d(inputModel.getLeftStick().x, 0, inputModel.getLeftStick().z));
 
-					//playerContainer.applyForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
-					playerContainer.updateRotation(new Vector3(0, inputModel.getLeftStick().getAngle() + 90, 0)); //TODO should happen in model
-					physicsObject.setDamping(0.6f, 0);
-					player.move(new Vector3d(inputModel.getLeftStick().x, 0, inputModel.getLeftStick().z));
-					playerContainer.applyForce(VectorConverter.convertToLibgdx(player.getMoveForce()));
-				}else {
-					physicsObject.setDamping(1f, 0);
-				}
-
-				Vector3 linearVelocity = physicsObject.getLinearVelocity();
-				if(linearVelocity.len() > Config.MAX_SPEED) {
-					linearVelocity.scl(Config.MAX_SPEED/linearVelocity.len());
-					physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
-				}
                 //Checks if escape button has been pressed.
                 if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
                     this.stop(projectD);
@@ -222,21 +231,6 @@ public class InGameState implements iGameState {
 	private void handleWorkers(){
 	    for (Worker worker : map.getWorkers()){
 	        worker.reactOnUpdate();
-	        EntityContainer entityContainer = ((EntityContainer)objectsMap.get(worker));
-	        btRigidBody physicsObject = entityContainer.getPhysicsObject();
-			if(worker.getMoveForce().getLength() != 0) {
-				entityContainer.applyForce(VectorConverter.convertToLibgdx(worker.getMoveForce()));
-				physicsObject.setDamping(0.6f, 0);
-			} else {
-				physicsObject.setDamping(1f, 0);
-			}
-
-
-			Vector3 linearVelocity = physicsObject.getLinearVelocity();
-			if(linearVelocity.len() > 30) {
-				linearVelocity.scl(30f/linearVelocity.len());
-				physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
-			}
         }
     }
 
@@ -257,6 +251,7 @@ public class InGameState implements iGameState {
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 		handleInput(projectD);
 		handleWorkers();
+		updateEntities(map.getEntities());
 		handleLights();
 		animate();
 		render();
