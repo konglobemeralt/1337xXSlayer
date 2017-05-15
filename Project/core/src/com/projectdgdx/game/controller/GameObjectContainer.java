@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
-import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody.btRigidBodyConstructionInfo;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.projectdgdx.game.model.AI.AINode;
@@ -17,7 +16,7 @@ import com.projectdgdx.game.model.Entity;
 import com.projectdgdx.game.model.Floor;
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.StaticObject;
-import com.projectdgdx.game.utils.Map;
+import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**

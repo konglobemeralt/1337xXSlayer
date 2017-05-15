@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.projectdgdx.game.model.GameObject;
-import com.projectdgdx.game.utils.Map;
+import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**

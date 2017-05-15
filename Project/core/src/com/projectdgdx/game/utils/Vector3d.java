@@ -34,6 +34,12 @@ public class Vector3d {
         return new Vector3d(x/getLength(), y/getLength(), z/getLength());
     }
 
+    /**
+     * If this vector is a and the arg is b, this function returns b-a.
+     * @param compVector //TODO
+     * @return
+     */
+
     public Vector3d subtractVectorFrom(Vector3d compVector){
         return new Vector3d(compVector.x-x, compVector.y-y, compVector.z-z);
     }

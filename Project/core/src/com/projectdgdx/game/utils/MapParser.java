@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.projectdgdx.game.model.BasicMap;
 import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.Map;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.GameStates;
-import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.InputModel;
 
 import java.io.File;

@@ -23,6 +23,7 @@ public class MachineInteractingWorkerState implements iWorkerState {
     public void reactOnUpdate(Worker worker) {
         if (worker.getPosition().isInRadius(machine.getPosition(), Config.HONEST_ACT_DISTANCE)){
             Timer timer = new Timer(3,1000);
+            timer.start();
             if (timer.getTimerValue() > 0){
                 //TODO animate working the machine
             }else{

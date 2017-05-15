@@ -5,25 +5,17 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.*;
 import com.badlogic.gdx.graphics.g3d.utils.*;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.*;
-import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
-import com.badlogic.gdx.physics.bullet.linearmath.btQuaternion;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.GameStates;
-import com.projectdgdx.game.ProjectD;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.utils.*;
-import com.projectdgdx.game.utils.Map;
+import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.view.RenderManager;
-import javafx.util.Pair;
 
 import java.util.*;
 

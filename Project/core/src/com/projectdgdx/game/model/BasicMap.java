@@ -1,6 +1,4 @@
-package com.projectdgdx.game.utils;
-
-import com.projectdgdx.game.model.GameObject;
+package com.projectdgdx.game.model;
 
 import java.util.List;
 

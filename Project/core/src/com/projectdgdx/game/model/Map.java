@@ -1,4 +1,4 @@
-package com.projectdgdx.game.utils;
+package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.AINode;

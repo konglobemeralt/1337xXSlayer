@@ -1,7 +1,5 @@
 package com.projectdgdx.game.controller;
 
-import com.projectdgdx.game.ProjectD;
-
 /**
  * This Interface provides a neat interface for states. All of these methods will be called by the main controller.
  *
