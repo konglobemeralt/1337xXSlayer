@@ -314,6 +314,7 @@ public class InGameState implements iGameState {
 			GameObject gameObject = entrySet.getKey();
 			btCollisionObject collisionObject = entrySet.getValue().getValue();
 
+
 			//Check for entity
 			if(gameObject instanceof Entity) {
 				Vector3 position = VectorConverter.convertToLibgdx(gameObject.getPosition());
