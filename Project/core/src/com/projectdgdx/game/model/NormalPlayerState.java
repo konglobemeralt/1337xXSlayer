@@ -7,9 +7,14 @@ import com.projectdgdx.game.utils.Vector3d;
  * It just walks around.
  */
 public class NormalPlayerState implements iPlayerState {
+    private PlayableCharacter character;
+
+    public NormalPlayerState(PlayableCharacter character){
+        this.character = character;
+    }
 
     @Override
     public void move(Vector3d vector) {
-        // TODO Implement this state, seems that it isn't implemented for some reason???
+        this.character.setMoveForce(vector);
     }
 }

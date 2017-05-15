@@ -39,12 +39,23 @@ public class Spotlight extends Entity {
 
     }
 
-    @Override
-    public void move(Vector3d vec){
+    /*@Override
+    public void move(Vector3d vec){                     //TODO This is an alternative move that should be used if spotlight is a physics object.
         if(listeners.size() == 0){
             super.move(vec);
         } else{
             super.move(vec);
+            checkListenerDetection(this.getPosition());
+
+        }
+    }*/
+
+    @Override
+    public void move(Vector3d vec){
+        if(listeners.size() == 0){
+            this.getPosition().add(vec);
+        } else{
+            this.getPosition().add(vec);
             checkListenerDetection(this.getPosition());
 
         }

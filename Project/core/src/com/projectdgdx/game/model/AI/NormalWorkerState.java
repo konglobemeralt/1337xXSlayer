@@ -37,11 +37,9 @@ public class NormalWorkerState implements iWorkerState, iTimerListener {
         Vector3d vectorToTarget = worker.getPosition().subtractVectorFrom(worker.getTargetNode().getPosition());
 
         Vector3d moveVector = vectorToTarget.normalised();
-        // TODO remove if problem free: moveVector.y = 0;
         worker.setRotation(new Vector3d(0, moveVector.getXZAngle() - 90, 0)); //TODO currently broken
 
-//        worker.move(moveVector);
-        worker.setMoveForce(moveVector);
+        worker.move(moveVector);
     }
 
     private void changeNodes(Worker worker){

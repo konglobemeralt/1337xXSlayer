@@ -74,7 +74,7 @@ public abstract class PlayableCharacter extends Character {
      * Sets the starting state of the PlayableCharacter.
      */
     protected void setStartingState(){
-        this.state = new NormalPlayerState();
+        this.state = new NormalPlayerState(this);
     }
 
     @Override

@@ -60,10 +60,6 @@ public class Worker extends Character {
         this.state = new StrikingWorkerState();
     }
 
-    @Override
-    public void move(Vector3d vector3d){
-        super.move(vector3d.scale(Config.MOVE_SPEED).scale(Gdx.graphics.getDeltaTime())); //TODO remove libGDX dependency
-    }
 
     @Override
     public boolean isColliding(Vector3d vec) {

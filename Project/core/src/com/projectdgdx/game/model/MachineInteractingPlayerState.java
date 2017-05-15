@@ -28,6 +28,6 @@ public class MachineInteractingPlayerState implements iPlayerState, iTimerListen
     @Override
     public void timeIsUp() {
         this.machine.updateTimer();
-        this.currentPlayer.setState(new NormalPlayerState());
+        this.currentPlayer.setState(new NormalPlayerState(currentPlayer));
     }
 }

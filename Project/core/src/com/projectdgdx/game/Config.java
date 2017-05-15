@@ -93,7 +93,7 @@ public class Config {
     public static final float BLACKOUT_RADIUS = 15;
 
     //MODEL ATTRIBUTES
-    public static final float WORKER_SPEED = 20f;
+    public static final float MAX_SPEED = 30f;
 
     /************LEVEL SELECTION************/
     public static String LEVEL_IN_PLAY = "basicMap.txt";

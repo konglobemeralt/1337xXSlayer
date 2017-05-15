@@ -26,6 +26,6 @@ public class CapturedPlayerState implements iPlayerState, iTimerListener {
 
     @Override
     public void timeIsUp() {
-        this.player.setState(new NormalPlayerState());
+        this.player.setState(new NormalPlayerState(player));
     }
 }

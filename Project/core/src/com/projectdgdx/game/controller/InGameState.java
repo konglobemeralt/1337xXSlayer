@@ -191,16 +191,18 @@ public class InGameState implements iGameState {
 
 				if(inputModel.getLeftStick().getLength() != 0) {
 
-					playerContainer.applyForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
-					playerContainer.updateRotation(new Vector3(0, inputModel.getLeftStick().getAngle() + 90, 0));
+					//playerContainer.applyForce(new Vector3(deltaTime * inputModel.getLeftStick().x * 10000, 0, deltaTime * inputModel.getLeftStick().z * 10000));
+					playerContainer.updateRotation(new Vector3(0, inputModel.getLeftStick().getAngle() + 90, 0)); //TODO should happen in model
 					physicsObject.setDamping(0.6f, 0);
+					player.move(new Vector3d(inputModel.getLeftStick().x, 0, inputModel.getLeftStick().z));
+					playerContainer.applyForce(VectorConverter.convertToLibgdx(player.getMoveForce()));
 				}else {
 					physicsObject.setDamping(1f, 0);
 				}
 
 				Vector3 linearVelocity = physicsObject.getLinearVelocity();
-				if(linearVelocity.len() > 30) {
-					linearVelocity.scl(30f/linearVelocity.len());
+				if(linearVelocity.len() > Config.MAX_SPEED) {
+					linearVelocity.scl(Config.MAX_SPEED/linearVelocity.len());
 					physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
 				}
                 //Checks if escape button has been pressed.
@@ -218,6 +220,7 @@ public class InGameState implements iGameState {
 				if(inputModel.getButtonX().getPressedCount()>0){
 					player.useAbility();
 				}
+				inputModel.resetButtonCounts();
 			}
 
 		}

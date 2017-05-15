@@ -36,8 +36,7 @@ public abstract class Entity extends GameObject {
 
     public void move(Vector3d vec){
         if (!isColliding(vec)){
-            this.addPositionX(vec.x);
-            this.addPositionZ(vec.z);
+            this.moveForce = vec.normalised();
         }
 
     }
