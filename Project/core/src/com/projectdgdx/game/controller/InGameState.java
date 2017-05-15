@@ -37,7 +37,7 @@ public class InGameState implements iGameState {
 	private  Array<AnimationController> animationControllers = new Array<AnimationController>();
 
 	private PerspectiveCamera cam;
-	private Spotlight spotlight;
+	private List<Spotlight> lightList = new ArrayList<>();
 	private CameraInputController camController;
 
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
@@ -112,6 +112,16 @@ public class InGameState implements iGameState {
 			}
 
 
+			//Check for spotlightControl and get spotlight
+			if(gameObject instanceof SpotlightControlBoard) {
+				lightList.add(((SpotlightControlBoard)gameObject).getSpotlight());
+			}
+
+			//Check for machine and get spotlight
+			if(gameObject instanceof Machine) {
+				lightList.add(((Machine)gameObject).getSpotLight());
+			}
+
 			//Add GameObject and ModelInstance to a map that keeps them together
 			objectsMap.put(gameObject, gameObjectContainer);
 		}
@@ -151,7 +161,7 @@ public class InGameState implements iGameState {
 	 *
 	 */
 	public void render () {
-		renderer.render(cam, spotlight, objectsMap.values()); //Pass render Instances and camera to render
+		renderer.render(cam, lightList, objectsMap.values()); //Pass render Instances and camera to render
 	}
 
 	/**
@@ -224,25 +234,31 @@ public class InGameState implements iGameState {
         }
     }
 
-	public void update(ProjectD projectD){
+	private void handleLights(){
+		lightList.clear();
+		for (SpotlightControlBoard spotlightControlBoard : map.getSpotlightControlBoard()){
+			lightList.add(spotlightControlBoard.getSpotlight());
+		}
 
-//		handleWorkers();
+		for (Machine machine : map.getMachines()){
+			lightList.add(machine.getSpotLight());
+		}
+	}
+
+	public void update(ProjectD projectD){
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
 		handleInput(projectD);
-
 		handleWorkers();
-//		for(map.getWorkers())
-//		updateModelInstaces();
-
-
+		handleLights();
 		animate();
 		render();
-
 
 	}
 
 	public void init(ProjectD projectD){
+		objectsMap = new HashMap<>();
+
 		//Bullet inits
 		Bullet.init();
 		collisionConfig = new btDefaultCollisionConfiguration();
@@ -257,7 +273,6 @@ public class InGameState implements iGameState {
 		rand = new Random();
 
 		createCamera();
-		spotlight = new Spotlight(new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 5, 1, "cool");
 
 		MapParser parser = new MapParser();
 		map = parser.parse(Config.LEVEL_IN_PLAY);
@@ -283,6 +298,8 @@ public class InGameState implements iGameState {
 
 		generateRenderInstances();
 
+		renderer = new RenderManager();
+		renderer.init(lightList);
 
 	}
 
@@ -292,13 +309,14 @@ public class InGameState implements iGameState {
 		updateCamera(projectD);
 
 		renderer = new RenderManager();
-		renderer.init();
+		renderer.init(lightList);
 
 	}
 
 	@Override
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+		lightList.clear();
 	}
 
 	public void exit(ProjectD projectD){

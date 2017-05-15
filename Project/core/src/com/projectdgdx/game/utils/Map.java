@@ -68,6 +68,26 @@ public abstract class Map {
         return nodes;
     }
 
+    public List<Machine> getMachines() {
+        List<Machine> machines = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof Machine) {
+                machines.add((Machine)gameObject);
+            }
+        }
+        return machines;
+    }
+
+    public List<SpotlightControlBoard> getSpotlightControlBoard() {
+        List<SpotlightControlBoard> SpotlightControlBoards = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof SpotlightControlBoard) {
+                SpotlightControlBoards.add((SpotlightControlBoard)gameObject);
+            }
+        }
+        return SpotlightControlBoards;
+    }
+
     public List<WorkerNode> getWorkerNodes() {
         List<WorkerNode> nodes = new ArrayList<>();
         for(GameObject gameObject : gameObjects) {
