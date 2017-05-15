@@ -70,7 +70,7 @@ public class InGameState implements iGameState {
 			GameObject gameObject1 = map.getGameObjects().get(userValue1);
 //			System.out.println("COLLISION!");
 //			}
-			System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
+			//System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
 			return true;
 		}
 	}
@@ -208,6 +208,16 @@ public class InGameState implements iGameState {
                     this.stop(projectD);
                     projectD.setState(GameStates.SETTINGS);
                 }
+
+				if(inputModel.getButtonA().getPressedCount()>0){
+					player.honestInteract(map.getHonestInteractables());
+				}
+				if(inputModel.getButtonB().getPressedCount()>0){
+					player.dishonestInteract(map.getDishonestInteractables());
+				}
+				if(inputModel.getButtonX().getPressedCount()>0){
+					player.useAbility();
+				}
 			}
 
 		}
@@ -235,7 +245,6 @@ public class InGameState implements iGameState {
         }
     }
 
-<<<<<<< HEAD
 	private void handleLights(){
 		lightList.clear();
 		for (SpotlightControlBoard spotlightControlBoard : map.getSpotlightControlBoard()){
