@@ -112,6 +112,7 @@ public class InGameState implements iGameState {
 			//Check for machine and get spotlight
 			if(gameObject instanceof Machine) {
 				lightList.add(((Machine)gameObject).getSpotLight());
+				((Machine)gameObject).updateTimer();
 			}
 
 			//Add GameObject and ModelInstance to a map that keeps them together
@@ -242,6 +243,7 @@ public class InGameState implements iGameState {
 
 		for (Machine machine : map.getMachines()){
 			lightList.add(machine.getSpotLight());
+			machine.updateSpotlight();
 		}
 	}
 
