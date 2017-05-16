@@ -41,14 +41,13 @@ public class RenderManager {
     private FPSLogger fps;
 
     private float lifeTime;
-    private float discoDelay = 0.03f; //2 seconds.
 
     public Collection<GameObjectContainer> instances;
 
     //TODO: MERGE WITH SPOT OBJECT TO CREATE VIABLE OBJECT
     private List<PointLight> pointLightList =  new ArrayList();
-    private List<Vector3d> pointLightPos =  new ArrayList();
-    private List<Spotlight> pointLights;
+    private List<Vector3d> discoLightPosList =  new ArrayList();
+    private List<PointLight> discoLightList =  new ArrayList();
 
     public Environment environment;
     DirectionalShadowLight shadowLight;
@@ -57,7 +56,7 @@ public class RenderManager {
     Random rand;
 
     public void render (PerspectiveCamera cam, List<Spotlight>lights, Collection<GameObjectContainer> instances) {
-        // fps.log();
+        fps.log();
 
         handleLights(lights);
 
@@ -81,12 +80,9 @@ public class RenderManager {
         updatePointLights(lights);
 
         if(Config.DISCO_FACTOR > 0){
-            lifeTime += Gdx.graphics.getDeltaTime();
-            if (lifeTime > discoDelay) {
-                updateDiscoLights();
-                lifeTime = 0;
-            }
+            updateDiscoLights();
         }
+
 
     }
 
@@ -187,11 +183,11 @@ public class RenderManager {
     //*******
 
     public void updateDiscoLights(){
-        for(PointLight p: pointLightList){
+        for(PointLight p: discoLightList){
             environment.remove(p);
             //pointLightList.remove(p);
         }
-        moveLights();
+        moveDiscoLights();
         //createLights();
     }
 
@@ -201,24 +197,24 @@ public class RenderManager {
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
                     pos.x , pos.y,  pos.z, 70f);
             environment.add(light);
-            pointLightList.add(light);
-            pointLightPos.add(pos);
+            discoLightList.add(light);
+            discoLightPosList.add(pos);
 
         }
 
     }
 
 
-    public void moveLights(){
+    public void moveDiscoLights(){
         for(int i = 0; i < Config.DISCO_FACTOR; i++){
-            pointLightPos.get(i).x += rand.nextFloat() * (5f + 5f) + -5f;
-            pointLightPos.get(i).y += rand.nextFloat() * (1f +1f) + -1f;
-            pointLightPos.get(i).z += rand.nextFloat() * (5f + 5f) + -5f;
+            discoLightPosList.get(i).x += rand.nextFloat() * (2f + 2f) + -2f;
+            discoLightPosList.get(i).y += rand.nextFloat() * (0.5f +0.5f) + -0.5f;
+            discoLightPosList.get(i).z += rand.nextFloat() * (2f + 2f) + -2f;
 
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
-                    pointLightPos.get(i).x , pointLightPos.get(i).y,  pointLightPos.get(i).z, 70f);
+                    discoLightPosList.get(i).x , discoLightPosList.get(i).y,  discoLightPosList.get(i).z, 50f);
             environment.add(light);
-            pointLightList.get(i).set(light);
+            pointLightList.add(light);
         }
 
     }
