@@ -9,20 +9,30 @@ import com.badlogic.gdx.InputProcessor;
  * This class handles inputs from a keyboard. It extends InputController and is therefore a valid input for the game.
  */
 public class KeyboardController extends InputController implements InputProcessor {
+
+    private boolean upDown = false;
+    private boolean downDown = false;
+    private boolean leftDown = false;
+    private boolean rightDown = false;
+
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == 51 || keycode == 19) { //Up
+            upDown = true;
             getModel().getLeftStick().z = -1;
         }
         if(keycode == 29 || keycode == 21) { //Left
+            leftDown = true;
             getModel().getLeftStick().x = -1;
         }
 
         if(keycode == 47 || keycode == 20) { //Down
+            downDown = true;
             getModel().getLeftStick().z = 1;
         }
 
         if(keycode == 32 || keycode == 22) { //Right
+            rightDown = true;
             getModel().getLeftStick().x = 1;
         }
 
@@ -44,18 +54,38 @@ public class KeyboardController extends InputController implements InputProcesso
     public boolean keyUp(int keycode) {
         // A really small value is kept to keep angle
         if(keycode == 51 || keycode == 19) { //Up
-            getModel().getLeftStick().z = 0;
+            upDown = false;
+            if(downDown) {
+                getModel().getLeftStick().z = 1;
+            }else {
+                getModel().getLeftStick().z = 0;
+            }
         }
         if(keycode == 29 || keycode == 21) { //Left
-            getModel().getLeftStick().x = 0;
+            leftDown = true;
+            if(rightDown) {
+                getModel().getLeftStick().x = 1;
+            }else {
+                getModel().getLeftStick().x = 0;
+            }
         }
 
         if(keycode == 47 || keycode == 20) { //Down
-            getModel().getLeftStick().z = 0;
+            downDown = true;
+            if(upDown) {
+                getModel().getLeftStick().z = -1;
+            }else {
+                getModel().getLeftStick().z = 0;
+            }
         }
 
         if(keycode == 32 || keycode == 22) { //Right
-            getModel().getLeftStick().x = 0;
+            rightDown = true;
+            if(leftDown) {
+                getModel().getLeftStick().x = -1;
+            }else {
+                getModel().getLeftStick().x = 0;
+            }
         }
 
         if(keycode == 131) { //ESCAPE
