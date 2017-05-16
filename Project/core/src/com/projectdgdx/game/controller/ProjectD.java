@@ -102,6 +102,13 @@ public class ProjectD extends ApplicationAdapter {
         this.currentState.exit(this);
     }
 
+    @Override
+    public void resize (int width, int height) {
+        for(iGameState gameState : gameStates.values()) {
+            gameState.resize(width, height);
+        }
+    }
+
     public InputMultiplexer getMultiplexer() {
         return multiplexer;
     }
