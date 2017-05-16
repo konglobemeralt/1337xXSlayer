@@ -2,11 +2,13 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Layout;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.InputModel;
 
@@ -29,8 +31,11 @@ public class MainMenuState implements iGameState {
     private TextButton settingsButton;
     private TextButton exitButton;
 
+    private List<TextButton> buttons = new ArrayList<>();
+
     private SelectBox<Object> levelSelection;
     private List<String> levelList = new ArrayList<String>();
+
 
     private InputMultiplexer multiplexer;
     private Label mainMenuHeading;
@@ -88,13 +93,14 @@ public class MainMenuState implements iGameState {
 
             float controllerValue = inputModel.getLeftStick().z;
             if(controllerValue != 0) {
+                System.out.println(controllerValue);
+                buttons.get(controllerPosition).setColor(Color.RED);
                 if(controllerValue < 0 && controllerPosition > 0) {
                     controllerPosition--;
-                }else if(controllerValue < 0 && controllerPosition < 4) {
+                }else if(controllerValue > 0 && controllerPosition < buttons.size() - 1) {
                     controllerPosition++;
                 }
-//                switch (controllerValue) {
-//                }
+                buttons.get(controllerPosition).setColor(Color.GREEN);
             }
 
             if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
@@ -124,6 +130,11 @@ public class MainMenuState implements iGameState {
         newGameButton = new TextButton("New game", skin);
         settingsButton = new TextButton("Settings", skin);
         exitButton = new TextButton("Exit Game", skin);
+
+        //Add buttons in screen order
+        buttons.add(newGameButton);
+        buttons.add(settingsButton);
+        buttons.add(exitButton);
 
 
         //Set up the SelectionBox with content

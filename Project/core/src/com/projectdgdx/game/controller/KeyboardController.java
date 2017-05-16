@@ -62,7 +62,7 @@ public class KeyboardController extends InputController implements InputProcesso
             }
         }
         if(keycode == 29 || keycode == 21) { //Left
-            leftDown = true;
+            leftDown = false;
             if(rightDown) {
                 getModel().getLeftStick().x = 1;
             }else {
@@ -71,7 +71,7 @@ public class KeyboardController extends InputController implements InputProcesso
         }
 
         if(keycode == 47 || keycode == 20) { //Down
-            downDown = true;
+            downDown = false;
             if(upDown) {
                 getModel().getLeftStick().z = -1;
             }else {
@@ -80,7 +80,7 @@ public class KeyboardController extends InputController implements InputProcesso
         }
 
         if(keycode == 32 || keycode == 22) { //Right
-            rightDown = true;
+            rightDown = false;
             if(leftDown) {
                 getModel().getLeftStick().x = -1;
             }else {
