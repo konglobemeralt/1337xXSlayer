@@ -71,7 +71,7 @@ public class GameObjectInit {
 
 
     /**
-     * convert can be used to convert a GameObjectInit into a GameObject
+     * convert can be used to convert a git sGameObjectInit into a GameObject
      *
      * @return A GameObject that has the data within GameObjectInit
      */
@@ -80,7 +80,7 @@ public class GameObjectInit {
             case "Machine":
                 return new Machine(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "machine.basic");
             case "SpotControl":
-                Spotlight light = new Spotlight(new Vector3d(x, 20, z), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 5, 300, "spotlight.controlboard") ;
+                Spotlight light = new Spotlight(new Vector3d(x, 30, z), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 5, 300, "spotlight.controlboard") ;
                 return new SpotlightControlBoard(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "control.basic", light);
               case "Worker":
                   return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "worker.basic");

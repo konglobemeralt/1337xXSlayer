@@ -23,6 +23,9 @@ public class ProjectD extends ApplicationAdapter {
     }
 
     public void setState(GameStates newState) {
+        for(InputController inputController : getInpuControllers()) {
+            inputController.getModel().resetButtonCounts();
+        }
         if(currentState != null){
             currentState.stop(this);
         }
@@ -97,6 +100,13 @@ public class ProjectD extends ApplicationAdapter {
     public void dispose(){
         AssetManager.dispose();
         this.currentState.exit(this);
+    }
+
+    @Override
+    public void resize (int width, int height) {
+        for(iGameState gameState : gameStates.values()) {
+            gameState.resize(width, height);
+        }
     }
 
     public InputMultiplexer getMultiplexer() {

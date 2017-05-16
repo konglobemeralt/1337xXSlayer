@@ -9,12 +9,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.*;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.model.Map;
+import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.view.RenderManager;
 
 import java.util.*;
@@ -23,7 +28,13 @@ import java.util.*;
  * InGameState controls everything that is in game.
  * Created by Eddie on 2017-04-28.
  */
-public class InGameState implements iGameState {
+public class InGameState implements iGameState{
+
+	private Label gameTimeCountLabel;
+	private Skin skin;
+	private Table table;
+	private Stage stage;
+	private Timer gameTimer;
 
 	private InputMultiplexer multiplexer;
 	private  Array<AnimationController> animationControllers = new Array<AnimationController>();
@@ -184,6 +195,8 @@ public class InGameState implements iGameState {
 	 */
 	public void render () {
 		renderer.render(cam, lightList, objectsMap.values()); //Pass render Instances and camera to render
+		stage.act();
+		stage.draw();
 	}
 
 	/**
@@ -260,6 +273,7 @@ public class InGameState implements iGameState {
 		handleInput(projectD);
 		handleWorkers();
 		updateEntities(map.getEntities());
+		updateTimerLabel();
 		handleLights();
 		animate();
 		render();
@@ -311,6 +325,17 @@ public class InGameState implements iGameState {
 		renderer = new RenderManager();
 		renderer.init(lightList);
 
+		this.table = new Table();
+		this.stage = new Stage();
+		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
+
+		//Create buttons
+		gameTimeCountLabel = new Label("Tid kvar ", skin);
+
+		this.table.add(gameTimeCountLabel).padBottom(Gdx.graphics.getHeight() - 70);
+		this.stage.addActor(table);
+
 	}
 
 
@@ -320,6 +345,7 @@ public class InGameState implements iGameState {
 
 		renderer = new RenderManager();
 		renderer.init(lightList);
+		updateTimer();
 
 	}
 
@@ -327,6 +353,11 @@ public class InGameState implements iGameState {
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
 		lightList.clear();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+
 	}
 
 	public void exit(ProjectD projectD){
@@ -374,6 +405,19 @@ public class InGameState implements iGameState {
 		return r;
 	}
 
+	private void updateTimerLabel(){
+		int min = gameTimer.getTimerValue()/60;
+		int seconds = gameTimer.getTimerValue()%60;
 
+		gameTimeCountLabel.setText("Tid kvar: " + min +":" +seconds);
+
+	};
+
+
+
+	public void updateTimer() {
+		this.gameTimer = new Timer(Config.GAME_TIME, 1000);
+		this.gameTimer.start();
+	}
 
 }
