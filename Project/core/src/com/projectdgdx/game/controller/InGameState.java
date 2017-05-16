@@ -244,6 +244,7 @@ public class InGameState implements iGameState {
 		lightList.clear();
 		for (SpotlightControlBoard spotlightControlBoard : map.getSpotlightControlBoard()){
 			lightList.add(spotlightControlBoard.getSpotlight());
+			spotlightControlBoard.updateSpotlight();
 		}
 
 		for (Machine machine : map.getMachines()){
