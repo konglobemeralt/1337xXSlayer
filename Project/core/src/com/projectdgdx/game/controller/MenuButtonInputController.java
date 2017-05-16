@@ -24,8 +24,14 @@ public class MenuButtonInputController {
 		this.buttons = buttons;
 	}
 
+	/**
+	 * handleInput will handle inputs from a list of controllers. It will use it's internal list of buttons
+	 * that is sent through the constructor. It passes a pressed button event to the button when a controller gets pressed.
+	 * @param inputControllers A list of InputControllers that should be used for looking for inputs.
+	 */
 	public void handleInput(List<InputController> inputControllers) {
-		//ResetButtonColor
+
+		//Reset color for currently selected button
 		buttons.get(controllerPosition).setColor(Color.LIGHT_GRAY);
 
 		for(InputController inputController : inputControllers) {
@@ -69,6 +75,11 @@ public class MenuButtonInputController {
 		buttons.get(controllerPosition).setColor(Color.GREEN);
 	}
 
+	/**
+	 *
+	 * @param value value to convert.
+	 * @return Return -1, 0, -1 depending on value.
+	 */
 	private float convertToMaxMin(float value) {
 		if(value == 0) {
 			return 0f;
