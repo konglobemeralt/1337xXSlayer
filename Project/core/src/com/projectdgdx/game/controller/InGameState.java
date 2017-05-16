@@ -65,6 +65,11 @@ public class InGameState implements iGameState {
 			//System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
 			return true;
 		}
+
+//		@Override
+//		public void onContactStarted (btCollisionObject colObj0, btCollisionObject colObj1) {
+//			// implementation
+//		}
 	}
 
 	private void generateRenderInstances(){
@@ -324,17 +329,19 @@ public class InGameState implements iGameState {
 	}
 
 	public void exit(ProjectD projectD){
+
+		System.out.println("EXIIITTT!");
 		//Dispose physics objects
+//		collisionConfig.dispose();
+		dispatcher.dispose();
+		collisionListener.dispose();
+		broadphase.dispose();
+		dynamicsWorld.dispose();
+		constraintSolver.dispose();
 		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
 			gameObjectContainer.dispose();
 		}
-		dispatcher.dispose();
-		collisionConfig.dispose();
-		collisionListener.dispose();
-		dynamicsWorld.dispose();
-		broadphase.dispose();
-		constraintSolver.dispose();
-//		motionState.dispose();
+
 
 		//Dispose graphic
 		renderer.dispose();
