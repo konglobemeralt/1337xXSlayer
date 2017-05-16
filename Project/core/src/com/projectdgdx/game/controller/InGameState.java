@@ -219,7 +219,6 @@ public class InGameState implements iGameState {
                 }
 
 				if(inputModel.getButtonA().getPressedCount()>0){
-					System.out.println("Character list length: " + map.getCharacters().size()); //Debug
 					player.honestInteract(map.getHonestInteractables());
 				}
 				if(inputModel.getButtonB().getPressedCount()>0){

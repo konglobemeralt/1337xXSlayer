@@ -53,7 +53,7 @@ public class Worker extends Character {
      */
     public void reactOnUpdate(){
         this.state.reactOnUpdate(this);
-        System.out.println(this.getPosition().toString()); //TODO Debug
+        //System.out.println(this.getPosition().toString()); //TODO Debug
     }
 
     @Override

@@ -9,6 +9,7 @@ public class UnusedMachineState implements iMachineState {
     @Override
     public void honestInteract(PlayableCharacter player, iHonestInteractable hi) {
         player.setState(new MachineInteractingPlayerState(hi, player));
+        System.out.println("Interacting with working machine");
     }
 
     @Override

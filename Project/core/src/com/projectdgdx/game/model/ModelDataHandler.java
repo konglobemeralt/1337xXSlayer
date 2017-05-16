@@ -16,17 +16,7 @@ public class ModelDataHandler {
     // Placeholder values
     private static Blackout blackout = new Blackout(new Vector3d(1,1,1), new Vector3d(1,1,1), new Vector3d(1,1,1), "Blackout");
 
-    private static StrikeZone strikeZone;
-
-    public static StrikeZone getStrikeZone() {
-        return strikeZone;
-    }
-
-    public static void setStrikeZone(StrikeZone strikeZone) {
-        ModelDataHandler.strikeZone = strikeZone;
-    }
-
-    public List<iHonestInteractable> getHonestInteractables() {
+       public List<iHonestInteractable> getHonestInteractables() {
         return honestInteractables;
     }
 

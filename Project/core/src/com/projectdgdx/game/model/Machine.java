@@ -27,6 +27,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
         this.machineCounter = new Timer(30, 1000);
         machineCounter.addListener(this);
+        this.machineCounter.start();
     }
 
     public Spotlight getSpotLight() {
@@ -41,8 +42,6 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
     public void honestInteract(PlayableCharacter player) {
         player.setMoveForce(new Vector3d(0,0,0));
         state.honestInteract(player, this);
-        this.updateTimer();
-        this.spot.setColor(new Vector3d(0,0,1));
     }
 
     @Override
@@ -66,9 +65,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
      * the machine will set itself to destroyed.
      */
     public void updateTimer() {
-        this.machineCounter = new Timer(30, 1000);
-        this.machineCounter.addListener(this);
-        this.machineCounter.start();
+        this.machineCounter.setTimerValue(30);
     }
 
 
