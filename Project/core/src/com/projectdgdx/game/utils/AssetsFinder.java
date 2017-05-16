@@ -14,12 +14,12 @@ public class AssetsFinder {
     static {
         textureMap.put("machine.basic", new String[]{"MachineBasic.g3db", "metal.jpg"});
         textureMap.put("control.basic", new String[]{"ControlBoard.g3db", "metal.jpg"});
+        textureMap.put("floor.basic", new String[]{"floor2.g3db", "metal.jpg"});
+        textureMap.put("node.worker", new String[]{"AInode.g3db", "AInodeTexture.png"});
         textureMap.put("worker.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
         textureMap.put("supervisor.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
         textureMap.put("saboteur.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
         textureMap.put("player.basic", new String[]{"robotIdle.g3db", "metal.jpg"});
-        textureMap.put("floor.basic", new String[]{"floor2.g3db", "metal.jpg"});
-        textureMap.put("node.worker", new String[]{"AInode.g3db", "AInodeTexture.png"});
     }
 
     /**

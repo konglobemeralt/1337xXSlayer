@@ -5,6 +5,7 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.InputModel;
+import com.projectdgdx.game.utils.AssetManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,6 +95,7 @@ public class ProjectD extends ApplicationAdapter {
 
     @Override
     public void dispose(){
+        AssetManager.dispose();
         this.currentState.exit(this);
     }
 
