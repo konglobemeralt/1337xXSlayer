@@ -14,7 +14,7 @@ public class Spotlight extends Entity {
     private List<iSpotlightListener> listeners = new ArrayList();
     private int spotlightRadius;
     private Vector3d color = new Vector3d(1, 0, 0);
-    private int intensity = 0;
+    private float intensity = 0;
     public Vector3d getColor() {
         return color;
     }
@@ -24,11 +24,11 @@ public class Spotlight extends Entity {
     }
 
 
-    public int getIntensity() {
+    public float getIntensity() {
         return intensity;
     }
 
-    public void setIntensity(int intensity) {
+    public void setIntensity(float intensity) {
         this.intensity = intensity;
     }
 

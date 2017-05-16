@@ -41,6 +41,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
     public void honestInteract(PlayableCharacter player) {
         player.setMoveForce(new Vector3d(0,0,0));
         state.honestInteract(player, this);
+        this.updateTimer();
         this.spot.setColor(new Vector3d(0,0,1));
     }
 
@@ -75,7 +76,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
         float timerValue = this.machineCounter.getTimerValue();
         float calcVal = (((timerValue ) * (1)) / (30));
-        this.spot.setColor(new Vector3d(1-calcVal, 1, 0));
+        this.spot.setColor(new Vector3d(1-calcVal, calcVal, 0));
 
     }
 

@@ -28,8 +28,8 @@ public class Config {
     public static boolean SHADOWMAPPING_ENABLED = true;
     public static final int SHADOW_MAP_HEIGHT = 4048;
     public static final int SHADOW_MAP_WIDTH = 4048;
-    public static final float SHADOW_MAP_VIEWPORT_HEIGHT = 100;
-    public static final float SHADOW_MAP_VIEWPORT_WIDTH = 100;
+    public static final float SHADOW_MAP_VIEWPORT_HEIGHT = 200;
+    public static final float SHADOW_MAP_VIEWPORT_WIDTH = 200;
     public static final float SHADOW_MAP_NEAR = 0.01f;
     public static final float SHADOW_MAP_FAR = 1500f;
 
@@ -56,19 +56,19 @@ public class Config {
 
     //SUN LIGHT POSITION
     public static final float SUN_LIGHT_X = -1f;
-    public static final float SUN_LIGHT_Y = -0.4f;
-    public static final float SUN_LIGHT_Z = -0.2f;
+    public static final float SUN_LIGHT_Y = -1f;
+    public static final float SUN_LIGHT_Z = -0.6f;
 
     //SUN LIGHT COLOR
-    public static float SUN_LIGHT_R = 80;
-    public static float SUN_LIGHT_G= 70;
-    public static float SUN_LIGHT_B = 60;
+    public static float SUN_LIGHT_R = 8;
+    public static float SUN_LIGHT_G= 7;
+    public static float SUN_LIGHT_B = 6;
 
     //AMBIENT LIGHT COLOR
-    public static final float AMBIENT_LIGHT_R = 0.5f;
-    public static final float AMBIENT_LIGHT_G = 0.4f;
-    public static final float AMBIENT_LIGHT_B = 0.4f;
-    public static final float AMBIENT_LIGHT_A = 0.4f;
+    public static final float AMBIENT_LIGHT_R = 0.2f;
+    public static final float AMBIENT_LIGHT_G = 0.2f;
+    public static final float AMBIENT_LIGHT_B = 0.2f;
+    public static final float AMBIENT_LIGHT_A = 1f;
 
     public static int DISCO_FACTOR = 0;
 
