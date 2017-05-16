@@ -403,11 +403,20 @@ public class InGameState implements iGameState{
 
 	private void updateTimerLabel(){
 		int min = gameTimer.getTimerValue()/60;
-		int seconds = gameTimer.getTimerValue()%60;
+		int sec = gameTimer.getTimerValue()%60;
 
-		gameTimeCountLabel.setText("Tid kvar: " + min +":" +seconds);
+		String minString = String.valueOf(min);
+		String secString = String.valueOf(sec);
 
-	};
+		if(sec < 10){
+			secString = 0 + secString;
+		}
+		if(min < 10){
+			minString = 0 + minString;
+		}
+
+		gameTimeCountLabel.setText("Tid kvar: " + minString + ":" + secString);
+	}
 
 
 
