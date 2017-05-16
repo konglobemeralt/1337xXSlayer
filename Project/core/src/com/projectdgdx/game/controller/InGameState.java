@@ -364,16 +364,15 @@ public class InGameState implements iGameState{
 
 		System.out.println("EXIIITTT!");
 		//Dispose physics objects
-//		collisionConfig.dispose();
+		dynamicsWorld.dispose();
+		collisionConfig.dispose();
 		dispatcher.dispose();
 		collisionListener.dispose();
 		broadphase.dispose();
-		dynamicsWorld.dispose();
 		constraintSolver.dispose();
 		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
 			gameObjectContainer.dispose();
 		}
-
 
 		//Dispose graphic
 		renderer.dispose();
