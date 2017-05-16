@@ -37,7 +37,7 @@ public class Saboteur extends PlayableCharacter{
     }
 
     @Override
-    public void useAbility(){
+    public void useAbility(List<Character> characters){ //TODO this list is not used
         if(this.blakoutsLeft > 0){
             ModelDataHandler.getBlackout().setPosition(this.getPosition());
             ModelDataHandler.getBlackout().activate();

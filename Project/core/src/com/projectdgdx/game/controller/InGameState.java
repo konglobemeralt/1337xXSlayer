@@ -220,7 +220,7 @@ public class InGameState implements iGameState {
 					player.dishonestInteract(map.getDishonestInteractables());
 				}
 				if(inputModel.getButtonX().getPressedCount()>0){
-					player.useAbility();
+					player.useAbility(map.getCharacters());
 				}
 				inputModel.resetButtonCounts();
 			}
