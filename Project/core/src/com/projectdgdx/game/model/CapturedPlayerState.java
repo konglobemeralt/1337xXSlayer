@@ -13,6 +13,7 @@ public class CapturedPlayerState implements iPlayerState, iTimerListener {
     PlayableCharacter player;
 
     public CapturedPlayerState(PlayableCharacter player){ //TODO Should change catcher to stay still
+        System.out.println("Captured at " + player.getPosition().toString());
         this.player = player;
 
         Timer capturedTime = new Timer(3, 1000);

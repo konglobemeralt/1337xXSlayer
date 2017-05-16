@@ -57,7 +57,7 @@ public class RenderManager {
     Random rand;
 
     public void render (PerspectiveCamera cam, List<Spotlight>lights, Collection<GameObjectContainer> instances) {
-        fps.log();
+        // fps.log();
 
         handleLights(lights);
 
