@@ -25,7 +25,7 @@ public class XboxController extends InputController implements ControllerListene
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
-        System.out.println("ButtonDown: " + buttonCode);
+        // System.out.println("ButtonDown: " + buttonCode);
         if(buttonCode == 0) { // a
             this.getModel().setButtonA(true);
         }

@@ -71,7 +71,7 @@ public class GameObjectInit {
 
 
     /**
-     * convert can be used to convert a GameObjectInit into a GameObject
+     * convert can be used to convert a git sGameObjectInit into a GameObject
      *
      * @return A GameObject that has the data within GameObjectInit
      */
