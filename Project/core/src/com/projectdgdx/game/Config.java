@@ -70,6 +70,11 @@ public class Config {
     public static final float AMBIENT_LIGHT_B = 0.2f;
     public static final float AMBIENT_LIGHT_A = 1f;
 
+    //SPOT LIGHT COLOR
+    public static final float SPOT_LIGHT_R = 0.9f;
+    public static final float SPOT_LIGHT_G = 0.7f;
+    public static final float SPOT_LIGHT_B = 0.5f;
+
     public static int DISCO_FACTOR = 0;
 
     /************MENU VARIABLES************/
