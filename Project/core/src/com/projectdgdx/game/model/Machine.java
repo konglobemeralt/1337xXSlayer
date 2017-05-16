@@ -75,7 +75,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
         float timerValue = this.machineCounter.getTimerValue();
         float calcVal = (((timerValue ) * (1)) / (30));
-        this.spot.setColor(new Vector3d(1 - calcVal, calcVal, 0));
+        this.spot.setColor(new Vector3d(1-calcVal, 1, 0));
 
     }
 

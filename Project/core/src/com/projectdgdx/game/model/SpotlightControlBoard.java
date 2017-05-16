@@ -13,6 +13,7 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
     public SpotlightControlBoard(Vector3d position, Vector3d scale, Vector3d rotation, String id, Spotlight spotlight) {
         super(position, scale, rotation, id);
         this.spotlight = spotlight;
+        this.spotlight.setColor(new Vector3d(0.2f, 0.1f, 0.3f));
     }
 
     @Override
@@ -20,9 +21,10 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
         player.setMoveForce(new Vector3d(0,0,0));
         if (player.state.getClass().equals(new InSpotlightPlayerState(spotlight).getClass())){ //TODO this class check is weird
             player.setState(new NormalPlayerState(player));
+            spotlight.setIntensity(500);
         }else{
             player.setState(new InSpotlightPlayerState(this.spotlight));
-            spotlight.setColor(new Vector3d(0, 1, 0));
+            spotlight.setIntensity(1500);
         }
 
     }
