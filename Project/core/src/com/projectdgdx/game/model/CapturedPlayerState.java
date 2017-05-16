@@ -12,11 +12,12 @@ public class CapturedPlayerState implements iPlayerState, iTimerListener {
 
     PlayableCharacter player;
 
-    public CapturedPlayerState(PlayableCharacter player){
+    public CapturedPlayerState(PlayableCharacter player){ //TODO Should change catcher to stay still
         this.player = player;
 
         Timer capturedTime = new Timer(3, 1000);
         capturedTime.addListener(this);
+        capturedTime.start();
     }
 
     @Override

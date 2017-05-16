@@ -21,8 +21,8 @@ public class Supervisor extends PlayableCharacter {
     }
 
     @Override
-    public void useAbility() {
-        this.catsch(ModelDataHandler.getCharacters());
+    public void useAbility(List<Character> characters) {
+        this.catsch(characters);
     }
 
     /**
@@ -47,14 +47,17 @@ public class Supervisor extends PlayableCharacter {
      * @param charactersInRadius , a list containing the characters that are inr adius.
      * @return the character closest to hte PlayableCharacter.
      */
-    private Character getClosestCharacter(List<Character> charactersInRadius){
-        Character closestCharacter = charactersInRadius.get(0);
-        float closestDistance = charactersInRadius.get(0).getPosition().distanceTo(this.getPosition());
+    private Character getClosestCharacter(List<Character> charactersInRadius){ //TODO Checks the first character twice
+
+        Character closestCharacter = new Worker(new Vector3d(0,0,0), new Vector3d(0,0,0), new Vector3d(0,0,0), "ss");
+        float closestDistance = 10000;
         for(Character c : charactersInRadius){
-            float characterToThisCharacterDistance = c.getPosition().distanceTo(this.getPosition());
-            if(characterToThisCharacterDistance < closestDistance){
-                closestCharacter = c;
-                closestDistance = characterToThisCharacterDistance;
+            if (!(c == this)){
+                float characterToThisCharacterDistance = c.getPosition().distanceTo(this.getPosition());
+                if(characterToThisCharacterDistance < closestDistance){
+                    closestCharacter = c;
+                    closestDistance = characterToThisCharacterDistance;
+                }
             }
         }
         return closestCharacter;

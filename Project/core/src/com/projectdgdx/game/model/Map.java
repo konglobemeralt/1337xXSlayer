@@ -48,6 +48,16 @@ public abstract class Map {
         return players;
     }
 
+    public List<Character> getCharacters() {
+        List<Character> character = new ArrayList<>();
+        for(GameObject gameObject : gameObjects) {
+            if(gameObject instanceof Character) {
+                character.add((Character)gameObject);
+            }
+        }
+        return character;
+    }
+
     public List<Worker> getWorkers() {
         List<Worker> workers = new ArrayList<>();
         for(GameObject gameObject : gameObjects) {
