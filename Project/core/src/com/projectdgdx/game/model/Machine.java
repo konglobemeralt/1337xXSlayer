@@ -65,8 +65,9 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
      * the machine will set itself to destroyed.
      */
     public void updateTimer() {
-        this.machineCounter.setTimerValue(30);
-    } // TODO instead add a new timer. This is how the timer works.
+        this.machineCounter = new Timer(30, 1000);
+        this.machineCounter.addListener(this);
+    }
 
     // TODO We need to have a listener that will listen to how many machines that are destroyed so
     // TODO that the game will end when a certain amount of machines have been destroyed.
