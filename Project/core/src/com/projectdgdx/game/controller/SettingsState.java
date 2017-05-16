@@ -79,7 +79,6 @@ public class SettingsState implements iGameState {
 
         for(InputController inputController : projectD.getInpuControllers()) {
             if(inputController.getModel().getMenuButton().getPressedCount() > 0) {
-                this.stop(projectD);
                 projectD.setState(GameStates.INGAME);
             }
         }
@@ -100,11 +99,7 @@ public class SettingsState implements iGameState {
     @Override
     public void init(ProjectD projectD) {
 
-        createMenu();
-        this.multiplexer = projectD.getMultiplexer();
-        multiplexer.addProcessor(stage);// Make the stage consume events
-        Gdx.input.setInputProcessor(multiplexer);
-
+        this.stage = new Stage();
 
     }
 
@@ -115,6 +110,12 @@ public class SettingsState implements iGameState {
      */
     @Override
     public void start(ProjectD projectD) {
+        createMenu();
+
+        this.multiplexer = projectD.getMultiplexer();
+        multiplexer.addProcessor(stage);// Make the stage consume events
+        Gdx.input.setInputProcessor(multiplexer);
+
         updateDiscoLabel();
         updateFOVlabel();
         updateAAlabel();
@@ -127,6 +128,8 @@ public class SettingsState implements iGameState {
     @Override
     public void stop(ProjectD projectD) {
         projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+        stage.clear();
+        stage.dispose();
     }
 
     @Override
