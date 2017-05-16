@@ -45,4 +45,6 @@ public interface iGameState {
      *
      */
     void stop(ProjectD projectD);
+
+    public void resize(int width, int height);
 }

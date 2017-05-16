@@ -24,6 +24,7 @@ public class CapturedPlayerState implements iPlayerState, iTimerListener {
     @Override
     public void move(Vector3d vector) {
         // Empty since the supervisors are "arguing" about that one caught the other and therefore stand still
+        this.player.setMoveForce(new Vector3d(0,0,0));
     }
 
     @Override

@@ -232,7 +232,6 @@ public class InGameState implements iGameState{
                 }
 
 				if(inputModel.getButtonA().getPressedCount()>0){
-					System.out.println("Character list length: " + map.getCharacters().size()); //Debug
 					player.honestInteract(map.getHonestInteractables());
 				}
 				if(inputModel.getButtonB().getPressedCount()>0){
@@ -354,6 +353,11 @@ public class InGameState implements iGameState{
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
 		lightList.clear();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+
 	}
 
 	public void exit(ProjectD projectD){

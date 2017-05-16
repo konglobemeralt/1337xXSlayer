@@ -31,7 +31,12 @@ public class Vector3d {
     }
 
     public  Vector3d normalised(){
-        return new Vector3d(x/getLength(), y/getLength(), z/getLength());
+        if(this.getLength() < 0000.1){
+            return new Vector3d(0,0,0);
+        }else{
+            return new Vector3d(x/getLength(), y/getLength(), z/getLength());
+        }
+
     }
 
     /**

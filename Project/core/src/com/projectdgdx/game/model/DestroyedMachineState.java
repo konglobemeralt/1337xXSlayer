@@ -13,6 +13,7 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
 
     public DestroyedMachineState(Vector3d machinePosition){
         this.machinePosition = machinePosition;
+        EndgameHandler.getEndgameHandler().incDestroyedMachines();
         // TODO Add as SpotlightListener
     }
 
