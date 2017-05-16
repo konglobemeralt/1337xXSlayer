@@ -61,12 +61,13 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
     }
 
     /**
-     * Thi method is used to update the internal timer of the machine. If the timer goes down to 0
+     * This method is used to update the internal timer of the machine. If the timer goes down to 0
      * the machine will set itself to destroyed.
      */
     public void updateTimer() {
-        this.machineCounter = new Timer(30, 1000);
-        this.machineCounter.addListener(this);
+        // This works since the timer shouldn't be reset if it is destroyed. When the timer is up
+        // the setTimerValue method executes but doesn't do anything.
+        this.machineCounter.setTimerValue(30);
     }
 
     // TODO We need to have a listener that will listen to how many machines that are destroyed so
