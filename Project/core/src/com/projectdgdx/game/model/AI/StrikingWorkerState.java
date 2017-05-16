@@ -13,6 +13,7 @@ public class StrikingWorkerState implements iWorkerState {
     @Override
     public void reactOnUpdate(Worker worker) {
         Timer timer = new Timer(5,1000);
+        timer.start();
         if (timer.getTimerValue()>0){
             actAngry();
         }else{

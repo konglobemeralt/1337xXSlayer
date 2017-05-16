@@ -45,7 +45,7 @@ public abstract class PlayableCharacter extends Character {
     /**
      * The character uses it's special ability.
      */
-    public abstract void useAbility();
+    public abstract void useAbility(List<Character> characters);
 
     /**
      * The character tries to interact with nearby honest objects.
