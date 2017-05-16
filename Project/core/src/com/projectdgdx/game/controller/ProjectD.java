@@ -23,6 +23,9 @@ public class ProjectD extends ApplicationAdapter {
     }
 
     public void setState(GameStates newState) {
+        for(InputController inputController : getInpuControllers()) {
+            inputController.getModel().resetButtonCounts();
+        }
         if(currentState != null){
             currentState.stop(this);
         }

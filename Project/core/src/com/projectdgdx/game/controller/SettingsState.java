@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.Config;
 
+import java.util.*;
+
 import static com.badlogic.gdx.Gdx.gl20;
 
 public class SettingsState implements iGameState {
@@ -56,6 +58,8 @@ public class SettingsState implements iGameState {
 
     private Table table;
 
+    private MenuButtonInputController menuButtonInputController;
+
 
     /**
      * update clears the screen and renders the settings menu
@@ -73,13 +77,16 @@ public class SettingsState implements iGameState {
         stage.act();
         stage.draw();
 
-        if(projectD.getInpuControllers().get(0).getModel().getMenuButton().isPressed()
-                && projectD.getInpuControllers().get(0).getModel().getMenuButton().getPressedCount() >= 1){
-            this.stop(projectD);
-            projectD.setState(GameStates.INGAME);
+        for(InputController inputController : projectD.getInpuControllers()) {
+            if(inputController.getModel().getMenuButton().getPressedCount() > 0) {
+                this.stop(projectD);
+                projectD.setState(GameStates.INGAME);
+            }
         }
 
-        if(mainMenuButton.isPressed()&& Gdx.input.justTouched()){
+        menuButtonInputController.handleInput(projectD.getInpuControllers());
+
+        if(mainMenuButton.isPressed()){
             this.exit(projectD);
             projectD.setState(GameStates.MAINMENU);
         }
@@ -115,7 +122,6 @@ public class SettingsState implements iGameState {
         updateSunRLabel();
         updateSunGLabel();
         updateSunBLabel();
-
     }
 
     @Override
@@ -229,6 +235,10 @@ public class SettingsState implements iGameState {
         settingsHeading = new Label("Settings Menu", skin);
 
         mainMenuButton = new TextButton("To Main Menu", skin);
+
+        java.util.List<TextButton> buttons = new ArrayList<>();
+        buttons.add(mainMenuButton);
+        menuButtonInputController = new MenuButtonInputController(buttons);
 
         /** Field of view slider  **/
         fovSlider = new Slider(5, 120, 1, false, skin);

@@ -49,9 +49,16 @@ public class MenuButtonInputController {
 			}
 
 			if(inputModel.getButtonA().getPressedCount() > 0) {
-				InputEvent event1 = new InputEvent();
-				event1.setType(InputEvent.Type.touchDown);
-				buttons.get(controllerPosition).fire(event1);
+
+				//Press button
+				InputEvent touchDown = new InputEvent();
+				touchDown.setType(InputEvent.Type.touchDown);
+				buttons.get(controllerPosition).fire(touchDown);
+
+				//Unpress button
+				InputEvent touchUp = new InputEvent();
+				touchUp.setType(InputEvent.Type.touchUp);
+				buttons.get(controllerPosition).fire(touchUp);
 			}
 
 			inputModel.resetButtonCounts();
