@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,8 +14,7 @@ import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.InputModel;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 import static com.badlogic.gdx.Gdx.gl20;
@@ -31,9 +31,7 @@ public class MainMenuState implements iGameState {
     private TextButton settingsButton;
     private TextButton exitButton;
 
-    float lastInputValue;
-
-    private List<TextButton> buttons = new ArrayList<>();
+    private MenuButtonInputController menuButtonInputController;
 
     private SelectBox<Object> levelSelection;
     private List<String> levelList = new ArrayList<String>();
@@ -42,7 +40,7 @@ public class MainMenuState implements iGameState {
     private InputMultiplexer multiplexer;
     private Label mainMenuHeading;
     private Table table;
-    private int controllerPosition = 0;
+
 
     @Override
     public void init(ProjectD projectD) {
@@ -78,46 +76,20 @@ public class MainMenuState implements iGameState {
             this.exit(projectD);
             projectD.resetState(GameStates.INGAME);
             projectD.setState(GameStates.INGAME);
-        }
-        else if(settingsButton.isPressed()){
+        } else if(settingsButton.isPressed()){
             this.exit(projectD);
             projectD.setState(GameStates.SETTINGS);
-        }
-
-        else if(exitButton.isPressed()){
+        } else if(exitButton.isPressed()){
             this.exit(projectD);
             Gdx.app.exit();
         }
 
-        //TODO more logic for handeling movement of controllers or keyboards in menus
+        //Handle inputs
+        menuButtonInputController.handleInput(projectD.getInpuControllers());
 
-        for(InputController inputController : projectD.getInpuControllers()) {
-            InputModel inputModel = inputController.getModel();
-
-            float controllerValue = inputModel.getLeftStick().z;
-            if(controllerValue != 0 && controllerValue != lastInputValue) {
-                System.out.println(controllerValue);
-                buttons.get(controllerPosition).setColor(Color.LIGHT_GRAY);
-                if(controllerValue < 0 && controllerPosition > 0) {
-                    controllerPosition--;
-                }else if(controllerValue > 0 && controllerPosition < buttons.size() - 1) {
-                    controllerPosition++;
-                }
-                buttons.get(controllerPosition).setColor(Color.GREEN);
-            }
-
-            if(inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1){
-                this.stop(projectD);
-                projectD.setState(GameStates.SETTINGS);
-            }
-
-            if(inputModel.getButtonX().getPressedCount() > 0) {
-//                buttons.get(controllerPosition).addAction(new Acti);
-            }
-
-            lastInputValue = controllerValue;
-        }
     }
+
+
 
     @Override
     public void stop(ProjectD projectD) {
@@ -141,10 +113,13 @@ public class MainMenuState implements iGameState {
         exitButton = new TextButton("Exit Game", skin);
 
         //Add buttons in screen order
+		List<TextButton> buttons = new ArrayList<>();
         buttons.add(newGameButton);
         buttons.add(settingsButton);
         buttons.add(exitButton);
 
+        //Create input handler for menu
+        menuButtonInputController = new MenuButtonInputController(buttons);
 
         //Set up the SelectionBox with content
         Object[] blob = new Object[levelList.size()];
