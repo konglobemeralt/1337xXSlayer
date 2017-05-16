@@ -57,6 +57,7 @@ public class MainMenuState implements iGameState {
 
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
+
         Gdx.input.setInputProcessor(multiplexer);
 
     }
@@ -94,6 +95,11 @@ public class MainMenuState implements iGameState {
     @Override
     public void stop(ProjectD projectD) {
         stage.dispose();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        
     }
 
     @Override

@@ -330,6 +330,11 @@ public class InGameState implements iGameState {
 		lightList.clear();
 	}
 
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
 	public void exit(ProjectD projectD){
 
 		System.out.println("EXIIITTT!");
