@@ -31,6 +31,8 @@ public class MainMenuState implements iGameState {
     private TextButton settingsButton;
     private TextButton exitButton;
 
+    float lastInputValue;
+
     private List<TextButton> buttons = new ArrayList<>();
 
     private SelectBox<Object> levelSelection;
@@ -88,13 +90,14 @@ public class MainMenuState implements iGameState {
         }
 
         //TODO more logic for handeling movement of controllers or keyboards in menus
+
         for(InputController inputController : projectD.getInpuControllers()) {
             InputModel inputModel = inputController.getModel();
 
             float controllerValue = inputModel.getLeftStick().z;
-            if(controllerValue != 0) {
+            if(controllerValue != 0 && controllerValue != lastInputValue) {
                 System.out.println(controllerValue);
-                buttons.get(controllerPosition).setColor(Color.RED);
+                buttons.get(controllerPosition).setColor(Color.LIGHT_GRAY);
                 if(controllerValue < 0 && controllerPosition > 0) {
                     controllerPosition--;
                 }else if(controllerValue > 0 && controllerPosition < buttons.size() - 1) {
@@ -107,6 +110,12 @@ public class MainMenuState implements iGameState {
                 this.stop(projectD);
                 projectD.setState(GameStates.SETTINGS);
             }
+
+            if(inputModel.getButtonX().getPressedCount() > 0) {
+//                buttons.get(controllerPosition).addAction(new Acti);
+            }
+
+            lastInputValue = controllerValue;
         }
     }
 
