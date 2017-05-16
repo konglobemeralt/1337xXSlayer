@@ -29,7 +29,7 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
             updateTimer();
         }else{
             player.setState(new InSpotlightPlayerState(this.spotlight));
-            this.spotlight.setIntensity(1500);
+            this.spotlight.setIntensity(700);
         }
 
     }
@@ -50,7 +50,7 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
         if(spotlightTimer != null){
             if(spotlightTimer.getTimerValue() != 0){
             float timerValue = this.spotlightTimer.getTimerValue();
-            float calcVal = (((timerValue) * (1500 - 300)) / (5)) + 300;
+            float calcVal = (((timerValue) * (700 - 300)) / (5)) + 300;
             this.spotlight.setIntensity(calcVal);
             }
         }
