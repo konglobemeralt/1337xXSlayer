@@ -181,7 +181,10 @@ public class RenderManager {
     }
 
     //*******
-
+    /**
+     * Updates the disco lights. Mostly used for fun and not really a function that should be payed any attention to.
+     *
+     */
     public void updateDiscoLights(){
         for(PointLight p: discoLightList){
             environment.remove(p);
@@ -191,6 +194,10 @@ public class RenderManager {
         //createLights();
     }
 
+    /**
+     * Creates the disco lights. Mostly used for fun and not really a function that should be payed any attention to.
+     *
+     */
     public void createDiscoLights(){
         for(int i = 0; i < Config.DISCO_FACTOR; i++){
             Vector3d pos = new Vector3d(rand.nextInt(300)-100, rand.nextInt(20)-5, rand.nextInt(300)-100);
@@ -204,7 +211,10 @@ public class RenderManager {
 
     }
 
-
+    /**
+     * Moves the disco lights. Mostly used for fun and not really a function that should be payed any attention to.
+     *
+     */
     public void moveDiscoLights(){
         for(int i = 0; i < Config.DISCO_FACTOR; i++){
             discoLightPosList.get(i).x += rand.nextFloat() * (2f + 2f) + -2f;
@@ -219,6 +229,10 @@ public class RenderManager {
 
     }
 
+    /**
+     * creates an enviroment using variables set in the config file and then uses these to initate
+     * the enviroment in a correct way.
+     */
     public void createEnvironment(){
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
@@ -255,17 +269,18 @@ public class RenderManager {
     public void init(List<Spotlight>lights){
         rand = new Random();
         createEnvironment();
-        System.out.println("LightSize >>" + lights.size());
         createBatches(lights.size());
         createDiscoLights();
         createPointLights(lights);
         createShaders();
 
-
-
         fps = new FPSLogger();
     }
 
+    /**
+     * creates a and starts the shaders to be used in rendering.
+     *
+     */
     private void createShaders(){
         shader = new BaseShader();
         shader.init();
