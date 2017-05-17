@@ -47,7 +47,7 @@ public class Saboteur extends PlayableCharacter{
 
     @Override
     public void beenCaught() {
-        // Here we want to change state to "EndGameState" probably by using an "EndGameListener"-isch kind of solution
+        EndgameHandler.getEndgameHandler().triggerSaboteurCaughtEnd();
     }
 
     @Override

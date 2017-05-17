@@ -145,7 +145,7 @@ public class InGameState implements iGameState, iTimerListener{
 				Vector3d moveForce = entity.getMoveForce().scale(5);
 				entityContainer.applyForce(VectorConverter.convertToLibgdx(moveForce));
 				Vector3d rotation = new Vector3d(moveForce.x, 0, -moveForce.z);
-				entityContainer.updateRotation(new Vector3(0,rotation.getXZAngle() + 90, 0)); //TODO should happen in model
+				entityContainer.updateRotation(new Vector3(0,rotation.getXZAngle() + 90, 0));
 				physicsObject.setDamping(0.7f, 0);
 			} else {
 				physicsObject.setDamping(1f, 0);
@@ -428,7 +428,7 @@ public class InGameState implements iGameState, iTimerListener{
 
 	@Override
 	public void timeIsUp() {
-		EndgameHandler.triggerTimeOutEnd();
+		EndgameHandler.getEndgameHandler().triggerTimeOutEnd();
 	}
 
 }
