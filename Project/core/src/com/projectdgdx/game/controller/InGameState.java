@@ -28,7 +28,7 @@ import java.util.*;
  * InGameState controls everything that is in game.
  * Created by Eddie on 2017-04-28.
  */
-public class InGameState implements iGameState{
+public class InGameState implements iGameState, iTimerListener{
 
 	private Label gameTimeCountLabel;
 	private Skin skin;
@@ -421,11 +421,14 @@ public class InGameState implements iGameState{
 		gameTimeCountLabel.setText("Tid kvar: " + minString + ":" + secString);
 	}
 
-
-
 	public void updateTimer() {
 		this.gameTimer = new Timer(Config.GAME_TIME, 1000);
 		this.gameTimer.start();
+	}
+
+	@Override
+	public void timeIsUp() {
+		EndgameHandler.triggerTimeOutEnd();
 	}
 
 }

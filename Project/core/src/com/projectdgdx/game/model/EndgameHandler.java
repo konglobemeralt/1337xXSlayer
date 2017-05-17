@@ -27,8 +27,8 @@ public class EndgameHandler {
     public void incStrikers(){
         this.strikeCounter++;
         if (this.strikeCounter >= numStrikingToEnd){
-            for (EndgameListener el : listeners){
-                el.reactToEndgame(Endgames.STRIKE);
+            for (EndgameListener endgameListener : listeners){
+                endgameListener.reactToEndgame(Endgames.STRIKE);
             }
         }
     }
@@ -37,21 +37,21 @@ public class EndgameHandler {
     public void incDestroyedMachines(){
         this.destroyedMachinesCounter++;
         if (this.destroyedMachinesCounter >= numMachinesDestroyedToEnd){
-            for (EndgameListener el : listeners){
-                el.reactToEndgame(Endgames.MACHINES_DESTROYED);
+            for (EndgameListener endgameListener : listeners){
+                endgameListener.reactToEndgame(Endgames.MACHINES_DESTROYED);
             }
         }
     }
 
-    public static void triggerTimeOutEnd(){
-        for (EndgameListener el : endgameHandler.listeners) {
-            el.reactToEndgame(Endgames.TIME_UPP);
+    public void triggerTimeOutEnd(){
+        for (EndgameListener endgameListener : listeners) {
+            endgameListener.reactToEndgame(Endgames.TIME_UPP);
         }
     }
 
-    public static void triggerSaboteurCaughtEnd(){
-        for (EndgameListener el : endgameHandler.listeners) {
-            el.reactToEndgame(Endgames.SABOTEUR_CAUGHT);
+    public void triggerSaboteurCaughtEnd(){
+        for (EndgameListener endgameListener : listeners) {
+            endgameListener.reactToEndgame(Endgames.SABOTEUR_CAUGHT);
         }
     }
 
