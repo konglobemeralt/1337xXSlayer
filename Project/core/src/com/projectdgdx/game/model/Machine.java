@@ -22,7 +22,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
         this.spot = new Spotlight(new Vector3d(position.x, 30, position.z),
                 new Vector3d(1, 1, 1),
-                new Vector3d(1, 1, 1), 5, 50, "spotlight.machine") ;
+                new Vector3d(1, 1, 1), 5, 100, "spotlight.machine") ;
         this.spot.setColor(new Vector3d(0, 1, 0));
 
         this.machineCounter = new Timer(30, 1000);

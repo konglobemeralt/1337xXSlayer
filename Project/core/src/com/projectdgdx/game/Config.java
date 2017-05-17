@@ -8,7 +8,7 @@ package com.projectdgdx.game;
  */
 
 public class Config {
-    public static final int GAME_TIME = 12;
+    public static final int GAME_TIME = 160;
     public static final boolean DEBUG = false;
     public static float MOVE_SPEED = 30f;
 

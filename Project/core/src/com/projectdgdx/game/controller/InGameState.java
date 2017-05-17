@@ -28,7 +28,7 @@ import java.util.*;
  * InGameState controls everything that is in game.
  * Created by Eddie on 2017-04-28.
  */
-public class InGameState implements iGameState{
+public class InGameState implements iGameState, iTimerListener{
 
 	private Label gameTimeCountLabel;
 	private Skin skin;
@@ -364,16 +364,15 @@ public class InGameState implements iGameState{
 
 		System.out.println("EXIIITTT!");
 		//Dispose physics objects
-//		collisionConfig.dispose();
+		dynamicsWorld.dispose();
+		collisionConfig.dispose();
 		dispatcher.dispose();
 		collisionListener.dispose();
 		broadphase.dispose();
-		dynamicsWorld.dispose();
 		constraintSolver.dispose();
 		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
 			gameObjectContainer.dispose();
 		}
-
 
 		//Dispose graphic
 		renderer.dispose();
@@ -407,17 +406,29 @@ public class InGameState implements iGameState{
 
 	private void updateTimerLabel(){
 		int min = gameTimer.getTimerValue()/60;
-		int seconds = gameTimer.getTimerValue()%60;
+		int sec = gameTimer.getTimerValue()%60;
 
-		gameTimeCountLabel.setText("Tid kvar: " + min +":" +seconds);
+		String minString = String.valueOf(min);
+		String secString = String.valueOf(sec);
 
-	};
+		if(sec < 10){
+			secString = 0 + secString;
+		}
+		if(min < 10){
+			minString = 0 + minString;
+		}
 
-
+		gameTimeCountLabel.setText("Tid kvar: " + minString + ":" + secString);
+	}
 
 	public void updateTimer() {
 		this.gameTimer = new Timer(Config.GAME_TIME, 1000);
 		this.gameTimer.start();
+	}
+
+	@Override
+	public void timeIsUp() {
+		EndgameHandler.triggerTimeOutEnd();
 	}
 
 }
