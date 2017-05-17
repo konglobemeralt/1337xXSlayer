@@ -280,6 +280,7 @@ public class InGameState implements iGameState, iTimerListener{
 
 	}
 
+	// TODO functional decomposition and docs
 	public void init(ProjectD projectD){
 		objectsMap = new HashMap<>();
 
@@ -336,6 +337,21 @@ public class InGameState implements iGameState, iTimerListener{
 		this.table.add(gameTimeCountLabel).padBottom(Gdx.graphics.getHeight() - 70);
 		this.stage.addActor(table);
 
+		// Machine init
+		this.machineInit();
+
+	}
+
+	private void machineInit(){
+		List<Spotlight> mainSpotlights = new ArrayList<>();
+
+		for(SpotlightControlBoard sCB : this.map.getSpotlightControlBoard()){
+			mainSpotlights.add(sCB.getSpotlight());
+		}
+
+		for(Machine m : this.map.getMachines()){
+			m.setBigDetectingSpotlights(mainSpotlights);
+		}
 	}
 
 

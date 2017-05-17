@@ -10,11 +10,11 @@ import com.projectdgdx.game.utils.Vector3d;
  */
 public class MachineDestroyingPlayerState implements iPlayerState, iTimerListener {
 
-    iDishonestInteractable machine;
+    Machine machine;
     PlayableCharacter currentUser;
 
     MachineDestroyingPlayerState(iDishonestInteractable machine, PlayableCharacter currentPlayer){
-        this.machine = machine;
+        this.machine = (Machine) machine;
         this.currentUser = currentPlayer;
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
@@ -24,13 +24,19 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
 
     @Override
     public void move(Vector3d vector) {
+        currentUser.setMoveForce(new Vector3d(0,0,0));
         // Empty since it will be more suspense if the saboteur can't move while sabotaging
     }
 
     @Override
     public void timeIsUp() {
+        DestroyedMachineState destroyedState = new DestroyedMachineState(machine.getPosition());
         this.currentUser.setState(new NormalPlayerState(currentUser));
-        this.machine.setState(new DestroyedMachineState(machine.getPosition()));
-        // TODO Add the destroyed machine state as a spotlightListener
+        this.machine.setState(destroyedState);
+
+        System.out.println("Spotlights from Machine size: "+this.machine.getBigDetectingSpotlights().size());
+        for(Spotlight mainSpotlight : this.machine.getBigDetectingSpotlights()){
+            mainSpotlight.addListener(destroyedState);
+        }
     }
 }
