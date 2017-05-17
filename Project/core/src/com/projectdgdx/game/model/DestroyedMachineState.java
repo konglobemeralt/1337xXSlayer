@@ -19,7 +19,7 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
 
     @Override
     public void honestInteract(PlayableCharacter player, iHonestInteractable hi) {
-        // Play a sound? Might not be useful
+        // TODO Update machine to display new model
     }
 
     @Override
