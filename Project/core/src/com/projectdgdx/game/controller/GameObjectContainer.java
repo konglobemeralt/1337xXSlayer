@@ -2,6 +2,7 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -41,6 +42,11 @@ public class GameObjectContainer implements Disposable {
 		@Override
 		public void setWorldTransform (Matrix4 worldTrans) {
 			gameObject.setPosition(VectorConverter.convertFromLibgdx(worldTrans.getTranslation(new Vector3())));
+//			System.out.println(gameObject.getClass().getName() + "  " + gameObject.getScale().toString());
+//			Quaternion orientation = transform.getRotation(new Quaternion());
+//
+//			worldTrans.set(VectorConverter.convertToLibgdx(gameObject.getPosition()), orientation, VectorConverter.convertToLibgdx(gameObject.getScale()));
+
 			transform.set(worldTrans);
 		}
 	}
@@ -51,6 +57,7 @@ public class GameObjectContainer implements Disposable {
 		this.gameObject = gameObject;
 		this.graphicObject = graphicObject;
 		this.physicsObject = generatePhysicsProperties();
+
 
 		//Disable movements in y:
 		physicsObject.setLinearFactor(new Vector3(1,1,1));
@@ -91,7 +98,7 @@ public class GameObjectContainer implements Disposable {
 			}
 
 			//Calculate bounding box and set to shape
-			BoundingBox boundingBox = graphicObject.model.calculateBoundingBox(new BoundingBox());
+			BoundingBox boundingBox = graphicObject.calculateBoundingBox(new BoundingBox());
 			btCollisionShape collisionShape;
 
 			if(gameObject instanceof com.projectdgdx.game.model.Character) {
