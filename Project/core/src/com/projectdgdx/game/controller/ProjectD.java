@@ -77,6 +77,8 @@ public class ProjectD extends ApplicationAdapter {
         gameStates.get(GameStates.SETTINGS).init(this);
     	gameStates.put(GameStates.INGAME, new InGameState());
     	gameStates.get(GameStates.INGAME).init(this);
+        gameStates.put(GameStates.ENDGAME, new EndGameState());
+    	gameStates.get(GameStates.ENDGAME).init(this);
 
 
         if(Config.DEBUG) {

@@ -383,7 +383,7 @@ public class InGameState implements iGameState, iTimerListener{
 	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
 		CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
 		CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
-//        System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
+//      System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
 
 
 		btCollisionAlgorithm algorithm = dispatcher.findAlgorithm(co0.wrapper, co1.wrapper);

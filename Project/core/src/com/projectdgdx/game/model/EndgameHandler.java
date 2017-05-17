@@ -14,7 +14,7 @@ public class EndgameHandler {
     private int strikeCounter = 0;
     private int destroyedMachinesCounter = 0;
 
-    private List<EndgameListener> listeners = new ArrayList<>();
+    private List<iEndgameListener> listeners = new ArrayList<>();
 
     private static EndgameHandler endgameHandler = new EndgameHandler(0);
 
@@ -27,7 +27,7 @@ public class EndgameHandler {
     public void incStrikers(){
         this.strikeCounter++;
         if (this.strikeCounter >= numStrikingToEnd){
-            for (EndgameListener endgameListener : listeners){
+            for (iEndgameListener endgameListener : listeners){
                 endgameListener.reactToEndgame(Endgames.STRIKE);
             }
         }
@@ -37,20 +37,20 @@ public class EndgameHandler {
     public void incDestroyedMachines(){
         this.destroyedMachinesCounter++;
         if (this.destroyedMachinesCounter >= numMachinesDestroyedToEnd){
-            for (EndgameListener endgameListener : listeners){
+            for (iEndgameListener endgameListener : listeners){
                 endgameListener.reactToEndgame(Endgames.MACHINES_DESTROYED);
             }
         }
     }
 
     public void triggerTimeOutEnd(){
-        for (EndgameListener endgameListener : listeners) {
+        for (iEndgameListener endgameListener : listeners) {
             endgameListener.reactToEndgame(Endgames.TIME_UPP);
         }
     }
 
     public void triggerSaboteurCaughtEnd(){
-        for (EndgameListener endgameListener : listeners) {
+        for (iEndgameListener endgameListener : listeners) {
             endgameListener.reactToEndgame(Endgames.SABOTEUR_CAUGHT);
         }
     }
@@ -71,7 +71,7 @@ public class EndgameHandler {
         this.numMachinesDestroyedToEnd = numMachinesDestroyedToEnd;
     }
 
-    public List<EndgameListener> getListeners() {
+    public List<iEndgameListener> getListeners() {
         return listeners;
     }
 
