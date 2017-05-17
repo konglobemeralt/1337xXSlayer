@@ -29,14 +29,17 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
 
     @Override
     public boolean isDetected(Vector3d spotlightPos, int radius) {
-        return this.machinePosition.isInRadius(spotlightPos, radius);
+        return this.machinePosition.isInRadius(new Vector3d(spotlightPos.x, 0, spotlightPos.z), radius);
     }
 
     @Override
     public void detect() {
         if(!this.detected) {
             this.detected = true;
+            System.out.println("SABOTAGE DETECTED");
             // Play animation of machine getting destroyed/change spotlight color from green to red and play a sound
+
+            // TODO Update machine to display new model
 
             // TODO reason if this should be removed as a listener and how?
         }

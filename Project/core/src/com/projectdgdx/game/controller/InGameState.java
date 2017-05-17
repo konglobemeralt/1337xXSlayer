@@ -337,6 +337,9 @@ public class InGameState implements iGameState, iTimerListener{
 		this.table.add(gameTimeCountLabel).padBottom(Gdx.graphics.getHeight() - 70);
 		this.stage.addActor(table);
 
+		// Machine init
+		this.machineInit();
+
 	}
 
 	private void machineInit(){

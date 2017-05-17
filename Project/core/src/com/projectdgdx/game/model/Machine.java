@@ -68,6 +68,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
     @Override
     public void timeIsUp() {
         this.setState(new DestroyedMachineState(this.getPosition()));
+        // TODO Update machine to display new model
     }
 
     /**
@@ -87,8 +88,4 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
     }
 
-
-
-    // TODO We need to have a listener that will listen to how many machines that are destroyed so
-    // TODO that the game will end when a certain amount of machines have been destroyed.
 }

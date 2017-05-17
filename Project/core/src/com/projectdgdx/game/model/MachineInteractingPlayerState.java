@@ -23,6 +23,7 @@ public class MachineInteractingPlayerState implements iPlayerState, iTimerListen
 
     @Override
     public void move(Vector3d vector) {
+        currentPlayer.setMoveForce(new Vector3d(0,0,0));
         // Player is stationary during machine interaction
     }
 
