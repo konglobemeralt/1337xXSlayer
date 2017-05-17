@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.projectdgdx.game.model.BasicMap;
-import com.projectdgdx.game.model.GameObject;
-import com.projectdgdx.game.model.Map;
-import com.projectdgdx.game.model.Supervisor;
+import com.projectdgdx.game.model.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -55,14 +52,14 @@ public class MapParser {
             //Make sure that node is not a text element
             if(node.getNodeType() == Node.ELEMENT_NODE) {
                 //Load node
-                Supervisor.GameObjectInit gameObjectInit = loadNode(node, new Supervisor.GameObjectInit(node.getNodeName()));
+                GameObjectInit gameObjectInit = loadNode(node, new GameObjectInit(node.getNodeName()));
 
                 //Check for child nodes
                 if(node.hasChildNodes()) {
                     for(int j = 0; j < node.getChildNodes().getLength(); j++) {
                         Node deepNode = node.getChildNodes().item(j);
                         if(deepNode.getNodeType() == Node.ELEMENT_NODE) {
-                            Supervisor.GameObjectInit deepGameObjectInit = loadNode(deepNode, gameObjectInit.clone());
+                            GameObjectInit deepGameObjectInit = loadNode(deepNode, gameObjectInit.clone());
                             addGameObject(deepGameObjectInit);
                         }
 
@@ -83,7 +80,7 @@ public class MapParser {
      * @param gameObjectInit GameObjectInit to add data from the node upon
      * @return A GameObjectInit
      */
-    private Supervisor.GameObjectInit loadNode(Node node, Supervisor.GameObjectInit gameObjectInit) {
+    private GameObjectInit loadNode(Node node, GameObjectInit gameObjectInit) {
         for(int i = 0; i < node.getAttributes().getLength(); i++) {
             Node attribute = node.getAttributes().item(i);
             gameObjectInit.changeValue(attribute.getNodeName(), attribute.getNodeValue());
@@ -97,7 +94,7 @@ public class MapParser {
      *
      * @param gameObjectInit A GameObjectInit that will be convert into a GameObject
      */
-    private void addGameObject(Supervisor.GameObjectInit gameObjectInit) {
+    private void addGameObject(GameObjectInit gameObjectInit) {
         GameObject gameObject = gameObjectInit.convert();
         if(gameObject != null) {
             gameObjects.add(gameObject);

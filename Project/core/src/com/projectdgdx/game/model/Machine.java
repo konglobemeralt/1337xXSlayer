@@ -4,6 +4,8 @@ import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
 
+import java.util.List;
+
 /**
  * The Machine class is the interactable machine object that is a main part of the game logic.
  * The Supervisors quest is to save the Machines from getting destroyed by the Saboteur.
@@ -13,6 +15,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
     private Timer machineCounter;
     private Spotlight spot;
+    private List<Spotlight> bigDetectingSpotlights;
 
     protected iMachineState state;
 
@@ -36,6 +39,14 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
     public void setSpotLight(Spotlight spot) {
         this.spot = spot;
+    }
+
+    public void setBigDetectingSpotlights(List<Spotlight> bigDetectingSpotlights) {
+        this.bigDetectingSpotlights = bigDetectingSpotlights;
+    }
+
+    public List<Spotlight> getBigDetectingSpotlights() {
+        return bigDetectingSpotlights;
     }
 
     @Override

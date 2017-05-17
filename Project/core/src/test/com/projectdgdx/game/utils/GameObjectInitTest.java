@@ -1,6 +1,7 @@
 package test.com.projectdgdx.game.utils;
 
 import com.projectdgdx.game.model.GameObject;
+import com.projectdgdx.game.model.GameObjectInit;
 import com.projectdgdx.game.model.Machine;
 import com.projectdgdx.game.model.Supervisor;
 import org.junit.Test;
@@ -13,10 +14,10 @@ import static org.junit.Assert.*;
 public class GameObjectInitTest {
     @Test
     public void convert() throws Exception {
-        Supervisor.GameObjectInit gameObjectInit = new Supervisor.GameObjectInit("Machine");
+        GameObjectInit gameObjectInit = new GameObjectInit("Machine");
         assertTrue(gameObjectInit.convert() instanceof Machine);
 
-        gameObjectInit = new Supervisor.GameObjectInit("SomethingThatDoesNotExists");
+        gameObjectInit = new GameObjectInit("SomethingThatDoesNotExists");
         assertTrue(gameObjectInit.convert() == null);
     }
 
@@ -26,7 +27,7 @@ public class GameObjectInitTest {
         int newYPosition = 99332103;
         int newZPosition = 59434103;
 
-        Supervisor.GameObjectInit gameObjectInit = new Supervisor.GameObjectInit("Machine");
+        GameObjectInit gameObjectInit = new GameObjectInit("Machine");
         gameObjectInit.changeValue("x", Integer.toString(newXPosition));
         gameObjectInit.changeValue("y", Integer.toString(newYPosition));
         gameObjectInit.changeValue("z", Integer.toString(newZPosition));
