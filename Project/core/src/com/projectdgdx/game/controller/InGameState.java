@@ -428,7 +428,7 @@ public class InGameState implements iGameState, iTimerListener{
 
 	@Override
 	public void timeIsUp() {
-		EndgameHandler.triggerTimeOutEnd();
+		EndgameHandler.getEndgameHandler().triggerTimeOutEnd();
 	}
 
 }
