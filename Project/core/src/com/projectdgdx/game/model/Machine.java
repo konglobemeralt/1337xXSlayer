@@ -66,9 +66,13 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
         this.state = newState;
     }
 
+    public Timer getMachineCounter() {
+        return machineCounter;
+    }
+
     @Override
     public void timeIsUp() {
-        this.setState(new DestroyedMachineState(this.getPosition()));
+        this.setState(new DestroyedMachineState(this));
         // TODO Update machine to display new model
     }
 

@@ -30,7 +30,7 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
 
     @Override
     public void timeIsUp() {
-        DestroyedMachineState destroyedState = new DestroyedMachineState(machine.getPosition());
+        DestroyedMachineState destroyedState = new DestroyedMachineState(machine);
         this.currentUser.setState(new NormalPlayerState(currentUser));
         this.machine.setState(destroyedState);
 
