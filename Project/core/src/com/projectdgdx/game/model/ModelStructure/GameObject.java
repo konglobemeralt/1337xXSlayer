@@ -50,7 +50,7 @@ public abstract class GameObject {
 
     /**
      * The id is ued to determine which graphical 3D object that should be connected to the object in the view.
-     * @return
+     * @return the id corresponding to a graphical model in the view
      */
     public String getId() {
         return id;
