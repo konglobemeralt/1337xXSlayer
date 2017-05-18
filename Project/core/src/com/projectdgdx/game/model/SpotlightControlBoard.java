@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.model.PlayerStates.InSpotlightPlayerState;
+import com.projectdgdx.game.model.PlayerStates.NormalPlayerState;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;

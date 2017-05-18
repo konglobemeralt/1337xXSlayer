@@ -1,4 +1,10 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.MachineStates;
+
+import com.projectdgdx.game.model.PlayableCharacter;
+import com.projectdgdx.game.model.PlayerStates.MachineDestroyingPlayerState;
+import com.projectdgdx.game.model.PlayerStates.MachineInteractingPlayerState;
+import com.projectdgdx.game.model.iDishonestInteractable;
+import com.projectdgdx.game.model.iHonestInteractable;
 
 /**
  * This state is the "normal" state for the machine. This is when nobody uses it and it isn't

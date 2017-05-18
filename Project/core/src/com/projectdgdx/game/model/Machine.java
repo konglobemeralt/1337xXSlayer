@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.model.MachineStates.DestroyedMachineState;
+import com.projectdgdx.game.model.MachineStates.iMachineState;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.iTimerListener;

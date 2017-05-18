@@ -80,7 +80,7 @@ public class Spotlight extends Entity {
      * Add Listeners to the Spotlight. The Listeners listen for when the Spotlight hovers over them.
      * @param slListener
      */
-    void addListener(iSpotlightListener slListener){
+    public void addListener(iSpotlightListener slListener){
         listeners.add(slListener);
     }
 }

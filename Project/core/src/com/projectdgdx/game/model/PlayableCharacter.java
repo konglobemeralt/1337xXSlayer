@@ -1,5 +1,6 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.model.PlayerStates.iPlayerState;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
