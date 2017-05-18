@@ -1,5 +1,6 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.Config;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
@@ -81,10 +82,18 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
 
     public void updateSpotlight(){
-
         float timerValue = this.machineCounter.getTimerValue();
         float calcVal = (((timerValue ) * (1)) / (30));
-        this.spot.setColor(new Vector3d(1-calcVal, calcVal, 0));
+        this.spot.setColor(new Vector3d(1-calcVal, calcVal * 1.5f, 0));
+
+        if(timerValue <= Config.MACHINELIGHT_BLINK_TIME){
+            if(timerValue%2==0) {
+                this.spot.setIntensity(Config.MACHINELIGHT_MAX_INTENSITY);
+            }
+            else{
+                this.spot.setIntensity(Config.MACHINELIGHT_BASE_INTENSITY);
+            }
+        }
 
     }
 
