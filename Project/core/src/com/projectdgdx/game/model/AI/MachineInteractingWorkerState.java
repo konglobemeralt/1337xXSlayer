@@ -13,15 +13,15 @@ import java.util.List;
  * Created by Emil Jansson on 2017-05-11.
  */
 public class MachineInteractingWorkerState implements iWorkerState {
-    private Machine machine;
+    private Vector3d pos;
 
-    public MachineInteractingWorkerState(Machine machine){
-        this.machine = machine;
+    public MachineInteractingWorkerState(Vector3d pos){
+        this.pos = pos;
     }
 
     @Override
     public void reactOnUpdate(Worker worker) {
-        if (worker.getPosition().isInRadius(machine.getPosition(), Config.HONEST_ACT_DISTANCE)){
+        if (worker.getPosition().isInRadius(pos, Config.HONEST_ACT_DISTANCE)){
             Timer timer = new Timer(3,1000);
             timer.start();
             if (timer.getTimerValue() > 0){
@@ -44,7 +44,7 @@ public class MachineInteractingWorkerState implements iWorkerState {
             }
 
         }else {
-            worker.move(worker.getPosition().subtractVectorFrom(machine.getPosition()).normalised());
+            worker.move(worker.getPosition().subtractVectorFrom(pos.normalised()));
         }
 
     }
