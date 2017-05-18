@@ -1,7 +1,5 @@
 package com.projectdgdx.game.model;
 
-import com.badlogic.gdx.Gdx;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.model.AI.NormalWorkerState;
 import com.projectdgdx.game.model.AI.StrikingWorkerState;

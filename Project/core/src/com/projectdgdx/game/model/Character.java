@@ -1,12 +1,7 @@
 package com.projectdgdx.game.model;
 
 
-import com.badlogic.gdx.math.Vector3;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.utils.Vector3d;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The Characters are all units that move around in the factory and that you can interact with in some way.

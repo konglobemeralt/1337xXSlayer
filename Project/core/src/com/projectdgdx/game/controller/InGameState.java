@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.Config;
+import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.AINode;
 import com.projectdgdx.game.utils.*;
@@ -194,7 +194,11 @@ public class InGameState implements iGameState, iTimerListener{
 	 *
 	 */
 	public void render () {
-		renderer.render(cam, lightList, objectsMap.values()); //Pass render Instances and camera to render
+		List<ModelInstance> modelInstances = new ArrayList<>();
+		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
+			modelInstances.add(gameObjectContainer.getGraphicObject());
+		}
+		renderer.render(cam, lightList, modelInstances); //Pass render Instances and camera to render
 		stage.act();
 		stage.draw();
 	}

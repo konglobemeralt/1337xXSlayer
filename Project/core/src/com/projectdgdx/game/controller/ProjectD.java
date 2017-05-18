@@ -3,7 +3,7 @@ package com.projectdgdx.game.controller;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.projectdgdx.game.Config;
+import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.model.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 
