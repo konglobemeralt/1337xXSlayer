@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.model.Character;
+import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.utils.Config;

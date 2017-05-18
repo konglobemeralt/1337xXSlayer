@@ -2,6 +2,10 @@ package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.AI.WorkerNode;
+import com.projectdgdx.game.model.ModelStructure.Character;
+import com.projectdgdx.game.model.ModelStructure.Entity;
+import com.projectdgdx.game.model.ModelStructure.GameObject;
+import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;

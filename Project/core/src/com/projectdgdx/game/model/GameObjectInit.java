@@ -2,6 +2,7 @@ package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.Decorations.Floor;
 import com.projectdgdx.game.model.MachineStates.UnusedMachineState;
+import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.Playables.NormalPlayerState;
 import com.projectdgdx.game.model.Playables.Saboteur;
 import com.projectdgdx.game.model.Playables.Supervisor;

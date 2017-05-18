@@ -3,7 +3,7 @@ package com.projectdgdx.game.model.StaticInteractable;
 import com.projectdgdx.game.model.Playables.InSpotlightPlayerState;
 import com.projectdgdx.game.model.Playables.NormalPlayerState;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
-import com.projectdgdx.game.model.StaticObject;
+import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Timer;

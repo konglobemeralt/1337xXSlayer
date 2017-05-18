@@ -15,6 +15,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.Decorations.Floor;
+import com.projectdgdx.game.model.ModelStructure.Character;
+import com.projectdgdx.game.model.ModelStructure.Entity;
+import com.projectdgdx.game.model.ModelStructure.GameObject;
+import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**
@@ -101,7 +105,7 @@ public class GameObjectContainer implements Disposable {
 			BoundingBox boundingBox = graphicObject.calculateBoundingBox(new BoundingBox());
 			btCollisionShape collisionShape;
 
-			if(gameObject instanceof com.projectdgdx.game.model.Character) {
+			if(gameObject instanceof Character) {
 				collisionShape = new btCylinderShape(new Vector3(1,1,4));
 			}else {
 				collisionShape = new btBoxShape(boundingBox.getDimensions(new Vector3()).scl(0.5f));

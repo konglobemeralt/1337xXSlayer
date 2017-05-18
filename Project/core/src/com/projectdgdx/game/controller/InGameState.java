@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.model.Input.InputModel;
+import com.projectdgdx.game.model.ModelStructure.Entity;
+import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;

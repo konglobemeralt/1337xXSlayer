@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model.Decorations;
 
-import com.projectdgdx.game.model.StaticObject;
+import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

@@ -4,6 +4,7 @@ import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.AI.NormalWorkerState;
 import com.projectdgdx.game.model.AI.StrikingWorkerState;
 import com.projectdgdx.game.model.AI.iWorkerState;
+import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

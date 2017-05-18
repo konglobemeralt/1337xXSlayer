@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.model.ModelStructure.GameObject;
+
 import java.util.List;
 
 /**
