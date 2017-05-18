@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.Config;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.badlogic.gdx.Gdx.gl20;
@@ -42,7 +42,6 @@ public class MainMenuState implements iGameState {
     public void init(ProjectD projectD) {
         File f = new File("map/");
 //        levelList = new ArrayList<String>(Arrays.asList(f.list()));
-        levelList = new ArrayList<String>(Arrays.asList(f.list()));
     }
 
     @Override
@@ -50,7 +49,7 @@ public class MainMenuState implements iGameState {
         buildMenu();
 
         //Set to first selection as default
-        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
+//        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
 
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events

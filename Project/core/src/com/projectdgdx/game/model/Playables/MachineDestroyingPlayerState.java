@@ -1,12 +1,12 @@
 package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.MachineStates.DestroyedMachineState;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;
+import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
+import com.projectdgdx.game.utils.iTimerListener;
 
 /**
  * This is the PlayerState that the Saboteur enters when destroying a Machine.The Saboteur will stand

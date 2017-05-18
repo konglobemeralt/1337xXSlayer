@@ -1,7 +1,7 @@
 package utils;
 
-import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.BasicMap;
+import com.projectdgdx.game.model.ModelStructure.GameObject;
 import org.junit.Test;
 
 import java.util.ArrayList;

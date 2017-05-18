@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.Config;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import static com.badlogic.gdx.Gdx.gl20;
 

@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
-import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.utils.*;
+import com.projectdgdx.game.model.Map;
+import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.view.RenderManager;
 
 import java.util.Random;

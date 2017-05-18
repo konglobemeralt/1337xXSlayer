@@ -2,9 +2,10 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g3d.*;
-import com.badlogic.gdx.graphics.g3d.utils.*;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
@@ -14,22 +15,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.projectdgdx.game.Config;
+import com.projectdgdx.game.model.AI.BasicNode;
+import com.projectdgdx.game.model.EndgameHandler;
 import com.projectdgdx.game.model.Input.InputModel;
+import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.model.ModelStructure.Entity;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;
 import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
-import com.projectdgdx.game.Config;
-import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.model.AI.BasicNode;
+import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.*;
-import com.projectdgdx.game.model.Map;
-import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.view.RenderManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 /**
  * InGameState controls everything that is in game.

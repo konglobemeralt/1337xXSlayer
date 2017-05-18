@@ -3,8 +3,8 @@ package com.projectdgdx.game.model.Playables;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
+import com.projectdgdx.game.utils.iTimerListener;
 
 /**
  * This PlayerState is for when a Supervisor or Saboteur honest interacts with a machine.

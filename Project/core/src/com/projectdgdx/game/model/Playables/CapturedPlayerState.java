@@ -1,8 +1,8 @@
 package com.projectdgdx.game.model.Playables;
 
 import com.projectdgdx.game.utils.Timer;
-import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
+import com.projectdgdx.game.utils.iTimerListener;
 
 /**
  * This state is used when a Supervisor catch another Supervisor. The Supervisors will stand still

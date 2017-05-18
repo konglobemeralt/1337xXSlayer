@@ -3,6 +3,10 @@ package com.projectdgdx.game.utils;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.*;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
@@ -31,7 +35,12 @@ public class MapParser {
         try {
             System.out.println(Gdx.files.getLocalStoragePath());
             FileHandle handle = Gdx.files.internal("map/" + mapName);
-            File inputFile = handle.file();
+            com.badlogic.gdx.assets.AssetManager manager = new AssetManager();
+            FileHandleResolver resolver = new InternalFileHandleResolver();
+            manager.setLoader(File.class, new TextFileLoader(resolver));
+            manager.load("map/" + mapName, File.class);
+            manager.finishLoading();
+            File inputFile = manager.get("map/" + mapName);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(inputFile);
