@@ -2,8 +2,7 @@ package test.com.projectdgdx.game.utils;
 
 import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.model.GameObjectInit;
-import com.projectdgdx.game.model.Machine;
-import com.projectdgdx.game.model.Supervisor;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

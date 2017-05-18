@@ -2,6 +2,9 @@ package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.AI.WorkerNode;
+import com.projectdgdx.game.model.Playables.PlayableCharacter;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
+import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
 
 import java.util.ArrayList;
 import java.util.List;

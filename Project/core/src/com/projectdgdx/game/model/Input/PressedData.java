@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.Input;
 
 /**
  * Created by Hampus on 2017-05-03.

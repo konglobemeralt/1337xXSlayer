@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.BasicNode;
+import com.projectdgdx.game.model.Decorations.Floor;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**

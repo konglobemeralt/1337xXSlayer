@@ -1,5 +1,8 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.Playables;
 
+import com.projectdgdx.game.model.Character;
+import com.projectdgdx.game.model.EndgameHandler;
+import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -39,8 +42,6 @@ public class Saboteur extends PlayableCharacter{
     @Override
     public void useAbility(List<Character> characters){ //TODO this list is not used
         if(this.blakoutsLeft > 0){
-            ModelDataHandler.getBlackout().setPosition(this.getPosition());
-            ModelDataHandler.getBlackout().activate();
             this.blakoutsLeft--;
         }
     }

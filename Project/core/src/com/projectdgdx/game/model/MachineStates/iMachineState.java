@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model.MachineStates;
 
-import com.projectdgdx.game.model.PlayableCharacter;
+import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.model.iHonestInteractable;
 

@@ -1,6 +1,8 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.model.PlayerStates.CapturedPlayerState;
+import com.projectdgdx.game.model.Character;
+import com.projectdgdx.game.model.Worker;
+import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 

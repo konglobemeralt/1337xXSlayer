@@ -1,5 +1,6 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.StaticInteractable;
 
+import com.projectdgdx.game.model.Entity;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;

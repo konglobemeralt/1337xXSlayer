@@ -1,6 +1,9 @@
 package com.projectdgdx.game.model.MachineStates;
 
 import com.projectdgdx.game.model.*;
+import com.projectdgdx.game.model.Playables.PlayableCharacter;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
+import com.projectdgdx.game.model.StaticInteractable.iSpotlightListener;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

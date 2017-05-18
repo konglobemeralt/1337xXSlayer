@@ -1,7 +1,6 @@
-package com.projectdgdx.game.model.PlayerStates;
+package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.model.Machine;
-import com.projectdgdx.game.model.PlayableCharacter;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.iTimerListener;

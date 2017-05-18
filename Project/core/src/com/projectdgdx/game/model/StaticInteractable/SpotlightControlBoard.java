@@ -1,7 +1,10 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.StaticInteractable;
 
-import com.projectdgdx.game.model.PlayerStates.InSpotlightPlayerState;
-import com.projectdgdx.game.model.PlayerStates.NormalPlayerState;
+import com.projectdgdx.game.model.Playables.InSpotlightPlayerState;
+import com.projectdgdx.game.model.Playables.NormalPlayerState;
+import com.projectdgdx.game.model.Playables.PlayableCharacter;
+import com.projectdgdx.game.model.StaticObject;
+import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
@@ -26,7 +29,7 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
     @Override
     public void honestInteract(PlayableCharacter player) {
         player.setMoveForce(new Vector3d(0,0,0));
-        if (player.state.getClass().equals(new InSpotlightPlayerState(spotlight).getClass())){ //TODO this class check is weird
+        if (player.getState().getClass().equals(new InSpotlightPlayerState(spotlight).getClass())){ //TODO this class check is weird
             player.setState(new NormalPlayerState(player));
             updateTimer();
         }else{

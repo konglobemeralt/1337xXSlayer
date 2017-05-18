@@ -1,6 +1,6 @@
 package test.com.projectdgdx.game.utils;
 
-import com.projectdgdx.game.model.Machine;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.MachineStates.UnusedMachineState;
 import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;

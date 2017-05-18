@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.Input;
 
 import com.projectdgdx.game.utils.Vector2d;
 

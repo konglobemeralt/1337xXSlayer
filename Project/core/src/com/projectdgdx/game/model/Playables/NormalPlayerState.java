@@ -1,6 +1,5 @@
-package com.projectdgdx.game.model.PlayerStates;
+package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.model.PlayableCharacter;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

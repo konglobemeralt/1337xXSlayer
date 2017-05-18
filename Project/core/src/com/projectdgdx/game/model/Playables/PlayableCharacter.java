@@ -1,6 +1,9 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.model.PlayerStates.iPlayerState;
+import com.projectdgdx.game.model.Character;
+import com.projectdgdx.game.model.Playables.iPlayerState;
+import com.projectdgdx.game.model.iDishonestInteractable;
+import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -12,20 +15,10 @@ import java.util.List;
  */
 public abstract class PlayableCharacter extends Character {
 
-    protected iPlayerState state;
+    private iPlayerState state;
 
     public PlayableCharacter(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
-    }
-
-    /**
-     * Recieves the movement inputs and delegates it to the state machine.
-     * TODO Will buttons be handled here or go directly to the functions?
-     * TODO  ANSWER: Will call functions. We want to separate all input handling from the model.
-     * // TODO What does this even do????????????
-     */
-    public void reactToInput(){
-        this.state.move(new Vector3d(1,1,1));
     }
 
     /**
@@ -34,6 +27,10 @@ public abstract class PlayableCharacter extends Character {
      */
     public void setState(iPlayerState newState){
         this.state = newState;
+    }
+
+    public iPlayerState getState() {
+        return state;
     }
 
     /**

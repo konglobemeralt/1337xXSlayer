@@ -13,11 +13,10 @@ import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
 import com.projectdgdx.game.utils.Config;
-import com.projectdgdx.game.model.Spotlight;
+import com.projectdgdx.game.model.StaticInteractable.Spotlight;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 

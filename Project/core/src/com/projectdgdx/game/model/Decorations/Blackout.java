@@ -1,5 +1,6 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.Decorations;
 
+import com.projectdgdx.game.model.GameObject;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.iTimerListener;
 import com.projectdgdx.game.utils.Vector3d;
