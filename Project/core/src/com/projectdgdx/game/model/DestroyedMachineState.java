@@ -9,16 +9,16 @@ import com.projectdgdx.game.utils.Vector3d;
 public class DestroyedMachineState implements iMachineState, iSpotlightListener {
 
     private boolean detected = false;
-    private Vector3d machinePosition;
+    private Machine machine;
 
-    public DestroyedMachineState(Vector3d machinePosition){
-        this.machinePosition = machinePosition;
+    public DestroyedMachineState(Machine machine){
+        this.machine = machine;
         EndgameHandler.getEndgameHandler().incDestroyedMachines();
-        // TODO Add as SpotlightListener
     }
 
     @Override
     public void honestInteract(PlayableCharacter player, iHonestInteractable hi) {
+        this.machine.getMachineCounter().setTimerValue(0);
         // TODO Update machine to display new model
     }
 
@@ -29,7 +29,7 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
 
     @Override
     public boolean isDetected(Vector3d spotlightPos, int radius) {
-        return this.machinePosition.isInRadius(new Vector3d(spotlightPos.x, 0, spotlightPos.z), radius);
+        return this.machine.getPosition().isInRadius(new Vector3d(spotlightPos.x, 0, spotlightPos.z), radius);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
         if(!this.detected) {
             this.detected = true;
             System.out.println("SABOTAGE DETECTED");
+            this.machine.getMachineCounter().setTimerValue(0);
             // Play animation of machine getting destroyed/change spotlight color from green to red and play a sound
 
             // TODO Update machine to display new model
