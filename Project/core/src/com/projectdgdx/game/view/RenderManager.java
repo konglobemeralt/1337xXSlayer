@@ -10,17 +10,11 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.projectdgdx.game.Config;
-import com.projectdgdx.game.controller.GameObjectContainer;
-import com.projectdgdx.game.model.Character;
+import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.model.Spotlight;
 import com.projectdgdx.game.utils.Vector3d;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,8 +36,6 @@ public class RenderManager {
 
     private float lifeTime;
 
-    public Collection<GameObjectContainer> instances;
-
     //TODO: MERGE WITH SPOT OBJECT TO CREATE VIABLE OBJECT
     private List<PointLight> pointLightList =  new ArrayList();
     private List<Vector3d> discoLightPosList =  new ArrayList();
@@ -55,7 +47,7 @@ public class RenderManager {
 
     Random rand;
 
-    public void render (PerspectiveCamera cam, List<Spotlight>lights, Collection<GameObjectContainer> instances) {
+    public void render (PerspectiveCamera cam, List<Spotlight>lights, List<ModelInstance> instances) {
         fps.log();
 
         handleLights(lights);
@@ -93,31 +85,10 @@ public class RenderManager {
      * @param cam PerspectiveCam the current camera
      */
 
-    private void renderToScreen(PerspectiveCamera cam, Collection<GameObjectContainer> instances){
+    private void renderToScreen(PerspectiveCamera cam, List<ModelInstance> instances){
         modelBatch.begin(cam);
-        for (GameObjectContainer instance : instances) {
-            modelBatch.render(instance.getGraphicObject(), environment);
-
-            if(Config.DEBUG) {
-                ModelBuilder modelBuilder = new ModelBuilder();
-                Vector3 dimensions = instance.getGraphicObject().calculateBoundingBox(new BoundingBox()).getDimensions(new Vector3());
-
-                Model model;
-                if(instance.getGameObject() instanceof Character) {
-                    model = modelBuilder.createCylinder(2, 5, 2,20,
-                            new Material(ColorAttribute.createDiffuse(Color.GREEN)),
-                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                }else {
-                    model = modelBuilder.createBox(dimensions.x, dimensions.y, dimensions.z,
-                            new Material(ColorAttribute.createDiffuse(Color.RED)),
-                            VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-                }
-
-                ModelInstance modelInstance = new ModelInstance(model);
-                modelInstance.transform = instance.getGraphicObject().transform;
-                modelBatch.render(modelInstance, environment);
-
-            }
+        for (ModelInstance instance : instances) {
+            modelBatch.render(instance, environment);
         }
         modelBatch.end();
     }
@@ -128,12 +99,12 @@ public class RenderManager {
      * @param cam PerspectiveCam the current camera
      */
 
-    private void renderShadowMap(PerspectiveCamera cam, Collection<GameObjectContainer> instances){
+    private void renderShadowMap(PerspectiveCamera cam, List<ModelInstance> instances){
         shadowLight.begin(Vector3.Zero, cam.direction);
         shadowBatch.begin(shadowLight.getCamera());
 
-        for (GameObjectContainer instance : instances) {
-            shadowBatch.render(instance.getGraphicObject(), environment);
+        for (ModelInstance instance : instances) {
+            shadowBatch.render(instance, environment);
         }
         shadowBatch.end();
         shadowLight.end();
