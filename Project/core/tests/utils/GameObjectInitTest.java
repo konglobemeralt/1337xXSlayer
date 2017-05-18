@@ -1,4 +1,4 @@
-package test.com.projectdgdx.game.utils;
+package utils;
 
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.GameObjectInit;

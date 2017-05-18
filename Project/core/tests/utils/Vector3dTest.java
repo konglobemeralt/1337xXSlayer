@@ -1,4 +1,4 @@
-package test.com.projectdgdx.game.utils;
+package utils;
 import com.projectdgdx.game.utils.Vector3d;
 import org.junit.Before;
 import org.junit.Test;

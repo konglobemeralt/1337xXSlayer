@@ -1,4 +1,4 @@
-package com.projectdgdx.game.utils;
+package com.projectdgdx.game;
 
 /**
  * Created by Eddie on 2017-04-28.

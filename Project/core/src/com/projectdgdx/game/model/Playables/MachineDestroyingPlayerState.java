@@ -17,7 +17,7 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
     Machine machine;
     PlayableCharacter currentUser;
 
-    MachineDestroyingPlayerState(iDishonestInteractable machine, PlayableCharacter currentPlayer){
+    public MachineDestroyingPlayerState(iDishonestInteractable machine, PlayableCharacter currentPlayer){
         this.machine = (Machine) machine;
         this.currentUser = currentPlayer;
         // Play some kind of animation

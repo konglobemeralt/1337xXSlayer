@@ -14,7 +14,7 @@ public class MachineInteractingPlayerState implements iPlayerState, iTimerListen
     private Machine machine;
     private PlayableCharacter currentPlayer;
 
-    MachineInteractingPlayerState(iHonestInteractable machine, PlayableCharacter currentPlayer){
+    public MachineInteractingPlayerState(iHonestInteractable machine, PlayableCharacter currentPlayer){
         this.currentPlayer = currentPlayer;
         this.machine = (Machine) machine;
         // Play some kind of animation

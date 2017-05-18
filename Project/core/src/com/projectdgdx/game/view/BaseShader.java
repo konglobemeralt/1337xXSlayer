@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.projectdgdx.game.utils.Config;
+import com.projectdgdx.game.Config;
 
 /**
  * Created by konglobemeralt on 2017-04-05.

@@ -21,7 +21,7 @@ import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;
 import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
-import com.projectdgdx.game.utils.Config;
+import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.utils.*;

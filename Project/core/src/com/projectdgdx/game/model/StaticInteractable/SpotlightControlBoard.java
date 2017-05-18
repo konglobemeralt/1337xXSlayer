@@ -5,7 +5,7 @@ import com.projectdgdx.game.model.Playables.NormalPlayerState;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.model.iHonestInteractable;
-import com.projectdgdx.game.utils.Config;
+import com.projectdgdx.game.Config;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;

@@ -1,4 +1,4 @@
-package test.com.projectdgdx.game.utils;
+package utils;
 
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.MachineStates.UnusedMachineState;

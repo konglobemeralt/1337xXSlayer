@@ -1,10 +1,11 @@
 apply plugin: "java"
 
-sourceCompatibility = 1.6
+sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "com.projectdgdx.game.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets")
+project.ext.assetstest = new File("ikasd");
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
@@ -28,7 +29,8 @@ task dist(type: Jar) {
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
     from files(project.assetsDir)
- 
+    from files(new File(project.buildDir, "subdir"))
+
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
