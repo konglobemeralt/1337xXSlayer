@@ -2,7 +2,6 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
@@ -14,7 +13,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.model.AI.AINode;
+import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**
@@ -74,7 +73,7 @@ public class GameObjectContainer implements Disposable {
 		//Add PhysicsObject to dynamicworld, depends on GameObject type
 		if(gameObject instanceof Entity) {
 			dynamicsWorld.addRigidBody(physicsObject, ENTITY_FLAG, STATIC_FLAG);
-		}else if(gameObject instanceof AINode) {
+		}else if(gameObject instanceof BasicNode) {
 			physicsObject = null;
 		} else if(gameObject instanceof Floor) {
 			//Ignore floor it's pointless for now

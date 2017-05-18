@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model;
 
-import com.projectdgdx.game.model.AI.AINode;
+import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.AI.NormalWorkerState;
 import com.projectdgdx.game.model.AI.StrikingWorkerState;
 import com.projectdgdx.game.model.AI.iWorkerState;
@@ -13,8 +13,8 @@ import com.projectdgdx.game.utils.Vector3d;
  */
 public class Worker extends Character {
 
-    private AINode targetNode;
-    private AINode lastNode;
+    private BasicNode targetNode;
+    private BasicNode lastNode;
     private iWorkerState state;
 
     public Worker(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
@@ -22,19 +22,19 @@ public class Worker extends Character {
         this.state = new NormalWorkerState();
     }
 
-    public AINode getTargetNode() {
+    public BasicNode getTargetNode() {
         return targetNode;
     }
 
-    public void setTargetNode(AINode targetNode) {
+    public void setTargetNode(BasicNode targetNode) {
         this.targetNode = targetNode;
     }
 
-    public AINode getLastNode() {
+    public BasicNode getLastNode() {
         return lastNode;
     }
 
-    public void setLastNode(AINode lastNode) {
+    public void setLastNode(BasicNode lastNode) {
         this.lastNode = lastNode;
     }
 

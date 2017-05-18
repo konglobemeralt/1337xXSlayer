@@ -1,7 +1,6 @@
 package com.projectdgdx.game.model;
 
-import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.model.AI.AINode;
+import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.AI.WorkerNode;
 
 import java.util.ArrayList;
@@ -68,11 +67,11 @@ public abstract class Map {
         return workers;
     }
 
-    public List<AINode> getAINodes() {
-        List<AINode> nodes = new ArrayList<>();
+    public List<BasicNode> getAINodes() {
+        List<BasicNode> nodes = new ArrayList<>();
         for(GameObject gameObject : gameObjects) {
-            if(gameObject instanceof AINode) {
-                nodes.add((AINode)gameObject);
+            if(gameObject instanceof BasicNode) {
+                nodes.add((BasicNode)gameObject);
             }
         }
         return nodes;

@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.model.AI.AINode;
+import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.Timer;
@@ -307,8 +307,8 @@ public class InGameState implements iGameState, iTimerListener{
 		map = parser.parse(Config.LEVEL_IN_PLAY);
 
 		// Init nodes
-		List<AINode> nodeList =  map.getAINodes();
-		for(AINode node : nodeList) {
+		List<BasicNode> nodeList =  map.getAINodes();
+		for(BasicNode node : nodeList) {
 			node.init(map.getAINodes());
 		}
 
