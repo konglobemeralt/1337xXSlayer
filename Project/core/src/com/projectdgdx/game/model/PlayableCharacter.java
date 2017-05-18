@@ -15,7 +15,6 @@ public abstract class PlayableCharacter extends Character {
 
     public PlayableCharacter(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
         super(position, scale, rotation, id);
-        this.setStartingState();
     }
 
     /**
@@ -68,13 +67,6 @@ public abstract class PlayableCharacter extends Character {
     protected boolean canHonestInteract(iHonestInteractable hi){
         float value = this.getPosition().distanceTo(hi.getPosition()) - Config.HONEST_ACT_DISTANCE;
         return value < 0;
-    }
-
-    /**
-     * Sets the starting state of the PlayableCharacter.
-     */
-    protected void setStartingState(){
-        this.state = new NormalPlayerState(this);
     }
 
     @Override

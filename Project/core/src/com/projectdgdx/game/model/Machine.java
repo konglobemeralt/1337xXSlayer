@@ -20,9 +20,9 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
     protected iMachineState state;
 
-    public Machine(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
+    public Machine(Vector3d position, Vector3d scale, Vector3d rotation, String id, iMachineState state) {
         super(position, scale, rotation, id);
-        this.state = new UnusedMachineState();
+        this.state = state;
 
         this.spot = new Spotlight(new Vector3d(position.x, 30, position.z),
                 new Vector3d(1, 1, 1),

@@ -78,16 +78,20 @@ public class GameObjectInit {
         public GameObject convert() {
             switch (type) {
                 case "Machine":
-                    return new Machine(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "machine.basic");
+                    return new Machine(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "machine.basic", new UnusedMachineState());
                 case "SpotControl":
                     Spotlight light = new Spotlight(new Vector3d(x,30,  z), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 30, Config.MACHINELIGHT_BASE_INTENSITY, "spotlight.controlboard");
                     return new SpotlightControlBoard(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "control.basic", light);
                 case "Worker":
                     return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "worker.basic");
                 case "Supervisor":
-                    return new Supervisor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "supervisor.basic");
+                    Supervisor supervisor = new Supervisor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "supervisor.basic");
+                    supervisor.setState(new NormalPlayerState(supervisor));
+                    return supervisor;
                 case "Saboteur":
-                    return new Saboteur(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "saboteur.basic");
+                    Saboteur saboteur = new Saboteur(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "saboteur.basic");
+                    saboteur.setState(new NormalPlayerState(saboteur));
+                    return saboteur;
                 case "WorkerNode":
                     return new WorkerNode(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "node.worker", nodeId, nodeFriends) {
                     };
