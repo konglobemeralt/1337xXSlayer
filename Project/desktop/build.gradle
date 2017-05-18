@@ -23,12 +23,21 @@ task debug(dependsOn: classes, type: JavaExec) {
     debug = true
 }
 
-task dist(type: Jar) {
-    from files(sourceSets.main.output.classesDir)
-//    from files(sourceSets.main.output.resourcesDir)
-    from files(project.ext.assetsDir);
-    from {configurations.compile.collect {zipTree(it)}}
+task copyAssets(type: Copy) {
+    FileTree tree = fileTree(dir: project.ext.assetsDir)
 
+    from tree
+    into "build/libs/"
+}
+
+task dist(type: Jar) {
+    //Copy assets files
+    tasks.copyAssets.execute()
+
+    //Create jar
+    from files(sourceSets.main.output.classesDir)
+//    from files(project.ext.assetsDir); No point in storing assets in jar anymore
+    from {configurations.compile.collect {zipTree(it)}}
 
     manifest {
         attributes 'Main-Class': project.mainClassName

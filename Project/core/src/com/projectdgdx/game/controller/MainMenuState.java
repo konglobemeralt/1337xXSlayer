@@ -41,7 +41,7 @@ public class MainMenuState implements iGameState {
     @Override
     public void init(ProjectD projectD) {
         File f = new File("map/");
-        levelList = new ArrayList<String>(Arrays.asList(f.list()));
+//        levelList = new ArrayList<String>(Arrays.asList(f.list()));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MainMenuState implements iGameState {
         buildMenu();
 
         //Set to first selection as default
-        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
+//        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
 
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
