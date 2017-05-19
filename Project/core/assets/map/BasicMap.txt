@@ -23,6 +23,5 @@
     <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
     <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
     <Worker x="0" y="0" z="-10" rotationX="0.0" rotationY="0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1"></Worker>
-
     <SpotControl x="0" y="0.0000" z="0" rotationX="0.0" rotationY="0.0" rotationZ="0" scaleX="1" scaleY="1" scaleZ="1" tag="SpotControl" prop="1.0"></SpotControl>
 </Map>
