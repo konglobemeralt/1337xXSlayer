@@ -76,7 +76,7 @@ public class RenderManager {
         updatePointLights(lights);
 
         if(Config.DISCO_FACTOR > 0){
-            updateDiscoLights();
+           updateDiscoLights();
         }
 
 
@@ -140,6 +140,7 @@ public class RenderManager {
         for (PointLight p: pointLightList) {
             environment.remove(p);
         }
+        pointLightList.clear();
         createPointLights(lights);
     }
 
@@ -165,6 +166,8 @@ public class RenderManager {
             environment.remove(p);
             //pointLightList.remove(p);
         }
+        discoLightList.clear();
+
         moveDiscoLights();
         //createLights();
     }
@@ -181,7 +184,6 @@ public class RenderManager {
             environment.add(light);
             discoLightList.add(light);
             discoLightPosList.add(pos);
-
         }
 
     }
@@ -199,7 +201,7 @@ public class RenderManager {
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
                     discoLightPosList.get(i).x , discoLightPosList.get(i).y,  discoLightPosList.get(i).z, 50f);
             environment.add(light);
-            pointLightList.add(light);
+            discoLightList.add(light);
         }
 
     }
