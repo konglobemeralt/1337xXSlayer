@@ -29,7 +29,7 @@ public class AssetsFinder {
      * @return A path to the model
      */
     public static String getModelPath(String id) {
-        System.out.println("ID: " + id);
+        // System.out.println("ID: " + id);
         return textureMap.get(id)[0];
     }
 
