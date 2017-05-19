@@ -2,14 +2,23 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.*;
+import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -64,6 +73,7 @@ public class InGameState implements iGameState, iTimerListener{
 	btBroadphaseInterface broadphase;
 	btDynamicsWorld dynamicsWorld;
 	btConstraintSolver constraintSolver;
+	DebugDrawer debugDrawer;
 
 //	MyMotionState motionState;
 
@@ -209,6 +219,7 @@ public class InGameState implements iGameState, iTimerListener{
 		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
 			modelInstances.add(gameObjectContainer.getGraphicObject());
 		}
+
 		renderer.render(cam, lightList, modelInstances); //Pass render Instances and camera to render
 		stage.act();
 		stage.draw();
@@ -284,7 +295,12 @@ public class InGameState implements iGameState, iTimerListener{
 
 	public void update(ProjectD projectD){
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+
+
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+//		dynamicsWorld.stepSimulation(1);
+
+
 		handleInput(projectD);
 		handleWorkers();
 		updateEntities(map.getEntities());
@@ -293,6 +309,11 @@ public class InGameState implements iGameState, iTimerListener{
 		animate();
 		render();
 
+		if(Config.DEBUG) {
+			debugDrawer.begin(cam);
+			dynamicsWorld.debugDrawWorld();
+			debugDrawer.end();
+		}
 	}
 
 	// TODO functional decomposition and docs
@@ -306,9 +327,17 @@ public class InGameState implements iGameState, iTimerListener{
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
 		// dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+
+		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+
+		if(Config.DEBUG) {
+			debugDrawer = new DebugDrawer();
+			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+			dynamicsWorld.setDebugDrawer(debugDrawer);
+		}
 		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
 		collisionListener = new CollisionListener();
+
 
 		rand = new Random();
 
@@ -393,7 +422,6 @@ public class InGameState implements iGameState, iTimerListener{
 
 	public void exit(ProjectD projectD){
 
-		System.out.println("EXIIITTT!");
 		//Dispose physics objects
 		dynamicsWorld.dispose();
 		collisionConfig.dispose();

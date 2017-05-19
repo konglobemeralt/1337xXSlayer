@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
+import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
@@ -65,6 +62,12 @@ public class GameObjectContainer implements Disposable {
 
 		//Disable movements in y:
 		physicsObject.setLinearFactor(new Vector3(1,1,1));
+
+		// Disable deactivation of physics object for moving objects
+		if(gameObject instanceof Entity) {
+			physicsObject.setActivationState(Collision.DISABLE_DEACTIVATION);
+		}
+
 
 		//Setup motion state
 		MyMotionState motionState = new MyMotionState();
