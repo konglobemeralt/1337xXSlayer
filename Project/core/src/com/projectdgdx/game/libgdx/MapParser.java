@@ -26,6 +26,11 @@ public class MapParser {
     private Document doc;
     private List<GameObject> gameObjects = new ArrayList<GameObject>();
 
+    //Default values for creation of map
+    private int machinesDestroyedToEnd = 3;
+    private int strikingWorkersToEnd = 4;
+
+
     /**
      * This method loads the xml representation of the map into a Document variable which can be used
      * to access map data.
@@ -85,6 +90,21 @@ public class MapParser {
         }
     }
 
+    /**
+     * Load map values from root of map file <Map attribute="value"></Map>
+     */
+    private void loadMapValues() {
+        if(doc.getDocumentElement().hasAttribute("machinesToDestroy")) {
+            machinesDestroyedToEnd = Integer.parseInt(doc.getDocumentElement().getAttribute("machinesToDestroy"));
+        }
+        if(doc.getDocumentElement().hasAttribute("workersToStrike")) {
+            strikingWorkersToEnd = Integer.parseInt(doc.getDocumentElement().getAttribute("workersToStrike"));
+        }
+        if(Config.DEBUG) {
+            System.out.println("MachinesToDestroy: " + machinesDestroyedToEnd + " , Strikes: " + strikingWorkersToEnd);
+        }
+    }
+
     //GameObject to add attributes to from xml
 
     /**
@@ -126,8 +146,9 @@ public class MapParser {
     public Map parse(String mapName) {
         loadDocument(mapName);
         loadElements(doc.getDocumentElement().getChildNodes());
-        return new BasicMap(gameObjects, 3, 4); //TODO arguments should derive from map text file
+        loadMapValues();
 
+        return new BasicMap(gameObjects, machinesDestroyedToEnd, strikingWorkersToEnd);
     }
 
 

@@ -1,6 +1,7 @@
 package utils;
 
 import com.projectdgdx.game.utils.Config;
+import com.projectdgdx.game.utils.Vector2d;
 import org.junit.Before;
 import org.junit.Test;
 

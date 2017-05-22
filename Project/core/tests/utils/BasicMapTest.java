@@ -17,7 +17,7 @@ public class BasicMapTest {
     @Test
     public void gameObjects() {
         List<GameObject> gameObjects = new ArrayList<GameObject>();
-        BasicMap map = new BasicMap(gameObjects);
+        BasicMap map = new BasicMap(gameObjects, 2,2);
         assertTrue(gameObjects.equals(map.getGameObjects()));
     }
 
