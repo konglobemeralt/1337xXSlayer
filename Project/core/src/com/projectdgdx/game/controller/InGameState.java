@@ -64,7 +64,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	//Bullet
 	btDefaultCollisionConfiguration collisionConfig;
 	btCollisionDispatcher dispatcher;
-	CollisionListener collisionListener;
 	btBroadphaseInterface broadphase;
 	btDynamicsWorld dynamicsWorld;
 	btConstraintSolver constraintSolver;
@@ -93,24 +92,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 			map.getEndgameCounter().incStrikingWorkers();
 		}
 	}
-
-	class CollisionListener extends ContactListener {
-		@Override
-		public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
-			GameObject gameObject0 = map.getGameObjects().get(userValue0);
-			GameObject gameObject1 = map.getGameObjects().get(userValue1);
-//			System.out.println("COLLISION!");
-//			}
-			//System.out.println(gameObject0.getId() + " collision with: " + gameObject1.getId());
-			return true;
-		}
-
-//		@Override
-//		public void onContactStarted (btCollisionObject colObj0, btCollisionObject colObj1) {
-//			// implementation
-//		}
-	}
-
 	private void generateRenderInstances(){
 
 		for (GameObject gameObject : map.getGameObjects()) {
@@ -359,7 +340,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 			dynamicsWorld.setDebugDrawer(debugDrawer);
 		}
 		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
-		collisionListener = new CollisionListener();
 
 
 		rand = new Random();
@@ -452,7 +432,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		dynamicsWorld.dispose();
 		collisionConfig.dispose();
 		dispatcher.dispose();
-		collisionListener.dispose();
 		broadphase.dispose();
 		constraintSolver.dispose();
 		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
