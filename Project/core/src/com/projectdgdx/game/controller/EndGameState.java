@@ -79,7 +79,15 @@ public class EndGameState implements iGameState {
 		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
 
 		//Create buttons
-		endGameMessage = new Label("Game Over :( :( :(", skin);
+		if (this.ending == GameStates.ENDGAME_TIMER){
+			endGameMessage = new Label("Game Over!\nTime is up, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
+		}else if (this.ending == GameStates.ENDGAME_CAUGHT){
+			endGameMessage = new Label("Game Over!\nThe saboteur was caught, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
+		}else if (this.ending == GameStates.ENDGAME_STRIKE){
+			endGameMessage = new Label("Game Over!\nThe workers are striking, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
+		}else if (this.ending == GameStates.ENDGAME_MACHINES){
+			endGameMessage = new Label("Game Over!\nThe machines are destroyed, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
+		}
 
 		this.table.add(endGameMessage).padBottom(Gdx.graphics.getHeight() - 70);
 		this.stage.addActor(table);

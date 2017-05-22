@@ -318,12 +318,24 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		render();
 
 		if(!gameRunning) {
-			projectD.setState(GameStates.ENDGAME); //TODO Currently cant say what kind of ending happened.
+			enterEndgame(projectD);
 		}
 		if(Config.DEBUG) {
 			debugDrawer.begin(cam);
 			dynamicsWorld.debugDrawWorld();
 			debugDrawer.end();
+		}
+	}
+
+	private void enterEndgame(ProjectD projectD){
+		if (gameEndingEvent == Events.MACHINES_DESTROYED_END){
+			projectD.setState(GameStates.ENDGAME_MACHINES);
+		}else if (gameEndingEvent == Events.SABOTEUR_CAUGHT){
+			projectD.setState(GameStates.ENDGAME_CAUGHT);
+		}else if (gameEndingEvent == Events.STRIKE_END){
+			projectD.setState(GameStates.ENDGAME_STRIKE);
+		}else if (gameEndingEvent == Events.TIME_UPP){
+			projectD.setState(GameStates.ENDGAME_TIMER);
 		}
 	}
 
