@@ -57,7 +57,7 @@ public class Worker extends Character {
 
     @Override
     public void beenCaught() {
-        this.state = new StrikingWorkerState();
+        this.state.beenCaught(this);
     }
 
 

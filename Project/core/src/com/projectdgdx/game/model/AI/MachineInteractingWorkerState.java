@@ -47,4 +47,9 @@ public class MachineInteractingWorkerState implements iWorkerState {
         }
 
     }
+
+    @Override
+    public void beenCaught(Worker worker) {
+        worker.setState(new StrikingWorkerState());
+    }
 }

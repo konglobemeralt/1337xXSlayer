@@ -11,6 +11,7 @@ import com.projectdgdx.game.utils.Vector3d;
 public class StrikingWorkerState implements iWorkerState {
 
     public StrikingWorkerState(){
+        System.out.println("I'm in chargeee now!");
         EventSender.getEventSender().sendNewStrikingWorker();
     }
 
@@ -40,5 +41,10 @@ public class StrikingWorkerState implements iWorkerState {
     private boolean isInStrikeZone(Worker worker){
        return false; //TODO
                //worker.getPosition().isInRadius(ModelDataHandler.getStrikeZone().getPosition(), Config.STRIKE_ZONE_RADIUS);
+    }
+
+    @Override
+    public void beenCaught(Worker worker) {
+        //Do nothing, is already caught
     }
 }

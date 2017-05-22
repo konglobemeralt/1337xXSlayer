@@ -13,4 +13,5 @@ public interface iWorkerState {
      */
 
 	void reactOnUpdate(Worker worker);
+	void beenCaught(Worker worker);
 }
