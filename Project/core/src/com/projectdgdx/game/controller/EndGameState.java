@@ -2,21 +2,19 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.model.Events;
 import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.view.RenderManager;
 
 import java.util.Random;
-
-import static com.badlogic.gdx.Gdx.gl20;
 
 /**
  * InGameState controls everything that is in game.
@@ -49,7 +47,7 @@ public class EndGameState implements iGameState {
 				Config.MENU_DEFAULTBACKGROUND_G,
 				Config.MENU_DEFAULTBACKGROUND_B,
 				Config.MENU_DEFAULTBACKGROUND_A);
-		Gdx.gl.glClear(gl20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
 		stage.draw();
 	}

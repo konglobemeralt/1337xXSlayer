@@ -2,6 +2,7 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -12,8 +13,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static com.badlogic.gdx.Gdx.gl20;
 
 /**
  * Main menu state displays and handles the main menu
@@ -64,7 +63,7 @@ public class MainMenuState implements iGameState {
                 Config.MENU_DEFAULTBACKGROUND_G,
                 Config.MENU_DEFAULTBACKGROUND_B,
                 Config.MENU_DEFAULTBACKGROUND_A);
-        Gdx.gl.glClear(gl20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act();
         stage.draw();
@@ -140,8 +139,8 @@ public class MainMenuState implements iGameState {
         table.row();
         table.add(newGameButton).expandX().width(600).height(60);
         table.row();
-        table.add(levelSelection).expandX().width(600).height(30);;
-        table.row();
+        table.add(levelSelection).expandX().width(600).height(30);
+		table.row();
         table.add(settingsButton).expandX().width(600).height(60);
         table.row();
         table.add(exitButton).expandX().width(600).height(60);

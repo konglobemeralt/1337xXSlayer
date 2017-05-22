@@ -81,9 +81,9 @@ public class Config {
     public static final float MENU_DEFAULTBACKGROUND_R = 0.2f;
     public static final float MENU_DEFAULTBACKGROUND_G = 0.2f;
     public static final float MENU_DEFAULTBACKGROUND_B = 0.2f;
-    public static final float MENU_DEFAULTBACKGROUND_A = 1f;;
+    public static final float MENU_DEFAULTBACKGROUND_A = 1f;
 
-    //PATHS GUI STYLE
+	//PATHS GUI STYLE
     public static final String UI_SKIN_PATH = "GUIStyle/uiskin.json";
 
     /************MODEL VARIABLES************/

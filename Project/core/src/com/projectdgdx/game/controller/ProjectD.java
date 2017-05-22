@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.projectdgdx.game.model.Events;
 import com.projectdgdx.game.model.Input.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.Config;

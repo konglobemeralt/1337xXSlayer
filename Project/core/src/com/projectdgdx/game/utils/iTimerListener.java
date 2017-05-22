@@ -7,5 +7,5 @@ public interface iTimerListener {
     /**
      * When a timer has ended and all time is up this method will be called.
      */
-    public void timeIsUp();
+	void timeIsUp();
 }

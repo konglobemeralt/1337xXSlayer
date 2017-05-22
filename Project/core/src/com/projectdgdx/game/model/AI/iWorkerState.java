@@ -12,5 +12,5 @@ public interface iWorkerState {
      * @param worker The worker who is in this state.
      */
 
-    public void reactOnUpdate(Worker worker);
+	void reactOnUpdate(Worker worker);
 }
