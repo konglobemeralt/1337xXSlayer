@@ -33,4 +33,11 @@ public class Vector2d {
         return "[" + x + "," + z + "]";
     }
 
+	/**
+	 * Created by Eddie on 2017-04-28.
+	 *
+	 * Class containing various settings variables for the game.
+	 *
+	 */
+
 }

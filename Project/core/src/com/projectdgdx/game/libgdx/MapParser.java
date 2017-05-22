@@ -1,16 +1,16 @@
-package com.projectdgdx.game.utils;
+package com.projectdgdx.game.libgdx;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
+import com.projectdgdx.game.utils.TextFileLoader;
+import com.projectdgdx.game.utils.Config;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

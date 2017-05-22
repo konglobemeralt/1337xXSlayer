@@ -1,9 +1,9 @@
 package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.model.iDishonestInteractable;
+import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;

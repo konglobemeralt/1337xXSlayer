@@ -2,8 +2,8 @@ package com.projectdgdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.controller.ProjectD;
+import com.projectdgdx.game.utils.Config;
 
 
 public class DesktopLauncher {

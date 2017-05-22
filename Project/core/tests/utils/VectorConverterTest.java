@@ -2,7 +2,7 @@ package utils;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.projectdgdx.game.utils.Vector2d;
+import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.VectorConverter;
 import org.junit.Before;
