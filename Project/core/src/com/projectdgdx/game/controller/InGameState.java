@@ -309,34 +309,9 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		}
 	}
 
-	// TODO functional decomposition and docs
-	public void init(ProjectD projectD){
-		objectsMap = new HashMap<>();
-
-		//Bullet inits
-		Bullet.init();
-		collisionConfig = new btDefaultCollisionConfiguration();
-		dispatcher = new btCollisionDispatcher(collisionConfig);
-		broadphase = new btDbvtBroadphase();
-		constraintSolver = new btSequentialImpulseConstraintSolver();
-		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
-
-		if(Config.DEBUG) {
-			debugDrawer = new DebugDrawer();
-			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
-			dynamicsWorld.setDebugDrawer(debugDrawer);
-		}
-
-
-		rand = new Random();
-
-		createCamera();
-
-		MapParser parser = new MapParser();
-		map = parser.parse(Config.LEVEL_IN_PLAY);
-
+	private void initWorkers() {
 		// Init nodes
+		rand = new Random();
 		List<BasicNode> nodeList =  map.getAINodes();
 		for(BasicNode node : nodeList) {
 			node.init(map.getAINodes());
@@ -345,18 +320,21 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		for (Worker worker : map.getWorkers()){
 			worker.setTargetNode(nodeList.get(rand.nextInt(nodeList.size())));
 		}
+	}
 
+	private void initInputs(List<InputController> inputs) {
 		int i = 0;
 		List<PlayableCharacter> players = map.getPlayers();
-		for(InputController input : projectD.getInpuControllers()) {
+		for(InputController input : inputs) {
 			if(i < players.size()) {
 				controllerPlayerMap.put(input, players.get(i));
 			}
 			i++;
 		}
+	}
 
-		generateRenderInstances();
-
+	private void initView() {
+		//Init view
 		renderer = new RenderManager();
 		renderer.init(lightList);
 
@@ -370,9 +348,39 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 		this.table.add(gameTimeCountLabel).padBottom(Gdx.graphics.getHeight() - 70);
 		this.stage.addActor(table);
+	}
 
-		// Machine init
-		this.machineInit();
+	private void initPhysics() {
+		Bullet.init();
+		collisionConfig = new btDefaultCollisionConfiguration();
+		dispatcher = new btCollisionDispatcher(collisionConfig);
+		broadphase = new btDbvtBroadphase();
+		constraintSolver = new btSequentialImpulseConstraintSolver();
+		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
+
+		if(Config.DEBUG) {
+			debugDrawer = new DebugDrawer();
+			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+			dynamicsWorld.setDebugDrawer(debugDrawer);
+		}
+	}
+
+	// TODO functional decomposition and docs
+	public void init(ProjectD projectD){
+		objectsMap = new HashMap<>();
+		createCamera();
+
+		//Parse and create map
+		MapParser parser = new MapParser();
+		map = parser.parse(Config.LEVEL_IN_PLAY);
+
+		initPhysics();
+		initWorkers();
+		initInputs(projectD.getInpuControllers());
+		generateRenderInstances();
+		initView();
+		initMachines();
 
 		// Make this a listener
 		EventSender.getEventSender().getListeners().clear();
@@ -380,7 +388,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 	}
 
-	private void machineInit(){
+	private void initMachines(){
 		List<Spotlight> mainSpotlights = new ArrayList<>();
 
 		for(SpotlightControlBoard sCB : this.map.getSpotlightControlBoard()){
