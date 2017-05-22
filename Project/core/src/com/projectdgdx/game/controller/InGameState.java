@@ -62,12 +62,12 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	private HashMap<GameObject, GameObjectContainer> objectsMap = new HashMap<>();
 
 	//Bullet
-	btDefaultCollisionConfiguration collisionConfig;
-	btCollisionDispatcher dispatcher;
-	btBroadphaseInterface broadphase;
-	btDynamicsWorld dynamicsWorld;
-	btConstraintSolver constraintSolver;
-	DebugDrawer debugDrawer;
+	private btDefaultCollisionConfiguration collisionConfig;
+	private btCollisionDispatcher dispatcher;
+	private btBroadphaseInterface broadphase;
+	private btDynamicsWorld dynamicsWorld;
+	private btConstraintSolver constraintSolver;
+	private DebugDrawer debugDrawer;
 
 //	MyMotionState motionState;
 
