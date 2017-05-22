@@ -48,7 +48,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	private Skin skin;
 	private Table table;
 	private Stage stage;
-	private Timer gameTimer;
 	private boolean gameRunning = true;
 	private Events gameEndingEvent;
 
@@ -433,8 +432,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 		renderer = new RenderManager();
 		renderer.init(lightList);
-		updateTimer();
-
+		initTimer();
 	}
 
 	@Override
@@ -492,8 +490,8 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	}
 
 	private void updateTimerLabel(){
-		int min = gameTimer.getTimerValue()/60;
-		int sec = gameTimer.getTimerValue()%60;
+		int min = map.getEndgameCounter().getEndgameTimer().getTimerValue()/60;
+		int sec = map.getEndgameCounter().getEndgameTimer().getTimerValue()%60;
 
 		String minString = String.valueOf(min);
 		String secString = String.valueOf(sec);
@@ -508,9 +506,10 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		gameTimeCountLabel.setText("Tid kvar: " + minString + ":" + secString);
 	}
 
-	public void updateTimer() {
-		this.gameTimer = new Timer(Config.GAME_TIME, 1000);
-		this.gameTimer.start();
+	public void initTimer() {
+		map.getEndgameCounter().setEndgameTimer(new Timer(Config.GAME_TIME,1000));
+		map.getEndgameCounter().getEndgameTimer().addListener(this);
+		map.getEndgameCounter().getEndgameTimer().start();
 	}
 
 	@Override

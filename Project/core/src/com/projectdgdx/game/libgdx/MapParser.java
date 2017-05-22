@@ -11,6 +11,7 @@ import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.utils.TextFileLoader;
 import com.projectdgdx.game.utils.Config;
+import com.projectdgdx.game.utils.Timer;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -148,7 +149,7 @@ public class MapParser {
         loadElements(doc.getDocumentElement().getChildNodes());
         loadMapValues();
 
-        return new BasicMap(gameObjects, machinesDestroyedToEnd, strikingWorkersToEnd);
+        return new BasicMap(gameObjects, machinesDestroyedToEnd, strikingWorkersToEnd, new Timer(Config.GAME_TIME,1000));
     }
 
 
