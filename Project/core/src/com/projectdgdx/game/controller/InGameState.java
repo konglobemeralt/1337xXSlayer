@@ -69,14 +69,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	private btConstraintSolver constraintSolver;
 	private DebugDrawer debugDrawer;
 
-//	MyMotionState motionState;
-
-	//Collision flags
-	final static short STATIC_FLAG = 1<<8;
-	final static short ENTITY_FLAG = 1<<9;
-	final static short ALL_FLAG = -1;
-
-
 	private RenderManager renderer;
 	private Random rand;
 	private Map map;
@@ -280,11 +272,9 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 
 	public void update(ProjectD projectD){
+		//Update world physics
 		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-
-
 		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
-//		dynamicsWorld.stepSimulation(1);
 
 
 		handleInput(projectD);
@@ -295,9 +285,11 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		animate();
 		render();
 
+		//Check if game over
 		if(!gameRunning) {
 			enterEndgame(projectD);
 		}
+
 		if(Config.DEBUG) {
 			debugDrawer.begin(cam);
 			dynamicsWorld.debugDrawWorld();
@@ -306,7 +298,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	}
 
 	private void enterEndgame(ProjectD projectD){
-		System.out.println("GAME OVER");
 		if (gameEndingEvent == Events.MACHINES_DESTROYED_END){
 			projectD.setState(GameStates.ENDGAME_MACHINES);
 		}else if (gameEndingEvent == Events.SABOTEUR_CAUGHT){
@@ -328,16 +319,14 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		dispatcher = new btCollisionDispatcher(collisionConfig);
 		broadphase = new btDbvtBroadphase();
 		constraintSolver = new btSequentialImpulseConstraintSolver();
-		// dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
 
 		if(Config.DEBUG) {
 			debugDrawer = new DebugDrawer();
 			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
 			dynamicsWorld.setDebugDrawer(debugDrawer);
 		}
-		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
 
 
 		rand = new Random();
