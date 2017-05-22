@@ -2,7 +2,7 @@ package com.projectdgdx.game.utils;
 
 public class Config {
     public static final int GAME_TIME = 160;
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static float MOVE_SPEED = 30f;
 
     public static final int MACHINELIGHT_BLINK_TIME = 10;

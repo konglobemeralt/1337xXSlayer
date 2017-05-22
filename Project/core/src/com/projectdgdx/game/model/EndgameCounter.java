@@ -25,7 +25,9 @@ public class EndgameCounter {
     }
 
     public void incDestroyedMachines(){
+        System.out.println("Num destroyed machines was:" + numDestroyedMachines + " now " + (numDestroyedMachines+1));
         this.numDestroyedMachines++;
+
         if (this.numDestroyedMachines >= targetNumDestroyedMachines){
             EventSender.getEventSender().sendMachinesDestroyedEnd();
         }

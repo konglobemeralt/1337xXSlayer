@@ -29,11 +29,11 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
     @Override
     public void move(Vector3d vector) {
         currentUser.setMoveForce(new Vector3d(0,0,0));
-        // Empty since it will be more suspense if the saboteur can't move while sabotaging
     }
 
     @Override
     public void timeIsUp() {
+        System.out.println("Destroyed machine!");
         DestroyedMachineState destroyedState = new DestroyedMachineState(machine);
         this.currentUser.setState(new NormalPlayerState(currentUser));
         this.machine.setState(destroyedState);

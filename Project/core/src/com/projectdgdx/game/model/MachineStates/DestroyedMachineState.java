@@ -18,6 +18,7 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
     private Machine machine;
 
     public DestroyedMachineState(Machine machine){
+        System.out.println("New state created");
         this.machine = machine;
         EventSender.getEventSender().sendNewDestroyedMachine();
     }

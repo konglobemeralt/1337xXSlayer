@@ -328,6 +328,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	}
 
 	private void enterEndgame(ProjectD projectD){
+		System.out.println("GAME OVER");
 		if (gameEndingEvent == Events.MACHINES_DESTROYED_END){
 			projectD.setState(GameStates.ENDGAME_MACHINES);
 		}else if (gameEndingEvent == Events.SABOTEUR_CAUGHT){
@@ -408,6 +409,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		this.machineInit();
 
 		// Make this a listener
+		EventSender.getEventSender().getListeners().clear();
 		EventSender.getEventSender().addListener(this);
 
 	}
