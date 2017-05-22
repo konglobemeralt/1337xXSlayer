@@ -1,7 +1,7 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.AI.WorkerNode;
-import com.projectdgdx.game.model.Decorations.Floor;
+import com.projectdgdx.game.model.Decorations.Decoration;
 import com.projectdgdx.game.model.MachineStates.UnusedMachineState;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.Playables.NormalPlayerState;
@@ -105,7 +105,7 @@ public class GameObjectInit {
                     return new WorkerNode(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "node.worker", nodeId, nodeFriends) {
                     };
                 case "Floor":
-                    return new Floor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
+                    return new Decoration(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
                 default:
                     System.out.println("TAG OF TYPE: " + type + " not supported");
                     return null;

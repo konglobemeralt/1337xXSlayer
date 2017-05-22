@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.projectdgdx.game.model.AI.BasicNode;
-import com.projectdgdx.game.model.Decorations.Floor;
+import com.projectdgdx.game.model.Decorations.Decoration;
 import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.ModelStructure.Entity;
@@ -83,8 +83,8 @@ public class GameObjectContainer implements Disposable {
 			dynamicsWorld.addRigidBody(physicsObject, ENTITY_FLAG, STATIC_FLAG);
 		}else if(gameObject instanceof BasicNode) {
 			physicsObject = null;
-		} else if(gameObject instanceof Floor) {
-			//Ignore floor it's pointless for now
+		} else if(gameObject instanceof Decoration) {
+			//Ignore decorations it's pointless for now
 		} else if(gameObject instanceof StaticObject) {
 			dynamicsWorld.addRigidBody(physicsObject, STATIC_FLAG, ENTITY_FLAG);
 		}
