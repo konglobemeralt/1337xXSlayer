@@ -78,9 +78,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
 
     @Override
     public void timeIsUp() {
-        System.out.println("Machine timed out");
-        this.setState(new DestroyedMachineState(this));
-        // TODO Update machine to display new model
+        this.state.destroyedByTime(this);
     }
 
     /**

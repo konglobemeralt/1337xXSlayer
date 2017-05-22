@@ -1,6 +1,7 @@
 package com.projectdgdx.game.model.MachineStates;
 
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.model.iHonestInteractable;
 
@@ -21,4 +22,6 @@ public interface iMachineState {
      * @param di , the iDishonestInteractable that is interacted with.
      */
     void dishonestInteract(PlayableCharacter player, iDishonestInteractable di);
+
+    void destroyedByTime(Machine machine);
 }

@@ -35,6 +35,11 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
     }
 
     @Override
+    public void destroyedByTime(Machine machine) {
+        //Nothing happens
+    }
+
+    @Override
     public boolean isDetected(Vector3d spotlightPos, int radius) {
         return this.machine.getPosition().isInRadius(new Vector3d(spotlightPos.x, 0, spotlightPos.z), radius);
     }

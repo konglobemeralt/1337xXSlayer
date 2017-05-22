@@ -3,6 +3,7 @@ package com.projectdgdx.game.model.MachineStates;
 import com.projectdgdx.game.model.Playables.MachineDestroyingPlayerState;
 import com.projectdgdx.game.model.Playables.MachineInteractingPlayerState;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.model.iHonestInteractable;
 
@@ -22,5 +23,12 @@ public class UnusedMachineState implements iMachineState {
     public void dishonestInteract(PlayableCharacter player, iDishonestInteractable di) {
         player.setState(new MachineDestroyingPlayerState(di, player));
 
+    }
+
+    @Override
+    public void destroyedByTime(Machine machine) {
+        System.out.println("Machine timed out");
+        machine.setState(new DestroyedMachineState(machine));
+        // TODO Update machine to display new model
     }
 }
