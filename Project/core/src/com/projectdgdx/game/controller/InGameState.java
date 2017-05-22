@@ -160,8 +160,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 				physicsObject.setDamping(1f, 0);
 			}
 
-
-
+			//Limit linear velocity
 			Vector3 linearVelocity = physicsObject.getLinearVelocity();
 			if(linearVelocity.len() > 30) {
 				linearVelocity.scl(30f/linearVelocity.len());
@@ -230,7 +229,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	 *
 	 */
 	private void handleInput(ProjectD projectD){
-		float deltaTime = Gdx.graphics.getDeltaTime();
 		for(InputController inputController : projectD.getInpuControllers()) {
 			InputModel inputModel = inputController.getModel();
 			if(controllerPlayerMap.containsKey(inputController)) {
@@ -442,30 +440,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		renderer.dispose();
 
 		this.stop(projectD);
-	}
-
-	private boolean checkCollision(btCollisionObject object0, btCollisionObject object1) {
-		CollisionObjectWrapper co0 = new CollisionObjectWrapper(object0);
-		CollisionObjectWrapper co1 = new CollisionObjectWrapper(object1);
-//      System.out.println(object0.getWorldTransform().getTranslation(new Vector3()).toString() + "   " + object1.getWorldTransform().getTranslation(new Vector3()).toString());
-
-
-		btCollisionAlgorithm algorithm = dispatcher.findAlgorithm(co0.wrapper, co1.wrapper);
-
-		btDispatcherInfo info = new btDispatcherInfo();
-		btManifoldResult result = new btManifoldResult(co0.wrapper, co1.wrapper);
-
-		algorithm.processCollision(co0.wrapper, co1.wrapper, info, result);
-
-		boolean r = result.getPersistentManifold().getNumContacts() > 0;
-
-		dispatcher.freeCollisionAlgorithm(algorithm.getCPointer());
-		result.dispose();
-		info.dispose();
-		co1.dispose();
-		co0.dispose();
-
-		return r;
 	}
 
 	private void updateTimerLabel(){
