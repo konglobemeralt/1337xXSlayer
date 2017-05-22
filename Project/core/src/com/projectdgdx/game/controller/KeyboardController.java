@@ -44,6 +44,11 @@ public class KeyboardController extends InputController implements InputProcesso
             getModel().setButtonB(true);
         }
 
+        if(keycode == Input.Keys.Z) { //X button
+            getModel().setButtonX(true);
+        }
+
+
         if(keycode == 131) { //ESCAPE
             getModel().setMenuButton(true);
         }
