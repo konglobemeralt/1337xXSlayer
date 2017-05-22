@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.AI.WorkerNode;
 import com.projectdgdx.game.model.Decorations.Floor;
 import com.projectdgdx.game.model.MachineStates.UnusedMachineState;
@@ -11,6 +10,7 @@ import com.projectdgdx.game.model.Playables.Supervisor;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;
 import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class GameObjectInit {
                 case "Machine":
                     return new Machine(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "machine.basic", new UnusedMachineState());
                 case "SpotControl":
-                    Spotlight light = new Spotlight(new Vector3d(x,30,  z), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 30, Config.MACHINELIGHT_BASE_INTENSITY, "spotlight.controlboard");
+                    Spotlight light = new Spotlight(new Vector3d(x,30,  z), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 30, Vector2d.Config.MACHINELIGHT_BASE_INTENSITY, "spotlight.controlboard");
                     return new SpotlightControlBoard(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "control.basic", light);
                 case "Worker":
                     return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "worker.basic");

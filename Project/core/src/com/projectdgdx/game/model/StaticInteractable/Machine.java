@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model.StaticInteractable;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.MachineStates.DestroyedMachineState;
 import com.projectdgdx.game.model.MachineStates.iMachineState;
 import com.projectdgdx.game.model.ModelStructure.StaticObject;
@@ -8,6 +7,7 @@ import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;
 
@@ -96,12 +96,12 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
         float calcVal = (((timerValue ) * (1)) / (30));
         this.spot.setColor(new Vector3d(1-calcVal, calcVal * 1.5f, 0));
 
-        if(timerValue <= Config.MACHINELIGHT_BLINK_TIME){
+        if(timerValue <= Vector2d.Config.MACHINELIGHT_BLINK_TIME){
             if(timerValue%2==0) {
-                this.spot.setIntensity(Config.MACHINELIGHT_MAX_INTENSITY);
+                this.spot.setIntensity(Vector2d.Config.MACHINELIGHT_MAX_INTENSITY);
             }
             else{
-                this.spot.setIntensity(Config.MACHINELIGHT_BASE_INTENSITY);
+                this.spot.setIntensity(Vector2d.Config.MACHINELIGHT_BASE_INTENSITY);
             }
         }
 

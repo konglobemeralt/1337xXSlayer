@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.projectdgdx.game.Config;
+import com.projectdgdx.game.utils.Vector2d;
 
 import java.util.ArrayList;
 
@@ -68,10 +68,10 @@ public class SettingsState implements iGameState {
      */
     @Override
     public void update(ProjectD projectD) {
-        Gdx.gl.glClearColor(Config.MENU_DEFAULTBACKGROUND_R,
-                Config.MENU_DEFAULTBACKGROUND_G,
-                Config.MENU_DEFAULTBACKGROUND_B,
-                Config.MENU_DEFAULTBACKGROUND_A);
+        Gdx.gl.glClearColor(Vector2d.Config.MENU_DEFAULTBACKGROUND_R,
+                Vector2d.Config.MENU_DEFAULTBACKGROUND_G,
+                Vector2d.Config.MENU_DEFAULTBACKGROUND_B,
+                Vector2d.Config.MENU_DEFAULTBACKGROUND_A);
         Gdx.gl.glClear(gl20.GL_COLOR_BUFFER_BIT);
 
         stage.act();
@@ -156,12 +156,12 @@ public class SettingsState implements iGameState {
      **/
     private void updateFOVlabel()
     {
-        float value = Config.CAMERA_FOV;
+        float value = Vector2d.Config.CAMERA_FOV;
 
         fovSlider.setValue(value);
         fovSlider.setAnimateDuration(0.3f);
 
-        fovValueLabel.setText(String.valueOf(Config.CAMERA_FOV));
+        fovValueLabel.setText(String.valueOf(Vector2d.Config.CAMERA_FOV));
         fovValueLabel.invalidate();
     }
 
@@ -170,12 +170,12 @@ public class SettingsState implements iGameState {
      **/
     private void updateDiscoLabel()
     {
-        float value = Config.DISCO_FACTOR;
+        float value = Vector2d.Config.DISCO_FACTOR;
 
         discoSlider.setValue(value);
         discoSlider.setAnimateDuration(0.3f);
 
-        discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
+        discoValueLabel.setText(String.valueOf(Vector2d.Config.DISCO_FACTOR) + " %");
         discoValueLabel.invalidate();
     }
 
@@ -184,12 +184,12 @@ public class SettingsState implements iGameState {
      **/
     private void updateAAlabel()
     {
-        float value = Config.AA_SAMPLES;
+        float value = Vector2d.Config.AA_SAMPLES;
 
         aaSlider.setValue(value);
         aaSlider.setAnimateDuration(0.3f);
 
-        aaValueLabel.setText(String.valueOf(Config.AA_SAMPLES));
+        aaValueLabel.setText(String.valueOf(Vector2d.Config.AA_SAMPLES));
         aaValueLabel.invalidate();
     }
 
@@ -198,12 +198,12 @@ public class SettingsState implements iGameState {
      **/
     private void updateSunRLabel()
     {
-        float value = Config.SUN_LIGHT_R;
+        float value = Vector2d.Config.SUN_LIGHT_R;
 
         sunrSlider.setValue(value);
         sunrSlider.setAnimateDuration(0.3f);
 
-        sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + " %");
+        sunrSliderValue.setText(String.valueOf(Vector2d.Config.SUN_LIGHT_R) + " %");
         sunrSliderValue.invalidate();
     }
 
@@ -212,12 +212,12 @@ public class SettingsState implements iGameState {
      **/
     private void updateSunGLabel()
     {
-        float value = Config.SUN_LIGHT_G;
+        float value = Vector2d.Config.SUN_LIGHT_G;
 
         sungSlider.setValue(value);
         sungSlider.setAnimateDuration(0.3f);
 
-        sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ " %");
+        sungSliderValue.setText(String.valueOf(Vector2d.Config.SUN_LIGHT_G)+ " %");
         sungSliderValue.invalidate();
     }
 
@@ -226,19 +226,19 @@ public class SettingsState implements iGameState {
      **/
     private void updateSunBLabel()
     {
-        float value = Config.SUN_LIGHT_B;
+        float value = Vector2d.Config.SUN_LIGHT_B;
 
         sunbSlider.setValue(value);
         sunbSlider.setAnimateDuration(0.3f);
 
-        sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ " %");
+        sunbSliderValue.setText(String.valueOf(Vector2d.Config.SUN_LIGHT_B)+ " %");
         sunbSliderValue.invalidate();
     }
 
     private void createMenu(){
         this.stage = new Stage();
 
-        skin = createBasicSkin(Config.UI_SKIN_PATH);
+        skin = createBasicSkin(Vector2d.Config.UI_SKIN_PATH);
 
         settingsHeading = new Label("Settings Menu", skin);
 
@@ -250,19 +250,19 @@ public class SettingsState implements iGameState {
 
         /** Field of view slider  **/
         fovSlider = new Slider(5, 120, 1, false, skin);
-        fovSlider.setValue(Config.CAMERA_FOV);
+        fovSlider.setValue(Vector2d.Config.CAMERA_FOV);
         fovLabel = new Label("FOV", skin);
         fovValueLabel = new Label("", skin);
 
         /** AA slider  **/
         aaSlider = new Slider(0, 20, 1, false, skin);
-        aaSlider.setValue(Config.AA_SAMPLES);
+        aaSlider.setValue(Vector2d.Config.AA_SAMPLES);
         aaLabel = new Label("AA Samples", skin);
         aaValueLabel = new Label("", skin);
 
         /** Disco slider  **/
         discoSlider = new Slider(0, 100, 1, false, skin);
-        discoSlider.setValue(Config.DISCO_FACTOR);
+        discoSlider.setValue(Vector2d.Config.DISCO_FACTOR);
         disoLabel = new Label("Disco Factor", skin);
         discoValueLabel = new Label("", skin);
 
@@ -281,17 +281,17 @@ public class SettingsState implements iGameState {
 
         /** Sun RGB sliders  **/
         sunrSlider = new Slider(0, 100, 1, false, skin);
-        sunrSlider.setValue(Config.SUN_LIGHT_R);
+        sunrSlider.setValue(Vector2d.Config.SUN_LIGHT_R);
         sunrSliderLabel = new Label("Sun light R:", skin);
         sunrSliderValue = new Label("", skin);
 
         sungSlider = new Slider(0, 100, 1, false, skin);
-        sungSlider.setValue(Config.SUN_LIGHT_G);
+        sungSlider.setValue(Vector2d.Config.SUN_LIGHT_G);
         sungSliderLabel = new Label("Sun light G:", skin);
         sungSliderValue = new Label("", skin);
 
         sunbSlider = new Slider(0, 100, 1, false, skin);
-        sunbSlider.setValue(Config.SUN_LIGHT_B);
+        sunbSlider.setValue(Vector2d.Config.SUN_LIGHT_B);
         sunbSliderLabel = new Label("Sun light B:", skin);
         sunbSliderValue = new Label("", skin);
 
@@ -348,7 +348,7 @@ public class SettingsState implements iGameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.CAMERA_FOV = ((int) value);
+                Vector2d.Config.CAMERA_FOV = ((int) value);
                 updateFOVlabel();
             }
         });
@@ -361,7 +361,7 @@ public class SettingsState implements iGameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.AA_SAMPLES = ((int) value);
+                Vector2d.Config.AA_SAMPLES = ((int) value);
                 updateAAlabel();
             }
         });
@@ -374,7 +374,7 @@ public class SettingsState implements iGameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.DISCO_FACTOR = ((int) value);
+                Vector2d.Config.DISCO_FACTOR = ((int) value);
                 updateDiscoLabel();
             }
         });
@@ -387,7 +387,7 @@ public class SettingsState implements iGameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.SUN_LIGHT_R = ((int) value );
+                Vector2d.Config.SUN_LIGHT_R = ((int) value );
                 updateSunRLabel();
             }
         });
@@ -400,7 +400,7 @@ public class SettingsState implements iGameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.SUN_LIGHT_G = ((int) value);
+                Vector2d.Config.SUN_LIGHT_G = ((int) value);
                 updateSunGLabel();
             }
         });
@@ -413,14 +413,14 @@ public class SettingsState implements iGameState {
                 Slider slider = (Slider) actor;
 
                 float value = slider.getValue();
-                Config.SUN_LIGHT_B = ((int) value);
+                Vector2d.Config.SUN_LIGHT_B = ((int) value);
                 updateSunBLabel();
             }
         });
 
         shadowMapCheckbox.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
+                Vector2d.Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
             }
         });
 
@@ -429,10 +429,10 @@ public class SettingsState implements iGameState {
             public void keyTyped (TextField textField, char key) {
 
                 if(textField.getText().length() > 0){
-                    Config.MOVE_SPEED = Integer.parseInt(textField.getText());
+                    Vector2d.Config.MOVE_SPEED = Integer.parseInt(textField.getText());
                 }
                 else{
-                    Config.MOVE_SPEED = Integer.parseInt(textField.getText());
+                    Vector2d.Config.MOVE_SPEED = Integer.parseInt(textField.getText());
                 }
 
             }

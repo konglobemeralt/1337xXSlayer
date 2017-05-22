@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.projectdgdx.game.Config;
+import com.projectdgdx.game.utils.Vector2d;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class MainMenuState implements iGameState {
         buildMenu();
 
         //Set to first selection as default
-        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
+        Vector2d.Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
 
         this.multiplexer = projectD.getMultiplexer();
         multiplexer.addProcessor(stage);// Make the stage consume events
@@ -60,10 +60,10 @@ public class MainMenuState implements iGameState {
 
     @Override
     public void update(ProjectD projectD) {
-        Gdx.gl.glClearColor(Config.MENU_DEFAULTBACKGROUND_R,
-                Config.MENU_DEFAULTBACKGROUND_G,
-                Config.MENU_DEFAULTBACKGROUND_B,
-                Config.MENU_DEFAULTBACKGROUND_A);
+        Gdx.gl.glClearColor(Vector2d.Config.MENU_DEFAULTBACKGROUND_R,
+                Vector2d.Config.MENU_DEFAULTBACKGROUND_G,
+                Vector2d.Config.MENU_DEFAULTBACKGROUND_B,
+                Vector2d.Config.MENU_DEFAULTBACKGROUND_A);
         Gdx.gl.glClear(gl20.GL_COLOR_BUFFER_BIT);
 
         stage.act();
@@ -106,7 +106,7 @@ public class MainMenuState implements iGameState {
     private void buildMenu(){
 
         this.stage = new Stage();
-        skin = createBasicSkin(Config.UI_SKIN_PATH);
+        skin = createBasicSkin(Vector2d.Config.UI_SKIN_PATH);
 
         //Create buttons
         mainMenuHeading = new Label("Project D", skin);
@@ -154,7 +154,7 @@ public class MainMenuState implements iGameState {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println(((Label) levelSelection.getSelected()).getText());
-                Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
+                Vector2d.Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
             }
         });
     }

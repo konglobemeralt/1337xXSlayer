@@ -1,9 +1,9 @@
 package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.EndgameHandler;
 import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.iDishonestInteractable;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class Saboteur extends PlayableCharacter{
      * @return
      */
     private boolean canDishonestInteract(iDishonestInteractable di){
-        float value = this.getPosition().distanceTo(di.getPosition()) - Config.HONEST_ACT_DISTANCE;
+        float value = this.getPosition().distanceTo(di.getPosition()) - Vector2d.Config.HONEST_ACT_DISTANCE;
         return value < 0;
     }
 

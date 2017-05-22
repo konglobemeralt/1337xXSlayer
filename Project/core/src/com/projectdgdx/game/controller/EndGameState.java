@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.view.RenderManager;
 
 import java.util.Random;
@@ -61,7 +61,7 @@ public class EndGameState implements iGameState {
 		this.table = new Table();
 		this.stage = new Stage();
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
+		skin = new Skin(Gdx.files.internal(Vector2d.Config.UI_SKIN_PATH));
 
 		//Create buttons
 		endGameMessage = new Label("Game Over :( :( :(", skin);

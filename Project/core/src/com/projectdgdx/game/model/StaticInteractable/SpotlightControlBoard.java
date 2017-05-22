@@ -1,12 +1,12 @@
 package com.projectdgdx.game.model.StaticInteractable;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.model.Playables.InSpotlightPlayerState;
 import com.projectdgdx.game.model.Playables.NormalPlayerState;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.iHonestInteractable;
 import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;
 
@@ -23,7 +23,7 @@ public class SpotlightControlBoard extends StaticObject implements iHonestIntera
     public SpotlightControlBoard(Vector3d position, Vector3d scale, Vector3d rotation, String id, Spotlight spotlight) {
         super(position, scale, rotation, id);
         this.spotlight = spotlight;
-        this.spotlight.setColor(new Vector3d(Config.SPOT_LIGHT_R, Config.SPOT_LIGHT_G, Config.SPOT_LIGHT_B));
+        this.spotlight.setColor(new Vector3d(Vector2d.Config.SPOT_LIGHT_R, Vector2d.Config.SPOT_LIGHT_G, Vector2d.Config.SPOT_LIGHT_B));
     }
 
     @Override

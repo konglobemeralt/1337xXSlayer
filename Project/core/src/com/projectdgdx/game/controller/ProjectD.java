@@ -4,9 +4,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.Input.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
+import com.projectdgdx.game.utils.Vector2d;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,7 +82,7 @@ public class ProjectD extends ApplicationAdapter {
     	gameStates.get(GameStates.ENDGAME).init(this);
 
 
-        if(Config.DEBUG) {
+        if(Vector2d.Config.DEBUG) {
         	this.setState(GameStates.INGAME);
 		} else {
 			this.setState(GameStates.MAINMENU);

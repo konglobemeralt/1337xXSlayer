@@ -2,18 +2,11 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.*;
@@ -24,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.AI.BasicNode;
 import com.projectdgdx.game.model.EndgameHandler;
 import com.projectdgdx.game.model.Input.InputModel;
@@ -187,17 +179,17 @@ public class InGameState implements iGameState, iTimerListener{
 	 *
 	 */
 	private void createCamera(){
-		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(Config.CAMERA_X, Config.CAMERA_Y, Config.CAMERA_Z);
+		cam = new PerspectiveCamera(Vector2d.Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.position.set(Vector2d.Config.CAMERA_X, Vector2d.Config.CAMERA_Y, Vector2d.Config.CAMERA_Z);
 		cam.lookAt(0f, 0f, 0f);
-		cam.near = Config.CAMERA_NEAR;
-		cam.far = Config.CAMERA_FAR;
+		cam.near = Vector2d.Config.CAMERA_NEAR;
+		cam.far = Vector2d.Config.CAMERA_FAR;
 		cam.update();
 	}
 
 
 	private void updateCamera(ProjectD projectD){
-		cam.fieldOfView = Config.CAMERA_FOV;
+		cam.fieldOfView = Vector2d.Config.CAMERA_FOV;
 
 		camController = new CameraInputController(cam);
 		camController.forwardTarget = true;
@@ -309,7 +301,7 @@ public class InGameState implements iGameState, iTimerListener{
 		animate();
 		render();
 
-		if(Config.DEBUG) {
+		if(Vector2d.Config.DEBUG) {
 			debugDrawer.begin(cam);
 			dynamicsWorld.debugDrawWorld();
 			debugDrawer.end();
@@ -330,7 +322,7 @@ public class InGameState implements iGameState, iTimerListener{
 
 		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 
-		if(Config.DEBUG) {
+		if(Vector2d.Config.DEBUG) {
 			debugDrawer = new DebugDrawer();
 			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
 			dynamicsWorld.setDebugDrawer(debugDrawer);
@@ -344,7 +336,7 @@ public class InGameState implements iGameState, iTimerListener{
 		createCamera();
 
 		MapParser parser = new MapParser();
-		map = parser.parse(Config.LEVEL_IN_PLAY);
+		map = parser.parse(Vector2d.Config.LEVEL_IN_PLAY);
 
 		// Init nodes
 		List<BasicNode> nodeList =  map.getAINodes();
@@ -373,7 +365,7 @@ public class InGameState implements iGameState, iTimerListener{
 		this.table = new Table();
 		this.stage = new Stage();
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
+		skin = new Skin(Gdx.files.internal(Vector2d.Config.UI_SKIN_PATH));
 
 		//Create buttons
 		gameTimeCountLabel = new Label("Tid kvar ", skin);
@@ -481,7 +473,7 @@ public class InGameState implements iGameState, iTimerListener{
 	}
 
 	public void updateTimer() {
-		this.gameTimer = new Timer(Config.GAME_TIME, 1000);
+		this.gameTimer = new Timer(Vector2d.Config.GAME_TIME, 1000);
 		this.gameTimer.start();
 	}
 

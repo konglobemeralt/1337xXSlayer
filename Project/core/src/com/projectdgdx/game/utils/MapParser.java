@@ -3,12 +3,10 @@ package com.projectdgdx.game.utils;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import org.w3c.dom.*;
@@ -34,7 +32,7 @@ public class MapParser {
      */
     private void loadDocument(String mapName) {
         try {
-            if(Config.DEBUG) {
+            if(Vector2d.Config.DEBUG) {
                 System.out.println(Gdx.files.getLocalStoragePath());
             }
             FileHandle handle = Gdx.files.internal("map/" + mapName);
@@ -99,7 +97,7 @@ public class MapParser {
             Node attribute = node.getAttributes().item(i);
             gameObjectInit.changeValue(attribute.getNodeName(), attribute.getNodeValue());
         }
-        if(Config.DEBUG) {
+        if(Vector2d.Config.DEBUG) {
             System.out.println(gameObjectInit);
         }
         return gameObjectInit;

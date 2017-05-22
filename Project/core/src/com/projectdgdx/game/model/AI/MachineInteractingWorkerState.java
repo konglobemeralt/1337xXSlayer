@@ -1,8 +1,8 @@
 package com.projectdgdx.game.model.AI;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class MachineInteractingWorkerState implements iWorkerState {
 
     @Override
     public void reactOnUpdate(Worker worker) {
-        if (worker.getPosition().isInRadius(pos, Config.HONEST_ACT_DISTANCE)){
+        if (worker.getPosition().isInRadius(pos, Vector2d.Config.HONEST_ACT_DISTANCE)){
             Timer timer = new Timer(3,1000);
             timer.start();
             if (timer.getTimerValue() > 0){

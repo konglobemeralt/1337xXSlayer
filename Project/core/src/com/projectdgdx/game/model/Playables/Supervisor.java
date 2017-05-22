@@ -1,9 +1,9 @@
 package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.model.iDishonestInteractable;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class Supervisor extends PlayableCharacter {
      * @return true if the character is in the catching radius else false.
      */
     private boolean canCatch(Character character){
-        return this.getPosition().isInRadius(character.getPosition(), Config.USE_ABILITY_ACT_DISTANCE);
+        return this.getPosition().isInRadius(character.getPosition(), Vector2d.Config.USE_ABILITY_ACT_DISTANCE);
     }
 
     /**

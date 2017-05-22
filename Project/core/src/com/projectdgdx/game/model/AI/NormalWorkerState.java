@@ -1,8 +1,8 @@
 package com.projectdgdx.game.model.AI;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Timer;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;
 
@@ -50,7 +50,7 @@ public class NormalWorkerState implements iWorkerState, iTimerListener {
     }
 
     private boolean isAtTargetNode(Worker worker){
-        return worker.getPosition().isInRadius(worker.getTargetNode().getPosition(), Config.WORKER_NODE_RADIUS);
+        return worker.getPosition().isInRadius(worker.getTargetNode().getPosition(), Vector2d.Config.WORKER_NODE_RADIUS);
     }
 
     private void startTimerAndListen(int timerValue, long ticTime ){

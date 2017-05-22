@@ -17,8 +17,8 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DepthShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class RenderManager {
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
 
-        if(Config.SHADOWMAPPING_ENABLED) {
+        if(Vector2d.Config.SHADOWMAPPING_ENABLED) {
             renderShadowMap(cam, instances);
         }
         renderToScreen(cam, instances);
@@ -75,7 +75,7 @@ public class RenderManager {
 
         updatePointLights(lights);
 
-        if(Config.DISCO_FACTOR > 0){
+        if(Vector2d.Config.DISCO_FACTOR > 0){
            updateDiscoLights();
         }
 
@@ -122,7 +122,7 @@ public class RenderManager {
 
         DefaultShader.Config config = new DefaultShader.Config();
         config.numDirectionalLights = 1;
-        config.numPointLights =  lightCount + Config.DISCO_FACTOR;
+        config.numPointLights =  lightCount + Vector2d.Config.DISCO_FACTOR;
         config.numSpotLights = 0;
 
         ShaderProvider shaderProvider = new DefaultShaderProvider(config);
@@ -177,7 +177,7 @@ public class RenderManager {
      *
      */
     public void createDiscoLights(){
-        for(int i = 0; i < Config.DISCO_FACTOR; i++){
+        for(int i = 0; i < Vector2d.Config.DISCO_FACTOR; i++){
             Vector3d pos = new Vector3d(rand.nextInt(300)-100, rand.nextInt(20)-5, rand.nextInt(300)-100);
             PointLight light = new PointLight().set(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(),
                     pos.x , pos.y,  pos.z, 70f);
@@ -193,7 +193,7 @@ public class RenderManager {
      *
      */
     public void moveDiscoLights(){
-        for(int i = 0; i < Config.DISCO_FACTOR; i++){
+        for(int i = 0; i < Vector2d.Config.DISCO_FACTOR; i++){
             discoLightPosList.get(i).x += rand.nextFloat() * (2f + 2f) + -2f;
             discoLightPosList.get(i).y += rand.nextFloat() * (0.5f +0.5f) + -0.5f;
             discoLightPosList.get(i).z += rand.nextFloat() * (2f + 2f) + -2f;
@@ -213,31 +213,31 @@ public class RenderManager {
     public void createEnvironment(){
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight,
-                Config.AMBIENT_LIGHT_R,
-                Config.AMBIENT_LIGHT_G,
-                Config.AMBIENT_LIGHT_B,
-                Config.AMBIENT_LIGHT_A));
-        if(Config.SHADOWMAPPING_ENABLED){
-            environment.add((shadowLight = new DirectionalShadowLight(Config.SHADOW_MAP_WIDTH,
-                    Config.SHADOW_MAP_HEIGHT,
-                    Config.SHADOW_MAP_VIEWPORT_WIDTH,
-                    Config.SHADOW_MAP_VIEWPORT_HEIGHT,
-                    Config.SHADOW_MAP_NEAR,
-                    Config.SHADOW_MAP_FAR)).set(
-                    Config.SUN_LIGHT_R/100f,
-                    Config.SUN_LIGHT_G/100f,
-                    Config.SUN_LIGHT_B/100f,
-                    Config.SUN_LIGHT_X,
-                    Config.SUN_LIGHT_Y,
-                    Config.SUN_LIGHT_Z));
+                Vector2d.Config.AMBIENT_LIGHT_R,
+                Vector2d.Config.AMBIENT_LIGHT_G,
+                Vector2d.Config.AMBIENT_LIGHT_B,
+                Vector2d.Config.AMBIENT_LIGHT_A));
+        if(Vector2d.Config.SHADOWMAPPING_ENABLED){
+            environment.add((shadowLight = new DirectionalShadowLight(Vector2d.Config.SHADOW_MAP_WIDTH,
+                    Vector2d.Config.SHADOW_MAP_HEIGHT,
+                    Vector2d.Config.SHADOW_MAP_VIEWPORT_WIDTH,
+                    Vector2d.Config.SHADOW_MAP_VIEWPORT_HEIGHT,
+                    Vector2d.Config.SHADOW_MAP_NEAR,
+                    Vector2d.Config.SHADOW_MAP_FAR)).set(
+                    Vector2d.Config.SUN_LIGHT_R/100f,
+                    Vector2d.Config.SUN_LIGHT_G/100f,
+                    Vector2d.Config.SUN_LIGHT_B/100f,
+                    Vector2d.Config.SUN_LIGHT_X,
+                    Vector2d.Config.SUN_LIGHT_Y,
+                    Vector2d.Config.SUN_LIGHT_Z));
             environment.shadowMap = shadowLight;
         }else{
-            environment.add(new DirectionalLight().set(Config.SUN_LIGHT_R/100f,
-                    Config.SUN_LIGHT_G/100f,
-                    Config.SUN_LIGHT_B/100f,
-                    Config.SUN_LIGHT_X,
-                    Config.SUN_LIGHT_Y,
-                    Config.SUN_LIGHT_Z));
+            environment.add(new DirectionalLight().set(Vector2d.Config.SUN_LIGHT_R/100f,
+                    Vector2d.Config.SUN_LIGHT_G/100f,
+                    Vector2d.Config.SUN_LIGHT_B/100f,
+                    Vector2d.Config.SUN_LIGHT_X,
+                    Vector2d.Config.SUN_LIGHT_Y,
+                    Vector2d.Config.SUN_LIGHT_Z));
         }
 
 

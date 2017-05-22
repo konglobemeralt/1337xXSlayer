@@ -1,9 +1,9 @@
 package com.projectdgdx.game.model.Playables;
 
-import com.projectdgdx.game.Config;
 import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.model.iHonestInteractable;
+import com.projectdgdx.game.utils.Vector2d;
 import com.projectdgdx.game.utils.Vector3d;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public abstract class PlayableCharacter extends Character {
      * @return boolean value depending on if HonestInteract is possible or not
      */
     protected boolean canHonestInteract(iHonestInteractable hi){
-        float value = this.getPosition().distanceTo(hi.getPosition()) - Config.HONEST_ACT_DISTANCE;
+        float value = this.getPosition().distanceTo(hi.getPosition()) - Vector2d.Config.HONEST_ACT_DISTANCE;
         return value < 0;
     }
 
