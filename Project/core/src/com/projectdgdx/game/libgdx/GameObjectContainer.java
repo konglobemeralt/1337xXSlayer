@@ -1,4 +1,4 @@
-package com.projectdgdx.game.controller;
+package com.projectdgdx.game.libgdx;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
