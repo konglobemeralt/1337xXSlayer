@@ -9,6 +9,7 @@ import com.projectdgdx.game.model.ModelStructure.StaticObject;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
+import com.projectdgdx.game.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,9 @@ public abstract class Map {
      *
      * @param gameObjects A list of GameObjects
      */
-    public Map(List<GameObject> gameObjects, int machinesDestroyedToEnd, int strikingWorkersToEnd) {
+    public Map(List<GameObject> gameObjects, int machinesDestroyedToEnd, int strikingWorkersToEnd, Timer endgameTimer) {
         this.gameObjects = gameObjects;
-        this.endgameCounter = new EndgameCounter(machinesDestroyedToEnd, strikingWorkersToEnd);
+        this.endgameCounter = new EndgameCounter(machinesDestroyedToEnd, strikingWorkersToEnd, endgameTimer);
     }
 
     /**

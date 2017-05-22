@@ -1,5 +1,7 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.utils.Timer;
+
 /**
  * Created by Emil Jansson on 2017-05-22.
  */
@@ -9,10 +11,22 @@ public class EndgameCounter {
     private int targetNumStrikingWorkers;
     private int numDestroyedMachines = 0;
     private int numStrikingWorkers = 0;
+    private Timer endgameTimer;
 
-    public EndgameCounter(int targetNumDestroyedMachines, int targetNumStrikingWorkers){
+    public void setEndgameTimer(Timer endgameTimer) {
+        this.endgameTimer = endgameTimer;
+    }
+
+    public Timer getEndgameTimer() {
+        return endgameTimer;
+    }
+
+
+    public EndgameCounter(int targetNumDestroyedMachines, int targetNumStrikingWorkers, Timer endgameTimer){
         this.targetNumDestroyedMachines = targetNumDestroyedMachines;
         this.targetNumStrikingWorkers = targetNumStrikingWorkers;
+        this.endgameTimer = endgameTimer;
+
     }
 
     public int getNumStrikingWorkers() {
