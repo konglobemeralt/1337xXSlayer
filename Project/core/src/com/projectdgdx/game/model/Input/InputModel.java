@@ -1,6 +1,5 @@
 package com.projectdgdx.game.model.Input;
 
-import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector2d;
 
 /**

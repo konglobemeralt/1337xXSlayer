@@ -11,7 +11,7 @@ public interface iHonestInteractable {
      * This method determines eht happens hen a player honest interacts with a machine.
      * @param player , the current Supervisor or Saboteur that interacts with the machine.
      */
-    public abstract void honestInteract(PlayableCharacter player);
-    public abstract Vector3d getPosition();
+	void honestInteract(PlayableCharacter player);
+    Vector3d getPosition();
 }
 
