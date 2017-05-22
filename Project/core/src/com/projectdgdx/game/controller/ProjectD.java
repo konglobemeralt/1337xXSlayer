@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.projectdgdx.game.model.Events;
 import com.projectdgdx.game.model.Input.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.Config;
@@ -30,7 +31,10 @@ public class ProjectD extends ApplicationAdapter {
         if(currentState != null){
             currentState.stop(this);
         }
+
+
         this.currentState = gameStates.get(newState);
+
         this.currentState.start(this);
     }
 
@@ -78,8 +82,14 @@ public class ProjectD extends ApplicationAdapter {
         gameStates.get(GameStates.SETTINGS).init(this);
     	gameStates.put(GameStates.INGAME, new InGameState());
     	gameStates.get(GameStates.INGAME).init(this);
-        gameStates.put(GameStates.ENDGAME, new EndGameState());
-    	gameStates.get(GameStates.ENDGAME).init(this);
+        gameStates.put(GameStates.ENDGAME_MACHINES, new EndGameState(GameStates.ENDGAME_MACHINES));
+    	gameStates.get(GameStates.ENDGAME_MACHINES).init(this);
+        gameStates.put(GameStates.ENDGAME_TIMER, new EndGameState(GameStates.ENDGAME_TIMER));
+        gameStates.get(GameStates.ENDGAME_TIMER).init(this);
+        gameStates.put(GameStates.ENDGAME_STRIKE, new EndGameState(GameStates.ENDGAME_STRIKE));
+        gameStates.get(GameStates.ENDGAME_STRIKE).init(this);
+        gameStates.put(GameStates.ENDGAME_CAUGHT, new EndGameState(GameStates.ENDGAME_CAUGHT));
+        gameStates.get(GameStates.ENDGAME_CAUGHT).init(this);
 
 
         if(Config.DEBUG) {

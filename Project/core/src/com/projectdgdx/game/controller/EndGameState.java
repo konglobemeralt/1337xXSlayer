@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.projectdgdx.game.model.Events;
 import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Config;
@@ -28,6 +29,7 @@ public class EndGameState implements iGameState {
 	private Table table;
 	private Stage stage;
 	private Timer gameTimer;
+	private GameStates ending;
 
 	private InputMultiplexer multiplexer;
 	private Array<AnimationController> animationControllers = new Array<AnimationController>();
@@ -36,6 +38,10 @@ public class EndGameState implements iGameState {
 	private RenderManager renderer;
 	private Random rand;
 	private Map map;
+
+	public EndGameState(GameStates ending){
+		this.ending = ending;
+	}
 
 
 	public void render() {
@@ -54,6 +60,8 @@ public class EndGameState implements iGameState {
 	 *
 	 * @param projectD ProjectD
 	 */
+
+
 
 
 	public void update(ProjectD projectD) {
