@@ -34,6 +34,7 @@ public class EndgameCounter {
     }
 
     public void incStrikingWorkers(){
+        System.out.println("Num strikers was:" + numStrikingWorkers + " now " + (numStrikingWorkers+1));
         this.numStrikingWorkers++;
         if (this.numStrikingWorkers >= targetNumStrikingWorkers){
             EventSender.getEventSender().sendStrikeEnd();

@@ -69,4 +69,9 @@ public class NormalWorkerState implements iWorkerState, iTimerListener {
             startTimerAndListen(new Random().nextInt(10), 1000);
         }
     }
+
+    @Override
+    public void beenCaught(Worker worker) {
+        worker.setState(new StrikingWorkerState());
+    }
 }
