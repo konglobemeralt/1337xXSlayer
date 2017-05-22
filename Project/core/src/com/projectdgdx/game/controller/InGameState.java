@@ -10,23 +10,22 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.*;
 import com.badlogic.gdx.physics.bullet.dynamics.*;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.Config;
+import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.model.AI.BasicNode;
-import com.projectdgdx.game.model.EndgameHandler;
 import com.projectdgdx.game.model.Input.InputModel;
-import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.model.ModelStructure.Entity;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.Spotlight;
 import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
-import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.*;
 import com.projectdgdx.game.view.RenderManager;
 
@@ -39,13 +38,15 @@ import java.util.Random;
  * InGameState controls everything that is in game.
  * Created by Eddie on 2017-04-28.
  */
-public class InGameState implements iGameState, iTimerListener{
+public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 	private Label gameTimeCountLabel;
 	private Skin skin;
 	private Table table;
 	private Stage stage;
 	private Timer gameTimer;
+	private boolean gameRunning = true;
+	private Events gameEndingEvent;
 
 	private InputMultiplexer multiplexer;
 	private  Array<AnimationController> animationControllers = new Array<AnimationController>();
@@ -76,6 +77,18 @@ public class InGameState implements iGameState, iTimerListener{
 	private RenderManager renderer;
 	private Random rand;
 	private Map map;
+
+	@Override
+	public void reactToEvent(Events event) {
+		if (event == Events.MACHINES_DESTROYED_END || event == Events.SABOTEUR_CAUGHT || event == Events.STRIKE_END || event == Events.TIME_UPP){
+			gameRunning = false;
+			gameEndingEvent = event;
+		}else if (event == Events.MACHINE_DESTRUCTION){
+			map.getEndgameCounter().incDestroyedMachines();
+		}else if (event == Events.SRIKING_WORKER){
+			map.getEndgameCounter().incStrikingWorkers();
+		}
+	}
 
 	class CollisionListener extends ContactListener {
 		@Override
@@ -292,7 +305,9 @@ public class InGameState implements iGameState, iTimerListener{
 		handleLights();
 		animate();
 		render();
-
+		if(!gameRunning){
+			projectD.setState(GameStates.ENDGAME); //TODO Currently cant say what kind of ending happened.
+		}
 	}
 
 	// TODO functional decomposition and docs
@@ -354,6 +369,9 @@ public class InGameState implements iGameState, iTimerListener{
 
 		// Machine init
 		this.machineInit();
+
+		// Make this a listener
+		EventSender.getEventSender().addListener(this);
 
 	}
 
@@ -459,7 +477,7 @@ public class InGameState implements iGameState, iTimerListener{
 
 	@Override
 	public void timeIsUp() {
-		EndgameHandler.getEndgameHandler().triggerTimeOutEnd();
+		EventSender.getEventSender().sendTimeOutEnd();
 	}
 
 }

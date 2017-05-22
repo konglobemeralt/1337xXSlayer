@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model.AI;
 
-import com.projectdgdx.game.model.EndgameHandler;
+import com.projectdgdx.game.model.EventSender;
 import com.projectdgdx.game.model.Worker;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
@@ -11,7 +11,7 @@ import com.projectdgdx.game.utils.Vector3d;
 public class StrikingWorkerState implements iWorkerState {
 
     public StrikingWorkerState(){
-        EndgameHandler.getEndgameHandler().incStrikers();
+        EventSender.getEventSender().sendNewStrikingWorker();
     }
 
     @Override

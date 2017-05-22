@@ -126,7 +126,7 @@ public class MapParser {
     public Map parse(String mapName) {
         loadDocument(mapName);
         loadElements(doc.getDocumentElement().getChildNodes());
-        return new BasicMap(gameObjects);
+        return new BasicMap(gameObjects, 3, 4); //TODO arguments should derive from map text file
 
     }
 

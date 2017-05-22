@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model.MachineStates;
 
-import com.projectdgdx.game.model.EndgameHandler;
+import com.projectdgdx.game.model.EventSender;
 import com.projectdgdx.game.model.Playables.PlayableCharacter;
 import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.iSpotlightListener;
@@ -19,7 +19,7 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
 
     public DestroyedMachineState(Machine machine){
         this.machine = machine;
-        EndgameHandler.getEndgameHandler().incDestroyedMachines();
+        EventSender.getEventSender().sendNewDestroyedMachine();
     }
 
     @Override

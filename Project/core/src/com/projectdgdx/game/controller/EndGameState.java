@@ -15,6 +15,8 @@ import com.projectdgdx.game.view.RenderManager;
 
 import java.util.Random;
 
+import static com.badlogic.gdx.Gdx.gl20;
+
 /**
  * InGameState controls everything that is in game.
  * Created by Eddie on 2017-04-28.
@@ -37,6 +39,11 @@ public class EndGameState implements iGameState {
 
 
 	public void render() {
+		Gdx.gl.glClearColor(Config.MENU_DEFAULTBACKGROUND_R,
+				Config.MENU_DEFAULTBACKGROUND_G,
+				Config.MENU_DEFAULTBACKGROUND_B,
+				Config.MENU_DEFAULTBACKGROUND_A);
+		Gdx.gl.glClear(gl20.GL_COLOR_BUFFER_BIT);
 		stage.act();
 		stage.draw();
 	}

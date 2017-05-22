@@ -20,6 +20,7 @@ public abstract class Map {
     private int gameTime = 300;
     private int playerSpeed = 1;
     private List<GameObject> gameObjects;
+    private EndgameCounter endgameCounter;
 
 
     /**
@@ -27,8 +28,9 @@ public abstract class Map {
      *
      * @param gameObjects A list of GameObjects
      */
-    public Map(List<GameObject> gameObjects) {
+    public Map(List<GameObject> gameObjects, int machinesDestroyedToEnd, int strikingWorkersToEnd) {
         this.gameObjects = gameObjects;
+        this.endgameCounter = new EndgameCounter(machinesDestroyedToEnd, strikingWorkersToEnd);
     }
 
     /**
@@ -154,5 +156,7 @@ public abstract class Map {
         return staticObjects;
     }
 
-
+    public EndgameCounter getEndgameCounter() {
+        return endgameCounter;
+    }
 }
