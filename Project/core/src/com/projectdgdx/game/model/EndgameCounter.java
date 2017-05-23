@@ -38,7 +38,7 @@ public class EndgameCounter {
         return numDestroyedMachines;
     }
 
-    public void incDestroyedMachines(){
+    public synchronized void incDestroyedMachines(){
         System.out.println("Num destroyed machines was:" + numDestroyedMachines + " now " + (numDestroyedMachines+1));
         this.numDestroyedMachines++;
 
@@ -47,7 +47,7 @@ public class EndgameCounter {
         }
     }
 
-    public void incStrikingWorkers(){
+    public synchronized void incStrikingWorkers(){
         System.out.println("Num strikers was:" + numStrikingWorkers + " now " + (numStrikingWorkers+1));
         this.numStrikingWorkers++;
         if (this.numStrikingWorkers >= targetNumStrikingWorkers){
