@@ -80,7 +80,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	@Override
 	public void reactToEvent(Events event) {
 		if (event == Events.MACHINES_DESTROYED_END || event == Events.SABOTEUR_CAUGHT || event == Events.STRIKE_END || event == Events.TIME_UPP){
-			renderer.takePrettyScreenShot();
 			gameRunning = false;
 			gameEndingEvent = event;
 		}else if (event == Events.MACHINE_DESTRUCTION){
@@ -292,6 +291,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 		//Check if game over
 		if(!gameRunning) {
+
 			enterEndgame(projectD);
 		}
 
@@ -303,6 +303,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	}
 
 	private void enterEndgame(ProjectD projectD){
+		projectD.takePrettyScreenshot();
 		if (gameEndingEvent == Events.MACHINES_DESTROYED_END){
 			projectD.setState(GameStates.ENDGAME_MACHINES);
 		}else if (gameEndingEvent == Events.SABOTEUR_CAUGHT){

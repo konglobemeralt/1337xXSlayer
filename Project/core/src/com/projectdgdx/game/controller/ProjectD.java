@@ -1,9 +1,14 @@
 package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.projectdgdx.game.model.Input.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.Config;
@@ -29,6 +34,7 @@ public class ProjectD extends ApplicationAdapter {
         }
         if(currentState != null){
             currentState.stop(this);
+
         }
 
 
@@ -119,6 +125,14 @@ public class ProjectD extends ApplicationAdapter {
         for(iGameState gameState : gameStates.values()) {
             gameState.resize(width, height);
         }
+    }
+
+    public void takePrettyScreenshot(){
+        byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);
+        BufferUtils.copy(pixels, 0, pixmap.getPixels(), pixels.length);
+        PixmapIO.writePNG(Gdx.files.external("prettyScreenshot.png"), pixmap);
+        pixmap.dispose();
     }
 
     public InputMultiplexer getMultiplexer() {

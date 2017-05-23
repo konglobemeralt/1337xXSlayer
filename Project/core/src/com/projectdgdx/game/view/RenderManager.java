@@ -1,8 +1,6 @@
 package com.projectdgdx.game.view;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -23,7 +21,6 @@ import com.projectdgdx.game.model.StaticInteractable.Spotlight;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -242,52 +239,6 @@ public class RenderManager {
         }
 
 
-    }
-
-
-
-    public static void takePrettyScreenShot() {
-        try {
-            FileHandle fh;
-            do {
-                fh = new FileHandle("PrettyScreenShot.png");
-            } while (fh.exists());
-
-            Pixmap pixmap = getScreenshot(0, 0, Gdx.graphics.getWidth(),
-                    Gdx.graphics.getHeight(), true);
-            PixmapIO.writePNG(fh, pixmap);
-            pixmap.dispose();
-        } catch (Exception e) {
-        }
-    }
-
-    private static Pixmap getScreenshot(int x, int y, int w, int h,
-                                        boolean yDown) {
-
-        Gdx.gl.glPixelStorei(GL20.GL_PACK_ALIGNMENT, 1);
-
-        final Pixmap pixmap1 = new Pixmap(w, h, Pixmap.Format.RGBA8888);
-        ByteBuffer pixels1 = pixmap1.getPixels();
-        Gdx.gl.glReadPixels(x, y, w, h, GL20.GL_RGBA, GL20.GL_UNSIGNED_BYTE,
-                pixels1);
-
-        Pixmap pixmap = pixmap1;
-
-        if (yDown) {
-            // Flip the pixmap upside down
-            ByteBuffer pixels = pixmap.getPixels();
-            int numBytes = w * h * 4;
-            byte[] lines = new byte[numBytes];
-            int numBytesPerLine = w * 4;
-            for (int i = 0; i < h; i++) {
-                pixels.position((h - i - 1) * numBytesPerLine);
-                pixels.get(lines, i * numBytesPerLine, numBytesPerLine);
-            }
-            pixels.clear();
-            pixels.put(lines);
-        }
-
-        return pixmap;
     }
 
 

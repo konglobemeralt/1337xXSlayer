@@ -2,6 +2,10 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,10 +29,8 @@ public class EndGameState implements iGameState {
 	private TextButton mainMenuButton;
 	private InputMultiplexer multiplexer;
 	private MenuButtonInputController menuButtonInputController;
-	private boolean isDrawn = false;
-
-
-
+	private SpriteBatch batch;
+	Texture background;
 
 	public EndGameState(GameStates ending){
 		this.ending = ending;
@@ -36,11 +38,17 @@ public class EndGameState implements iGameState {
 
 
 	private void render() {
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
+				(Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+
+
 		stage.act();
-		if(!isDrawn){
-			stage.draw();
-			isDrawn = true;
-		}
+		batch.begin();
+		batch.draw(background, 0, 0);
+		batch.end();
+		stage.draw();
 
 	}
 
@@ -61,8 +69,6 @@ public class EndGameState implements iGameState {
 		}
 
 		menuButtonInputController.handleInput(projectD.getInpuControllers());
-
-
 		render();
 
 	}
@@ -73,7 +79,7 @@ public class EndGameState implements iGameState {
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
 
-
+		background = new Texture(Gdx.files.getExternalStoragePath() + "prettyScreenshot.png");
 		mainMenuButton = new TextButton("To Main Menu", skin);
 
 		java.util.List<TextButton> buttons = new ArrayList<>();
@@ -90,8 +96,9 @@ public class EndGameState implements iGameState {
 		}else if (this.ending == GameStates.ENDGAME_MACHINES){
 			endGameMessage = new Label("\nGame Over!\nThe machines are destroyed, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
 		}
-		endGameMessage.setFontScale(2);
+		endGameMessage.setFontScale(1);
 
+		batch = new SpriteBatch();
 
 		this.table.add(endGameMessage);
 		this.table.row();
@@ -111,8 +118,8 @@ public class EndGameState implements iGameState {
 	@Override
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
-		stage.clear();
-		stage.dispose();
+		//stage.clear();
+		//stage.dispose();
 	}
 
 	@Override
