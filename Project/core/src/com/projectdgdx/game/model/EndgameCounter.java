@@ -3,7 +3,8 @@ package com.projectdgdx.game.model;
 import com.projectdgdx.game.utils.Timer;
 
 /**
- * Created by Emil Jansson on 2017-05-22.
+ * The EndGameCounter is a data handler that handles all data surrounding the end of the game.
+ * This includes number of destroyed Machines, striking worker and the overall timer.
  */
 public class EndgameCounter {
 
@@ -38,6 +39,10 @@ public class EndgameCounter {
         return numDestroyedMachines;
     }
 
+    /**
+     * Increments the number of destroyed Machines and sends an event to the EventSender if enough
+     * Machines have been destroyed to end the game.
+     */
     public synchronized void incDestroyedMachines(){
         System.out.println("Num destroyed machines was:" + numDestroyedMachines + " now " + (numDestroyedMachines+1));
         this.numDestroyedMachines++;
@@ -47,6 +52,11 @@ public class EndgameCounter {
         }
     }
 
+
+    /**
+     * Increments the number of striking Workers and sends an event to the EventSender if enough
+     * Workers strike to end the game.
+     */
     public synchronized void incStrikingWorkers(){
         System.out.println("Num strikers was:" + numStrikingWorkers + " now " + (numStrikingWorkers+1));
         this.numStrikingWorkers++;

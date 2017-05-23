@@ -12,8 +12,9 @@ import com.projectdgdx.game.utils.Config;
 import java.util.ArrayList;
 
 /**
- * InGameState controls everything that is in game.
- * Created by Eddie on 2017-04-28.
+ * The EndGameState will occur when the game has ended, enough worker are on strike, the saboteur is caught
+ * or enough machines are destroyed. The state will display the message of who wins and that the game
+ * is over.
  */
 public class EndGameState implements iGameState {
 
@@ -34,7 +35,9 @@ public class EndGameState implements iGameState {
 		this.ending = ending;
 	}
 
-
+	/**
+	 * Will render the stage and view the graphical representation of the EndGameState
+	 */
 	private void render() {
 		stage.act();
 		if(!isDrawn){
@@ -44,16 +47,7 @@ public class EndGameState implements iGameState {
 
 	}
 
-
-	/**
-	 * Handles user input. // TODO more thorough docs
-	 *
-	 * @param projectD ProjectD
-	 */
-
-
-
-
+	@Override
 	public void update(ProjectD projectD) {
 		if(mainMenuButton.isPressed()){
 			this.exit(projectD);
@@ -64,9 +58,9 @@ public class EndGameState implements iGameState {
 
 
 		render();
-
 	}
 
+	@Override
 	public void init(ProjectD projectD) {
 		this.table = new Table();
 		this.stage = new Stage();
@@ -117,16 +111,11 @@ public class EndGameState implements iGameState {
 
 	@Override
 	public void resize(int width, int height) {
-
 	}
 
+	@Override
 	public void exit(ProjectD projectD) {
 		this.stop(projectD);
-	}
-
-
-	private void updateEndGameMessage() {
-		endGameMessage.setText("Sätt till ngn cool sträng som beskriver hur det gick i spelet");
 	}
 
 }
