@@ -8,12 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.projectdgdx.game.model.Map;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.view.RenderManager;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -26,16 +28,13 @@ public class EndGameState implements iGameState {
 	private Skin skin;
 	private Table table;
 	private Stage stage;
-	private Timer gameTimer;
 	private GameStates ending;
-
+	private TextButton mainMenuButton;
 	private InputMultiplexer multiplexer;
-	private Array<AnimationController> animationControllers = new Array<AnimationController>();
+	private MenuButtonInputController menuButtonInputController;
 
 
-	private RenderManager renderer;
-	private Random rand;
-	private Map map;
+
 
 	public EndGameState(GameStates ending){
 		this.ending = ending;
@@ -63,20 +62,32 @@ public class EndGameState implements iGameState {
 
 
 	public void update(ProjectD projectD) {
+		if(mainMenuButton.isPressed()){
+			this.exit(projectD);
+			projectD.setState(GameStates.MAINMENU);
+		}
+
+		menuButtonInputController.handleInput(projectD.getInpuControllers());
+
+
 		render();
 
 	}
 
 	public void init(ProjectD projectD) {
-
-		rand = new Random();
-
 		this.table = new Table();
 		this.stage = new Stage();
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
 
-		//Create buttons
+
+		mainMenuButton = new TextButton("To Main Menu", skin);
+
+		java.util.List<TextButton> buttons = new ArrayList<>();
+		buttons.add(mainMenuButton);
+		menuButtonInputController = new MenuButtonInputController(buttons);
+
+		//End game strings
 		if (this.ending == GameStates.ENDGAME_TIMER){
 			endGameMessage = new Label("Game Over!\nTime is up, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
 		}else if (this.ending == GameStates.ENDGAME_CAUGHT){
@@ -87,7 +98,10 @@ public class EndGameState implements iGameState {
 			endGameMessage = new Label("Game Over!\nThe machines are destroyed, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
 		}
 
-		this.table.add(endGameMessage).padBottom(Gdx.graphics.getHeight() - 70);
+
+		this.table.add(endGameMessage);
+		this.table.row();
+		this.table.add(mainMenuButton).expandX();
 		this.stage.addActor(table);
 
 	}
@@ -95,12 +109,16 @@ public class EndGameState implements iGameState {
 
 	@Override
 	public void start(ProjectD projectD) {
-
+		this.multiplexer = projectD.getMultiplexer();
+		multiplexer.addProcessor(stage);// Make the stage consume events
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
+		stage.clear();
+		stage.dispose();
 	}
 
 	@Override
