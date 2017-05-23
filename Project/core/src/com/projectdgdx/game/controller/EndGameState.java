@@ -73,7 +73,7 @@ public class EndGameState implements iGameState {
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		skin = new Skin(Gdx.files.internal(Config.UI_SKIN_PATH));
 
-		background = new Texture(Gdx.files.getExternalStoragePath() + "prettyScreenshot.png");
+		background = new Texture(Gdx.files.getLocalStoragePath() + "prettyScreenshot.png");
 		mainMenuButton = new TextButton("To Main Menu", skin);
 
 		java.util.List<TextButton> buttons = new ArrayList<>();
