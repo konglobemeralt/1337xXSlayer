@@ -48,8 +48,7 @@ public class GameObjectInit {
         private String id = null;
 
         /**
-         * The constructor for GameObjectInit requires a type
-         *
+         * The constructor for GameObjectInit requires a type.
          * @param type Type of GameObject that the data should be converted into
          */
         public GameObjectInit(String type) {
@@ -81,7 +80,6 @@ public class GameObjectInit {
 
         /**
          * convert can be used to convert a git sGameObjectInit into a GameObject
-         *
          * @return A GameObject that has the data within GameObjectInit
          */
         public GameObject convert() {
@@ -161,7 +159,6 @@ public class GameObjectInit {
 
         /**
          * Clone provides a way to do a deep copy of a GameObjectInit
-         *
          * @return A clone of GameObjectInit
          */
         @Override

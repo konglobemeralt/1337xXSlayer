@@ -8,9 +8,6 @@ import com.projectdgdx.game.utils.Vector3d;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Emil Jansson on 2017-05-11.
- */
 public class MachineInteractingWorkerState implements iWorkerState {
     private Vector3d pos;
 

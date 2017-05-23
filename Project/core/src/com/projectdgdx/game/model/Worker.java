@@ -48,7 +48,7 @@ public class Worker extends Character {
     }
 
     /**
-     *
+     * React to the game tick. will delegate the exact reaction to its internal state.
      */
     public void reactOnUpdate(){
         this.state.reactOnUpdate(this);

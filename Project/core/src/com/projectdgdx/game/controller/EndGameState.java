@@ -2,25 +2,19 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.model.Map;
-import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Config;
-import com.projectdgdx.game.view.RenderManager;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
- * InGameState controls everything that is in game.
- * Created by Eddie on 2017-04-28.
+ * The EndGameState will occur when the game has ended, enough worker are on strike, the saboteur is caught
+ * or enough machines are destroyed. The state will display the message of who wins and that the game
+ * is over.
  */
 public class EndGameState implements iGameState {
 
@@ -32,6 +26,7 @@ public class EndGameState implements iGameState {
 	private TextButton mainMenuButton;
 	private InputMultiplexer multiplexer;
 	private MenuButtonInputController menuButtonInputController;
+	private boolean isDrawn = false;
 
 
 
@@ -40,27 +35,19 @@ public class EndGameState implements iGameState {
 		this.ending = ending;
 	}
 
-
-	public void render() {
-		Gdx.gl.glClearColor(Config.MENU_DEFAULTBACKGROUND_R,
-				Config.MENU_DEFAULTBACKGROUND_G,
-				Config.MENU_DEFAULTBACKGROUND_B,
-				Config.MENU_DEFAULTBACKGROUND_A);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	/**
+	 * Will render the stage and view the graphical representation of the EndGameState
+	 */
+	private void render() {
 		stage.act();
-		stage.draw();
+		if(!isDrawn){
+			stage.draw();
+			isDrawn = true;
+		}
+
 	}
 
-
-	/**
-	 * Handles user input. // TODO more thorough docs
-	 *
-	 * @param projectD ProjectD
-	 */
-
-
-
-
+	@Override
 	public void update(ProjectD projectD) {
 		if(mainMenuButton.isPressed()){
 			this.exit(projectD);
@@ -71,9 +58,9 @@ public class EndGameState implements iGameState {
 
 
 		render();
-
 	}
 
+	@Override
 	public void init(ProjectD projectD) {
 		this.table = new Table();
 		this.stage = new Stage();
@@ -89,14 +76,15 @@ public class EndGameState implements iGameState {
 
 		//End game strings
 		if (this.ending == GameStates.ENDGAME_TIMER){
-			endGameMessage = new Label("Game Over!\nTime is up, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
+			endGameMessage = new Label("\nGame Over!\nTime is up, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
 		}else if (this.ending == GameStates.ENDGAME_CAUGHT){
-			endGameMessage = new Label("Game Over!\nThe saboteur was caught, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
+			endGameMessage = new Label("\nGame Over!\nThe saboteur was caught, meaning the SUPERVISORS WIN\nand the SABOTEUR LOSE!", skin);
 		}else if (this.ending == GameStates.ENDGAME_STRIKE){
-			endGameMessage = new Label("Game Over!\nThe workers are striking, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
+			endGameMessage = new Label("\nGame Over!\nThe workers are striking, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
 		}else if (this.ending == GameStates.ENDGAME_MACHINES){
-			endGameMessage = new Label("Game Over!\nThe machines are destroyed, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
+			endGameMessage = new Label("\nGame Over!\nThe machines are destroyed, meaning the SABOTEUR WIN\nand the SUPERVISORS LOSE!", skin);
 		}
+		endGameMessage.setFontScale(2);
 
 
 		this.table.add(endGameMessage);
@@ -123,16 +111,11 @@ public class EndGameState implements iGameState {
 
 	@Override
 	public void resize(int width, int height) {
-
 	}
 
+	@Override
 	public void exit(ProjectD projectD) {
 		this.stop(projectD);
-	}
-
-
-	private void updateEndGameMessage() {
-		endGameMessage.setText("Sätt till ngn cool sträng som beskriver hur det gick i spelet");
 	}
 
 }

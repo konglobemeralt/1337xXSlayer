@@ -32,7 +32,6 @@ public abstract class Entity extends GameObject {
      * Changes the entity's position by translation by vector vec.
      * @param vec The vector used for translation.
      */
-
     public void move(Vector3d vec){
         if (!isColliding(vec)){
             this.moveForce = vec.normalised();

@@ -54,6 +54,9 @@ public class InputModel {
         return menuButton;
     }
 
+    /**
+     * Will reset the number of times buttons has been pressed
+     */
     public void resetButtonCounts() {
         buttonA.resetCount();
         buttonB.resetCount();
