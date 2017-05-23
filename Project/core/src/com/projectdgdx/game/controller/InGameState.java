@@ -158,9 +158,9 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 			//Limit linear velocity
 			Vector3 linearVelocity = physicsObject.getLinearVelocity();
-			if(linearVelocity.len() > 30) {
-				linearVelocity.scl(30f/linearVelocity.len());
-				physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-30f, 30f));
+			if(linearVelocity.len() > Config.MOVE_SPEED) {
+				linearVelocity.scl(Config.MOVE_SPEED/linearVelocity.len());
+				physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-Config.MOVE_SPEED, Config.MOVE_SPEED));
 			}
 		}
 	}
