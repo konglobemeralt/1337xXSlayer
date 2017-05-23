@@ -374,12 +374,17 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 	// TODO docs
 	public void init(ProjectD projectD){
+		System.out.println("INITTTT!!");
 		objectsMap = new HashMap<>();
 		createCamera();
 
+
+		//Reset game running
+		gameRunning = true;
+
 		//Remove all existing timers
-		System.out.println("INIT!");
 		Timer.removeTimers();
+
 
 		//Parse and create map
 		MapParser parser = new MapParser();

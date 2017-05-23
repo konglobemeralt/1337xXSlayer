@@ -64,4 +64,5 @@ public class EndgameCounter {
             EventSender.getEventSender().sendStrikeEnd();
         }
     }
+
 }

@@ -18,10 +18,12 @@ public class Timer implements Runnable{
 
     private static void addTimer(Timer timer) {
         timers.add(timer);
+        System.out.println(timers.size());
     }
 
     private static void removeTimer(Timer timer) {
         timers.remove(timer);
+        isPaused = false;
     }
 
     public static void pauseTimers() {
@@ -32,10 +34,10 @@ public class Timer implements Runnable{
     }
 
     public static void resumeTimers() {
-        isPaused = false;
         for(Timer timer : timers) {
             timer.resume();
         }
+        isPaused = false;
     }
 
     public static void removeTimers() {
@@ -111,11 +113,16 @@ public class Timer implements Runnable{
                 }
                 this.timerValue--;
         }
-        if(!Thread.interrupted()) {
-            notifyListenersTimeUp();
-            removeTimer(this);
+
+            if(!Thread.interrupted()) {
+                while(isPaused) {
+                    System.out.println("I'm a stupid thread");
+                }
+                notifyListenersTimeUp();
+                removeTimer(this);
 //            System.out.println(listeners.get(0).toString());
-        }
+            }
+
 
     }
 }
