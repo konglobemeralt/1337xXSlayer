@@ -3,6 +3,8 @@ package com.projectdgdx.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
@@ -18,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.libgdx.EntityContainer;
 import com.projectdgdx.game.libgdx.GameObjectContainer;
@@ -76,6 +80,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	@Override
 	public void reactToEvent(Events event) {
 		if (event == Events.MACHINES_DESTROYED_END || event == Events.SABOTEUR_CAUGHT || event == Events.STRIKE_END || event == Events.TIME_UPP){
+			renderer.takePrettyScreenShot();
 			gameRunning = false;
 			gameEndingEvent = event;
 		}else if (event == Events.MACHINE_DESTRUCTION){
@@ -466,5 +471,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	public void timeIsUp() {
 		EventSender.getEventSender().sendTimeOutEnd();
 	}
+
+
 
 }
