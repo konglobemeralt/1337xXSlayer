@@ -1,6 +1,7 @@
 package com.projectdgdx.game.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Emil Jansson on 2017-05-04.
@@ -9,6 +10,53 @@ public class Timer implements Runnable{
     private ArrayList<iTimerListener> listeners = new ArrayList<iTimerListener>();
     private int timerValue;
     private long ticTime;
+    private Thread thread;
+
+    private static boolean isPaused = false;
+
+    private static List<Timer> timers = new ArrayList<>();
+
+    private static void addTimer(Timer timer) {
+        timers.add(timer);
+    }
+
+    private static void removeTimer(Timer timer) {
+        timers.remove(timer);
+    }
+
+    public static void pauseTimers() {
+        isPaused = true;
+        for(Timer timer : timers) {
+            timer.pause();
+        }
+    }
+
+    public static void resumeTimers() {
+        isPaused = false;
+        for(Timer timer : timers) {
+            timer.resume();
+        }
+    }
+
+    public static void removeTimers() {
+        for(Timer timer : timers) {
+            timer.stop();
+        }
+        timers.clear();
+    }
+
+    public synchronized void pause() {
+        thread.interrupt();
+    }
+
+    public synchronized void resume() {
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public synchronized void stop() {
+        thread.interrupt();
+    }
 
     public Timer(int timerValue, long ticTime){
         this.timerValue = timerValue;
@@ -43,20 +91,31 @@ public class Timer implements Runnable{
     }
 
     public void start(){
-        Thread thread = new Thread(this);
-        thread.start();
+        if(!isPaused) {
+            thread = new Thread(this);
+            thread.start();
+        }
+        addTimer(this);
     }
 
 
     @Override
     public void run() {
         while (this.timerValue > 0){
-            try {
-                //wait(this.ticTime);
-                Thread.sleep(this.ticTime);
-            }catch(Exception e){}
-            this.timerValue--;
+                try {
+//                    System.out.println("Tick: " + this.timerValue);
+                    Thread.sleep(this.ticTime);
+                }catch(InterruptedException e){
+//                    System.out.println("Thread has been interrupted");
+                    return;
+                }
+                this.timerValue--;
         }
-        notifyListenersTimeUp();
+        if(!Thread.interrupted()) {
+            notifyListenersTimeUp();
+            removeTimer(this);
+//            System.out.println(listeners.get(0).toString());
+        }
+
     }
 }

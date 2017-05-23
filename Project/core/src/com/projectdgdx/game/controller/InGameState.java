@@ -377,6 +377,10 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		objectsMap = new HashMap<>();
 		createCamera();
 
+		//Remove all existing timers
+		System.out.println("INIT!");
+		Timer.removeTimers();
+
 		//Parse and create map
 		MapParser parser = new MapParser();
 		map = parser.parse(Config.LEVEL_IN_PLAY);
@@ -410,9 +414,10 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	@Override
 	public void start(ProjectD projectD) {
 		updateCamera(projectD);
-
 		renderer = new RenderManager();
 		renderer.init(lightList);
+		Timer.resumeTimers();
+		//TODO rename this method
 		initTimer();
 	}
 
@@ -420,6 +425,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	public void stop(ProjectD projectD) {
 		projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
 		lightList.clear();
+		Timer.pauseTimers();
 	}
 
 	@Override
