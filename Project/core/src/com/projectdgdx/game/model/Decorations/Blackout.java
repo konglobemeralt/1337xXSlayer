@@ -6,14 +6,13 @@ import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;
 
 /**
- * Created by Eddie on 2017-05-11.
+ * The blackout class is a "graphical" class that is based on an ability that the Saboteur has. A
+ * radius around the saboteur will become black and therefore creates an opportunity for the
+ * saboteur to hide and escape.
  */
 public class Blackout extends GameObject implements iTimerListener {
 
     /**
-     * The blackout class is a "graphical" class that is based on an ability that the Saboteur has. A
-     * radius around the saboteur will become black and therefore creates an opportunity for the
-     * saboteur to hide and escape.
      * @param position The origo of the blackout
      * @param scale
      * @param rotation
@@ -31,6 +30,7 @@ public class Blackout extends GameObject implements iTimerListener {
     public void activate(){
         Timer blackoutTime = new Timer(3,1000);
         blackoutTime.addListener(this);
+        blackoutTime.start();
 
         // Show the blackout block
     }

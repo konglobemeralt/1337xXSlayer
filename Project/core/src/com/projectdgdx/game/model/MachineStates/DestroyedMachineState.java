@@ -6,6 +6,7 @@ import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.model.StaticInteractable.iSpotlightListener;
 import com.projectdgdx.game.model.iDishonestInteractable;
 import com.projectdgdx.game.model.iHonestInteractable;
+import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
@@ -48,7 +49,9 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
     public void detect() {
         if(!this.detected) {
             this.detected = true;
-            System.out.println("SABOTAGE DETECTED");
+            if(Config.DEBUG){
+                System.out.println("SABOTAGE DETECTED");
+            }
             this.machine.getMachineCounter().setTimerValue(0);
             // Play animation of machine getting destroyed/change spotlight color from green to red and play a sound
 

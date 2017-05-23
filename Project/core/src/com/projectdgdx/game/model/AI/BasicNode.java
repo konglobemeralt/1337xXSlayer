@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Emil Jansson on 2017-05-08.
+ * An overall node that has a position in the room and defined connections to other nodes in the room.
  */
 public abstract class BasicNode extends GameObject {
 
@@ -81,10 +81,9 @@ public abstract class BasicNode extends GameObject {
     }
 
     /**
-     *  //TODO
-     * @param nodeList
+     *  Will add connections to other nodes and their corresponding strength.
+     * @param nodeList , a list of nodes that this node should connect to.
      */
-
     public void init(List<BasicNode> nodeList) { //TODO use node strength. All connections have strength 1 atm.
         for(BasicNode node : nodeList) {
             if(friendList.contains(node.getNodeId())) {

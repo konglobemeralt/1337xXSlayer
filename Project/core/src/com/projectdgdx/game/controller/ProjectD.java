@@ -98,7 +98,8 @@ public class ProjectD extends ApplicationAdapter {
 
 
         if(Config.DEBUG) {
-        	this.setState(GameStates.INGAME);
+            this.resetState(GameStates.INGAME);
+            this.setState(GameStates.INGAME);
 		} else {
 			this.setState(GameStates.MAINMENU);
 		}

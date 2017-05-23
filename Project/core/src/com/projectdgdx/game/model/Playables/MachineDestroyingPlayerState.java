@@ -33,12 +33,16 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
 
     @Override
     public void timeIsUp() {
-        System.out.println("Destroyed machine!");
+        // System.out.println("Destroyed machine!");
+
+        // Set the state of the machine to destroyed and the state of the saboteur to normal
         DestroyedMachineState destroyedState = new DestroyedMachineState(machine);
         this.currentUser.setState(new NormalPlayerState(currentUser));
         this.machine.setState(destroyedState);
 
-        System.out.println("Spotlights from Machine size: "+this.machine.getBigDetectingSpotlights().size());
+        // System.out.println("Spotlights from Machine size: "+this.machine.getBigDetectingSpotlights().size());
+
+        // Add the destroyed machine as a listener to the spotlight
         for(Spotlight mainSpotlight : this.machine.getBigDetectingSpotlights()){
             mainSpotlight.addListener(destroyedState);
         }
