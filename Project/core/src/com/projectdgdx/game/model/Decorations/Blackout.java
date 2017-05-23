@@ -31,6 +31,7 @@ public class Blackout extends GameObject implements iTimerListener {
     public void activate(){
         Timer blackoutTime = new Timer(3,1000);
         blackoutTime.addListener(this);
+        blackoutTime.start();
 
         // Show the blackout block
     }
