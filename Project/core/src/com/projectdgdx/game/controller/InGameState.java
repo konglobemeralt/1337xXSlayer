@@ -366,7 +366,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		}
 	}
 
-	// TODO functional decomposition and docs
+	// TODO docs
 	public void init(ProjectD projectD){
 		objectsMap = new HashMap<>();
 		createCamera();

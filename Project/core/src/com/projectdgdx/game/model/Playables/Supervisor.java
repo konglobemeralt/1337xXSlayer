@@ -51,8 +51,8 @@ public class Supervisor extends PlayableCharacter {
      * @return the character closest to hte PlayableCharacter.
      */
     private Character getClosestCharacter(List<Character> charactersInRadius){ //TODO Checks the first character twice
-
-        Character closestCharacter = new Worker(new Vector3d(0,0,0), new Vector3d(0,0,0), new Vector3d(0,0,0), "ss");
+        charactersInRadius.remove(this);
+        Character closestCharacter = null;
         float closestDistance = 10000;
         for(Character c : charactersInRadius){
             if (!(c == this)){
@@ -83,7 +83,9 @@ public class Supervisor extends PlayableCharacter {
     public void catsch(List<Character> characters){
         List<Character> charactersInRadius = getCharactersInRadius(characters);
         Character closestCharacter = getClosestCharacter(charactersInRadius);
-        closestCharacter.beenCaught();
+        if(closestCharacter != null) {
+            closestCharacter.beenCaught();
+        }
     }
 
     @Override
