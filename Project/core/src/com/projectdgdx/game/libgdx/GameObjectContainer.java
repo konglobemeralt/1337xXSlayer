@@ -16,6 +16,7 @@ import com.projectdgdx.game.model.ModelStructure.Character;
 import com.projectdgdx.game.model.ModelStructure.Entity;
 import com.projectdgdx.game.model.ModelStructure.GameObject;
 import com.projectdgdx.game.model.ModelStructure.StaticObject;
+import com.projectdgdx.game.model.StaticInteractable.Machine;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**
@@ -43,11 +44,6 @@ public class GameObjectContainer implements Disposable {
 		@Override
 		public void setWorldTransform (Matrix4 worldTrans) {
 			gameObject.setPosition(VectorConverter.convertFromLibgdx(worldTrans.getTranslation(new Vector3())));
-//			System.out.println(gameObject.getClass().getName() + "  " + gameObject.getScale().toString());
-//			Quaternion orientation = transform.getRotation(new Quaternion());
-//
-//			worldTrans.set(VectorConverter.convertToLibgdx(gameObject.getPosition()), orientation, VectorConverter.convertToLibgdx(gameObject.getScale()));
-
 			transform.set(worldTrans);
 		}
 	}
@@ -72,7 +68,14 @@ public class GameObjectContainer implements Disposable {
 		//Setup motion state
 		MyMotionState motionState = new MyMotionState();
 		motionState.transform = graphicObject.transform;
+
+
 		physicsObject.setMotionState(motionState);
+
+		//Hacks to fix offset from machine model
+		if(gameObject instanceof Machine) {
+			graphicObject.transform = graphicObject.transform.translate(0.6f,0,-3);
+		}
 
 		//Set binding to GameObject within Map
 		physicsObject.setUserValue(map.getGameObjects().indexOf(gameObject));
