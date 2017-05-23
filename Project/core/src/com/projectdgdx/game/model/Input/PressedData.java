@@ -1,7 +1,7 @@
 package com.projectdgdx.game.model.Input;
 
 /**
- * Created by Hampus on 2017-05-03.
+ *
  */
 public class PressedData {
 	private boolean pressed = false;

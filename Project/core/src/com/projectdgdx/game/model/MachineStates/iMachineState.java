@@ -23,5 +23,9 @@ public interface iMachineState {
      */
     void dishonestInteract(PlayableCharacter player, iDishonestInteractable di);
 
+    /**
+     * What happens when the internal timer of a Machine has ticked down to 0.
+     * @param machine , the Machine with the internal timer that has ended.
+     */
     void destroyedByTime(Machine machine);
 }

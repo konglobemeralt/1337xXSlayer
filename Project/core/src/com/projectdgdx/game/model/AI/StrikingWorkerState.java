@@ -6,7 +6,8 @@ import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Created by Emil Jansson on 2017-05-09.
+ * When a Worker is caught by the Supervisor it will enter the StrikingWorkerState. It will send
+ * an event to the EventSender.
  */
 public class StrikingWorkerState implements iWorkerState {
 
