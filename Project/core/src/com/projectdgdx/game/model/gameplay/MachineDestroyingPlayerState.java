@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
@@ -10,11 +10,11 @@ import com.projectdgdx.game.utils.iTimerListener;
  */
 public class MachineDestroyingPlayerState implements iPlayerState, iTimerListener {
 
-    private iDishonestInteractable machine;
+    private Machine machine;
     private PlayableCharacter currentUser;
 
     public MachineDestroyingPlayerState(iDishonestInteractable machine, PlayableCharacter currentPlayer){
-        this.machine = machine;
+        this.machine = (Machine) machine;
         this.currentUser = currentPlayer;
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
@@ -32,7 +32,7 @@ public class MachineDestroyingPlayerState implements iPlayerState, iTimerListene
         // System.out.println("Destroyed machine!");
 
         // Set the state of the machine to destroyed and the state of the saboteur to normal
-        DestroyedMachineState destroyedState = new DestroyedMachineState((Machine)machine);
+        DestroyedMachineState destroyedState = new DestroyedMachineState(machine);
         this.currentUser.setState(new NormalPlayerState(currentUser));
         this.machine.setState(destroyedState);
 

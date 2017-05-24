@@ -1,8 +1,8 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 /**
  * This state is the "normal" state for the machine. This is when nobody uses it and it isn't
- * destroyed/sabotaged. Is in a standby mode waiting for someone to interact with it.
+ * destroyed/sabotaged. Is in a standby mode waiting for someone to gameplay with it.
  */
 public class UnusedMachineState implements iMachineState {
 

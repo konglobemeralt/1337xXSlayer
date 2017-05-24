@@ -8,7 +8,7 @@ import java.util.UUID;
  * Created by Eddie on 2017-04-28.
  *
  * This is the abstract class controller that is a base for all sorts of inputs.
- * It contains a InputModel instance where all input data should be saved to.
+ * It contains a InputModel instance where all input dataHolding should be saved to.
  */
 public abstract class InputController {
     final private UUID uuid = UUID.randomUUID();
@@ -25,7 +25,7 @@ public abstract class InputController {
 
     /**
      *
-     * @return InputModel that has all data associated with this InputController
+     * @return InputModel that has all dataHolding associated with this InputController
      */
     public InputModel getModel(){
         return inputModel;

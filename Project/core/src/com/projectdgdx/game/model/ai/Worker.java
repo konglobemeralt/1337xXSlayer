@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model.ai;
 
-import com.projectdgdx.game.model.interact.Character;
+import com.projectdgdx.game.model.gameplay.Character;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

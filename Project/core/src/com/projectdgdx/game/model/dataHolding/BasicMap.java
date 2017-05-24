@@ -1,6 +1,6 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.dataHolding;
 
-import com.projectdgdx.game.model.modelStructure.GameObject;
+import com.projectdgdx.game.model.objectStructure.GameObject;
 import com.projectdgdx.game.utils.Timer;
 
 import java.util.List;

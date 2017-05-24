@@ -36,7 +36,7 @@ public class VectorConverterTest{
         assertEquals(newVec2.getClass().getName(), "com.badlogic.gdx.math.Vector2");
         assertEquals(newVec3.getClass().getName(), "com.badlogic.gdx.math.Vector3");
 
-        // Verify that the data is the same as before conversion
+        // Verify that the dataHolding is the same as before conversion
         assertTrue(newVec2.x == 1 && newVec2.y == 2);
         assertTrue(newVec3.x == 1 && newVec3.y == 2 && newVec3.z == 3);
     }

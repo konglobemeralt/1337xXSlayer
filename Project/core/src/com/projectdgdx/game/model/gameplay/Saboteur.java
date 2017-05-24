@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 
 import com.projectdgdx.game.utils.EventSender;
@@ -29,8 +29,8 @@ public class Saboteur extends PlayableCharacter{
     }
 
     /**
-     * Verfies if the Saboteur is in distance to any object that is possible to dishonest interact with.
-     * @param di , the object that the the Saboteur want to know if it can dishonest interact with.
+     * Verfies if the Saboteur is in distance to any object that is possible to dishonest gameplay with.
+     * @param di , the object that the the Saboteur want to know if it can dishonest gameplay with.
      * @return
      */
     private boolean canDishonestInteract(iDishonestInteractable di){

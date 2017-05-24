@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 /**
  * Machines can have internal states to determine if they're workable or if they're destroyed.

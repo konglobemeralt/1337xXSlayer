@@ -1,17 +1,17 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.dataHolding;
 
 import com.projectdgdx.game.model.ai.NormalWorkerState;
 import com.projectdgdx.game.model.ai.Worker;
 import com.projectdgdx.game.model.ai.WorkerNode;
 import com.projectdgdx.game.model.decorations.Decoration;
-import com.projectdgdx.game.model.interact.UnusedMachineState;
-import com.projectdgdx.game.model.modelStructure.GameObject;
-import com.projectdgdx.game.model.interact.NormalPlayerState;
-import com.projectdgdx.game.model.interact.Saboteur;
-import com.projectdgdx.game.model.interact.Supervisor;
-import com.projectdgdx.game.model.interact.Machine;
-import com.projectdgdx.game.model.interact.Spotlight;
-import com.projectdgdx.game.model.interact.SpotlightControlBoard;
+import com.projectdgdx.game.model.gameplay.UnusedMachineState;
+import com.projectdgdx.game.model.objectStructure.GameObject;
+import com.projectdgdx.game.model.gameplay.NormalPlayerState;
+import com.projectdgdx.game.model.gameplay.Saboteur;
+import com.projectdgdx.game.model.gameplay.Supervisor;
+import com.projectdgdx.game.model.gameplay.Machine;
+import com.projectdgdx.game.model.gameplay.Spotlight;
+import com.projectdgdx.game.model.gameplay.SpotlightControlBoard;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -51,7 +51,7 @@ public class GameObjectInit {
 
         /**
          * The constructor for GameObjectInit requires a type.
-         * @param type Type of GameObject that the data should be converted into
+         * @param type Type of GameObject that the dataHolding should be converted into
          */
         public GameObjectInit(String type) {
             this.type = type;
@@ -82,7 +82,7 @@ public class GameObjectInit {
 
         /**
          * convert can be used to convert a git sGameObjectInit into a GameObject
-         * @return A GameObject that has the data within GameObjectInit
+         * @return A GameObject that has the dataHolding within GameObjectInit
          */
         public GameObject convert() {
             switch (type) {

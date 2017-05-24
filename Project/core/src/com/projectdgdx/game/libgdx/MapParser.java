@@ -7,8 +7,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
-import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.model.modelStructure.GameObject;
+import com.projectdgdx.game.model.dataHolding.BasicMap;
+import com.projectdgdx.game.model.dataHolding.GameObjectInit;
+import com.projectdgdx.game.model.dataHolding.Map;
+import com.projectdgdx.game.model.objectStructure.GameObject;
 import com.projectdgdx.game.utils.TextFileLoader;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Timer;
@@ -34,7 +36,7 @@ public class MapParser {
 
     /**
      * This method loads the xml representation of the map into a Document variable which can be used
-     * to access map data.
+     * to access map dataHolding.
      *
      * @param mapName the name of the map to load. Map has to be located in assets/map
      */
@@ -111,8 +113,8 @@ public class MapParser {
     /**
      * loadNode can be used for loading attributes of a node onto a gameObjectInit. This method is not immutable.
      *
-     * @param node Node to load data from
-     * @param gameObjectInit GameObjectInit to add data from the node upon
+     * @param node Node to load dataHolding from
+     * @param gameObjectInit GameObjectInit to add dataHolding from the node upon
      * @return A GameObjectInit
      */
     private GameObjectInit loadNode(Node node, GameObjectInit gameObjectInit) {

@@ -1,6 +1,6 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
-import com.projectdgdx.game.model.modelStructure.StaticObject;
+import com.projectdgdx.game.model.objectStructure.StaticObject;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
@@ -62,7 +62,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
         state.dishonestInteract(player, this);
     }
 
-    @Override
+
     public void setState(iMachineState newState) {
         this.state = newState;
     }

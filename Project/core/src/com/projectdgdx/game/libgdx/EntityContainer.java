@@ -5,9 +5,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
-import com.projectdgdx.game.model.Map;
-import com.projectdgdx.game.model.modelStructure.Entity;
-import com.projectdgdx.game.model.modelStructure.GameObject;
+import com.projectdgdx.game.model.objectStructure.Entity;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**

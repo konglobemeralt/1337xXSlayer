@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
@@ -41,8 +41,8 @@ public abstract class PlayableCharacter extends Character {
     public abstract void useAbility(List<Character> characters);
 
     /**
-     * The character tries to interact with nearby honest objects.
-     * @param interactables The list of objects the character tries to honest interact with.
+     * The character tries to gameplay with nearby honest objects.
+     * @param interactables The list of objects the character tries to honest gameplay with.
      */
     public void honestInteract(List<iHonestInteractable> interactables){
         for (iHonestInteractable i: interactables){
@@ -54,7 +54,7 @@ public abstract class PlayableCharacter extends Character {
     }
 
     /**
-     * Verifies if any honest object is close enough to interact with.
+     * Verifies if any honest object is close enough to gameplay with.
      * @param hi iHonestInteractable
      * @return boolean value depending on if HonestInteract is possible or not
      */

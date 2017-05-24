@@ -1,9 +1,9 @@
-package com.projectdgdx.game.model.modelStructure;
+package com.projectdgdx.game.model.objectStructure;
 
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * Basic GameObject data structure. The foundation of our model hierarchy. All model object
+ * Basic GameObject dataHolding structure. The foundation of our model hierarchy. All model object
  * in the game inherit from GameObject.
  */
 public abstract class GameObject {

@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.modelStructure;
+package com.projectdgdx.game.model.objectStructure;
 
 import com.projectdgdx.game.utils.Vector3d;
 

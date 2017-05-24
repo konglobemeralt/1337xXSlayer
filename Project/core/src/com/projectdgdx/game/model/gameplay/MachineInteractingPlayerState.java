@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
@@ -9,12 +9,12 @@ import com.projectdgdx.game.utils.iTimerListener;
  * The will stand still for 3 seconds and then the Machines internal timer will be updated.
  */
 public class MachineInteractingPlayerState implements iPlayerState, iTimerListener {
-    private iHonestInteractable machine;
+    private Machine machine;
     private PlayableCharacter currentPlayer;
 
     public MachineInteractingPlayerState(iHonestInteractable machine, PlayableCharacter currentPlayer){
         this.currentPlayer = currentPlayer;
-        this.machine = machine;
+        this.machine = (Machine) machine;
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
         timer.addListener(this);

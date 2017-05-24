@@ -14,11 +14,11 @@ import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration
 import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.model.modelStructure.Entity;
-import com.projectdgdx.game.model.modelStructure.GameObject;
-import com.projectdgdx.game.model.interact.Machine;
-import com.projectdgdx.game.model.interact.Spotlight;
-import com.projectdgdx.game.model.interact.SpotlightControlBoard;
+import com.projectdgdx.game.model.objectStructure.Entity;
+import com.projectdgdx.game.model.objectStructure.GameObject;
+import com.projectdgdx.game.model.gameplay.Machine;
+import com.projectdgdx.game.model.gameplay.Spotlight;
+import com.projectdgdx.game.model.gameplay.SpotlightControlBoard;
 import com.projectdgdx.game.utils.*;
 
 import java.util.ArrayList;

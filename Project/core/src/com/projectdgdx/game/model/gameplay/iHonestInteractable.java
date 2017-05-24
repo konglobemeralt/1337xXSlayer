@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -12,7 +12,5 @@ public interface iHonestInteractable {
      */
 	void honestInteract(PlayableCharacter player);
     Vector3d getPosition();
-    void updateTimer();
-    void setState(iMachineState newState);
 }
 

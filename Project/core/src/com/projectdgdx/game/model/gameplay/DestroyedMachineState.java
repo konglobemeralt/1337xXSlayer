@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 import com.projectdgdx.game.utils.EventSender;
 import com.projectdgdx.game.utils.Config;
@@ -6,7 +6,7 @@ import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * A machine will enter this state when sabotaged. It will be detectable by the Spotlight and the
- * players can't interact with it anymore.
+ * players can't gameplay with it anymore.
  */
 public class DestroyedMachineState implements iMachineState, iSpotlightListener {
 

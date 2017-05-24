@@ -1,10 +1,10 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.dataHolding;
 
 import com.projectdgdx.game.utils.EventSender;
 import com.projectdgdx.game.utils.Timer;
 
 /**
- * The EndGameCounter is a data handler that handles all data surrounding the end of the game.
+ * The EndGameCounter is a dataHolding handler that handles all dataHolding surrounding the end of the game.
  * This includes number of destroyed Machines, striking worker and the overall timer.
  */
 public class EndgameCounter {

@@ -1,11 +1,11 @@
-package com.projectdgdx.game.model.interact;
+package com.projectdgdx.game.model.gameplay;
 
 
-import com.projectdgdx.game.model.modelStructure.Entity;
+import com.projectdgdx.game.model.objectStructure.Entity;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * The Characters are all units that move around in the factory and that you can interact with in some way.
+ * The Characters are all units that move around in the factory and that you can gameplay with in some way.
  */
 public abstract class Character extends Entity {
 
