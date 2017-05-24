@@ -15,8 +15,8 @@ public abstract class BasicNode extends GameObject {
     private ArrayList<BasicNode> connectingNodes = new ArrayList<BasicNode>();
     private ArrayList<Double> connectionStrengths = new ArrayList<Double>();
 
-    int nodeId;
-    List<Integer> friendList;
+    private int nodeId;
+    private List<Integer> friendList;
 
     public BasicNode(Vector3d position, Vector3d scale, Vector3d rotation, String id, int nodeId, List<Integer> friendList) {
         super(position, scale, rotation, id);
@@ -90,6 +90,14 @@ public abstract class BasicNode extends GameObject {
                 addConnection(node, 1);
             }
         }
+    }
+
+    public List<Integer> getNodeFriendIds() {
+        List<Integer> friends = new ArrayList<>();
+        for(int nodeFriend : friendList) {
+            friends.add(nodeFriend);
+        }
+        return friends;
     }
 
 }

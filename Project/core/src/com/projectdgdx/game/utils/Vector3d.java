@@ -80,4 +80,8 @@ public class Vector3d {
         return new Vector3d((float)Math.toRadians(x), (float)Math.toRadians(y), (float)Math.toRadians(z));
     }
 
+    public boolean equals(Vector3d compare) {
+        return this.x == compare.x && this.y == compare.y && this.z == compare.z;
+    }
+
 }

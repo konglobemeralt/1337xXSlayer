@@ -37,11 +37,6 @@ public class GameObjectInit {
         private float rotationY = 0;
         private float rotationZ = 0;
 
-        private float spawnRate = 1;
-        private boolean spawnRateRandom = false;
-        private float spawnDelay = 0;
-        private float aliveLimit = 10;
-
         //Node
         private int nodeId = 0;
         private List<Integer> nodeFriends = new ArrayList<>();
@@ -72,10 +67,6 @@ public class GameObjectInit {
             rotationY = gameObjectInit.rotationY;
             rotationZ = gameObjectInit.rotationZ;
 
-            spawnRate = gameObjectInit.spawnRate;
-            spawnRateRandom = gameObjectInit.spawnRateRandom;
-            spawnDelay = gameObjectInit.spawnDelay;
-            aliveLimit = gameObjectInit.aliveLimit;
             id = gameObjectInit.id;
         }
 
@@ -148,10 +139,6 @@ public class GameObjectInit {
                     for(String friend : value.split(",")) {
                         nodeFriends.add(Integer.parseInt(friend));
                     }
-                    //                className = value;
-                    break;
-                case "className":
-                    //                className = value;
                     break;
                 default:
                     System.out.println("Value does not exist   " + key);
