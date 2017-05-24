@@ -11,12 +11,12 @@ import com.projectdgdx.game.utils.iTimerListener;
  * The will stand still for 3 seconds and then the Machines internal timer will be updated.
  */
 public class MachineInteractingPlayerState implements iPlayerState, iTimerListener {
-    private Machine machine;
+    private iHonestInteractable machine;
     private PlayableCharacter currentPlayer;
 
     public MachineInteractingPlayerState(iHonestInteractable machine, PlayableCharacter currentPlayer){
         this.currentPlayer = currentPlayer;
-        this.machine = (Machine) machine;
+        this.machine = machine;
         // Play some kind of animation
         Timer timer = new Timer(3, 1000);
         timer.addListener(this);
