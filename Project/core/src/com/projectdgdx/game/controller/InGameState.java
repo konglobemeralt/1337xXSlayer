@@ -291,7 +291,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	public void start(ProjectD projectD) {
 		updateCamera(projectD);
 		renderer = new RenderManager();
-		renderer.init(lightList);
+		renderer.init(gameWorld.getLightList());
 		Timer.resumeTimers();
 		//TODO rename this method
 		initTimer();

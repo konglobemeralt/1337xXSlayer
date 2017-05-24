@@ -32,8 +32,6 @@ import java.util.Random;
 public class GameWorld {
 	private PerspectiveCamera cam;
 	private List<Spotlight> lightList = new ArrayList<>();
-	private CameraInputController camController;
-
 	private HashMap<GameObject, GameObjectContainer> objectsMap = new HashMap<>();
 
 	//Bullet
@@ -47,8 +45,13 @@ public class GameWorld {
 	private Random rand = new Random();
 
 
+	public List<Spotlight> getLightList() {
+		return lightList;
+	}
+
 	public void init(List<GameObject> gameObjects) {
 		initPhysics();
+
 		createCamera();
 		generateGameObjectContainers(gameObjects);
 	}
