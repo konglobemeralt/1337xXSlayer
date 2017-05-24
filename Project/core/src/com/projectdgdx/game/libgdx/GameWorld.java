@@ -1,11 +1,9 @@
 package com.projectdgdx.game.libgdx;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
@@ -16,12 +14,11 @@ import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration
 import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
-import com.projectdgdx.game.controller.ProjectD;
 import com.projectdgdx.game.model.modelStructure.Entity;
 import com.projectdgdx.game.model.modelStructure.GameObject;
-import com.projectdgdx.game.model.staticInteractable.Machine;
-import com.projectdgdx.game.model.staticInteractable.Spotlight;
-import com.projectdgdx.game.model.staticInteractable.SpotlightControlBoard;
+import com.projectdgdx.game.model.interact.Machine;
+import com.projectdgdx.game.model.interact.Spotlight;
+import com.projectdgdx.game.model.interact.SpotlightControlBoard;
 import com.projectdgdx.game.utils.*;
 
 import java.util.ArrayList;

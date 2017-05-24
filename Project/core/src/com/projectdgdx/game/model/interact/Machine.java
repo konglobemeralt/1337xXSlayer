@@ -1,10 +1,6 @@
-package com.projectdgdx.game.model.staticInteractable;
+package com.projectdgdx.game.model.interact;
 
-import com.projectdgdx.game.model.machineStates.iMachineState;
 import com.projectdgdx.game.model.modelStructure.StaticObject;
-import com.projectdgdx.game.model.playables.PlayableCharacter;
-import com.projectdgdx.game.model.interaction.iDishonestInteractable;
-import com.projectdgdx.game.model.interaction.iHonestInteractable;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;

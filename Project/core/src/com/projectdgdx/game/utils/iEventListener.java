@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.utils;
 
 /**
  * The EventListener listens to the EventSender and react on the event(s) that it sends.

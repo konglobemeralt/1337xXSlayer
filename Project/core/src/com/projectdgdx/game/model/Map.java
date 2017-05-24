@@ -1,16 +1,17 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.ai.BasicNode;
+import com.projectdgdx.game.model.ai.Worker;
 import com.projectdgdx.game.model.ai.WorkerNode;
-import com.projectdgdx.game.model.interaction.iDishonestInteractable;
-import com.projectdgdx.game.model.interaction.iHonestInteractable;
-import com.projectdgdx.game.model.modelStructure.Character;
+import com.projectdgdx.game.model.interact.iDishonestInteractable;
+import com.projectdgdx.game.model.interact.iHonestInteractable;
+import com.projectdgdx.game.model.interact.Character;
 import com.projectdgdx.game.model.modelStructure.Entity;
 import com.projectdgdx.game.model.modelStructure.GameObject;
 import com.projectdgdx.game.model.modelStructure.StaticObject;
-import com.projectdgdx.game.model.playables.PlayableCharacter;
-import com.projectdgdx.game.model.staticInteractable.Machine;
-import com.projectdgdx.game.model.staticInteractable.SpotlightControlBoard;
+import com.projectdgdx.game.model.interact.PlayableCharacter;
+import com.projectdgdx.game.model.interact.Machine;
+import com.projectdgdx.game.model.interact.SpotlightControlBoard;
 import com.projectdgdx.game.utils.Timer;
 
 import java.util.ArrayList;

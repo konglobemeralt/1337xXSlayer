@@ -1,5 +1,6 @@
 package com.projectdgdx.game.model;
 
+import com.projectdgdx.game.utils.EventSender;
 import com.projectdgdx.game.utils.Timer;
 
 /**

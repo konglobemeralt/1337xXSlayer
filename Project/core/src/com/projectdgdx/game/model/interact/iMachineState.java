@@ -1,9 +1,4 @@
-package com.projectdgdx.game.model.machineStates;
-
-import com.projectdgdx.game.model.playables.PlayableCharacter;
-import com.projectdgdx.game.model.staticInteractable.Machine;
-import com.projectdgdx.game.model.interaction.iDishonestInteractable;
-import com.projectdgdx.game.model.interaction.iHonestInteractable;
+package com.projectdgdx.game.model.interact;
 
 /**
  * Machines can have internal states to determine if they're workable or if they're destroyed.

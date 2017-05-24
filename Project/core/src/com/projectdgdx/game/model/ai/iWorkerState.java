@@ -1,7 +1,5 @@
 package com.projectdgdx.game.model.ai;
 
-import com.projectdgdx.game.model.Worker;
-
 /**
  * Created by Emil Jansson on 2017-05-09.
  */

@@ -1,11 +1,6 @@
-package com.projectdgdx.game.model.machineStates;
+package com.projectdgdx.game.model.interact;
 
-import com.projectdgdx.game.model.EventSender;
-import com.projectdgdx.game.model.playables.PlayableCharacter;
-import com.projectdgdx.game.model.staticInteractable.Machine;
-import com.projectdgdx.game.model.staticInteractable.iSpotlightListener;
-import com.projectdgdx.game.model.interaction.iDishonestInteractable;
-import com.projectdgdx.game.model.interaction.iHonestInteractable;
+import com.projectdgdx.game.utils.EventSender;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 

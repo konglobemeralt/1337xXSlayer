@@ -1,7 +1,6 @@
 package com.projectdgdx.game.model.ai;
 
-import com.projectdgdx.game.model.EventSender;
-import com.projectdgdx.game.model.Worker;
+import com.projectdgdx.game.utils.EventSender;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

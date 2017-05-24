@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.utils;
 
 /**
  * Enum for the different events we have in the game.

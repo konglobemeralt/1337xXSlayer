@@ -1,11 +1,6 @@
-package com.projectdgdx.game.model.interaction;
+package com.projectdgdx.game.model.interact;
 
-import com.projectdgdx.game.model.playables.PlayableCharacter;
-import com.projectdgdx.game.model.staticInteractable.Spotlight;
 import com.projectdgdx.game.utils.Vector3d;
-import com.projectdgdx.game.model.machineStates.iMachineState;
-
-import java.util.List;
 
 /**
  * All objects that can be honest interacted with by any playable character should implement this interface.

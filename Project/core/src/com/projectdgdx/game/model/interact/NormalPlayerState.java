@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model.playables;
+package com.projectdgdx.game.model.interact;
 
 import com.projectdgdx.game.utils.Vector3d;
 

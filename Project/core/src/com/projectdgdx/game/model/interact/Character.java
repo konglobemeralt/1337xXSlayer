@@ -1,6 +1,7 @@
-package com.projectdgdx.game.model.modelStructure;
+package com.projectdgdx.game.model.interact;
 
 
+import com.projectdgdx.game.model.modelStructure.Entity;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

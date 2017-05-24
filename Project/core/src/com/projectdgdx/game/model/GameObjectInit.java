@@ -1,16 +1,17 @@
 package com.projectdgdx.game.model;
 
 import com.projectdgdx.game.model.ai.NormalWorkerState;
+import com.projectdgdx.game.model.ai.Worker;
 import com.projectdgdx.game.model.ai.WorkerNode;
 import com.projectdgdx.game.model.decorations.Decoration;
-import com.projectdgdx.game.model.machineStates.UnusedMachineState;
+import com.projectdgdx.game.model.interact.UnusedMachineState;
 import com.projectdgdx.game.model.modelStructure.GameObject;
-import com.projectdgdx.game.model.playables.NormalPlayerState;
-import com.projectdgdx.game.model.playables.Saboteur;
-import com.projectdgdx.game.model.playables.Supervisor;
-import com.projectdgdx.game.model.staticInteractable.Machine;
-import com.projectdgdx.game.model.staticInteractable.Spotlight;
-import com.projectdgdx.game.model.staticInteractable.SpotlightControlBoard;
+import com.projectdgdx.game.model.interact.NormalPlayerState;
+import com.projectdgdx.game.model.interact.Saboteur;
+import com.projectdgdx.game.model.interact.Supervisor;
+import com.projectdgdx.game.model.interact.Machine;
+import com.projectdgdx.game.model.interact.Spotlight;
+import com.projectdgdx.game.model.interact.SpotlightControlBoard;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 

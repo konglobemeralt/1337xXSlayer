@@ -1,9 +1,6 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.model.ai;
 
-import com.projectdgdx.game.model.ai.BasicNode;
-import com.projectdgdx.game.model.ai.NormalWorkerState;
-import com.projectdgdx.game.model.ai.iWorkerState;
-import com.projectdgdx.game.model.modelStructure.Character;
+import com.projectdgdx.game.model.interact.Character;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**

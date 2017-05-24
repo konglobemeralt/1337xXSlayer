@@ -1,4 +1,4 @@
-package com.projectdgdx.game.model;
+package com.projectdgdx.game.utils;
 
 import java.util.ArrayList;
 import java.util.List;

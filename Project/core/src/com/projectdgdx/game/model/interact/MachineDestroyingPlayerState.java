@@ -1,9 +1,5 @@
-package com.projectdgdx.game.model.playables;
+package com.projectdgdx.game.model.interact;
 
-import com.projectdgdx.game.model.machineStates.DestroyedMachineState;
-import com.projectdgdx.game.model.staticInteractable.Machine;
-import com.projectdgdx.game.model.staticInteractable.Spotlight;
-import com.projectdgdx.game.model.interaction.iDishonestInteractable;
 import com.projectdgdx.game.utils.Timer;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;
