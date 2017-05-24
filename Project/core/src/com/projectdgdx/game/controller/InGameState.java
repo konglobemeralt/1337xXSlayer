@@ -2,6 +2,7 @@ package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.projectdgdx.game.libgdx.GameWorld;
 import com.projectdgdx.game.model.*;
 import com.projectdgdx.game.libgdx.EntityContainer;
 import com.projectdgdx.game.libgdx.GameObjectContainer;
@@ -55,24 +57,16 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	private InputMultiplexer multiplexer;
 	private  Array<AnimationController> animationControllers = new Array<AnimationController>();
 
-	private PerspectiveCamera cam;
 	private List<Spotlight> lightList = new ArrayList<>();
 	private CameraInputController camController;
 
 	private HashMap<InputController, PlayableCharacter> controllerPlayerMap = new HashMap<>();
-	private HashMap<GameObject, GameObjectContainer> objectsMap = new HashMap<>();
-
-	//Bullet
-	private btDefaultCollisionConfiguration collisionConfig;
-	private btCollisionDispatcher dispatcher;
-	private btBroadphaseInterface broadphase;
-	private btDynamicsWorld dynamicsWorld;
-	private btConstraintSolver constraintSolver;
-	private DebugDrawer debugDrawer;
 
 	private RenderManager renderer;
 	private Random rand;
 	private Map map;
+
+	private GameWorld gameWorld;
 
 	@Override
 	public void reactToEvent(Events event) {
@@ -85,98 +79,9 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 			map.getEndgameCounter().incStrikingWorkers();
 		}
 	}
-	private void generateRenderInstances(){
-
-		for (GameObject gameObject : map.getGameObjects()) {
-			// Create a ModelInstance for GameObject gameObject
-			ModelInstance modelInstance = new ModelInstance(AssetManager.getModel(AssetsFinder.getModelPath(gameObject.getId())));
-			modelInstance.transform.setToTranslation(VectorConverter.convertToLibgdx(gameObject.getPosition()));
-			Vector3 scale = VectorConverter.convertToLibgdx(gameObject.getScale());
-			modelInstance.transform.scale(scale.x, scale.y, scale.z);
-			Vector3 rotation = VectorConverter.convertToLibgdx(gameObject.getRotation());
-			modelInstance.transform.rotate(Vector3.X, rotation.x);
-			modelInstance.transform.rotate(Vector3.Y, rotation.y);
-			modelInstance.transform.rotate(Vector3.Z, rotation.z);
-
-			//Check for worker or player animation from id
-			if(gameObject.getId().equalsIgnoreCase("worker.basic") || gameObject.getId().equalsIgnoreCase("player.basic")) {
-				AnimationController animController = new AnimationController(modelInstance);
-				animController.setAnimation("Robot|IdleAnim", -1, 0.2f, new AnimationController.AnimationListener() {
-					@Override
-					public void onEnd(AnimationController.AnimationDesc animation) {
-					}
-
-					@Override
-					public void onLoop(AnimationController.AnimationDesc animation) {
-						//   Gdx.app.log("INFO", "Animation Ended");
-					}
-				});
-				animationControllers.add(animController);
-			}
-
-			GameObjectContainer gameObjectContainer;
-			if(gameObject instanceof Entity) {
-				gameObjectContainer = new EntityContainer(gameObject, modelInstance, dynamicsWorld, map);
-			} else {
-				gameObjectContainer = new GameObjectContainer(gameObject, modelInstance, dynamicsWorld, map);
-			}
-
-
-			//Check for spotlightControl and get spotlight
-			if(gameObject instanceof SpotlightControlBoard) {
-				lightList.add(((SpotlightControlBoard)gameObject).getSpotlight());
-			}
-
-			//Check for machine and get spotlight
-			if(gameObject instanceof Machine) {
-				lightList.add(((Machine)gameObject).getSpotLight());
-				((Machine)gameObject).updateTimer();
-			}
-
-			//Add GameObject and ModelInstance to a map that keeps them together
-			objectsMap.put(gameObject, gameObjectContainer);
-		}
-
-	}
-
-	public void updateEntities(List<Entity> entities) {
-		for(Entity entity : entities) {
-			EntityContainer entityContainer = ((EntityContainer)objectsMap.get(entity));
-			btRigidBody physicsObject = entityContainer.getPhysicsObject();
-			if(entity.getMoveForce().getLength() != 0) {
-				Vector3d moveForce = entity.getMoveForce().scale(5);
-				entityContainer.applyForce(VectorConverter.convertToLibgdx(moveForce));
-				Vector3d rotation = new Vector3d(moveForce.x, 0, -moveForce.z);
-				entityContainer.updateRotation(new Vector3(0,rotation.getXZAngle() + 90, 0));
-				physicsObject.setDamping(0.7f, 0);
-			} else {
-				physicsObject.setDamping(1f, 0);
-			}
-
-			//Limit linear velocity
-			Vector3 linearVelocity = physicsObject.getLinearVelocity();
-			if(linearVelocity.len() > Config.MOVE_SPEED) {
-				linearVelocity.scl(Config.MOVE_SPEED/linearVelocity.len());
-				physicsObject.setLinearVelocity(physicsObject.getLinearVelocity().clamp(-Config.MOVE_SPEED, Config.MOVE_SPEED));
-			}
-		}
-	}
-
-	/**
-	 * Creates a camera to be used for rendering using the settings in the config file
-	 *
-	 */
-	private void createCamera(){
-		cam = new PerspectiveCamera(Config.CAMERA_FOV, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(Config.CAMERA_X, Config.CAMERA_Y, Config.CAMERA_Z);
-		cam.lookAt(0f, 0f, 0f);
-		cam.near = Config.CAMERA_NEAR;
-		cam.far = Config.CAMERA_FAR;
-		cam.update();
-	}
-
 
 	private void updateCamera(ProjectD projectD){
+		PerspectiveCamera cam = gameWorld.getCamera();
 		cam.fieldOfView = Config.CAMERA_FOV;
 
 		camController = new CameraInputController(cam);
@@ -195,12 +100,7 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	 *
 	 */
 	public void render () {
-		List<ModelInstance> modelInstances = new ArrayList<>();
-		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
-			modelInstances.add(gameObjectContainer.getGraphicObject());
-		}
-
-		renderer.render(cam, lightList, modelInstances); //Pass render Instances and camera to render
+		renderer.render(gameWorld.getCamera(), lightList, gameWorld.getGraphicObjects()); //Pass render Instances and camera to render
 		stage.act();
 		stage.draw();
 	}
@@ -274,13 +174,11 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 
 	public void update(ProjectD projectD){
 		//Update world physics
-		final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-		dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+		gameWorld.update();
 
 
 		handleInput(projectD);
 		handleWorkers();
-		updateEntities(map.getEntities());
 		updateTimerLabel();
 		handleLights();
 		animate();
@@ -290,12 +188,6 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		if(!gameRunning) {
 
 			enterEndgame(projectD);
-		}
-
-		if(Config.DEBUG) {
-			debugDrawer.begin(cam);
-			dynamicsWorld.debugDrawWorld();
-			debugDrawer.end();
 		}
 	}
 
@@ -353,27 +245,8 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		this.stage.addActor(table);
 	}
 
-	private void initPhysics() {
-		Bullet.init();
-		collisionConfig = new btDefaultCollisionConfiguration();
-		dispatcher = new btCollisionDispatcher(collisionConfig);
-		broadphase = new btDbvtBroadphase();
-		constraintSolver = new btSequentialImpulseConstraintSolver();
-		dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
-		dynamicsWorld.setGravity(new Vector3(0, 0, 0));
-
-		if(Config.DEBUG) {
-			debugDrawer = new DebugDrawer();
-			debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
-			dynamicsWorld.setDebugDrawer(debugDrawer);
-		}
-	}
-
 	// TODO docs
 	public void init(ProjectD projectD){
-		System.out.println("INITTTT!!");
-		objectsMap = new HashMap<>();
-		createCamera();
 
 
 		//Reset game running
@@ -387,10 +260,11 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 		MapParser parser = new MapParser();
 		map = parser.parse(Config.LEVEL_IN_PLAY);
 
-		initPhysics();
+		gameWorld = new GameWorld();
+		gameWorld.init(map.getGameObjects());
+
 		initWorkers();
 		initInputs(projectD.getInpuControllers());
-		generateRenderInstances();
 		initView();
 		initMachines();
 
@@ -436,16 +310,9 @@ public class InGameState implements iGameState, iTimerListener, iEventListener {
 	}
 
 	public void exit(ProjectD projectD){
+		//Dispose game world
+		gameWorld.dispose();
 
-		//Dispose physics objects
-		dynamicsWorld.dispose();
-		collisionConfig.dispose();
-		dispatcher.dispose();
-		broadphase.dispose();
-		constraintSolver.dispose();
-		for(GameObjectContainer gameObjectContainer : objectsMap.values()) {
-			gameObjectContainer.dispose();
-		}
 
 		//Dispose graphic
 		renderer.dispose();

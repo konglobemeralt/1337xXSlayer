@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.projectdgdx.game.model.Map;
+import com.projectdgdx.game.model.modelStructure.Entity;
 import com.projectdgdx.game.model.modelStructure.GameObject;
 import com.projectdgdx.game.utils.VectorConverter;
 
@@ -13,10 +14,14 @@ import com.projectdgdx.game.utils.VectorConverter;
  * Created by Hampus on 2017-05-11.
  */
 public class EntityContainer extends GameObjectContainer {
-	public EntityContainer(GameObject gameObject, ModelInstance graphicObject, btDynamicsWorld dynamicsWorld, Map map) {
-		super(gameObject, graphicObject, dynamicsWorld, map);
+	public EntityContainer(Entity entity, ModelInstance graphicObject, btDynamicsWorld dynamicsWorld) {
+		super(entity, graphicObject, dynamicsWorld);
 		physicsObject.setLinearFactor(new Vector3(1,1,1));
 		physicsObject.setAngularFactor(new Vector3(0,0,0));
+	}
+
+	public Entity getEntity() {
+		return (Entity)getGameObject();
 	}
 
 	public void applyForce(Vector3 forceVector) {

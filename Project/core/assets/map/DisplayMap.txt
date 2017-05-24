@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Map machinesToDestroy="3" workersToStrike="3">
+    <Supervisor></Supervisor>
+    <Machine x="-40" z="10" rotationY="90"></Machine>
+    <Floor y="-1" scaleX="2" scaleZ="2"></Floor>
+    <WorkerNode x="1" y="-1" z="1" scaleX="0.09f" scaleY="0.09f" scaleZ="0.09f"></WorkerNode>
+</Map>

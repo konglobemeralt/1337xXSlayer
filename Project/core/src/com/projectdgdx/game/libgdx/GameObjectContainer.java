@@ -48,7 +48,7 @@ public class GameObjectContainer implements Disposable {
 		}
 	}
 
-	public GameObjectContainer(GameObject gameObject, ModelInstance graphicObject, btDynamicsWorld dynamicsWorld, Map map) {
+	public GameObjectContainer(GameObject gameObject, ModelInstance graphicObject, btDynamicsWorld dynamicsWorld) {
 
 		//Set internal data
 		this.gameObject = gameObject;
@@ -78,7 +78,7 @@ public class GameObjectContainer implements Disposable {
 		}
 
 		//Set binding to GameObject within Map
-		physicsObject.setUserValue(map.getGameObjects().indexOf(gameObject));
+//		physicsObject.setUserValue(map.getGameObjects().indexOf(gameObject));
 		physicsObject.setCollisionFlags(physicsObject.getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 
 		//Add PhysicsObject to dynamicworld, depends on GameObject type

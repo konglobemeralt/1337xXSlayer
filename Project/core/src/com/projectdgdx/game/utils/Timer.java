@@ -114,14 +114,13 @@ public class Timer implements Runnable{
                 this.timerValue--;
         }
 
-            if(!Thread.interrupted()) {
-                while(isPaused) {
-                    System.out.println("I'm a stupid thread");
-                }
-                notifyListenersTimeUp();
-                removeTimer(this);
-//            System.out.println(listeners.get(0).toString());
+        if(!Thread.interrupted()) {
+            while(isPaused) {
+                System.out.println("I'm a stupid thread");
             }
+            notifyListenersTimeUp();
+            removeTimer(this);
+        }
 
 
     }
