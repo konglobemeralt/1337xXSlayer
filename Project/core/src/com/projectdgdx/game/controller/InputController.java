@@ -1,6 +1,6 @@
 package com.projectdgdx.game.controller;
 
-import com.projectdgdx.game.model.Input.InputModel;
+import com.projectdgdx.game.model.input.InputModel;
 
 import java.util.UUID;
 

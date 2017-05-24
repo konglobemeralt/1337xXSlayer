@@ -8,7 +8,7 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.projectdgdx.game.model.*;
-import com.projectdgdx.game.model.ModelStructure.GameObject;
+import com.projectdgdx.game.model.modelStructure.GameObject;
 import com.projectdgdx.game.utils.TextFileLoader;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Timer;

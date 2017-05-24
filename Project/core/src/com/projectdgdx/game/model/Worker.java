@@ -1,14 +1,13 @@
 package com.projectdgdx.game.model;
 
-import com.projectdgdx.game.model.AI.BasicNode;
-import com.projectdgdx.game.model.AI.NormalWorkerState;
-import com.projectdgdx.game.model.AI.StrikingWorkerState;
-import com.projectdgdx.game.model.AI.iWorkerState;
-import com.projectdgdx.game.model.ModelStructure.Character;
+import com.projectdgdx.game.model.ai.BasicNode;
+import com.projectdgdx.game.model.ai.NormalWorkerState;
+import com.projectdgdx.game.model.ai.iWorkerState;
+import com.projectdgdx.game.model.modelStructure.Character;
 import com.projectdgdx.game.utils.Vector3d;
 
 /**
- * A worker is a Character in the game that looks is controlled by the AI unit and walks around
+ * A worker is a Character in the game that looks is controlled by the ai unit and walks around
  * and simulate interaction with the Machines. Looks like the Supervisors and the Saboteur.
  * Walks between a network of nodes.
  */
@@ -18,9 +17,9 @@ public class Worker extends Character {
     private BasicNode lastNode;
     private iWorkerState state;
 
-    public Worker(Vector3d position, Vector3d scale, Vector3d rotation, String id) {
+    public Worker(Vector3d position, Vector3d scale, Vector3d rotation, String id, iWorkerState startingState) {
         super(position, scale, rotation, id);
-        this.state = new NormalWorkerState();
+        this.state = startingState;
     }
 
     public BasicNode getTargetNode() {

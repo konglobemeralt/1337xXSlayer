@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.projectdgdx.game.model.Input.InputModel;
+import com.projectdgdx.game.model.input.InputModel;
 import com.projectdgdx.game.utils.AssetManager;
 import com.projectdgdx.game.utils.Config;
 

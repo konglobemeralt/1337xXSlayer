@@ -1,15 +1,16 @@
 package com.projectdgdx.game.model;
 
-import com.projectdgdx.game.model.AI.WorkerNode;
-import com.projectdgdx.game.model.Decorations.Decoration;
-import com.projectdgdx.game.model.MachineStates.UnusedMachineState;
-import com.projectdgdx.game.model.ModelStructure.GameObject;
-import com.projectdgdx.game.model.Playables.NormalPlayerState;
-import com.projectdgdx.game.model.Playables.Saboteur;
-import com.projectdgdx.game.model.Playables.Supervisor;
-import com.projectdgdx.game.model.StaticInteractable.Machine;
-import com.projectdgdx.game.model.StaticInteractable.Spotlight;
-import com.projectdgdx.game.model.StaticInteractable.SpotlightControlBoard;
+import com.projectdgdx.game.model.ai.NormalWorkerState;
+import com.projectdgdx.game.model.ai.WorkerNode;
+import com.projectdgdx.game.model.decorations.Decoration;
+import com.projectdgdx.game.model.machineStates.UnusedMachineState;
+import com.projectdgdx.game.model.modelStructure.GameObject;
+import com.projectdgdx.game.model.playables.NormalPlayerState;
+import com.projectdgdx.game.model.playables.Saboteur;
+import com.projectdgdx.game.model.playables.Supervisor;
+import com.projectdgdx.game.model.staticInteractable.Machine;
+import com.projectdgdx.game.model.staticInteractable.Spotlight;
+import com.projectdgdx.game.model.staticInteractable.SpotlightControlBoard;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.utils.Vector3d;
 
@@ -90,7 +91,7 @@ public class GameObjectInit {
                     Spotlight light = new Spotlight(new Vector3d(x,30,  z), new Vector3d(1, 1, 1), new Vector3d(1, 1, 1), 30, Config.MACHINELIGHT_BASE_INTENSITY, "spotlight.controlboard");
                     return new SpotlightControlBoard(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "control.basic", light);
                 case "Worker":
-                    return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "worker.basic");
+                    return new Worker(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "worker.basic", new NormalWorkerState());
                 case "Supervisor":
                     Supervisor supervisor = new Supervisor(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "supervisor.basic");
                     supervisor.setState(new NormalPlayerState(supervisor));

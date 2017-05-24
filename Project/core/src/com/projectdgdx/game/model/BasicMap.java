@@ -1,6 +1,6 @@
 package com.projectdgdx.game.model;
 
-import com.projectdgdx.game.model.ModelStructure.GameObject;
+import com.projectdgdx.game.model.modelStructure.GameObject;
 import com.projectdgdx.game.utils.Timer;
 
 import java.util.List;

@@ -9,14 +9,14 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Disposable;
-import com.projectdgdx.game.model.AI.BasicNode;
-import com.projectdgdx.game.model.Decorations.Decoration;
+import com.projectdgdx.game.model.ai.BasicNode;
+import com.projectdgdx.game.model.decorations.Decoration;
 import com.projectdgdx.game.model.Map;
-import com.projectdgdx.game.model.ModelStructure.Character;
-import com.projectdgdx.game.model.ModelStructure.Entity;
-import com.projectdgdx.game.model.ModelStructure.GameObject;
-import com.projectdgdx.game.model.ModelStructure.StaticObject;
-import com.projectdgdx.game.model.StaticInteractable.Machine;
+import com.projectdgdx.game.model.modelStructure.Character;
+import com.projectdgdx.game.model.modelStructure.Entity;
+import com.projectdgdx.game.model.modelStructure.GameObject;
+import com.projectdgdx.game.model.modelStructure.StaticObject;
+import com.projectdgdx.game.model.staticInteractable.Machine;
 import com.projectdgdx.game.utils.VectorConverter;
 
 /**

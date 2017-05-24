@@ -3,7 +3,7 @@ package com.projectdgdx.game.controller;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.projectdgdx.game.model.Input.InputModel;
+import com.projectdgdx.game.model.input.InputModel;
 
 import java.util.HashMap;
 import java.util.List;
