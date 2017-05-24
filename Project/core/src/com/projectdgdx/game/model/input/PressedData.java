@@ -31,7 +31,7 @@ public class PressedData {
 		if(isPressed) {
 			pressedCount++;
 		}
-		pressed = true;
+		pressed = isPressed;
 	}
 
 	/**
