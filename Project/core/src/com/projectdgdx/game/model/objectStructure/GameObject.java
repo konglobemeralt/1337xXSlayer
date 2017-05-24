@@ -54,29 +54,4 @@ public abstract class GameObject {
     public String getId() {
         return id;
     }
-
-    /**
-     * Increase or decrease the x value of the objects position.
-     * @param x ,the float value that will be added to the current position.
-     */
-    public void addPositionX(float x){
-        this.position.x += x;
-    }
-
-    /**
-     * Increase or decrease the z value of the objects position.
-     * @param z ,the float value that will be added to the current position.
-     */
-    public void addPositionZ(float z){
-        this.position.z += z;
-    }
-
-    /**
-     * Increase or decrease the y value of the objects position.
-     * @param y ,the float value that will be added to the current position.
-     */
-    public void addPositionY(float y){
-        this.position.y += y;
-    }
-
 }
