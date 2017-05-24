@@ -1,6 +1,5 @@
 package utils;
 
-import com.projectdgdx.game.model.BasicMap;
 import com.projectdgdx.game.model.objectStructure.GameObject;
 import org.junit.Test;
 

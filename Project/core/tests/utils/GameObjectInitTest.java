@@ -1,8 +1,8 @@
 package utils;
 
-import com.projectdgdx.game.model.GameObjectInit;
+import com.projectdgdx.game.model.dataHolding.GameObjectInit;
+import com.projectdgdx.game.model.gameplay.Machine;
 import com.projectdgdx.game.model.objectStructure.GameObject;
-import com.projectdgdx.game.model.staticInteractable.Machine;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

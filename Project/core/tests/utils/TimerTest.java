@@ -1,7 +1,7 @@
 package utils;
 
-import com.projectdgdx.game.model.machineStates.UnusedMachineState;
-import com.projectdgdx.game.model.staticInteractable.Machine;
+import com.projectdgdx.game.model.gameplay.Machine;
+import com.projectdgdx.game.model.gameplay.UnusedMachineState;
 import com.projectdgdx.game.utils.Vector3d;
 import com.projectdgdx.game.utils.iTimerListener;
 import org.junit.Test;
