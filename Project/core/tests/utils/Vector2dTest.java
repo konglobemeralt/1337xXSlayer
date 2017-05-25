@@ -50,4 +50,10 @@ public class Vector2dTest {
 
         assertTrue(newVec.getLength() == 1);
     }
+
+    @Test
+    public void testToString() {
+        Vector2d newVec = new Vector2d(0,1);
+        newVec.toString().equals("[0,1]");
+    }
 }
