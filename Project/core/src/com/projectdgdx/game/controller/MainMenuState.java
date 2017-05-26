@@ -22,9 +22,6 @@ import java.util.List;
  */
 public class MainMenuState implements iGameState {
 
-    private Skin skin;
-    private Stage stage;
-
     private MenuButtonInputController menuButtonInputController;
 
     private SelectBox<Object> levelSelection;
@@ -33,33 +30,29 @@ public class MainMenuState implements iGameState {
 
     private InputMultiplexer multiplexer;
     private Label mainMenuHeading;
-    private Table table;
 
     private MenuView menuView;
     private MenuItemFactory menuFactory;
-
-    public ProjectD projectD;
 
     @Override
     public void init(ProjectD projectD) {
         File f = new File("map/");
         levelList = new ArrayList<String>(Arrays.asList(f.list()));
 
-        menuView = new MenuView();
-        menuFactory = new MenuItemFactory();
-        multiplexer = new InputMultiplexer();
+
     }
 
     @Override
     public void start(ProjectD projectD) {
+        menuView = new MenuView();
+        menuFactory = new MenuItemFactory();
+        multiplexer = new InputMultiplexer();
+
         buildMenu(projectD);
 
         //Set to first selection as default
      //   Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
-
-        menuView.init(projectD.getMultiplexer());
-
-       // Gdx.input.setInputProcessor(projectD.getMultiplexer());
+      // Gdx.input.setInputProcessor(projectD.getMultiplexer());
 
     }
 
@@ -77,7 +70,7 @@ public class MainMenuState implements iGameState {
 
     @Override
     public void stop(ProjectD projectD) {
-        //stage.dispose();
+        menuView.dispose();
     }
 
     @Override
@@ -87,7 +80,7 @@ public class MainMenuState implements iGameState {
 
     @Override
     public void exit(ProjectD projectD) {
-        //stage.dispose();
+
     }
 
 
