@@ -82,7 +82,7 @@ public class SettingsState implements iGameState {
             }
         }
 
-        menuButtonInputController.handleInput(projectD.getInpuControllers());
+        //menuButtonInputController.handleInput(projectD.getInpuControllers());
 
         if(mainMenuButton.isPressed()){
             this.exit(projectD);
