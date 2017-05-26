@@ -23,10 +23,11 @@ public class MenuItemFactory {
 		return list;
 	}
 
-	public static List<Actor> createLabelCheckBox(float min, float max, float startValue, String title, ChangeListener changeListener) {
+	public static List<Actor> createLabelCheckBox(boolean startValue, String title, ChangeListener changeListener) {
 		List<Actor> list = new ArrayList<>();
 		list.add(new Label(title, skin));
 		CheckBox checkBox = new CheckBox("", skin);
+		checkBox.setChecked(startValue);
 		checkBox.addListener(changeListener);
 		list.add(checkBox);
 		return list;

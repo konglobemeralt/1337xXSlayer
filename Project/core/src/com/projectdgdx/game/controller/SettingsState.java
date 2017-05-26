@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.libgdx.MenuItemFactory;
+import com.projectdgdx.game.model.input.InputModel;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.view.MenuView;
 
@@ -21,43 +22,39 @@ import java.util.ArrayList;
 
 public class SettingsState implements iGameState {
 
-    private Skin skin;
-    private Stage stage;
+ //  private Label shadowMappingLabel;
+ //  private CheckBox shadowMapCheckbox;
 
-    private Label shadowMappingLabel;
-    private CheckBox shadowMapCheckbox;
+ //  private TextButton mainMenuButton;
+     private InputMultiplexer multiplexer;
 
-    private TextButton mainMenuButton;
-    private InputMultiplexer multiplexer;
+ //  private Slider fovSlider;
+ //  private Label fovValueLabel;
+ //  private Label fovLabel;
 
-    private Slider fovSlider;
-    private Label fovValueLabel;
-    private Label fovLabel;
+ //  private Slider aaSlider;
+ //  private Label aaLabel;
+ //  private Label aaValueLabel;
 
-    private Slider aaSlider;
-    private Label aaLabel;
-    private Label aaValueLabel;
+ //  private Slider discoSlider;
+ //  private Label disoLabel;
+ //  private Label discoValueLabel;
 
-    private Slider discoSlider;
-    private Label disoLabel;
-    private Label discoValueLabel;
+ //  private Slider sunrSlider;
+ //  private Label sunrSliderLabel;
+ //  private Label sunrSliderValue;
+ //  private Slider sungSlider;
+ //  private Label sungSliderLabel;
+ //  private Label sungSliderValue;
+ //  private Slider sunbSlider;
+ //  private Label sunbSliderLabel;
+ //  private Label sunbSliderValue;
 
-    private Slider sunrSlider;
-    private Label sunrSliderLabel;
-    private Label sunrSliderValue;
-    private Slider sungSlider;
-    private Label sungSliderLabel;
-    private Label sungSliderValue;
-    private Slider sunbSlider;
-    private Label sunbSliderLabel;
-    private Label sunbSliderValue;
+ //  private Label settingsHeading;
 
-    private Label settingsHeading;
+ //  private Label moveSpeedLabel;
+ //  private TextField moveSpeedIn;
 
-    private Label moveSpeedLabel;
-    private TextField moveSpeedIn;
-
-    private Table table;
 
     private MenuView menuView;
     private MenuItemFactory menuFactory;
@@ -73,6 +70,16 @@ public class SettingsState implements iGameState {
     @Override
     public void update(ProjectD projectD) {
         menuView.render();
+
+        for(InputController inputController : projectD.getInpuControllers()) {
+            InputModel inputModel = inputController.getModel();
+            //Checks if escape button has been pressed.
+            if (inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1) {
+                this.stop(projectD);
+                projectD.setState(GameStates.INGAME);
+            }
+        }
+
     }
 
     /**
@@ -110,8 +117,8 @@ public class SettingsState implements iGameState {
     @Override
     public void stop(ProjectD projectD) {
         projectD.getInpuControllers().get(0).getModel().resetButtonCounts();
-        stage.clear();
-        stage.dispose();
+        menuView.dispose();
+
     }
 
     @Override
@@ -168,20 +175,6 @@ public class SettingsState implements iGameState {
  //  }
 
  //  /**
- //   * Updates the sun R label
- //   **/
- //  private void updateSunRLabel()
- //  {
- //      float value = Config.SUN_LIGHT_R;
-
- //      sunrSlider.setValue(value);
- //      sunrSlider.setAnimateDuration(0.3f);
-
- //      sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + " %");
- //      sunrSliderValue.invalidate();
- //  }
-
- //  /**
  //   * Updates the sun G label
  //   **/
  //  private void updateSunGLabel()
@@ -212,25 +205,87 @@ public class SettingsState implements iGameState {
     private void buildMenu(final ProjectD projectD){
 
 
-        menuView.addMenuItems(menuFactory.createTextButton("Woah! Settings", new ChangeListener() {
+        menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.SUN_LIGHT_R, "Sun R Slider", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
-                        projectD.resetState(GameStates.INGAME);
-                        projectD.setState(GameStates.INGAME);
+                        Slider slider = (Slider) actor;
+
+                        float value = slider.getValue();
+                        Config.SUN_LIGHT_R = ((int) value );
+                        updateSunRLabel();
+                    }
+
+                    /**
+                     * Updates the sun R label
+                     **/
+                    private void updateSunRLabel()
+                    {
+                       // float value = Config.SUN_LIGHT_R;
+//
+                       // sunrSlider.setValue(value);
+                       // sunrSlider.setAnimateDuration(0.3f);
+//
+                       // sunrSliderValue.setText(String.valueOf(Config.SUN_LIGHT_R) + " %");
+                       // sunrSliderValue.invalidate();
+                    }
+
+                }
+        ));
+
+        menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.SUN_LIGHT_G, "Sun G Slider", new ChangeListener() {
+                    public void changed(ChangeEvent event, Actor actor) {
+                        Slider slider = (Slider) actor;
+
+                        float value = slider.getValue();
+                        Config.SUN_LIGHT_G = ((int) value );
+                        //updateSunRLabel();
                     }
                 }
         ));
 
-        menuView.addMenuItems(menuFactory.createTextButton("Settings", new ChangeListener() {
+        menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.SUN_LIGHT_B, "Sun B Slider", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
-                        projectD.setState(GameStates.SETTINGS);
+                        Slider slider = (Slider) actor;
+
+                        float value = slider.getValue();
+                        Config.SUN_LIGHT_B = ((int) value );
+                        //updateSunRLabel();
                     }
                 }
         ));
 
-        menuView.addMenuItems(menuFactory.createTextButton("Exit", new ChangeListener() {
+        menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.DISCO_FACTOR, "Disco Factor", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
-                        System.out.print("New");
-                        Gdx.app.exit();
+                        Slider slider = (Slider) actor;
+
+                        float value = slider.getValue();
+                        Config.DISCO_FACTOR = ((int) value );
+                        //updateSunRLabel();
+                    }
+                }
+        ));
+
+        menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.CAMERA_FOV, "Camera Fov", new ChangeListener() {
+                    public void changed(ChangeEvent event, Actor actor) {
+                        Slider slider = (Slider) actor;
+
+                        float value = slider.getValue();
+                        Config.CAMERA_FOV = ((int) value );
+                        //updateSunRLabel();
+                    }
+                }
+        ));
+
+
+        menuView.addMenuItems(menuFactory.createLabelCheckBox(true, "Shadow Mapping", new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                        CheckBox box = (CheckBox) actor;
+                        Config.SHADOWMAPPING_ENABLED = box.isChecked();
+                   }
+               }));
+
+        menuView.addMenuItems(menuFactory.createTextButton("Back to Main Menu", new ChangeListener() {
+                    public void changed(ChangeEvent event, Actor actor) {
+                        projectD.setState(GameStates.MAINMENU);
                     }
                 }
         ));
@@ -378,18 +433,7 @@ public class SettingsState implements iGameState {
        //    }
        //});
 
-       //sunrSlider.addListener(new ChangeListener()
-       //{
-       //    @Override
-       //    public void changed(ChangeEvent event, Actor actor)
-       //    {
-       //        Slider slider = (Slider) actor;
 
-       //        float value = slider.getValue();
-       //        Config.SUN_LIGHT_R = ((int) value );
-       //        updateSunRLabel();
-       //    }
-       //});
 
        //sungSlider.addListener(new ChangeListener()
        //{
