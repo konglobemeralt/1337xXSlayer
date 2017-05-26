@@ -36,8 +36,8 @@ public class MenuView {
 			table.add(menuItem);
 			table.row();
 		}
-		table.addActor(table);
-	}
+		stage.addActor(table);
+;	}
 
 	/**
 	 * Render menu
@@ -52,6 +52,7 @@ public class MenuView {
 
 		stage.act();
 		stage.draw();
+
 	}
 
 	public void dispose() {

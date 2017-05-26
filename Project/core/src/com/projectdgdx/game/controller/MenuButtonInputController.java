@@ -1,6 +1,7 @@
 package com.projectdgdx.game.controller;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.projectdgdx.game.model.input.InputModel;
@@ -16,11 +17,11 @@ import java.util.Map;
  */
 public class MenuButtonInputController {
 
-	private List<TextButton> buttons;
+	private List<Actor> buttons;
 	private Map<InputController, Float> lastInputValues = new HashMap<>();
 	private int controllerPosition = 0;
 
-	public MenuButtonInputController(List<TextButton> buttons) {
+	public MenuButtonInputController(List<Actor> buttons) {
 		this.buttons = buttons;
 	}
 
@@ -68,7 +69,7 @@ public class MenuButtonInputController {
 			}
 
 			inputModel.resetButtonCounts();
-			lastInputValues.replace(inputController, convertToMaxMin(controllerValue));
+			//lastInputValues.replace(inputController, convertToMaxMin(controllerValue));
 		}
 
 		//Set new button color

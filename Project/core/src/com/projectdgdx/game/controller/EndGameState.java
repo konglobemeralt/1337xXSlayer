@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -76,7 +77,7 @@ public class EndGameState implements iGameState {
 		background = new Texture(Gdx.files.getLocalStoragePath() + "prettyScreenshot.png");
 		mainMenuButton = new TextButton("To Main Menu", skin);
 
-		java.util.List<TextButton> buttons = new ArrayList<>();
+		java.util.List<Actor> buttons = new ArrayList<>();
 		buttons.add(mainMenuButton);
 		menuButtonInputController = new MenuButtonInputController(buttons);
 

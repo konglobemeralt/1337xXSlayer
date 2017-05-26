@@ -1,7 +1,7 @@
 package com.projectdgdx.game.controller;
 
 /**
- * SettingsState creates and renders an UI to configure the game settings
+ * SettingsState creates and renders an UIStructure to configure the game settings
  *
  * Created by Jesper on 2017-05-01.
  */
@@ -245,7 +245,7 @@ public class SettingsState implements iGameState {
 
         java.util.List<TextButton> buttons = new ArrayList<>();
         buttons.add(mainMenuButton);
-        menuButtonInputController = new MenuButtonInputController(buttons);
+       // menuButtonInputController = new MenuButtonInputController(buttons);
 
         /** Field of view slider  **/
         fovSlider = new Slider(5, 120, 1, false, skin);
