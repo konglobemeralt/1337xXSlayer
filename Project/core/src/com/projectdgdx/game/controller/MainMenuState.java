@@ -24,9 +24,6 @@ public class MainMenuState implements iGameState {
 
     private Skin skin;
     private Stage stage;
-    private TextButton newGameButton;
-    private TextButton settingsButton;
-    private TextButton exitButton;
 
     private MenuButtonInputController menuButtonInputController;
 
@@ -48,6 +45,7 @@ public class MainMenuState implements iGameState {
 
         menuView = new MenuView();
         menuFactory = new MenuItemFactory();
+        multiplexer = new InputMultiplexer();
     }
 
     @Override
@@ -55,12 +53,11 @@ public class MainMenuState implements iGameState {
         buildMenu();
 
         //Set to first selection as default
-        Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
+     //   Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
 
-        this.multiplexer = projectD.getMultiplexer();
-        multiplexer.addProcessor(stage);// Make the stage consume events
+        menuView.init(projectD.getMultiplexer());
 
-        Gdx.input.setInputProcessor(multiplexer);
+       // Gdx.input.setInputProcessor(projectD.getMultiplexer());
 
     }
 
@@ -82,7 +79,7 @@ public class MainMenuState implements iGameState {
        // }
 
         //Handle inputs
-        menuButtonInputController.handleInput(projectD.getInpuControllers());
+        //menuButtonInputController.handleInput(projectD.getInpuControllers());
 
     }
 
@@ -104,9 +101,6 @@ public class MainMenuState implements iGameState {
     }
 
     private void buildMenu(){
-        this.stage = new Stage();
-        skin = createBasicSkin(Config.UI_SKIN_PATH);
-
 
         //Add buttons in screen order
         //
@@ -135,29 +129,28 @@ public class MainMenuState implements iGameState {
                     }
                 }
         ));
+        menuView.init(multiplexer);
 
 
-
-
-        //Set up the SelectionBox with content
-        Object[] blob = new Object[levelList.size()];
-        for(int i = 0; i < levelList.size(); i++){
-            blob[i] = new Label(levelList.get(i), skin);
-        }
-        levelSelection = new SelectBox<Object>(skin);
-        levelSelection.setItems(blob);
-
-
-        menuView.init();
-
-        //add listeners
-        levelSelection.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println(((Label) levelSelection.getSelected()).getText());
-                Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
-            }
-        });
+       // //Set up the SelectionBox with content
+       // Object[] blob = new Object[levelList.size()];
+       // for(int i = 0; i < levelList.size(); i++){
+       //     blob[i] = new Label(levelList.get(i), skin);
+       // }
+       // levelSelection = new SelectBox<Object>(skin);
+       // levelSelection.setItems(blob);
+//
+//
+       //
+//
+       // //add listeners
+       // levelSelection.addListener(new ChangeListener() {
+       //     @Override
+       //     public void changed(ChangeEvent event, Actor actor) {
+       //         System.out.println(((Label) levelSelection.getSelected()).getText());
+       //         Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
+       //     }
+       // });
     }
 
     /**
