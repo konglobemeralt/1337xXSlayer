@@ -153,3 +153,5 @@ libgdx-*.zip.MD5
 
 #gradle wrapper
 /local.properties
+
+output.html
