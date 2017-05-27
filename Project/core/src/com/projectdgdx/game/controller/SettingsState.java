@@ -231,6 +231,8 @@ public class SettingsState implements iGameState {
                 }
         ));
 
+        menuView.addMenuItems(menuFactory.createLabel("Settings"));
+
         menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.SUN_LIGHT_G, "Sun G Slider", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
                         Slider slider = (Slider) actor;

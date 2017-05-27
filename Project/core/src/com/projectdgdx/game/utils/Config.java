@@ -9,6 +9,10 @@ public class Config {
     public static final int MACHINELIGHT_BASE_INTENSITY = 300;
     public static final int MACHINELIGHT_MAX_INTENSITY = 400;
 
+    public static final int MENU_X = 500;
+    public static final int MENU_Y = 30;
+
+
     /************CAMERA VARIABLES************/
 
     //CAMERA VARIABLES

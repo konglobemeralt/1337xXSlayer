@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.utils.Config;
+import sun.font.TextLabel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class MenuItemFactory {
 		list.add(new Label(title, skin));
 		Slider slider = new Slider(min, max, 1, false, skin);
 		slider.addListener(changeListener);
+		slider.setValue(startValue);
 		list.add(slider);
 		return list;
 	}
@@ -33,11 +35,38 @@ public class MenuItemFactory {
 		return list;
 	}
 
+
+
+
+	public static List<Actor> creadeDropDown(String title, List<String> levelList, ChangeListener changeListener) {
+
+		List<Actor> list = new ArrayList<>();
+
+		Object[] blob = new Object[levelList.size()];
+		for(int i = 0; i < levelList.size(); i++){
+			blob[i] = new Label(levelList.get(i), skin);
+		}
+		SelectBox box = new SelectBox<Object>(skin);
+		box.setItems(blob);
+		box.addListener(changeListener);
+		list.add(box);
+
+
+		return list;
+	}
+
 	public static List<Actor> createTextButton(String title, ChangeListener changeListener) {
 		List<Actor> list = new ArrayList<>();
 		TextButton button = new TextButton(title, skin);
 		button.addListener(changeListener);
 		list.add(button);
+		return list;
+	}
+
+	public static List<Actor> createLabel(String title) {
+		List<Actor> list = new ArrayList<>();
+		Label label = new Label(title, skin);
+		list.add(label);
 		return list;
 	}
 }

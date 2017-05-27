@@ -24,7 +24,6 @@ public class MainMenuState implements iGameState {
 
     private MenuButtonInputController menuButtonInputController;
 
-    private SelectBox<Object> levelSelection;
     private List<String> levelList = new ArrayList<String>();
 
 
@@ -38,8 +37,6 @@ public class MainMenuState implements iGameState {
     public void init(ProjectD projectD) {
         File f = new File("map/");
         levelList = new ArrayList<String>(Arrays.asList(f.list()));
-
-
     }
 
     @Override
@@ -51,8 +48,8 @@ public class MainMenuState implements iGameState {
         buildMenu(projectD);
 
         //Set to first selection as default
-     //   Config.LEVEL_IN_PLAY = ((Label) levelSelection.getSelected()).getText().toString();
-      // Gdx.input.setInputProcessor(projectD.getMultiplexer());
+
+
 
     }
 
@@ -88,14 +85,24 @@ public class MainMenuState implements iGameState {
 
         //Add buttons in screen order
         //
+        menuView.addMenuItems(menuFactory.createLabel("Main Menu"));
 
-      menuView.addMenuItems(menuFactory.createTextButton("New Game", new ChangeListener() {
+        menuView.addMenuItems(menuFactory.createTextButton("New Game", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
                         projectD.resetState(GameStates.INGAME);
                         projectD.setState(GameStates.INGAME);
                     }
                 }
         ));
+
+        menuView.addMenuItems(menuFactory.creadeDropDown("Level Select", levelList, new ChangeListener() {
+                    public void changed(ChangeEvent event, Actor actor) {
+                        Config.LEVEL_IN_PLAY = ((Label)(((SelectBox) actor).getSelected())).getText().toString();
+
+                    }
+                }
+        ));
+
 
         menuView.addMenuItems(menuFactory.createTextButton("Settings", new ChangeListener() {
                    public void changed(ChangeEvent event, Actor actor) {
@@ -111,6 +118,10 @@ public class MainMenuState implements iGameState {
                     }
                 }
         ));
+
+
+
+
         menuView.init(multiplexer);
 
 
@@ -135,13 +146,5 @@ public class MainMenuState implements iGameState {
        // });
     }
 
-    /**
-     * createBasicSkin reads an internalGUI file and creates a skin
-     *
-     * @param path Path to the GUIskin file
-     * @return A new skin
-     */
-    private Skin createBasicSkin(String path){
-        return new Skin(Gdx.files.internal(path));
-    }
+
 }

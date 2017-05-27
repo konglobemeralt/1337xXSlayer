@@ -15,6 +15,7 @@ public class MenuView {
 	private Stage stage;
 	private List<Actor> menuItems = new ArrayList<>();
 
+
 	/**
 	 * Add menuItems to be used for rendering menuView after init
 	 * @param menuItems List of menuItems
@@ -34,7 +35,7 @@ public class MenuView {
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		for(Actor menuItem : menuItems) {
-			table.add(menuItem);
+			table.add(menuItem).expandX().width(Config.MENU_X).height(Config.MENU_Y);
 			table.row();
 		}
 		stage.addActor(table);
