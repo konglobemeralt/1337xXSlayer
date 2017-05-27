@@ -1,6 +1,7 @@
 package com.projectdgdx.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,6 +14,7 @@ import java.util.List;
 public class MenuView {
 	private Stage stage;
 	private List<Actor> menuItems = new ArrayList<>();
+
 
 	/**
 	 * Add menuItems to be used for rendering menuView after init
@@ -27,17 +29,21 @@ public class MenuView {
 	/**
 	 * Init menu, will use all menuItems that has been added using addMenuItems
 	 */
-	public void init() {
+	public void init(InputMultiplexer multiplexer) {
 		stage = new Stage();
 		Table table = new Table();
 		table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		for(Actor menuItem : menuItems) {
-			table.add(menuItem);
+			table.add(menuItem).expandX().width(Config.MENU_X).height(Config.MENU_Y);
 			table.row();
 		}
-		table.addActor(table);
-	}
+		stage.addActor(table);
+		multiplexer.addProcessor(stage);
+		Gdx.input.setInputProcessor(multiplexer);
+
+
+		;	}
 
 	/**
 	 * Render menu
@@ -52,6 +58,7 @@ public class MenuView {
 
 		stage.act();
 		stage.draw();
+
 	}
 
 	public void dispose() {
