@@ -6,7 +6,7 @@ import com.projectdgdx.game.utils.Vector3d;
 
 /**
  * A machine will enter this state when sabotaged. It will be detectable by the Spotlight and the
- * players can't gameplay with it anymore.
+ * players can't interact with it anymore.
  */
 public class DestroyedMachineState implements iMachineState, iSpotlightListener {
 
@@ -33,6 +33,10 @@ public class DestroyedMachineState implements iMachineState, iSpotlightListener 
     @Override
     public void destroyedByTime(Machine machine) {
         //Nothing happens
+    }
+
+    public boolean isDetected() {
+        return detected;
     }
 
     @Override

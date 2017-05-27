@@ -30,9 +30,11 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
                 new Vector3d(1, 1, 1), 5, 100, "spotlight.machine") ;
         this.spot.setColor(new Vector3d(0, 1, 0));
 
-        this.machineCounter = new Timer(30, 1000);
-        machineCounter.addListener(this);
-        this.machineCounter.start();
+        this.startMachineTimer();
+    }
+
+    public iMachineState getState() {
+        return state;
     }
 
     public Spotlight getSpotLight() {
@@ -99,6 +101,12 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
             }
         }
 
+    }
+
+    private void startMachineTimer(){
+        this.machineCounter = new Timer(30, 1000);
+        machineCounter.addListener(this);
+        this.machineCounter.start();
     }
 
 }
