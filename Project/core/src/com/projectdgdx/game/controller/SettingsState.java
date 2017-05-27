@@ -14,6 +14,7 @@ import com.projectdgdx.game.libgdx.MenuItemFactory;
 import com.projectdgdx.game.model.input.InputModel;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.view.MenuView;
+import java.util.List;
 
 public class SettingsState implements iGameState {
      private InputMultiplexer multiplexer;
@@ -32,6 +33,7 @@ public class SettingsState implements iGameState {
     public void update(ProjectD projectD) {
         menuView.render();
 
+
         for(InputController inputController : projectD.getInpuControllers()) {
             InputModel inputModel = inputController.getModel();
             //Checks if escape button has been pressed.
@@ -41,7 +43,9 @@ public class SettingsState implements iGameState {
             }
         }
 
-    }
+		menuButtonInputController.handleInput(projectD.getInpuControllers());
+
+	}
 
     /**
      * Initiates the settings menu, creating all the buttons adding listners, and ordering them in a row table.
@@ -62,7 +66,7 @@ public class SettingsState implements iGameState {
     public void start(ProjectD projectD) {
         menuView = new MenuView();
         menuFactory = new MenuItemFactory();
-        multiplexer = new InputMultiplexer();
+        multiplexer = projectD.getMultiplexer();
 
         buildMenu(projectD);
     }
@@ -86,6 +90,7 @@ public class SettingsState implements iGameState {
 
 
     private void buildMenu(final ProjectD projectD){
+
 
 
         menuView.addMenuItems(menuFactory.createLabelSlider(0, 100, Config.SUN_LIGHT_R, "Sun R Slider", new ChangeListener() {
@@ -168,13 +173,16 @@ public class SettingsState implements iGameState {
                    }
                }));
 
-        menuView.addMenuItems(menuFactory.createTextButton("Back to Main Menu", new ChangeListener() {
-                    public void changed(ChangeEvent event, Actor actor) {
-                        projectD.setState(GameStates.MAINMENU);
-                    }
-                }
-        ));
+        List<Actor> mainMenuButton = menuFactory.createTextButton("Back to Main Menu", new ChangeListener() {
+					public void changed(ChangeEvent event, Actor actor) {
+						projectD.setState(GameStates.MAINMENU);
+					}
+				}
+		);
+        menuView.addMenuItems(mainMenuButton);
         menuView.init(multiplexer);
-    }
+
+		menuButtonInputController = new MenuButtonInputController(mainMenuButton);
+	}
 
 }

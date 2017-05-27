@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.model.input.InputModel;
 
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class MenuButtonInputController {
 				}else if(controllerValue > 0 && controllerPosition < buttons.size() - 1) {
 					controllerPosition++;
 				}
-				System.out.println(controllerPosition);
+//				System.out.println(controllerPosition);
 				buttons.get(controllerPosition).setColor(Color.GREEN);
 			}
 
@@ -62,6 +63,10 @@ public class MenuButtonInputController {
 				touchDown.setType(InputEvent.Type.touchDown);
 				buttons.get(controllerPosition).fire(touchDown);
 
+				System.out.println("TKSOAKODSOAK");
+				ChangeListener.ChangeEvent changeEvent = new ChangeListener.ChangeEvent();
+				buttons.get(controllerPosition).fire(changeEvent);
+
 				//Unpress button
 				InputEvent touchUp = new InputEvent();
 				touchUp.setType(InputEvent.Type.touchUp);
@@ -69,7 +74,7 @@ public class MenuButtonInputController {
 			}
 
 			inputModel.resetButtonCounts();
-			//lastInputValues.replace(inputController, convertToMaxMin(controllerValue));
+			lastInputValues.replace(inputController, convertToMaxMin(controllerValue));
 		}
 
 		//Set new button color

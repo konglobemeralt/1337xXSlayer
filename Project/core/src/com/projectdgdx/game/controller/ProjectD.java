@@ -128,6 +128,7 @@ public class ProjectD extends ApplicationAdapter {
         }
     }
 
+
     public void takePrettyScreenshot(){
         byte[] pixels = ScreenUtils.getFrameBufferPixels(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), true);
         Pixmap pixmap = new Pixmap(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight(), Pixmap.Format.RGBA8888);

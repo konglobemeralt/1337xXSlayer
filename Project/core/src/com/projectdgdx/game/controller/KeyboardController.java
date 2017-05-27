@@ -18,6 +18,7 @@ public class KeyboardController extends InputController implements InputProcesso
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == 51 || keycode == 19) { //Up
+            System.out.println("YAY");
             upDown = true;
             getModel().getLeftStick().z = -1;
         }
@@ -36,18 +37,17 @@ public class KeyboardController extends InputController implements InputProcesso
             getModel().getLeftStick().x = 1;
         }
 
-        if(keycode == Input.Keys.C) { //A button
+        if(keycode == 31) { //C button
             getModel().setButtonA(true);
         }
 
-        if(keycode == Input.Keys.X) { //B button
+        if(keycode == 52) { //X button
             getModel().setButtonB(true);
         }
 
-        if(keycode == Input.Keys.Z) { //X button
+        if(keycode == 54) { //Z button
             getModel().setButtonX(true);
         }
-
 
         if(keycode == 131) { //ESCAPE
             getModel().setMenuButton(true);
@@ -57,7 +57,6 @@ public class KeyboardController extends InputController implements InputProcesso
 
     @Override
     public boolean keyUp(int keycode) {
-        // A really small value is kept to keep angle
         if(keycode == 51 || keycode == 19) { //Up
             upDown = false;
             if(downDown) {
@@ -91,6 +90,18 @@ public class KeyboardController extends InputController implements InputProcesso
             }else {
                 getModel().getLeftStick().x = 0;
             }
+        }
+
+        if(keycode == 31) { //A button
+            getModel().setButtonA(false);
+        }
+
+        if(keycode == 52) { //B button
+            getModel().setButtonB(false);
+        }
+
+        if(keycode == 54) { //X button
+            getModel().setButtonX(false);
         }
 
         if(keycode == 131) { //ESCAPE

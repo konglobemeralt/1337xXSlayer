@@ -43,7 +43,7 @@ public class MainMenuState implements iGameState {
     public void start(ProjectD projectD) {
         menuView = new MenuView();
         menuFactory = new MenuItemFactory();
-        multiplexer = new InputMultiplexer();
+        multiplexer = projectD.getMultiplexer();
 
         buildMenu(projectD);
 
@@ -57,6 +57,7 @@ public class MainMenuState implements iGameState {
     public void update(ProjectD projectD) {
 
         menuView.render();
+        menuButtonInputController.handleInput(projectD.getInpuControllers());
 
         //Handle inputs
         //menuButtonInputController.handleInput(projectD.getInpuControllers());
@@ -85,15 +86,17 @@ public class MainMenuState implements iGameState {
 
         //Add buttons in screen order
         //
-        menuView.addMenuItems(menuFactory.createLabel("Main Menu"));
+        List<Actor> buttons = new ArrayList<>();
 
-        menuView.addMenuItems(menuFactory.createTextButton("New Game", new ChangeListener() {
+        menuView.addMenuItems(menuFactory.createLabel("Main Menu"));
+        List<Actor> newGameButton = menuFactory.createTextButton("New Game", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
                         projectD.resetState(GameStates.INGAME);
                         projectD.setState(GameStates.INGAME);
                     }
                 }
-        ));
+        );
+        menuView.addMenuItems(newGameButton);
 
         menuView.addMenuItems(menuFactory.creadeDropDown("Level Select", levelList, new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
@@ -103,21 +106,28 @@ public class MainMenuState implements iGameState {
                 }
         ));
 
-
-        menuView.addMenuItems(menuFactory.createTextButton("Settings", new ChangeListener() {
-                   public void changed(ChangeEvent event, Actor actor) {
-                       projectD.setState(GameStates.SETTINGS);
+        List<Actor> settingsButton = menuFactory.createTextButton("Settings", new ChangeListener() {
+                    public void changed(ChangeEvent event, Actor actor) {
+                        projectD.setState(GameStates.SETTINGS);
                     }
                 }
-        ));
+        );
+        menuView.addMenuItems(settingsButton);
 
-        menuView.addMenuItems(menuFactory.createTextButton("Exit", new ChangeListener() {
+
+        List<Actor> exitButton = menuFactory.createTextButton("Exit", new ChangeListener() {
                     public void changed(ChangeEvent event, Actor actor) {
                         System.out.print("New");
                         Gdx.app.exit();
                     }
                 }
-        ));
+        );
+        menuView.addMenuItems(exitButton);
+
+        buttons.add(newGameButton.get(0));
+        buttons.add(settingsButton.get(0));
+        buttons.add(exitButton.get(0));
+        menuButtonInputController = new MenuButtonInputController(buttons);
 
 
 
