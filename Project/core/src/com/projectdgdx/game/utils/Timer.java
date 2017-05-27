@@ -18,7 +18,9 @@ public class Timer implements Runnable{
 
     private static void addTimer(Timer timer) {
         timers.add(timer);
-        System.out.println(timers.size());
+        if(Config.DEBUG) {
+            System.out.println("Amount of running timers: " + timers.size());
+        }
     }
 
     private static void removeTimer(Timer timer) {

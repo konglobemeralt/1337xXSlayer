@@ -63,10 +63,6 @@ public class MenuButtonInputController {
 				touchDown.setType(InputEvent.Type.touchDown);
 				buttons.get(controllerPosition).fire(touchDown);
 
-				System.out.println("TKSOAKODSOAK");
-				ChangeListener.ChangeEvent changeEvent = new ChangeListener.ChangeEvent();
-				buttons.get(controllerPosition).fire(changeEvent);
-
 				//Unpress button
 				InputEvent touchUp = new InputEvent();
 				touchUp.setType(InputEvent.Type.touchUp);

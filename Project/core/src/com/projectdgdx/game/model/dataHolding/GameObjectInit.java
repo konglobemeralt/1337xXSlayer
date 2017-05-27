@@ -98,7 +98,9 @@ public class GameObjectInit {
                 case "Floor":
                     return new Decoration(new Vector3d(x, y, z), new Vector3d(scaleX, scaleY, scaleZ), new Vector3d(rotationX, rotationY, rotationZ), "floor.basic");
                 default:
-                    System.out.println("TAG OF TYPE: " + type + " not supported");
+                    if(Config.DEBUG) {
+                        System.out.println("TAG OF TYPE: " + type + " not supported");
+                    }
                     return null;
             }
         }
@@ -141,7 +143,9 @@ public class GameObjectInit {
                     }
                     break;
                 default:
-                    System.out.println("Value does not exist   " + key);
+                    if(Config.DEBUG) {
+                        System.out.println("Value does not exist   " + key);
+                    }
                     break;
             }
         }

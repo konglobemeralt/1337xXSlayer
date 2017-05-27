@@ -18,7 +18,6 @@ public class KeyboardController extends InputController implements InputProcesso
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == 51 || keycode == 19) { //Up
-            System.out.println("YAY");
             upDown = true;
             getModel().getLeftStick().z = -1;
         }
