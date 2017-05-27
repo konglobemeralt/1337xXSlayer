@@ -19,10 +19,12 @@ import java.util.List;
 
 public class ProjectD extends ApplicationAdapter {
 
+    private GameStates currentGameState;
     private iGameState currentState;
     private List<InputController> inputController = new ArrayList();
 
     private InputMultiplexer multiplexer;
+    private GameStates lastGameState = GameStates.MAINMENU;
 
     public iGameState getState() {
         return currentState;
@@ -34,13 +36,17 @@ public class ProjectD extends ApplicationAdapter {
         }
         if(currentState != null){
             currentState.stop(this);
-
         }
 
-
+        this.lastGameState = currentGameState;
         this.currentState = gameStates.get(newState);
+        this.currentGameState = newState;
 
         this.currentState.start(this);
+    }
+
+    public GameStates getLastGameState() {
+        return lastGameState;
     }
 
     public void resetState(GameStates stateToReset) {

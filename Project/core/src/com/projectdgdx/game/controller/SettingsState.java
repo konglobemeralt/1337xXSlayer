@@ -38,8 +38,7 @@ public class SettingsState implements iGameState {
             InputModel inputModel = inputController.getModel();
             //Checks if escape button has been pressed.
             if (inputModel.getMenuButton().isPressed() && inputModel.getMenuButton().getPressedCount() >= 1) {
-                this.stop(projectD);
-                projectD.setState(GameStates.INGAME);
+                projectD.setState(projectD.getLastGameState());
             }
         }
 
