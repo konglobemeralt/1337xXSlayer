@@ -6,11 +6,8 @@ package com.projectdgdx.game.controller;
  * Created by Jesper on 2017-05-01.
  */
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.projectdgdx.game.libgdx.MenuItemFactory;
@@ -18,44 +15,8 @@ import com.projectdgdx.game.model.input.InputModel;
 import com.projectdgdx.game.utils.Config;
 import com.projectdgdx.game.view.MenuView;
 
-import java.util.ArrayList;
-
 public class SettingsState implements iGameState {
-
- //  private Label shadowMappingLabel;
- //  private CheckBox shadowMapCheckbox;
-
- //  private TextButton mainMenuButton;
      private InputMultiplexer multiplexer;
-
- //  private Slider fovSlider;
- //  private Label fovValueLabel;
- //  private Label fovLabel;
-
- //  private Slider aaSlider;
- //  private Label aaLabel;
- //  private Label aaValueLabel;
-
- //  private Slider discoSlider;
- //  private Label disoLabel;
- //  private Label discoValueLabel;
-
- //  private Slider sunrSlider;
- //  private Label sunrSliderLabel;
- //  private Label sunrSliderValue;
- //  private Slider sungSlider;
- //  private Label sungSliderLabel;
- //  private Label sungSliderValue;
- //  private Slider sunbSlider;
- //  private Label sunbSliderLabel;
- //  private Label sunbSliderValue;
-
- //  private Label settingsHeading;
-
- //  private Label moveSpeedLabel;
- //  private TextField moveSpeedIn;
-
-
     private MenuView menuView;
     private MenuItemFactory menuFactory;
 
@@ -104,14 +65,6 @@ public class SettingsState implements iGameState {
         multiplexer = new InputMultiplexer();
 
         buildMenu(projectD);
-
-      //  updateDiscoLabel();
-      //  updateFOVlabel();
-      //  updateAAlabel();
-//
-      //  updateSunRLabel();
-      //  updateSunGLabel();
-      //  updateSunBLabel();
     }
 
     @Override
@@ -131,76 +84,6 @@ public class SettingsState implements iGameState {
     }
 
 
-
- //  /**
- //   * Updates the FOV value label
- //   **/
- //  private void updateFOVlabel()
- //  {
- //      float value = Config.CAMERA_FOV;
-
- //      fovSlider.setValue(value);
- //      fovSlider.setAnimateDuration(0.3f);
-
- //      fovValueLabel.setText(String.valueOf(Config.CAMERA_FOV));
- //      fovValueLabel.invalidate();
- //  }
-
- //  /**
- //   * Updates the disco factor value label
- //   **/
- //  private void updateDiscoLabel()
- //  {
- //      float value = Config.DISCO_FACTOR;
-
- //      discoSlider.setValue(value);
- //      discoSlider.setAnimateDuration(0.3f);
-
- //      discoValueLabel.setText(String.valueOf(Config.DISCO_FACTOR) + " %");
- //      discoValueLabel.invalidate();
- //  }
-
- //  /**
- //   * Updates the AAfactor value label
- //   **/
- //  private void updateAAlabel()
- //  {
- //      float value = Config.AA_SAMPLES;
-
- //      aaSlider.setValue(value);
- //      aaSlider.setAnimateDuration(0.3f);
-
- //      aaValueLabel.setText(String.valueOf(Config.AA_SAMPLES));
- //      aaValueLabel.invalidate();
- //  }
-
- //  /**
- //   * Updates the sun G label
- //   **/
- //  private void updateSunGLabel()
- //  {
- //      float value = Config.SUN_LIGHT_G;
-
- //      sungSlider.setValue(value);
- //      sungSlider.setAnimateDuration(0.3f);
-
- //      sungSliderValue.setText(String.valueOf(Config.SUN_LIGHT_G)+ " %");
- //      sungSliderValue.invalidate();
- //  }
-
- //  /**
- //   * Updates the sun B label
- //   **/
- //  private void updateSunBLabel()
- //  {
- //      float value = Config.SUN_LIGHT_B;
-
- //      sunbSlider.setValue(value);
- //      sunbSlider.setAnimateDuration(0.3f);
-
- //      sunbSliderValue.setText(String.valueOf(Config.SUN_LIGHT_B)+ " %");
- //      sunbSliderValue.invalidate();
- //  }
 
     private void buildMenu(final ProjectD projectD){
 
@@ -292,199 +175,6 @@ public class SettingsState implements iGameState {
                 }
         ));
         menuView.init(multiplexer);
-       //this.stage = new Stage();
-
-       //skin = createBasicSkin(Config.UI_SKIN_PATH);
-
-       //settingsHeading = new Label("Settings Menu", skin);
-
-       //mainMenuButton = new TextButton("To Main Menu", skin);
-
-       //java.util.List<TextButton> buttons = new ArrayList<>();
-       //buttons.add(mainMenuButton);
-       /// menuButtonInputController = new MenuButtonInputController(buttons);
-
-       ///** Field of view slider  **/
-       //fovSlider = new Slider(5, 120, 1, false, skin);
-       //fovSlider.setValue(Config.CAMERA_FOV);
-       //fovLabel = new Label("FOV", skin);
-       //fovValueLabel = new Label("", skin);
-
-       ///** AA slider  **/
-       //aaSlider = new Slider(0, 20, 1, false, skin);
-       //aaSlider.setValue(Config.AA_SAMPLES);
-       //aaLabel = new Label("AA Samples", skin);
-       //aaValueLabel = new Label("", skin);
-
-       ///** Disco slider  **/
-       //discoSlider = new Slider(0, 100, 1, false, skin);
-       //discoSlider.setValue(Config.DISCO_FACTOR);
-       //disoLabel = new Label("Disco Factor", skin);
-       //discoValueLabel = new Label("", skin);
-
-       ///** Shadow mapping checkbox  **/
-       //shadowMappingLabel = new Label("Shadow mapping", skin);
-       //shadowMapCheckbox = new CheckBox("", skin);
-       //shadowMapCheckbox.setChecked(true);
-
-       ///** Movement Speed textfield  **/
-       //moveSpeedLabel = new Label("Movement Speed", skin);
-       //moveSpeedIn = new TextField("30", skin);
-       //moveSpeedIn.setMessageText("Movement Speed");
-       //moveSpeedIn.setPosition(30, 30);
-       ////stage.addActor(moveSpeedIn);
-
-
-       ///** Sun RGB sliders  **/
-       //sunrSlider = new Slider(0, 100, 1, false, skin);
-       //sunrSlider.setValue(Config.SUN_LIGHT_R);
-       //sunrSliderLabel = new Label("Sun light R:", skin);
-       //sunrSliderValue = new Label("", skin);
-
-       //sungSlider = new Slider(0, 100, 1, false, skin);
-       //sungSlider.setValue(Config.SUN_LIGHT_G);
-       //sungSliderLabel = new Label("Sun light G:", skin);
-       //sungSliderValue = new Label("", skin);
-
-       //sunbSlider = new Slider(0, 100, 1, false, skin);
-       //sunbSlider.setValue(Config.SUN_LIGHT_B);
-       //sunbSliderLabel = new Label("Sun light B:", skin);
-       //sunbSliderValue = new Label("", skin);
-
-
-
-       //table = new Table();
-
-       //table.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-       //table.add(settingsHeading).expandX().height(60);
-       //table.row();
-       //table.add(fovLabel).expandY();
-       //table.add(fovSlider);
-       //table.add(fovValueLabel).padRight(300);
-       //table.row();
-       //table.add(aaLabel).expandY();
-       //table.add(aaSlider);
-       //table.add(aaValueLabel).padRight(300);
-       //table.row();
-       //table.add(disoLabel).expandY();
-       //table.add(discoSlider);
-       //table.add(discoValueLabel).padRight(300);
-       //table.row();
-       //table.add(shadowMappingLabel).expandY();
-       //table.add(shadowMapCheckbox).padRight(160);
-       //table.row();
-       //table.add(moveSpeedLabel).expandY();
-       //table.add(moveSpeedIn).expandY();
-       //table.row();
-       //table.add(sunrSliderLabel).expandY();
-       //table.add(sunrSlider);
-       //table.add(sunrSliderValue).padRight(300);
-       //table.row();
-       //table.add(sungSliderLabel).expandY();
-       //table.add(sungSlider);
-       //table.add(sungSliderValue).padRight(300);
-       //table.row();
-       //table.add(sunbSliderLabel).expandY();
-       //table.add(sunbSlider);
-       //table.add(sunbSliderValue).padRight(300);
-       //table.row();
-       //table.add(mainMenuButton).expandY().width(450).height(60);
-       //table.row();
-
-
-       //table.setFillParent(true);
-       //table.pack();
-
-       //fovSlider.addListener(new ChangeListener()
-       //{
-       //    @Override
-       //    public void changed(ChangeEvent event, Actor actor)
-       //    {
-       //        Slider slider = (Slider) actor;
-
-       //        float value = slider.getValue();
-       //        Config.CAMERA_FOV = ((int) value);
-       //        updateFOVlabel();
-       //    }
-       //});
-
-       //aaSlider.addListener(new ChangeListener()
-       //{
-       //    @Override
-       //    public void changed(ChangeEvent event, Actor actor)
-       //    {
-       //        Slider slider = (Slider) actor;
-
-       //        float value = slider.getValue();
-       //        Config.AA_SAMPLES = ((int) value);
-       //        updateAAlabel();
-       //    }
-       //});
-
-       //discoSlider.addListener(new ChangeListener()
-       //{
-       //    @Override
-       //    public void changed(ChangeEvent event, Actor actor)
-       //    {
-       //        Slider slider = (Slider) actor;
-
-       //        float value = slider.getValue();
-       //        Config.DISCO_FACTOR = ((int) value);
-       //        updateDiscoLabel();
-       //    }
-       //});
-
-
-
-       //sungSlider.addListener(new ChangeListener()
-       //{
-       //    @Override
-       //    public void changed(ChangeEvent event, Actor actor)
-       //    {
-       //        Slider slider = (Slider) actor;
-
-       //        float value = slider.getValue();
-       //        Config.SUN_LIGHT_G = ((int) value);
-       //        updateSunGLabel();
-       //    }
-       //});
-
-       //sunbSlider.addListener(new ChangeListener()
-       //{
-       //    @Override
-       //    public void changed(ChangeEvent event, Actor actor)
-       //    {
-       //        Slider slider = (Slider) actor;
-
-       //        float value = slider.getValue();
-       //        Config.SUN_LIGHT_B = ((int) value);
-       //        updateSunBLabel();
-       //    }
-       //});
-
-       //shadowMapCheckbox.addListener(new ChangeListener() {
-       //    public void changed (ChangeEvent event, Actor actor) {
-       //        Config.SHADOWMAPPING_ENABLED = shadowMapCheckbox.isChecked();
-       //    }
-       //});
-
-       //moveSpeedIn.setTextFieldListener(new TextField.TextFieldListener() {
-
-       //    public void keyTyped (TextField textField, char key) {
-
-       //        if(textField.getText().length() > 0){
-       //            Config.MOVE_SPEED = Integer.parseInt(textField.getText());
-       //        }
-       //        else{
-       //            Config.MOVE_SPEED = Integer.parseInt(textField.getText());
-       //        }
-
-       //    }
-       //});
-
-       //stage.addActor(table);
-
     }
 
 }
