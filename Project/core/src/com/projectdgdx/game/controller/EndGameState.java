@@ -50,7 +50,7 @@ public class EndGameState implements iGameState {
 	@Override
 	public void update(ProjectD projectD) {
 
-		menuButtonInputController.handleInput(projectD.getInpuControllers());
+		//menuButtonInputController.handleInput(projectD.getInpuControllers());
 		render();
 	}
 
@@ -65,7 +65,7 @@ public class EndGameState implements iGameState {
 		menuView = new MenuView();
 		menuFactory = new MenuItemFactory();
 
-		menuView.init(projectD.getMultiplexer());
+
 
 		//End game strings
 		if (this.ending == GameStates.ENDGAME_TIMER){
@@ -81,15 +81,14 @@ public class EndGameState implements iGameState {
 		batch = new SpriteBatch();
 
 		menuView.addMenuItems(menuFactory.createLabel(endGameMessage));
-		menuView.addMenuItems(menuFactory.createTextButton("New Game", new ChangeListener() {
+		menuView.addMenuItems(menuFactory.createTextButton("Back To Main Menu", new ChangeListener() {
 					public void changed(ChangeEvent event, Actor actor) {
-						projectD.resetState(GameStates.INGAME);
-						projectD.setState(GameStates.INGAME);
+						projectD.setState(GameStates.MAINMENU);
 					}
 				}
 		));
 
-
+		menuView.init(projectD.getMultiplexer());
 	}
 
 	@Override
