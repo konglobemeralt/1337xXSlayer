@@ -83,13 +83,13 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
      * the machine will set itself to destroyed.
      */
     public void updateTimer() {
-        this.machineCounter.setTimerValue(30);
+        this.machineCounter.setTimerValue(Config.MACHINE_TIMER);
     }
 
 
     public void updateSpotlight(){
         float timerValue = this.machineCounter.getTimerValue();
-        float calcVal = (((timerValue ) * (1)) / (30));
+        float calcVal = (((timerValue ) * (1)) / (Config.MACHINE_TIMER));
         this.spot.setColor(new Vector3d(1-calcVal, calcVal * 1.5f, 0));
 
         if(timerValue <= Config.MACHINELIGHT_BLINK_TIME){
@@ -104,7 +104,7 @@ public class Machine extends StaticObject implements iHonestInteractable, iDisho
     }
 
     private void startMachineTimer(){
-        this.machineCounter = new Timer(30, 1000);
+        this.machineCounter = new Timer(Config.MACHINE_TIMER, 1000);
         machineCounter.addListener(this);
         this.machineCounter.start();
     }

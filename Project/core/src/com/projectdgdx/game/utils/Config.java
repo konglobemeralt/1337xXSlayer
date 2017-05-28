@@ -5,6 +5,7 @@ public class Config {
     public static final boolean DEBUG = false;
     public static float MOVE_SPEED = 20f;
 
+    public static final int MACHINE_TIMER = 30;
     public static final int MACHINELIGHT_BLINK_TIME = 10;
     public static final int MACHINELIGHT_BASE_INTENSITY = 300;
     public static final int MACHINELIGHT_MAX_INTENSITY = 400;
