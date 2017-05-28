@@ -62,14 +62,8 @@ public class MenuView {
 
 	}
 
-	public static int count = 0;
-
 	public void dispose() {
-		if(count > 0) {
-			System.out.println("uas");
-		}
 		stage.dispose();
-		count++;
 	}
 
 }
