@@ -17,7 +17,7 @@ import com.projectdgdx.game.view.MenuView;
 import java.util.List;
 
 public class SettingsState implements iGameState {
-     private InputMultiplexer multiplexer;
+
     private MenuView menuView;
     private MenuItemFactory menuFactory;
 
@@ -65,7 +65,6 @@ public class SettingsState implements iGameState {
     public void start(ProjectD projectD) {
         menuView = new MenuView();
         menuFactory = new MenuItemFactory();
-        multiplexer = projectD.getMultiplexer();
 
         buildMenu(projectD);
     }
@@ -181,7 +180,7 @@ public class SettingsState implements iGameState {
 				}
 		);
         menuView.addMenuItems(mainMenuButton);
-        menuView.init(multiplexer);
+        menuView.init(projectD.getMultiplexer());
 
 		menuButtonInputController = new MenuButtonInputController(mainMenuButton);
 	}

@@ -27,9 +27,6 @@ public class MainMenuState implements iGameState {
     private List<String> levelList = new ArrayList<String>();
 
 
-    private InputMultiplexer multiplexer;
-    private Label mainMenuHeading;
-
     private MenuView menuView;
     private MenuItemFactory menuFactory;
 
@@ -43,7 +40,7 @@ public class MainMenuState implements iGameState {
     public void start(ProjectD projectD) {
         menuView = new MenuView();
         menuFactory = new MenuItemFactory();
-        multiplexer = projectD.getMultiplexer();
+
 
         buildMenu(projectD);
 
@@ -134,7 +131,7 @@ public class MainMenuState implements iGameState {
 
 
 
-        menuView.init(multiplexer);
+        menuView.init(projectD.getMultiplexer());
 
 
        // //Set up the SelectionBox with content
