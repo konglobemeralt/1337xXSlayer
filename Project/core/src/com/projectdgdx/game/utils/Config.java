@@ -1,11 +1,11 @@
 package com.projectdgdx.game.utils;
 
 public class Config {
-    public static final int GAME_TIME = 1200;
+    public static final int GAME_TIME = 120;
     public static final boolean DEBUG = false;
     public static float MOVE_SPEED = 20f;
 
-    public static final int MACHINE_TIMER = 120;
+    public static final int MACHINE_TIMER = 30;
     public static final int MACHINELIGHT_BLINK_TIME = 10;
     public static final int MACHINELIGHT_BASE_INTENSITY = 300;
     public static final int MACHINELIGHT_MAX_INTENSITY = 400;
@@ -94,7 +94,7 @@ public class Config {
     /************MODEL VARIABLES************/
 
     //MODEL RADIUS'S
-    public static final float HONEST_ACT_DISTANCE = 20;
+    public static final float HONEST_ACT_DISTANCE = 16;
     public static final float USE_ABILITY_ACT_DISTANCE = 5;
     public static final float STRIKE_ZONE_RADIUS = 10;
     public static final float WORKER_NODE_RADIUS = 1;
